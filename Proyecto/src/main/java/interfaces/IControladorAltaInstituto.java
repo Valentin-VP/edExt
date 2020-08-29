@@ -1,4 +1,4 @@
-package logica;
+package interfaces;
 
 public class IControladorAltaInstituto {
 	

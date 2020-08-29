@@ -1,7 +1,7 @@
 package logica;
 
+import interfaces.IControladorAltaInstituto;
 import logica.Instituto;
-import logica.IControladorAltaInstituto;
 import logica.ManejadorInstituto;
 
 public class ControladorAltaInstituto extends IControladorAltaInstituto{
