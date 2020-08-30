@@ -1,11 +1,11 @@
 package logica;
 
 import datatypes.DtFecha;
-import datatypes.DtUsuarioBase;
+import datatypes.DtUsuario;
 import interfaces.IControladorAltaUsuario;
 
 public class ControladorAltaUsuario implements IControladorAltaUsuario {
-	private DtUsuarioBase usuario;
+	private DtUsuario usuario;
 	private String instituto;
 	
 	public ControladorAltaUsuario() {
@@ -14,19 +14,21 @@ public class ControladorAltaUsuario implements IControladorAltaUsuario {
 	
 	@Override
 	public Boolean altaUsuario(String nick, String correo, String nombre, String apellido, DtFecha fechaNac) {
-		// TODO Auto-generated method stub
+		//fijarme si el usuario ya esta en el sistema
+		//crear un DtUsuario
 		return null;
 	}
 	
 	@Override
 	public void seleccionarInstituto(String instituto) {
-		// TODO Auto-generated method stub
+		//hago un set en la clase Docente(falta)
 		
 	}
 	
 	@Override
 	public Boolean modificarAltaUsuario(String nuevoNick, String nuevoCorreo) {
-		// TODO Auto-generated method stub
+		//hago un set en la clase Usuario
+		//me fijo si la modificacion es valida
 		return null;
 	}
 	
@@ -38,15 +40,16 @@ public class ControladorAltaUsuario implements IControladorAltaUsuario {
 	
 	@Override
 	public void confirmarAltaUsuario() {
-		// TODO Auto-generated method stub
+		//crea la instancia
+		//cre el link
 		
 	}
 	
-	public DtUsuarioBase getUsuario() {
+	public DtUsuario getUsuario() {
 		return usuario;
 	}
 	
-	public void setUsuario(DtUsuarioBase usuario) {
+	public void setUsuario(DtUsuario usuario) {
 		this.usuario = usuario;
 	}
 	
