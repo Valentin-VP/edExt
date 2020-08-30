@@ -1,7 +1,8 @@
 package datatypes;
 
 public class DtUsuario extends DtUsuarioBase {
-	private String nombre;
+	private String nick;
+	private String correo;
 	private String apellido;
 	private DtFecha fechaNac;
 	
@@ -10,18 +11,27 @@ public class DtUsuario extends DtUsuarioBase {
 	}
 	
 	public DtUsuario(String nick, String correo, String nombre, String apellido, DtFecha fechaNac) {
-		super(nick, correo);
-		this.nombre = nombre;
+		super(nombre);
+		this.nick = nick;
+		this.correo = correo;
 		this.apellido = apellido;
 		this.fechaNac = fechaNac;
 	}
 	
-	public String getNombre() {
-		return nombre;
+	public String getNick() {
+		return nick;
 	}
 	
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public void setNick(String nick) {
+		this.nick = nick;
+	}
+	
+	public String getCorreo() {
+		return correo;
+	}
+	
+	public void setCorreo(String correo) {
+		this.correo = correo;
 	}
 	
 	public String getApellido() {
