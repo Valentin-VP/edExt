@@ -1,5 +1,11 @@
 package interfaces;
 
-public class IControladorAltaInstituto {
+
+public interface IControladorAltaInstituto {
+
+	public boolean darAltaInstituto(String nombre);
 	
+	public boolean iNuevoNombre(String nombre);
+	
+	public void confirmar();
 }
