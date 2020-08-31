@@ -81,6 +81,10 @@ public class ControladorAltaCurso implements IControladorAltaCurso{
 		// TODO Auto-generated method stub
 		return false;
 	}
+	public ControladorAltaCurso() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 	@Override
 	public void setPrevias(String previas) {
 		// TODO Auto-generated method stub
