@@ -19,7 +19,8 @@ public class ControladorAltaInstituto implements IControladorAltaInstituto{
 	}
 	
 	public boolean iNuevoNombre(String nombre) {
-		ManejadorInstituto mI = null;// mI.getInstancia();no me deja inicializar asi la clase
+		ManejadorInstituto mI = mI.getInstancia();
+		//ManejadorInstituto mI = null;// mI.getInstancia();no me deja inicializar asi la clase
 		if(mI.exists(nombre)) {
 			this.nombre = nombre;
 		}
@@ -32,4 +33,5 @@ public class ControladorAltaInstituto implements IControladorAltaInstituto{
 	}
 	
 	
-}
+}	
+
