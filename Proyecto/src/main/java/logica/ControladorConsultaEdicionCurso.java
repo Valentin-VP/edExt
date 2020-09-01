@@ -1,7 +1,6 @@
 package logica;
 
 import java.util.*;
-
 import datatypes.DtCursoBase;
 import datatypes.DtEdicion;
 import datatypes.DtEdicionBase;
@@ -24,15 +23,22 @@ public class ControladorConsultaEdicionCurso implements IControladorConsultaEdic
 	}
 	@Override
 	public ArrayList<DtCursoBase> seleccionarInstituto(String instituto) {
-		return null;
+		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
+		Instituto i = mI.find(instituto);
+		return i.getCursos();
 	}
 	@Override
 	public ArrayList<DtEdicionBase> seleccionarCurso(String curso) {
-		return null;
+		ManejadorCurso mC = ManejadorCurso.getInstancia();
+		Curso c = mC.find(curso);
+		return c.getEdiciones();
 	}
 	@Override
 	public DtEdicion seleccionarEdicion(String edicion) {
-		return null;
+		ManejadorEdicion mE = ManejadorEdicion.getInstancia();
+		Edicion e = mE.find(edicion);
+		DtEdicion edition = new DtEdicion(e.getNombre(), e.getFechaI(), e.getFechaF(), e.getCupos(), e.getFechaPub());
+		return edition;
 	}
 	public String getEdicion() {
 		return edicion;

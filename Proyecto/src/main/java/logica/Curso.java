@@ -3,7 +3,7 @@ package logica;
 import datatypes.DtTime;
 import datatypes.DtFecha;
 import datatypes.DtCurso;
-import datatypes.DtEdicion;
+import datatypes.DtEdicionBase;
 import java.util.*;
 
 public class Curso {
@@ -15,10 +15,10 @@ public class Curso {
 	private DtFecha fechaR;
 	private String URL;
 	private ArrayList<DtCurso> previas;//visibilidad
-	private ArrayList<DtEdicion> ediciones;//visibilidad
+	private ArrayList<DtEdicionBase> ediciones;//visibilidad
 	
 	public Curso(String nombre, String descripcion, String duracion, DtTime cantHoras, Integer creditos, DtFecha fechaR,
-			String uRL, ArrayList<DtCurso> previas, ArrayList<DtEdicion> ediciones) {
+			String uRL) {
 		super();
 		this.nombre = nombre;
 		this.descripcion = descripcion;
@@ -27,8 +27,6 @@ public class Curso {
 		this.creditos = creditos;
 		this.fechaR = fechaR;
 		URL = uRL;
-		this.previas = previas;
-		this.ediciones = ediciones;
 	}
 
 	public Curso() {
@@ -99,11 +97,11 @@ public class Curso {
 		this.previas = previas;
 	}
 
-	public ArrayList<DtEdicion> getEdiciones() {
+	public ArrayList<DtEdicionBase> getEdiciones() {
 		return ediciones;
 	}
 
-	public void setEdiciones(ArrayList<DtEdicion> ediciones) {
+	public void setEdiciones(ArrayList<DtEdicionBase> ediciones) {
 		this.ediciones = ediciones;
 	}
 	

@@ -59,8 +59,8 @@ public class Edicion {
 		this.fechaPub = fechaPub;
 	}
 	
-	public DtEdicion getDtEdicion(String edicion) {
+	/*public DtEdicion getDtEdicion(String edicion) {
 		//retorna un datatype con la informacion de "edicion"
-	}
+	}*/
 	
 }

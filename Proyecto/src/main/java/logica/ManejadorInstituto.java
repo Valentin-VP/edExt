@@ -26,5 +26,17 @@ public class ManejadorInstituto {
 		Instituto i = new Instituto(nombre);
 		institutos.put(i.getNombre(), i);
 	}
+//desde aca es mio
+	public Instituto find(String instituto) {
+		return this.institutos.get(instituto);
+	}
+	
+	public Map<String, Instituto> getInstitutos() {
+		return institutos;
+	}
+
+	public void setInstitutos(Map<String, Instituto> institutos) {
+		this.institutos = institutos;
+	}
 	
 }
