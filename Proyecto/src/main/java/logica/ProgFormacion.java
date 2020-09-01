@@ -11,15 +11,13 @@ public class ProgFormacion {
 	private Date fechaF;
 	private Date fechaAlta;
 	private ArrayList<Curso> cursos;
-	public ProgFormacion(String nombre, String desc, Date fechaI, Date fechaF, Date fechaAlta,
-			ArrayList<Curso> cursos) {
+	public ProgFormacion(String nombre, String desc, Date fechaI, Date fechaF, Date fechaAlta) {
 		super();
 		this.nombre = nombre;
 		this.desc = desc;
 		this.fechaI = fechaI;
 		this.fechaF = fechaF;
 		this.fechaAlta = fechaAlta;
-		this.cursos = cursos;
 	}
 	public String getNombre() {
 		return nombre;
@@ -57,10 +55,8 @@ public class ProgFormacion {
 	public void setCursos(ArrayList<Curso> cursos) {
 		this.cursos = cursos;
 	}
-	
 	public DtProgramaBase getDtProgBase() {
 		DtProgramaBase dtpb = new DtProgramaBase(this.nombre);
 		return dtpb;
 	}
-	
 }
