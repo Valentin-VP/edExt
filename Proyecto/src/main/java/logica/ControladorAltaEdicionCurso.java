@@ -15,33 +15,38 @@ public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso
 	
 	@Override
 	public ArrayList<DtCursoBase> seleccionarInstituto(String instituto) {
-		return null;
+		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
+		Instituto i = mI.find(instituto);
+		return i.getCursos();
 	}
 
 	@Override
-	public Boolean altaEdicionCurso(String curso, String nombre, DtFecha fechaI, DtFecha fechaF,
-			ArrayList<String> docentes) {
+	public Boolean altaEdicionCurso(String curso, String nombre, DtFecha fechaI, DtFecha fechaF, ArrayList<String> docentes) {
+		//la coleccion de docentes es un viaje... despues
 		return null;
 	}
 
 	@Override
 	public void ingresarCupos(Integer cupos) {
-		
+		//booleano en Edicion??
 	}
 
 	@Override
 	public Boolean modificarAltaEdicion(String nuevoNombre) {
-		return null;
+		this.edicion.setNombre(nuevoNombre);
+		ManejadorEdicion mE = ManejadorEdicion.getInstancia();
+		return mE.exists(nuevoNombre);
 	}
 
 	@Override
 	public void cancelarAltaEdicion() {
-		
+		//nose
 	}
 
 	@Override
 	public void confirmarAltaEdicion() {
-		
+		//creo instancia
+		//creo link
 	}
 
 }

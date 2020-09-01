@@ -1,7 +1,6 @@
 package logica;
 
-import java.util.ArrayList;
-
+import java.util.*;
 import datatypes.DtFecha;
 import datatypes.DtUsuario;
 import datatypes.DtUsuarioBase;
@@ -15,23 +14,31 @@ public class ControladorModificarDatosUsuario implements IControladorModificarDa
 	
 	@Override
 	public ArrayList<DtUsuarioBase> mostrarUsuarios() {
-		return null;
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		ArrayList<DtUsuarioBase> usuarios = null;
+		for (Usuario u: mU.getUsuarios()) {
+			DtUsuarioBase dtUsuarioBase = new DtUsuarioBase(u.getNombre());
+			usuarios.add(dtUsuarioBase);
+		}
+		return usuarios;
 	}
 	@Override
 	public DtUsuario seleccionarUsuario(String usuario) {
-		return null;
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		Usuario user = mU.getUsuario(usuario);
+		return user.getDtUsuario();
 	}
 	@Override
 	public void editarNombre(String nuevoNombre) {
-		
+		this.nombre = nuevoNombre;//??
 	}
 	@Override
 	public void editarApellido(String nuevoApellido) {
-		
+		this.apellido = nuevoApellido;//??
 	}
 	@Override
 	public void editarFNac(DtFecha nuevaFecha) {
-		
+		this.fechaNac = nuevaFecha;//??
 	}
 	
 	

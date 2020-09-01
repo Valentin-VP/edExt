@@ -16,6 +16,13 @@ public class ManejadorCurso {
 		return instancia;
 	}
 	
+	public boolean exists(String nombre) {
+		if(cursos.containsKey(nombre))
+			return true;
+		else 
+			return false;
+	}
+	
 	public void agregarCurso(String nombre, String descripcion, String duracion, DtTime cantHoras, Integer creditos, DtFecha fechaR, String URL) {
 		Curso c = new Curso(nombre, descripcion, duracion, cantHoras, creditos, fechaR, URL);
 		cursos.put(c.getNombre(), c);

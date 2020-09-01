@@ -15,6 +15,13 @@ public class ManejadorEdicion {
 		return instancia;
 	}
 	
+	public boolean exists(String nombre) {
+		if(ediciones.containsKey(nombre))
+			return true;
+		else 
+			return false;
+	}
+	
 	public void agregarEdicion(String nombre, DtFecha fechaI, DtFecha fechaF, Integer cupos, DtFecha fechaPub) {
 		Edicion e = new Edicion(nombre, fechaI, fechaF, cupos, fechaPub);
 		ediciones.put(e.getNombre(), e);
