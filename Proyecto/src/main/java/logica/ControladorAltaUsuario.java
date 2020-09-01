@@ -6,7 +6,7 @@ import interfaces.IControladorAltaUsuario;
 
 public class ControladorAltaUsuario implements IControladorAltaUsuario {
 	private DtUsuario usuario;
-	private String instituto;
+	private Instituto instituto;
 	
 	public ControladorAltaUsuario() {
 		super();
@@ -14,35 +14,49 @@ public class ControladorAltaUsuario implements IControladorAltaUsuario {
 	
 	@Override
 	public Boolean altaUsuario(String nick, String correo, String nombre, String apellido, DtFecha fechaNac) {
-		//fijarme si el usuario ya esta en el sistema
-		//crear un DtUsuario
-		return null;
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		Boolean esValido = true;
+		for (Usuario u: mU.getUsuarios()) {
+			if ((u.getNick() == nick) || (u.getCorreo() == correo)) {
+				esValido = false;
+			}
+		}
+		this.usuario = new DtUsuario(nick, correo, nombre, apellido, fechaNac);
+		return esValido;
 	}
 	
 	@Override
-	public void seleccionarInstituto(String instituto) {
-		//hago un seteo en la clase Docente
-		
+	public void seleccionarInstituto(Instituto instituto) {//arreglado??
+		Usuario user = new Usuario(usuario.getNick(), usuario.getCorreo(), usuario.getNombre(), usuario.getApellido(), usuario.getFechaNac());
+		if (user instanceof Docente) {
+			((Docente) user).setInstituto(instituto);
+		}
 	}
 	
 	@Override
 	public Boolean modificarAltaUsuario(String nuevoNick, String nuevoCorreo) {
-		//hago un set en la clase Usuario
-		//me fijo si la modificacion es valida
-		return null;
+		this.usuario.setNick(nuevoNick);
+		this.usuario.setCorreo(nuevoCorreo);
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		Boolean esValido = true;
+		for (Usuario u: mU.getUsuarios()) {
+			if ((u.getNick() == nuevoNick) || (u.getCorreo() == nuevoCorreo)) {
+				esValido = false;
+			}
+		}
+		return esValido;
 	}
 	
 	@Override
 	public void cancelarAltaUsuario() {
-		// TODO Auto-generated method stub
-		
+		//nose
 	}
 	
 	@Override
 	public void confirmarAltaUsuario() {
-		//crea la instancia
-		//cre el link
-		
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		Usuario user = new Usuario(usuario.getNick(), usuario.getCorreo(), usuario.getNombre(), usuario.getApellido(), usuario.getFechaNac());
+		mU.agregarUsuario(user);
 	}
 	
 	public DtUsuario getUsuario() {
@@ -53,11 +67,11 @@ public class ControladorAltaUsuario implements IControladorAltaUsuario {
 		this.usuario = usuario;
 	}
 	
-	public String getInstituto() {
+	public Instituto getInstituto() {
 		return instituto;
 	}
 	
-	public void setInstituto(String instituto) {
+	public void setInstituto(Instituto instituto) {
 		this.instituto = instituto;
 	}
 	

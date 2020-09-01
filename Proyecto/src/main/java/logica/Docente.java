@@ -8,8 +8,7 @@ public class Docente extends Usuario {
 	private Instituto instituto;//visibilidad
 	private ArrayList<DtEdicion> ediciones;//visibilidad
 	
-	public Docente(String nick, String nombre, String apellido, String correo, DtFecha fechaNac, Instituto instituto,
-			ArrayList<DtEdicion> ediciones) {
+	public Docente(String nick, String nombre, String apellido, String correo, DtFecha fechaNac, Instituto instituto, ArrayList<DtEdicion> ediciones) {
 		super(nick, nombre, apellido, correo, fechaNac);
 		this.instituto = instituto;
 		this.ediciones = ediciones;

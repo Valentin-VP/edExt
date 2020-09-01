@@ -64,8 +64,9 @@ public class Usuario {
 		this.fechaNac = fechaNac;
 	}
 	
-	public DtUsuario getDtUsuario(String usuario) {//correo necesario?
-		//devuelve un DtUsuario con la informacion de "usuario" 
+	public DtUsuario getDtUsuario() {
+		DtUsuario dtUsuario = new DtUsuario(this.nick, this.correo, this.nombre, this.apellido, this.fechaNac);
+		return dtUsuario;
 	}
 	
 }
