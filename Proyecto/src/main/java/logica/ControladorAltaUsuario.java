@@ -21,7 +21,7 @@ public class ControladorAltaUsuario implements IControladorAltaUsuario {
 	
 	@Override
 	public void seleccionarInstituto(String instituto) {
-		//hago un set en la clase Docente(falta)
+		//hago un seteo en la clase Docente
 		
 	}
 	
