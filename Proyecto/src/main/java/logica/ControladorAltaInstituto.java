@@ -13,14 +13,13 @@ public class ControladorAltaInstituto implements IControladorAltaInstituto{
 	}
 	
 	public boolean darAltaInstituto(String nombre){
-		ManejadorInstituto mI = null;//mI.getInstancia();no me deja inicializar asi la clase
+		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 		this.nombre = nombre;
 		return mI.exists(nombre);
 	}
 	
 	public boolean iNuevoNombre(String nombre) {
-		ManejadorInstituto mI = mI.getInstancia();
-		//ManejadorInstituto mI = null;// mI.getInstancia();no me deja inicializar asi la clase
+		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 		if(mI.exists(nombre)) {
 			this.nombre = nombre;
 		}
@@ -28,7 +27,7 @@ public class ControladorAltaInstituto implements IControladorAltaInstituto{
 	}
 	
 	public void confirmar() {
-		ManejadorInstituto mI = null;// mI.getInstancia();no me deja inicializar asi la clase
+		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 		mI.agregarInstituto(this.nombre);
 	}
 	

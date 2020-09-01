@@ -4,13 +4,13 @@ import java.util.Map;
 import logica.Instituto;
 
 public class ManejadorInstituto {
-	private ManejadorInstituto instancia;
+	private static ManejadorInstituto instancia;
 	private Map<String,Instituto> institutos;
 	
 	public ManejadorInstituto() {}
 	
-	public ManejadorInstituto getInstancia() {
-		if(this.instancia == null)
+	public static ManejadorInstituto getInstancia() {
+		if(instancia == null)
 			instancia = new ManejadorInstituto();
 		return instancia;
 	}
