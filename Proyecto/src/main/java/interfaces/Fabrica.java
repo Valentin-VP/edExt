@@ -9,7 +9,7 @@ import logica.ControladorModificarDatosUsuario;
 public class Fabrica {
 	private static Fabrica instancia = null;
 
-	public Fabrica() {
+	private Fabrica() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -25,23 +25,23 @@ public class Fabrica {
 		return new ControladorAltaCurso();
 	}
 	
-	public IControladorAltaEdicionCurso ControladorAltaEdicionCurso() {
+	public IControladorAltaEdicionCurso getIControladorAltaEdicionCurso() {
 		return new ControladorAltaEdicionCurso();
 	}
 	
-	public IControladorAltaInstituto ControladorAltaInstituto() {
+	public IControladorAltaInstituto getIControladorAltaInstituto() {
 		return new ControladorAltaInstituto();
 	}
 	
-	public IControladorAltaUsuario ControladorAltaUsuario() {
+	public IControladorAltaUsuario getIControladorAltaUsuario() {
 		return new ControladorAltaUsuario();
 	}
 	
-	public IControladorConsultaEdicionCurso ControladorConsultaEdicionCurso() {
+	public IControladorConsultaEdicionCurso getIControladorConsultaEdicionCurso() {
 		return new ControladorConsultaEdicionCurso();
 	}
 	
-	public IControladorModificarDatosUsuario ControladorModificarDatosUsuario() {
+	public IControladorModificarDatosUsuario getIControladorModificarDatosUsuario() {
 		return new ControladorModificarDatosUsuario();
 	}
 }

@@ -7,11 +7,27 @@ import javax.swing.JButton;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JTextField;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import java.awt.Color;
+import java.awt.Dimension;
 
+import javax.swing.border.TitledBorder;
+
+import interfaces.Fabrica;
+import interfaces.IControladorAltaInstituto;
+
+import javax.swing.JOptionPane;
+
+@SuppressWarnings("unused")
 public class Principal {
-
+	
 	private JFrame frame;
-
+	private AgregarInstituto agregarInstitutoInternalFrame;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -33,6 +49,20 @@ public class Principal {
 	 */
 	public Principal() {
 		initialize();
+		
+		Fabrica fabrica = Fabrica.getInstancia();
+
+		//Dimension desktopSize = frame.getMaximumSize(); esto y lo de abajo es para dejar el internal frame en el medio
+		//Dimension jInternalFrameSize;
+		
+		agregarInstitutoInternalFrame = new AgregarInstituto(fabrica.getIControladorAltaInstituto());
+		agregarInstitutoInternalFrame.setLocation(188, 105);
+		//agregarInstitutoInternalFrame.setLocation(170, 103);
+		//jInternalFrameSize = agregarInstitutoInternalFrame.getSize();
+		//agregarInstitutoInternalFrame.setLocation((desktopSize.width - jInternalFrameSize.width)/2,
+		//(desktopSize.height - jInternalFrameSize.height)/2);
+		agregarInstitutoInternalFrame.setVisible(false);
+		frame.getContentPane().add(agregarInstitutoInternalFrame);
 	}
 
 	/**
@@ -40,17 +70,22 @@ public class Principal {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
+		frame.setBounds(100, 100, 643, 478);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		JMenuBar menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
 		
-		JMenu mnAlltas = new JMenu("Alltas");
+		JMenu mnAlltas = new JMenu("Altas");
 		menuBar.add(mnAlltas);
 		
 		JMenuItem mntmNewMenuItem = new JMenuItem("Instituto");
+		mntmNewMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {//mostrar internal frame para el nombre del instituto
+				agregarInstitutoInternalFrame.setVisible(true);
+			}
+		});
 		mnAlltas.add(mntmNewMenuItem);
 		
 		JMenuItem mntmCurso = new JMenuItem("Curso");
@@ -59,4 +94,6 @@ public class Principal {
 		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Usuario");
 		mnAlltas.add(mntmNewMenuItem_1);
 	}
+	
+	
 }
