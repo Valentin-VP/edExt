@@ -3,6 +3,7 @@ package logica;
 import datatypes.DtTime;
 import datatypes.DtFecha;
 import datatypes.DtCurso;
+import datatypes.DtEdicion;
 import datatypes.DtEdicionBase;
 import java.util.*;
 
@@ -100,7 +101,20 @@ public class Curso {
 	public ArrayList<DtEdicionBase> getEdiciones() {
 		return ediciones;
 	}
-
+	
+	// Para obtener la edicion vigente del curso -- Mauri
+	public DtEdicionBase getEdicionVigente() {
+		DtEdicionBase dteb=null;
+			for(int i=0;i < ediciones.size();i++) {
+				if(dteb instanceof DtEdicion) {
+					if ( ((DtEdicion) ediciones.get(i)).getFechaPub().getAnio() == 2020 ) {
+						return dteb;
+					}
+				}
+			}
+		return dteb;
+	}
+	
 	public void setEdiciones(ArrayList<DtEdicionBase> ediciones) {
 		this.ediciones = ediciones;
 	}
