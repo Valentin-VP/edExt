@@ -1,12 +1,11 @@
 package logica;
 
-import java.util.Map;
-import logica.Instituto;
+import java.util.HashMap;
 
 
 public class ManejadorInstituto {
     private static ManejadorInstituto instancia;
-    private Map<String,Instituto> institutos;
+    private HashMap<String,Instituto> institutos = new HashMap<>();
 
     public ManejadorInstituto() {}
 
@@ -17,28 +16,27 @@ public class ManejadorInstituto {
     }
 
     public boolean exists(String nombre) {
-        return true;
-        //if(institutos.containsKey(nombre)) {
-        //    return false;
-        //}else { 
-        //    return true;
-        //}
+        if(institutos.containsKey(nombre)) {
+            return true;
+        }else { 
+           return false;
+        }
     }
 
     public void agregarInstituto(String nombre) {
         Instituto i = new Instituto(nombre);
-        institutos.put(nombre, i);
+        institutos.put(i.getNombre(), i);
     }
 //desde aca es mio
     public Instituto find(String instituto) {
         return this.institutos.get(instituto);
     }
 
-    public Map<String, Instituto> getInstitutos() {
+    public HashMap<String, Instituto> getInstitutos() {
         return institutos;
     }
 
-    public void setInstitutos(Map<String, Instituto> institutos) {
+    public void setInstitutos(HashMap<String, Instituto> institutos) {
         this.institutos = institutos;
     }
 

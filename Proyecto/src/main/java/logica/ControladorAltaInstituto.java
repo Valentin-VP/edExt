@@ -14,10 +14,8 @@ public class ControladorAltaInstituto implements IControladorAltaInstituto{
 	
 	public boolean darAltaInstituto(String nombre){//retorna true si el nick esta disponible en el sistema
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
-		if(!mI.exists(nombre)) {
-			this.nombre = nombre;
-		}
-		return mI.exists(nombre);
+		this.nombre = nombre;
+		return !mI.exists(nombre);
 	}
 	
 	/*public boolean iNuevoNombre(String nombre) {
