@@ -17,6 +17,15 @@ public class Docente extends Usuario {
 	public Docente(String nick, String nombre, String apellido, String correo, DtFecha fechaNac) {
 		super(nick, nombre, apellido, correo, fechaNac);
 	}
+	
+	public boolean find(DtEdicion edicion) {
+		for (DtEdicion e: ediciones) {
+			if (e.getNombre() == edicion.getNombre()) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	public Instituto getInstituto() {
 		return instituto;

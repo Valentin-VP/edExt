@@ -57,58 +57,77 @@ public class AgregarEdicionCurso extends JInternalFrame {
 		getContentPane().setLayout(null);
 		
 		JLabel lblCurso = new JLabel("Curso");
+		lblCurso.setBounds(35, 24, 70, 15);
 		
 		nombreCurso = new JTextField();
+		nombreCurso.setBounds(105, 22, 277, 19);
 		nombreCurso.setFont(new Font("Dialog", Font.PLAIN, 14));
 		nombreCurso.setColumns(10);
 		
 		JLabel lblfechainicio = new JLabel("Fecha de Inicio");
+		lblfechainicio.setBounds(12, 88, 123, 15);
 		
 		JComboBox<String> fiDia = new JComboBox<String>();
+		fiDia.setBounds(161, 83, 48, 24);
 		fiDia.setModel(new DefaultComboBoxModel<String>(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"}));
 		fiDia.setMaximumRowCount(31);
 		
 		JComboBox<String> fiMes = new JComboBox<String>();
+		fiMes.setBounds(245, 83, 48, 24);
 		fiMes.setModel(new DefaultComboBoxModel<String>(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"}));
 		fiMes.setMaximumRowCount(12);
 		
 		JComboBox<String> fiAnio = new JComboBox<String>();
+		fiAnio.setBounds(329, 83, 70, 24);
 		fiAnio.setModel(new DefaultComboBoxModel<String>(new String[] {"2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023"}));
 		fiAnio.setMaximumRowCount(20);
 		
 		JLabel lblDia = new JLabel("dia");
+		lblDia.setBounds(169, 56, 40, 15);
 		
 		JLabel lblMes = new JLabel("mes");
+		lblMes.setBounds(245, 56, 70, 15);
 		
-		JLabel lblAno = new JLabel("año");
+		JLabel lblAno = new JLabel("anio");
+		lblAno.setBounds(329, 56, 70, 15);
 		
 		JLabel lblFechaDeFin = new JLabel("Fecha de fin");
+		lblFechaDeFin.setBounds(12, 149, 123, 15);
 		
 		JLabel lblDia_2 = new JLabel("dia");
+		lblDia_2.setBounds(169, 119, 40, 15);
 		
 		JLabel lblMes_2 = new JLabel("mes");
+		lblMes_2.setBounds(245, 119, 70, 15);
 		
-		JLabel lblAno_2 = new JLabel("año");
+		JLabel lblAno_2 = new JLabel("anio");
+		lblAno_2.setBounds(329, 119, 70, 15);
 		
 		JComboBox<String> ffDia = new JComboBox<String>();
+		ffDia.setBounds(161, 146, 48, 24);
 		ffDia.setModel(new DefaultComboBoxModel<String>(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"}));
 		ffDia.setMaximumRowCount(31);
 		
 		JComboBox<String> ffMes = new JComboBox<String>();
+		ffMes.setBounds(245, 146, 48, 24);
 		ffMes.setModel(new DefaultComboBoxModel<String>(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"}));
 		ffMes.setMaximumRowCount(12);
 		
 		JComboBox<String> ffAnio = new JComboBox<String>();
+		ffAnio.setBounds(329, 146, 70, 24);
 		ffAnio.setModel(new DefaultComboBoxModel<String>(new String[] {"2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023"}));
 		ffAnio.setMaximumRowCount(20);
 		
 		JLabel lblNombre = new JLabel("Nombre"); 
+		lblNombre.setBounds(35, 192, 70, 15);
 		
 		nombreEdicion = new JTextField();
+		nombreEdicion.setBounds(119, 190, 270, 19);
 		nombreEdicion.setFont(new Font("Dialog", Font.PLAIN, 14));
 		nombreEdicion.setColumns(10);
 		
 		JRadioButton cuposBool = new JRadioButton("Cupos");
+		cuposBool.setBounds(37, 239, 87, 23);
 		cuposBool.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {//no me sale lo del boton y el texto
 				cuposBool.setSelected(false);
@@ -118,6 +137,7 @@ public class AgregarEdicionCurso extends JInternalFrame {
 		});
 		
 		cantCupos = new JTextField();
+		cantCupos.setBounds(161, 241, 61, 19);
 		cantCupos.setColumns(10);
 		
 		cuposBool.setSelected(true);
@@ -125,169 +145,64 @@ public class AgregarEdicionCurso extends JInternalFrame {
 		cuposBool.setHorizontalAlignment(SwingConstants.LEFT);
 		
 		JLabel lblCantCupos = new JLabel("Cant Cupos");
+		lblCantCupos.setBounds(152, 221, 129, 15);
 		
 		JLabel lblFechaDePub = new JLabel("Fecha de publicacion");
+		lblFechaDePub.setBounds(12, 307, 123, 15);
 		
 		JLabel lblDia_2_1 = new JLabel("dia");
+		lblDia_2_1.setBounds(169, 277, 40, 15);
 		
 		JComboBox<String> ffDia_1 = new JComboBox<String>();
+		ffDia_1.setBounds(161, 304, 48, 24);
 		ffDia_1.setModel(new DefaultComboBoxModel<String>(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"}));
 		ffDia_1.setMaximumRowCount(31);
 		
 		JComboBox<String> ffMes_1 = new JComboBox<String>();
+		ffMes_1.setBounds(245, 304, 48, 24);
 		ffMes_1.setModel(new DefaultComboBoxModel<String>(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"}));
 		ffMes_1.setMaximumRowCount(12);
 		
 		JLabel lblMes_2_1 = new JLabel("mes");
+		lblMes_2_1.setBounds(245, 277, 70, 15);
 		
-		JLabel lblAno_2_1 = new JLabel("año");
+		JLabel lblAno_2_1 = new JLabel("anio");
+		lblAno_2_1.setBounds(329, 277, 70, 15);
 		
 		JComboBox<String> ffAnio_1 = new JComboBox<String>();
+		ffAnio_1.setBounds(329, 304, 70, 24);
 		ffAnio_1.setModel(new DefaultComboBoxModel<String>(new String[] {"2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023"}));
 		ffAnio_1.setMaximumRowCount(20);
 		
-		
-		GroupLayout groupLayout = new GroupLayout(getContentPane());
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(35)
-							.addComponent(lblCurso, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE)
-							.addComponent(nombreCurso, GroupLayout.PREFERRED_SIZE, 277, GroupLayout.PREFERRED_SIZE))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(169)
-							.addComponent(lblDia, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-							.addGap(36)
-							.addComponent(lblMes, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE)
-							.addGap(14)
-							.addComponent(lblAno, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(12)
-							.addComponent(lblfechainicio, GroupLayout.PREFERRED_SIZE, 123, GroupLayout.PREFERRED_SIZE)
-							.addGap(26)
-							.addComponent(fiDia, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
-							.addGap(36)
-							.addComponent(fiMes, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
-							.addGap(36)
-							.addComponent(fiAnio, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(169)
-							.addComponent(lblDia_2, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-							.addGap(36)
-							.addComponent(lblMes_2, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE)
-							.addGap(14)
-							.addComponent(lblAno_2, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(12)
-							.addComponent(lblFechaDeFin, GroupLayout.PREFERRED_SIZE, 123, GroupLayout.PREFERRED_SIZE)
-							.addGap(26)
-							.addComponent(ffDia, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
-							.addGap(36)
-							.addComponent(ffMes, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
-							.addGap(36)
-							.addComponent(ffAnio, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(35)
-							.addComponent(lblNombre, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE)
-							.addGap(14)
-							.addComponent(nombreEdicion, GroupLayout.PREFERRED_SIZE, 270, GroupLayout.PREFERRED_SIZE))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(152)
-							.addComponent(lblCantCupos, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(37)
-							.addComponent(cuposBool, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)
-							.addGap(37)
-							.addComponent(cantCupos, GroupLayout.PREFERRED_SIZE, 61, GroupLayout.PREFERRED_SIZE))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(169)
-							.addComponent(lblDia_2_1, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-							.addGap(36)
-							.addComponent(lblMes_2_1, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE)
-							.addGap(14)
-							.addComponent(lblAno_2_1, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(12)
-							.addComponent(lblFechaDePub, GroupLayout.PREFERRED_SIZE, 123, GroupLayout.PREFERRED_SIZE)
-							.addGap(26)
-							.addComponent(ffDia_1, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
-							.addGap(36)
-							.addComponent(ffMes_1, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
-							.addGap(36)
-							.addComponent(ffAnio_1, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(102, Short.MAX_VALUE))
-				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-					.addContainerGap(231, Short.MAX_VALUE)
-					.addGap(22))
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(22)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(2)
-							.addComponent(lblCurso))
-						.addComponent(nombreCurso, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE))
-					.addGap(15)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblDia)
-						.addComponent(lblMes)
-						.addComponent(lblAno))
-					.addGap(12)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(5)
-							.addComponent(lblfechainicio))
-						.addComponent(fiDia, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(fiMes, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(fiAnio, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(12)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblDia_2)
-						.addComponent(lblMes_2)
-						.addComponent(lblAno_2))
-					.addGap(12)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(3)
-							.addComponent(lblFechaDeFin))
-						.addComponent(ffDia, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(ffMes, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(ffAnio, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(20)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(2)
-							.addComponent(lblNombre))
-						.addComponent(nombreEdicion, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE))
-					.addGap(12)
-					.addComponent(lblCantCupos)
-					.addGap(3)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(cuposBool)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(2)
-							.addComponent(cantCupos, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-					.addGap(15)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblDia_2_1)
-						.addComponent(lblMes_2_1)
-						.addComponent(lblAno_2_1))
-					.addGap(12)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(3)
-							.addComponent(lblFechaDePub))
-						.addComponent(ffDia_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(ffMes_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(ffAnio_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(18)
-					.addContainerGap(29, Short.MAX_VALUE))
-		);
-		getContentPane().setLayout(groupLayout);
+		getContentPane().setLayout(null);
+		getContentPane().add(lblCurso);
+		getContentPane().add(nombreCurso);
+		getContentPane().add(lblDia);
+		getContentPane().add(lblMes);
+		getContentPane().add(lblAno);
+		getContentPane().add(lblfechainicio);
+		getContentPane().add(fiDia);
+		getContentPane().add(fiMes);
+		getContentPane().add(fiAnio);
+		getContentPane().add(lblDia_2);
+		getContentPane().add(lblMes_2);
+		getContentPane().add(lblAno_2);
+		getContentPane().add(lblFechaDeFin);
+		getContentPane().add(ffDia);
+		getContentPane().add(ffMes);
+		getContentPane().add(ffAnio);
+		getContentPane().add(lblNombre);
+		getContentPane().add(nombreEdicion);
+		getContentPane().add(lblCantCupos);
+		getContentPane().add(cuposBool);
+		getContentPane().add(cantCupos);
+		getContentPane().add(lblDia_2_1);
+		getContentPane().add(lblMes_2_1);
+		getContentPane().add(lblAno_2_1);
+		getContentPane().add(lblFechaDePub);
+		getContentPane().add(ffDia_1);
+		getContentPane().add(ffMes_1);
+		getContentPane().add(ffAnio_1);
 
 	}
 }

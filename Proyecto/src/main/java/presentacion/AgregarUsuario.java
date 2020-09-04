@@ -19,6 +19,10 @@ import excepciones.UsuarioRepetido;
 
 import datatypes.DtFecha;
 import javax.swing.JButton;
+//import javax.swing.JSpinner;
+//import javax.swing.SpinnerNumberModel;
+//import java.awt.Choice;
+//import javax.swing.JPasswordField;
 
 public class AgregarUsuario extends JInternalFrame {
 	
@@ -29,7 +33,7 @@ public class AgregarUsuario extends JInternalFrame {
 	private JTextField textFieldCorreo;
 	private JTextField textFieldNombre;
 	private JTextField textFieldApellido;
-	private JComboBox<String> diaNac;
+	private JComboBox<Integer> diaNac;
 	private JComboBox<String> mesNac;
 	private JComboBox<String> anioNac;
 
@@ -85,11 +89,11 @@ public class AgregarUsuario extends JInternalFrame {
 		lblFechanac.setBounds(58, 288, 82, 15);
 		getContentPane().add(lblFechanac);
 		
-		JComboBox<String> diaNac = new JComboBox<String>();
-		diaNac.setMaximumRowCount(31);
+		JComboBox<Integer> diaNac = new JComboBox<Integer>();
+		diaNac.setMaximumRowCount(2);
 		diaNac.setBounds(170, 283, 54, 24);
-		diaNac.setModel(new DefaultComboBoxModel<String>(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"}));
-		diaNac.setSelectedIndex(0);
+		diaNac.setModel(new DefaultComboBoxModel<Integer>(new Integer[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31}));
+		//diaNac.setSelectedIndex(0);
 		getContentPane().add(diaNac);
 		
 		JComboBox<String> mesNac = new JComboBox<String>();
@@ -110,13 +114,13 @@ public class AgregarUsuario extends JInternalFrame {
 		lblDia.setBounds(170, 256, 44, 15);
 		getContentPane().add(lblDia);
 		
-		JLabel NickUsuario_1_1 = new JLabel("mes");
-		NickUsuario_1_1.setBounds(254, 256, 44, 15);
-		getContentPane().add(NickUsuario_1_1);
+		JLabel lblMes = new JLabel("mes");
+		lblMes.setBounds(254, 256, 44, 15);
+		getContentPane().add(lblMes);
 		
-		JLabel NickUsuario_1_1_1 = new JLabel("anio");
-		NickUsuario_1_1_1.setBounds(339, 256, 44, 15);
-		getContentPane().add(NickUsuario_1_1_1);
+		JLabel lblAnio = new JLabel("anio");
+		lblAnio.setBounds(339, 256, 44, 15);
+		getContentPane().add(lblAnio);
 		
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
@@ -148,7 +152,7 @@ public class AgregarUsuario extends JInternalFrame {
 		String correo = this.textFieldCorreo.getText();
 		String nombre = this.textFieldNombre.getText();
 		String apellido = this.textFieldApellido.getText();
-		Integer dia = (Integer) this.diaNac.getSelectedItem();//tengo error en esta linea y no se que es
+		Integer dia = (Integer) this.diaNac.getSelectedItem();
 		Integer mes = (Integer) this.mesNac.getSelectedItem();
 		Integer anio = (Integer) this.anioNac.getSelectedItem();
 		DtFecha fechaNac = new DtFecha(dia, mes, anio);
@@ -162,7 +166,7 @@ public class AgregarUsuario extends JInternalFrame {
 				JOptionPane.showConfirmDialog(this, e.getMessage(), "Agregar Usuario", JOptionPane.ERROR_MESSAGE);
 			}
 			limpiar();
-			setVisible(false);
+			//setVisible(false);
 		}
 	}	
 
@@ -191,5 +195,4 @@ public class AgregarUsuario extends JInternalFrame {
 		this.mesNac.setSelectedItem(1);
 		this.anioNac.setSelectedItem(1992);
 	}
-
 }

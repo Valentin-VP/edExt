@@ -13,8 +13,8 @@ import interfaces.IControladorAltaEdicionCurso;
 public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso {
 	private String instituto;
 	private String curso;
-	private boolean tieneCupos;
-	private Integer cupos;
+	private boolean tieneCupos;//no lo uso
+	private Integer cupos;//no lo uso
 	private DtEdicion edicion;
 	
 	@Override
@@ -27,6 +27,7 @@ public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso
 	
 	@Override
 	public void altaEdicionCurso(String curso, String nombre, DtFecha fechaI, DtFecha fechaF, ArrayList<String> docentes, boolean tieneCupos, Integer cupos, DtFecha fechaPub) throws EdicionRepetida, CursoNoExiste {
+		//si tieneCupos es false, seteo cupos en 0
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 		Instituto i = mI.find(this.instituto);
 		this.curso = curso;
@@ -40,18 +41,26 @@ public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso
 				throw new CursoNoExiste("El curso" + curso + " no esta en este instituto");
 			}
 		}
-		for (DtEdicionBase e: c.getEdiciones()) {
+		for (DtEdicionBase e: c.getEdiciones()) {//revisar
 			if (e.getNombre() == nombre) {
 				throw new EdicionRepetida("La edicion " + nombre + " ya se encuentra integrada al curso");
 			}
 		}
 		edicion = new DtEdicion(nombre, fechaI, fechaF, tieneCupos, cupos, fechaPub);
-		ManejadorEdicion mE = ManejadorEdicion.getInstancia();
-		Edicion ed = new Edicion(nombre, fechaI, fechaF, tieneCupos, cupos, fechaPub);
-		mE.getEdiciones().add(ed);
 		DtEdicionBase eBase = new DtEdicionBase(nombre);
 		c.getEdiciones().add(eBase);
-		//la coleccion de docentes... es un viaje
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		for (Usuario u: mU.getUsuarios()) {//creo que esta bien
+			if (u instanceof Docente) {
+				for (String nick: docentes) {
+					if (u.getNick() == nick) {
+						if (!((Docente) u).find(this.edicion)) {
+							((Docente) u).getEdiciones().add(edicion);
+						} else throw new EdicionRepetida("El docente " + nick + " ya dicta la edicion " + this.edicion.getNombre());
+					}
+				}
+			}
+		}
 	}
 
 	@Override
@@ -60,7 +69,9 @@ public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso
 			throw new EdicionSinCupos("La edicion " + edicion.getNombre() + " no tiene cupos");
 		}
 		edicion.setCupo(cupos);
-		//buscar edicion en coleccion global y cambiarla
+		ManejadorEdicion mE = ManejadorEdicion.getInstancia();
+		Edicion e = mE.find(this.edicion.getNombre());
+		e.setCupos(cupos);
 	}
 
 	/*@Override
@@ -92,8 +103,9 @@ public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso
 
 	@Override
 	public void confirmarAltaEdicion() {
-		//creo instancia
-		//creo link
+		ManejadorEdicion mE = ManejadorEdicion.getInstancia();
+		Edicion ed = new Edicion(edicion.getNombre(), edicion.getFechaI(), edicion.getFechaF(), edicion.isTieneCupos(), edicion.getCupo(), edicion.getFechaPub());
+		mE.getEdiciones().add(ed);
 	}
 
 }
