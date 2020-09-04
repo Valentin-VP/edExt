@@ -1,12 +1,13 @@
 package logica;
 
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 import datatypes.DtFecha;
 import datatypes.DtTime;
 
 public class ManejadorCurso {
 	private static ManejadorCurso instancia = null;
-	private Map<String, Curso> cursos;
+	private List<Curso> cursos = new ArrayList<>();
 	
 	public ManejadorCurso() {}
 	
@@ -17,26 +18,33 @@ public class ManejadorCurso {
 	}
 	
 	public boolean exists(String nombre) {
-		if(cursos.containsKey(nombre))
-			return true;
-		else 
-			return false;
+		for(Curso c: cursos) {
+			if(c.getNombre()==nombre) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
-	public void agregarCurso(String nombre, String descripcion, String duracion, DtTime cantHoras, Integer creditos, DtFecha fechaR, String URL) {
-		Curso c = new Curso(nombre, descripcion, duracion, cantHoras, creditos, fechaR, URL);
-		cursos.put(c.getNombre(), c);
+	public void agregarCurso(Curso curso) {
+		cursos.add(curso);
 	}
-//desde aca es mio
+//desde aca es mio  ***Completé este método como ejemplo de los find con List, pero podemos dejarlo como Map (rcastro)***
 	public Curso find(String curso) {
-		return this.cursos.get(curso);
+		Curso retorno = null;
+		for(Curso c: cursos) {
+			if(c.getNombre()==curso) {
+				retorno =c ;
+			}
+		}
+		return retorno;
 	}
 	
-	public Map<String, Curso> getCursos() {
+	public Map<String, Curso> getCursos() { // Modifiqué a List en vez de Map, revisar en equipo (rcastro)
 		return cursos;
 	}
 
-	public void setCursos(Map<String, Curso> cursos) {
+	public void setCursos(Map<String, Curso> cursos) { // Modifiqué a List en vez de Map, revisar en equipo (rcastro)
 		this.cursos = cursos;
 	}
 }

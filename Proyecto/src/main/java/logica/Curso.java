@@ -14,12 +14,12 @@ public class Curso {
 	private DtTime cantHoras;
 	private Integer creditos;
 	private DtFecha fechaR;
-	private String URL;
-	private ArrayList<DtCurso> previas;//visibilidad
+	private String url;
+	private ArrayList<String> previas;//visibilidad <-- Modifiqué a String en vez de Curso, verificar (rcastro)
 	private ArrayList<DtEdicionBase> ediciones;//visibilidad
 	
 	public Curso(String nombre, String descripcion, String duracion, DtTime cantHoras, Integer creditos, DtFecha fechaR,
-			String uRL) {
+			String url, List<String> list) {
 		super();
 		this.nombre = nombre;
 		this.descripcion = descripcion;
@@ -27,7 +27,7 @@ public class Curso {
 		this.cantHoras = cantHoras;
 		this.creditos = creditos;
 		this.fechaR = fechaR;
-		URL = uRL;
+		this.url = url;
 	}
 
 	public Curso() {
@@ -82,19 +82,20 @@ public class Curso {
 		this.fechaR = fechaR;
 	}
 
-	public String getURL() {
-		return URL;
+	public String getUrl() {
+		return url;
 	}
 
-	public void setURL(String uRL) {
-		URL = uRL;
+	public void setUrl(String url) {
+		this.url = url;
 	}
 
-	public ArrayList<DtCurso> getPrevias() {
+	public ArrayList<String> getPrevias() {
+		//Controlar en llamado si tiene elementos
 		return previas;
 	}
 
-	public void setPrevias(ArrayList<DtCurso> previas) {
+	public void setPrevias(ArrayList<String> previas) {
 		this.previas = previas;
 	}
 

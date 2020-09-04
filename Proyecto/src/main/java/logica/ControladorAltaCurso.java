@@ -1,6 +1,11 @@
 package logica;
 
 import interfaces.IControladorAltaCurso;
+import excepciones.CursoRepetido;
+import excepciones.InstitutoInexistente;
+
+import java.util.List;
+
 import datatypes.DtCurso;
 import datatypes.DtTime;
 import datatypes.DtFecha;
@@ -14,6 +19,13 @@ public class ControladorAltaCurso implements IControladorAltaCurso{
 	private DtTime cantHoras;
 	private int creditos;
 	private DtFecha fechaR;
+	private String url;
+	private List<String> previas;
+	
+	public ControladorAltaCurso() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 	
 	public ControladorAltaCurso(DtCurso curso, String instituto, String nombre, String descripcion, String duracion,
 			DtTime cantHoras, int creditos, DtFecha fechaR) {
@@ -75,21 +87,27 @@ public class ControladorAltaCurso implements IControladorAltaCurso{
 	public void setFechaR(DtFecha fechaR) {
 		this.fechaR = fechaR;
 	}
-	@Override
-	public boolean altaCurso(String instituto, String nombre, String descripcion, String duracion, DtTime cantHoras,
-			int creditos, String url, DtFecha fechaR) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	public ControladorAltaCurso() {
-		super();
-		// TODO Auto-generated constructor stub
+	
+	public List<String> getPrevias() {
+		return previas;
 	}
 	@Override
-	public void setPrevias(String previas) {
-		// TODO Auto-generated method stub
-		
+	public void setPrevias(List<String> previas) {
+		this.previas=previas;
 	}
+	
+	public String getUrl() {
+		return url;
+	}
+	
+	public void setUrl(String url) {
+		this.url = url;
+	}
+	
+	public void agregarPrevias(String previa) {
+		this.previas.add(previa);
+	}
+	
 	@Override
 	public boolean modificarAltacurso(String nombre) {
 		// TODO Auto-generated method stub
@@ -97,12 +115,46 @@ public class ControladorAltaCurso implements IControladorAltaCurso{
 	}
 	@Override
 	public void confirmarAltaCurso() {
-		// TODO Auto-generated method stub
+		ManejadorCurso mC = ManejadorCurso.getInstancia();
+		Curso curso = new Curso(getNombre(), getDescripcion(), getDuracion(), getCantHoras(), getCreditos(), getFechaR(), getUrl(), getPrevias());
+		mC.agregarCurso(curso);
 		
 	}
 	@Override
+	// Quiero revisar si amerita algo así y cómo lo implementamos bien
 	public void cancelarAltaCurso() {
-		// TODO Auto-generated method stub
-		
+		setInstituto(null);
+		setNombre(null);
+		setDescripcion(null);
+		setDuracion(null);
+		setCantHoras(null);
+		setCreditos(0);
+		setUrl(null);
+		setFechaR(null);
 	}
+	
+	
+	@Override
+	public void altaCurso(String instituto, String nombre, String descripcion, String duracion, DtTime cantHoras, int creditos, String url, DtFecha fechaR) throws CursoRepetido, InstitutoInexistente {
+		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
+		if(!mI.exists(instituto)) {
+			throw new InstitutoInexistente("No existe el Instituto seleccionado.");
+		}
+		ManejadorCurso mC = ManejadorCurso.getInstancia();
+		if(mC.exists(nombre)) {
+			throw new CursoRepetido("Ya existe un Curso con ese nombre en el Instituto seleccionado.");
+		}
+		// Se superan controles de operacion, es seguro guardar variables
+		setInstituto(instituto);
+		setNombre(nombre);
+		setDescripcion(descripcion);
+		setDuracion(duracion);
+		setCantHoras(cantHoras);
+		setCreditos(creditos);
+		setUrl(url);
+		setFechaR(fechaR);
+
+	}
+	
+	
 }

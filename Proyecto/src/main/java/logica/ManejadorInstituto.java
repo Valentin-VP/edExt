@@ -1,11 +1,12 @@
 package logica;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class ManejadorInstituto {
     private static ManejadorInstituto instancia;
-    private HashMap<String,Instituto> institutos = new HashMap<>();
+    private List<Instituto> institutos = new ArrayList<>();
 
     public ManejadorInstituto() {}
 
@@ -16,11 +17,12 @@ public class ManejadorInstituto {
     }
 
     public boolean exists(String nombre) {
-        if(institutos.containsKey(nombre)) {
-            return true;
-        }else { 
-           return false;
-        }
+    	for(Instituto i: institutos) {
+    		if(i.getNombre()==nombre) {
+    			return true;
+    		}
+    	}
+    	return false;
     }
 
     public void agregarInstituto(String nombre) {
