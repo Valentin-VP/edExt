@@ -11,21 +11,13 @@ public class DtEdicion extends DtEdicionBase {
 		super();
 	}
 	
-	public DtEdicion(String nombre, DtFecha fechaI, DtFecha fechaF, Integer cupo,DtFecha fechaPub, boolean tieneCupos) {
+	public DtEdicion(String nombre, DtFecha fechaI, DtFecha fechaF, boolean tieneCupos, Integer cupo,DtFecha fechaPub) {
 		super(nombre);
 		this.fechaI = fechaI;
 		this.fechaF = fechaF;
 		this.tieneCupos = tieneCupos;
 		this.cupo = cupo;
 		this.fechaPub = fechaPub;
-	}
-
-	public boolean isTieneCupos() {
-		return tieneCupos;
-	}
-
-	public void setTieneCupos(boolean tieneCupos) {
-		this.tieneCupos = tieneCupos;
 	}
 
 	public DtFecha getFechaI() {
@@ -43,9 +35,17 @@ public class DtEdicion extends DtEdicionBase {
 	public void setFechaF(DtFecha fechaF) {
 		this.fechaF = fechaF;
 	}
+	
+	public boolean isTieneCupos() {
+		return tieneCupos;
+	}
 
+	public void setTieneCupos(boolean tieneCupos) {
+		this.tieneCupos = tieneCupos;
+	}
+	
 	public Integer getCupo() {
-		return cupo;
+			return cupo;	
 	}
 
 	public void setCupo(Integer cupo) {
@@ -59,5 +59,5 @@ public class DtEdicion extends DtEdicionBase {
 	public void setFechaPub(DtFecha fechaPub) {
 		this.fechaPub = fechaPub;
 	}
-	
+
 }

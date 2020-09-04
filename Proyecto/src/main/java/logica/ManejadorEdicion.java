@@ -3,9 +3,10 @@ package logica;
 import java.util.*;
 import datatypes.DtFecha;
 
+
 public class ManejadorEdicion {
 	private static ManejadorEdicion instancia = null;
-	private Map<String, Edicion> ediciones;
+    private List<Edicion> ediciones = new ArrayList<>();
 	
 	public ManejadorEdicion() {}
 	
@@ -16,26 +17,33 @@ public class ManejadorEdicion {
 	}
 	
 	public boolean exists(String nombre) {
-		if(ediciones.containsKey(nombre))
-			return true;
-		else 
-			return false;
+		for (Edicion e: ediciones) {
+			if (e.getNombre() == nombre) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
-	public void agregarEdicion(String nombre, DtFecha fechaI, DtFecha fechaF, Integer cupos, DtFecha fechaPub, boolean tieneCupos) {
-		Edicion e = new Edicion(nombre, fechaI, fechaF, cupos, fechaPub, tieneCupos);
-		ediciones.put(e.getNombre(), e);
+	public void agregarEdicion(String nombre, DtFecha fechaI, DtFecha fechaF, boolean tieneCupos, Integer cupos, DtFecha fechaPub) {
+		Edicion e = new Edicion(nombre, fechaI, fechaF,  tieneCupos, cupos, fechaPub);
+		ediciones.add(e);
 	}
-//desde aca es mio
+
 	public Edicion find(String edicion) {
-		return this.ediciones.get(edicion);
+		for (Edicion e: ediciones) {
+			if (e.getNombre() == edicion) {
+				return e;
+			}
+		}
+		return null;
 	}
 	
-	public Map<String, Edicion> getEdiciones() {
+	public List<Edicion> getEdiciones() {
 		return ediciones;
 	}
 
-	public void setEdiciones(Map<String, Edicion> ediciones) {
+	public void setEdiciones(List<Edicion> ediciones) {
 		this.ediciones = ediciones;
 	}
 }

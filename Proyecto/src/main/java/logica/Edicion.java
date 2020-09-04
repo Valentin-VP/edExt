@@ -11,7 +11,7 @@ public class Edicion {
 	private Integer cupos;
 	private DtFecha fechaPub;
 	
-	public Edicion(String nombre, DtFecha fechaI, DtFecha fechaF, Integer cupos, DtFecha fechaPub, boolean tieneCupos) {
+	public Edicion(String nombre, DtFecha fechaI, DtFecha fechaF, boolean tieneCupos, Integer cupos, DtFecha fechaPub) {
 		super();
 		this.nombre = nombre;
 		this.fechaI = fechaI;
@@ -19,14 +19,6 @@ public class Edicion {
 		this.tieneCupos = tieneCupos;
 		this.cupos = cupos;
 		this.fechaPub = fechaPub;
-	}
-
-	public boolean isTieneCupos() {
-		return tieneCupos;
-	}
-
-	public void setTieneCupos(boolean tieneCupos) {
-		this.tieneCupos = tieneCupos;
 	}
 
 	public String getNombre() {
@@ -70,8 +62,16 @@ public class Edicion {
 	}
 	
 	public DtEdicion getDtEdicion() {
-		DtEdicion edicion = new DtEdicion(this.nombre, this.fechaI, this.fechaF, this.cupos, this.fechaPub, this.tieneCupos);
+		DtEdicion edicion = new DtEdicion(this.nombre, this.fechaI, this.fechaF, this.tieneCupos, this.cupos, this.fechaPub);
 		return edicion;
+	}
+
+	public boolean isTieneCupos() {
+		return tieneCupos;
+	}
+
+	public void setTieneCupos(boolean tieneCupos) {
+		this.tieneCupos = tieneCupos;
 	}
 	
 }

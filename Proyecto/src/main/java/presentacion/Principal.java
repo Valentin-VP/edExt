@@ -60,9 +60,9 @@ public class Principal {
 		agregarInstitutoInternalFrame.setLocation(188, 105);
 		frame.getContentPane().add(agregarInstitutoInternalFrame);
 		
-		agregarEdicionCursoInternalFrame = new AgregarEdicionCurso(fabrica.getIControladorAltaEdicionCurso());
+		/*agregarEdicionCursoInternalFrame = new AgregarEdicionCurso(fabrica.getIControladorAltaEdicionCurso());
 		agregarEdicionCursoInternalFrame.setLocation(188, 105);
-		frame.getContentPane().add(agregarEdicionCursoInternalFrame);
+		frame.getContentPane().add(agregarEdicionCursoInternalFrame);*/
 		
 		agregarUsuarioInternalFrame = new AgregarUsuario(fabrica.getIControladorAltaUsuario());
 		agregarUsuarioInternalFrame.setLocation(188, 105);
@@ -93,6 +93,11 @@ public class Principal {
 		mnAlltas.add(mntmCurso);
 		
 		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Usuario");
+		mntmNewMenuItem_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				agregarUsuarioInternalFrame.setVisible(true);
+			}
+		});
 		mnAlltas.add(mntmNewMenuItem_1);
 		
 		JMenu mnInformacin = new JMenu("Informaci\u00F3n");

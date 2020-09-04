@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import datatypes.DtEdicion;
 import excepciones.EdicionRepetida;
 import excepciones.EdicionSinCupos;
+import excepciones.CursoNoExiste;
 import datatypes.DtEdicionBase;
 import datatypes.DtCursoBase;
 import datatypes.DtFecha;
@@ -12,6 +13,7 @@ import interfaces.IControladorAltaEdicionCurso;
 public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso {
 	private String instituto;
 	private String curso;
+	private boolean tieneCupos;
 	private Integer cupos;
 	private DtEdicion edicion;
 	
@@ -19,28 +21,36 @@ public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso
 	public ArrayList<DtCursoBase> seleccionarInstituto(String instituto) {
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 		Instituto i = mI.find(instituto);
+		this.instituto = i.getNombre();
 		return i.getCursos();
 	}
-
+	
 	@Override
-	public void altaEdicionCurso(String curso, String nombre, DtFecha fechaI, DtFecha fechaF, ArrayList<String> docentes, Integer cupos, boolean tieneCupos, DtFecha fechaPub) throws EdicionRepetida {
+	public void altaEdicionCurso(String curso, String nombre, DtFecha fechaI, DtFecha fechaF, ArrayList<String> docentes, boolean tieneCupos, Integer cupos, DtFecha fechaPub) throws EdicionRepetida, CursoNoExiste {
+		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
+		Instituto i = mI.find(this.instituto);
 		this.curso = curso;
 		ManejadorCurso mC = ManejadorCurso.getInstancia();
 		Curso c = mC.find(curso);
 		if (c != null) {
-			//throw new agregar exception de rodri
+			throw new CursoNoExiste("El curso" + curso + " no esta en el sistema");
+		}
+		for (DtCursoBase dtC: i.getCursos()) {
+			if (dtC.getNombre() == curso) {
+				throw new CursoNoExiste("El curso" + curso + " no esta en este instituto");
+			}
 		}
 		for (DtEdicionBase e: c.getEdiciones()) {
 			if (e.getNombre() == nombre) {
 				throw new EdicionRepetida("La edicion " + nombre + " ya se encuentra integrada al curso");
 			}
 		}
-		edicion = new DtEdicion(nombre, fechaI, fechaF, cupos, fechaPub, tieneCupos);//creo el datatytpe
-		DtEdicionBase eBase = new DtEdicionBase(nombre);
-		c.getEdiciones().add(eBase);//agrego la edicion a las lista de ediciones del curso
+		edicion = new DtEdicion(nombre, fechaI, fechaF, tieneCupos, cupos, fechaPub);
 		ManejadorEdicion mE = ManejadorEdicion.getInstancia();
-		Edicion ed = new Edicion(nombre, fechaI, fechaF, cupos, fechaPub, tieneCupos);
-		mE.getEdiciones().put(nombre, ed);//agrego la edicion a la coleccion global de ediciones
+		Edicion ed = new Edicion(nombre, fechaI, fechaF, tieneCupos, cupos, fechaPub);
+		mE.getEdiciones().add(ed);
+		DtEdicionBase eBase = new DtEdicionBase(nombre);
+		c.getEdiciones().add(eBase);
 		//la coleccion de docentes... es un viaje
 	}
 
@@ -50,6 +60,7 @@ public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso
 			throw new EdicionSinCupos("La edicion " + edicion.getNombre() + " no tiene cupos");
 		}
 		edicion.setCupo(cupos);
+		//buscar edicion en coleccion global y cambiarla
 	}
 
 	/*@Override

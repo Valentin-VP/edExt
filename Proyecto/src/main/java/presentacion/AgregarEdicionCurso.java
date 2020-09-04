@@ -22,6 +22,16 @@ import java.awt.event.ActionEvent;
 //import javax.swing.JFormattedTextField;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.JList;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JTextArea;
+import javax.swing.JTable;
+import javax.swing.JToggleButton;
+import javax.swing.JButton;
+import javax.swing.JProgressBar;
+import javax.swing.JTree;
+import javax.swing.JPanel;
+import javax.swing.JSpinner;
 //import javax.swing.JTabbedPane;
 //import javax.swing.LayoutStyle.ComponentPlacement;
 
@@ -34,7 +44,7 @@ public class AgregarEdicionCurso extends JInternalFrame {
 	private JTextField nombreEdicion;
 	private JTextField cantCupos;
 	
-	public AgregarEdicionCurso(IControladorAltaEdicionCurso icon) {
+	public AgregarEdicionCurso(IControladorAltaEdicionCurso icon) {//no se como hacer lo de los docentes
 		this.icon = icon;
         setResizable(true);
         setIconifiable(true);
@@ -100,19 +110,19 @@ public class AgregarEdicionCurso extends JInternalFrame {
 		
 		JRadioButton cuposBool = new JRadioButton("Cupos");
 		cuposBool.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				cuposBool.setSelected(true);
+			public void actionPerformed(ActionEvent arg0) {//no me sale lo del boton y el texto
+				cuposBool.setSelected(false);
+				cantCupos.setEditable(false);
 				cantCupos.setText("");
-				cantCupos.setEnabled(true);
 			}
 		});
-		cuposBool.setEnabled(true);
-		cuposBool.setSelected(false);
-		cantCupos.setEnabled(false);
-		cuposBool.setHorizontalAlignment(SwingConstants.LEFT);
 		
 		cantCupos = new JTextField();
 		cantCupos.setColumns(10);
+		
+		cuposBool.setSelected(true);
+		cantCupos.setEditable(true);
+		cuposBool.setHorizontalAlignment(SwingConstants.LEFT);
 		
 		JLabel lblCantCupos = new JLabel("Cant Cupos");
 		
@@ -135,6 +145,8 @@ public class AgregarEdicionCurso extends JInternalFrame {
 		JComboBox<String> ffAnio_1 = new JComboBox<String>();
 		ffAnio_1.setModel(new DefaultComboBoxModel<String>(new String[] {"2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023"}));
 		ffAnio_1.setMaximumRowCount(20);
+		
+		
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -206,6 +218,9 @@ public class AgregarEdicionCurso extends JInternalFrame {
 							.addGap(36)
 							.addComponent(ffAnio_1, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap(102, Short.MAX_VALUE))
+				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+					.addContainerGap(231, Short.MAX_VALUE)
+					.addGap(22))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -269,7 +284,8 @@ public class AgregarEdicionCurso extends JInternalFrame {
 						.addComponent(ffDia_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(ffMes_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(ffAnio_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(189, Short.MAX_VALUE))
+					.addGap(18)
+					.addContainerGap(29, Short.MAX_VALUE))
 		);
 		getContentPane().setLayout(groupLayout);
 

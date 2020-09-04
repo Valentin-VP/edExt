@@ -37,7 +37,7 @@ public class ControladorConsultaEdicionCurso implements IControladorConsultaEdic
 	public DtEdicion seleccionarEdicion(String edicion) {
 		ManejadorEdicion mE = ManejadorEdicion.getInstancia();
 		Edicion e = mE.find(edicion);
-		DtEdicion edition = new DtEdicion(e.getNombre(), e.getFechaI(), e.getFechaF(), e.getCupos(), e.getFechaPub(), e.isTieneCupos());
+		DtEdicion edition = new DtEdicion(e.getNombre(), e.getFechaI(), e.getFechaF(), e.isTieneCupos(), e.getCupos(), e.getFechaPub());
 		return edition;
 	}
 	public String getEdicion() {

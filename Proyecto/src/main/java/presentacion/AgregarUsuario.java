@@ -13,11 +13,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JToggleButton;
+//import javax.swing.JToggleButton;
 
 import excepciones.UsuarioRepetido;
 
 import datatypes.DtFecha;
+import javax.swing.JButton;
 
 public class AgregarUsuario extends JInternalFrame {
 	
@@ -117,23 +118,23 @@ public class AgregarUsuario extends JInternalFrame {
 		NickUsuario_1_1_1.setBounds(339, 256, 44, 15);
 		getContentPane().add(NickUsuario_1_1_1);
 		
-		JToggleButton AceptarAltaUsuario = new JToggleButton("Aceptar");
-		AceptarAltaUsuario.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				agregarUsuarioAceptarActionPerformed(e);
+		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				agregarUsuarioCancelarActionPerformed(arg0);
 			}
 		});
-		AceptarAltaUsuario.setBounds(58, 391, 144, 25);
-		getContentPane().add(AceptarAltaUsuario);
+		btnCancelar.setBounds(79, 400, 117, 25);
+		getContentPane().add(btnCancelar);
 		
-		JToggleButton CancelarAltaUsuario = new JToggleButton("Cancelar");
-		CancelarAltaUsuario.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				agregarUsuarioCancelarActionPerformed(e);
+		JButton btnAceptar = new JButton("Aceptar");
+		btnAceptar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				agregarUsuarioAceptarActionPerformed(arg0);
 			}
 		});
-		CancelarAltaUsuario.setBounds(292, 391, 144, 25);
-		getContentPane().add(CancelarAltaUsuario);
+		btnAceptar.setBounds(293, 400, 117, 25);
+		getContentPane().add(btnAceptar);
 
 	}
 	
@@ -147,13 +148,14 @@ public class AgregarUsuario extends JInternalFrame {
 		String correo = this.textFieldCorreo.getText();
 		String nombre = this.textFieldNombre.getText();
 		String apellido = this.textFieldApellido.getText();
-		Integer dia = (Integer) this.diaNac.getSelectedItem();
+		Integer dia = (Integer) this.diaNac.getSelectedItem();//tengo error en esta linea y no se que es
 		Integer mes = (Integer) this.mesNac.getSelectedItem();
 		Integer anio = (Integer) this.anioNac.getSelectedItem();
 		DtFecha fechaNac = new DtFecha(dia, mes, anio);
 		if (checkeo()) {
 			try {
 				this.icon.altaUsuario(nickname, correo, nombre, apellido, fechaNac);
+				this.icon.confirmarAltaUsuario();
 				JOptionPane.showMessageDialog(this, "El Usuario se ha agregado con exito", "Agregar Usuario",
 				JOptionPane.INFORMATION_MESSAGE);
 			} catch (UsuarioRepetido e) {
@@ -162,10 +164,8 @@ public class AgregarUsuario extends JInternalFrame {
 			limpiar();
 			setVisible(false);
 		}
-		
-		
-	}
-	
+	}	
+
 	private boolean checkeo() {
 		String nickname = this.textFieldNick.getText();
 		String correo = this.textFieldCorreo.getText();
