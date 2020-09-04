@@ -1,9 +1,10 @@
 package logica;
 
 import logica.ManejadorUsuario;
+import interfaces.IControladorConsultaUsuario;
 
 @SuppressWarnings("unused")
-public class ControladorConsultaUsuario {
+public class ControladorConsultaUsuario implements IControladorConsultaUsuario {
 	private Usuario user;
 	
 	public void listarUsuarios() {
@@ -11,9 +12,9 @@ public class ControladorConsultaUsuario {
 		mI.getUsuarios();//aca tengo la lista de usuarios a listar
 	}
 	
-	public void ElejirUsuario(String nick) {
+	public void ElejirUsuario(String nick, String correo) {
 		ManejadorUsuario mI = ManejadorUsuario.getInstancia();
-		mI.getUsuario(nick);
+		mI.getUsuario(nick, correo);
 		//aca habria que ver que tipo de usuario es y depende de lo que elija el usuario el caso de uso con el que se procede
 	}
 }

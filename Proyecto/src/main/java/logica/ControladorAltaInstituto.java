@@ -12,6 +12,7 @@ public class ControladorAltaInstituto implements IControladorAltaInstituto{
 		return nombre;
 	}
 	
+	@Override
 	public boolean darAltaInstituto(String nombre){//retorna true si el nick esta disponible en el sistema
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 		this.nombre = nombre;
@@ -26,6 +27,7 @@ public class ControladorAltaInstituto implements IControladorAltaInstituto{
 		return mI.exists(nombre);
 	}*/
 	
+	@Override
 	public void confirmar() {
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 		mI.agregarInstituto(this.nombre);

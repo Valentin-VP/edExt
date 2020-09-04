@@ -1,7 +1,6 @@
 package logica;
 
 import java.util.*;
-import logica.Usuario;
 
 public class ManejadorUsuario {
 	private static ManejadorUsuario instancia = null;
@@ -17,8 +16,12 @@ public class ManejadorUsuario {
 	public ArrayList<Usuario> getUsuarios() {
 		return usuarios;
 	}
-	public Usuario getUsuario(String nick) {//correo?
-		//hacer find
+	public Usuario getUsuario(String nick, String correo) {
+		for (Usuario u: usuarios) {
+			if ((u.getNick() == nick) || (u.getCorreo() == correo)) {
+				return u;
+			}
+		}
 		return null;
 	}
 	public void removerUsuario(Usuario usuario) {

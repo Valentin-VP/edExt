@@ -23,9 +23,9 @@ public class ControladorModificarDatosUsuario implements IControladorModificarDa
 		return usuarios;
 	}
 	@Override
-	public DtUsuario seleccionarUsuario(String usuario) {
+	public DtUsuario seleccionarUsuario(String nick, String correo) {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
-		Usuario user = mU.getUsuario(usuario);
+		Usuario user = mU.getUsuario(nick, correo);
 		return user.getDtUsuario();
 	}
 	@Override
@@ -40,6 +40,5 @@ public class ControladorModificarDatosUsuario implements IControladorModificarDa
 	public void editarFNac(DtFecha nuevaFecha) {
 		this.fechaNac = nuevaFecha;//??
 	}
-	
 	
 }

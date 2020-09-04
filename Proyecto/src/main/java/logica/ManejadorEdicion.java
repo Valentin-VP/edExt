@@ -22,8 +22,8 @@ public class ManejadorEdicion {
 			return false;
 	}
 	
-	public void agregarEdicion(String nombre, DtFecha fechaI, DtFecha fechaF, Integer cupos, DtFecha fechaPub) {
-		Edicion e = new Edicion(nombre, fechaI, fechaF, cupos, fechaPub);
+	public void agregarEdicion(String nombre, DtFecha fechaI, DtFecha fechaF, Integer cupos, DtFecha fechaPub, boolean tieneCupos) {
+		Edicion e = new Edicion(nombre, fechaI, fechaF, cupos, fechaPub, tieneCupos);
 		ediciones.put(e.getNombre(), e);
 	}
 //desde aca es mio

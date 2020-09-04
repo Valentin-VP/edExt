@@ -19,6 +19,8 @@ import javax.swing.border.TitledBorder;
 
 import interfaces.Fabrica;
 import interfaces.IControladorAltaInstituto;
+import interfaces.IControladorAltaEdicionCurso;
+import interfaces.IControladorAltaUsuario;
 
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
@@ -30,10 +32,9 @@ public class Principal {
 	
 	private JFrame frame;
 	private AgregarInstituto agregarInstitutoInternalFrame;
+	private AgregarEdicionCurso agregarEdicionCursoInternalFrame;
+	private AgregarUsuario agregarUsuarioInternalFrame;
 	
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -47,9 +48,6 @@ public class Principal {
 		});
 	}
 
-	/**
-	 * Create the application.
-	 */
 	public Principal() {
 		initialize();
 		
@@ -61,11 +59,16 @@ public class Principal {
 		agregarInstitutoInternalFrame = new AgregarInstituto(fabrica.getIControladorAltaInstituto());
 		agregarInstitutoInternalFrame.setLocation(188, 105);
 		frame.getContentPane().add(agregarInstitutoInternalFrame);
+		
+		agregarEdicionCursoInternalFrame = new AgregarEdicionCurso(fabrica.getIControladorAltaEdicionCurso());
+		agregarEdicionCursoInternalFrame.setLocation(188, 105);
+		frame.getContentPane().add(agregarEdicionCursoInternalFrame);
+		
+		agregarUsuarioInternalFrame = new AgregarUsuario(fabrica.getIControladorAltaUsuario());
+		agregarUsuarioInternalFrame.setLocation(188, 105);
+		frame.getContentPane().add(agregarUsuarioInternalFrame);
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 643, 478);

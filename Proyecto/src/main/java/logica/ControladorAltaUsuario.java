@@ -1,8 +1,9 @@
-package logica;
+ package logica;
 
 import datatypes.DtFecha;
 import datatypes.DtUsuario;
 import interfaces.IControladorAltaUsuario;
+import excepciones.UsuarioRepetido;
 
 public class ControladorAltaUsuario implements IControladorAltaUsuario {
 	private DtUsuario usuario;
@@ -13,39 +14,32 @@ public class ControladorAltaUsuario implements IControladorAltaUsuario {
 	}
 	
 	@Override
-	public Boolean altaUsuario(String nick, String correo, String nombre, String apellido, DtFecha fechaNac) {
+	public void altaUsuario(String nick, String correo, String nombre, String apellido, DtFecha fechaNac) throws UsuarioRepetido {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
-		Boolean esValido = true;
-		for (Usuario u: mU.getUsuarios()) {
-			if ((u.getNick() == nick) || (u.getCorreo() == correo)) {
-				esValido = false;
-			}
-		}
+		Usuario user = mU.getUsuario(nick, correo);
+		if(user != null)
+			throw new UsuarioRepetido("El usuario " + nick + " ya se encuentra registrado");
 		this.usuario = new DtUsuario(nick, correo, nombre, apellido, fechaNac);
-		return esValido;
 	}
 	
 	@Override
-	public void seleccionarInstituto(Instituto instituto) {//arreglado??
+	public void seleccionarInstituto(Instituto instituto) {
 		Usuario user = new Usuario(usuario.getNick(), usuario.getCorreo(), usuario.getNombre(), usuario.getApellido(), usuario.getFechaNac());
 		if (user instanceof Docente) {
 			((Docente) user).setInstituto(instituto);
 		}
 	}
 	
-	@Override
-	public Boolean modificarAltaUsuario(String nuevoNick, String nuevoCorreo) {
+	/*@Override
+	public void modificarAltaUsuario(String nuevoNick, String nuevoCorreo) throws UsuarioRepetido {
 		this.usuario.setNick(nuevoNick);
 		this.usuario.setCorreo(nuevoCorreo);
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
-		Boolean esValido = true;
-		for (Usuario u: mU.getUsuarios()) {
-			if ((u.getNick() == nuevoNick) || (u.getCorreo() == nuevoCorreo)) {
-				esValido = false;
-			}
+		Usuario user = mU.getUsuario(nuevoNick, nuevoCorreo);
+		if (user != null) {
+			throw new UsuarioRepetido("El usuario " + nuevoNick + "con correo " + nuevoCorreo + " ya se encuentra registrado");
 		}
-		return esValido;
-	}
+	}*/
 	
 	@Override
 	public void cancelarAltaUsuario() {

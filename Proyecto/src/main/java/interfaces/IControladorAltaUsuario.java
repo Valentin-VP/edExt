@@ -2,13 +2,14 @@ package interfaces;
 
 import datatypes.DtFecha;
 import logica.Instituto;
+import excepciones.UsuarioRepetido;
 
 public interface IControladorAltaUsuario {
-	public Boolean altaUsuario(String nick, String correo, String nombre, String apellido, DtFecha fechaNac);
+	public void altaUsuario(String nick, String correo, String nombre, String apellido, DtFecha fechaNac) throws UsuarioRepetido; 
 	
 	public void seleccionarInstituto(Instituto instituto);
 	
-	public Boolean modificarAltaUsuario(String nuevoNick, String nuevoCorreo);
+	//public void modificarAltaUsuario(String nuevoNick, String nuevoCorreo) throws UsuarioRepetido;
 	
 	public void cancelarAltaUsuario();
 	
