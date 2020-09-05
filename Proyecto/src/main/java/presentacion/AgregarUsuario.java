@@ -33,7 +33,7 @@ public class AgregarUsuario extends JInternalFrame {
 	private JTextField textFieldCorreo;
 	private JTextField textFieldNombre;
 	private JTextField textFieldApellido;
-	private JComboBox<Integer> diaNac;
+	private JComboBox<String> diaNac;
 	private JComboBox<String> mesNac;
 	private JComboBox<String> anioNac;
 
@@ -89,25 +89,78 @@ public class AgregarUsuario extends JInternalFrame {
 		lblFechanac.setBounds(58, 288, 82, 15);
 		getContentPane().add(lblFechanac);
 		
-		JComboBox<Integer> diaNac = new JComboBox<Integer>();
-		diaNac.setMaximumRowCount(2);
+		diaNac = new JComboBox<String>();
+		//diaNac.setMaximumRowCount(2);
 		diaNac.setBounds(170, 283, 54, 24);
-		diaNac.setModel(new DefaultComboBoxModel<Integer>(new Integer[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31}));
-		//diaNac.setSelectedIndex(0);
+		diaNac.addItem("1");
+		diaNac.addItem("2");
+		diaNac.addItem("3");
+		diaNac.addItem("4");
+		diaNac.addItem("5");
+		diaNac.addItem("6");
+		diaNac.addItem("7");
+		diaNac.addItem("8");
+		diaNac.addItem("9");
+		diaNac.addItem("10");
+		diaNac.addItem("11");
+		diaNac.addItem("12");
+		diaNac.addItem("13");
+		diaNac.addItem("14");
+		diaNac.addItem("15");
+		diaNac.addItem("16");
+		diaNac.addItem("17");
+		diaNac.addItem("18");
+		diaNac.addItem("19");
+		diaNac.addItem("20");
+		diaNac.addItem("21");
+		diaNac.addItem("22");
+		diaNac.addItem("23");
+		diaNac.addItem("24");
+		diaNac.addItem("25");
+		diaNac.addItem("26");
+		diaNac.addItem("27");
+		diaNac.addItem("28");
+		diaNac.addItem("29");
+		diaNac.addItem("30");
+		diaNac.addItem("31");
+		//diaNac.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"}));
+		diaNac.setSelectedItem("1");
 		getContentPane().add(diaNac);
 		
-		JComboBox<String> mesNac = new JComboBox<String>();
-		mesNac.setModel(new DefaultComboBoxModel<String>(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"}));
-		mesNac.setMaximumRowCount(12);
-		mesNac.setSelectedIndex(0);
+		mesNac = new JComboBox<String>();
 		mesNac.setBounds(254, 283, 54, 24);
+		mesNac.addItem("1");
+		mesNac.addItem("2");
+		mesNac.addItem("3");
+		mesNac.addItem("4");
+		mesNac.addItem("5");
+		mesNac.addItem("6");
+		mesNac.addItem("7");
+		mesNac.addItem("8");
+		mesNac.addItem("9");
+		mesNac.addItem("10");
+		mesNac.addItem("11");
+		mesNac.addItem("12");
+		//mesNac.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"}));
+		//mesNac.setMaximumRowCount(12);
+		mesNac.setSelectedItem("1");
 		getContentPane().add(mesNac);
 		
-		JComboBox<String> anioNac = new JComboBox<String>();
-		anioNac.setModel(new DefaultComboBoxModel<String>(new String[] {"1992", "1993", "1994", "1995", "1996", "1997", "1998", "1999", "2000", "2001", "2002"}));
-		anioNac.setMaximumRowCount(10);
-		anioNac.setSelectedIndex(0);
+		anioNac = new JComboBox<String>();
 		anioNac.setBounds(339, 283, 60, 24);
+		anioNac.addItem("1");
+		anioNac.addItem("2");
+		anioNac.addItem("3");
+		anioNac.addItem("4");
+		anioNac.addItem("5");
+		anioNac.addItem("6");
+		anioNac.addItem("7");
+		anioNac.addItem("8");
+		anioNac.addItem("9");
+		anioNac.addItem("10");
+		//anioNac.setModel(new DefaultComboBoxModel(new String[] {"1992", "1993", "1994", "1995", "1996", "1997", "1998", "1999", "2000", "2001", "2002"}));
+		//anioNac.setMaximumRowCount(10);
+		anioNac.setSelectedItem("1992");
 		getContentPane().add(anioNac);
 		
 		JLabel lblDia = new JLabel("dia");
@@ -152,10 +205,10 @@ public class AgregarUsuario extends JInternalFrame {
 		String correo = this.textFieldCorreo.getText();
 		String nombre = this.textFieldNombre.getText();
 		String apellido = this.textFieldApellido.getText();
-		Integer dia = (Integer) this.diaNac.getSelectedItem();
-		Integer mes = (Integer) this.mesNac.getSelectedItem();
-		Integer anio = (Integer) this.anioNac.getSelectedItem();
-		DtFecha fechaNac = new DtFecha(dia, mes, anio);
+	    String dia = (String) this.diaNac.getSelectedItem();
+		String mes = (String) this.mesNac.getSelectedItem();
+		String anio = (String) this.anioNac.getSelectedItem();
+		DtFecha fechaNac = new DtFecha(Integer.parseInt(dia), Integer.parseInt(mes), Integer.parseInt(anio));
 		if (checkeo()) {
 			try {
 				this.icon.altaUsuario(nickname, correo, nombre, apellido, fechaNac);
@@ -175,10 +228,10 @@ public class AgregarUsuario extends JInternalFrame {
 		String correo = this.textFieldCorreo.getText();
 		String nombre = this.textFieldNombre.getText();
 		String apellido = this.textFieldApellido.getText();
-		Integer dia = (Integer) this.diaNac.getSelectedItem();
-		Integer mes = (Integer) this.mesNac.getSelectedItem();
-		Integer anio = (Integer) this.anioNac.getSelectedItem();
-		if(nickname.isEmpty() || correo.isEmpty() || nombre.isEmpty() || apellido.isEmpty() || dia.equals(0) || mes.equals(0) || anio.equals(0)) {
+		String dia = (String) this.diaNac.getSelectedItem();
+		String mes = (String) this.mesNac.getSelectedItem();
+		String anio = (String) this.anioNac.getSelectedItem();
+		if(nickname.isEmpty() || correo.isEmpty() || nombre.isEmpty() || apellido.isEmpty() || dia.equals("") || mes.equals("") || anio.equals("")) {
 			JOptionPane.showConfirmDialog(this, "No puede haber campos vacios", "Agregar Usuario", 
 			JOptionPane.ERROR_MESSAGE);
 			return false;
@@ -191,8 +244,8 @@ public class AgregarUsuario extends JInternalFrame {
 		this.textFieldCorreo.setText("");
 		this.textFieldNombre.setText("");
 		this.textFieldApellido.setText("");
-		this.diaNac.setSelectedItem(1);
-		this.mesNac.setSelectedItem(1);
-		this.anioNac.setSelectedItem(1992);
+		this.diaNac.setSelectedItem("1");
+		this.mesNac.setSelectedItem("1");
+		this.anioNac.setSelectedItem("1992");
 	}
 }
