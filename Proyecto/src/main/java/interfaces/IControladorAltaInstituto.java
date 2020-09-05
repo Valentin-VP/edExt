@@ -1,11 +1,11 @@
 package interfaces;
 
+import excepciones.InstitutoRepetidoExeption;
 
 public interface IControladorAltaInstituto {
 
-	public boolean darAltaInstituto(String nombre);
-	
+	public void darAltaInstituto(String nombre) throws InstitutoRepetidoExeption;
+ 
 	//public boolean iNuevoNombre(String nombre);
 	
-	public void confirmar();
 }

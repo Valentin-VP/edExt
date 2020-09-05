@@ -136,7 +136,7 @@ public class ControladorAltaCurso implements IControladorAltaCurso{
 	
 	@Override
 	public void altaCurso(String instituto, String nombre, String descripcion, String duracion, DtTime cantHoras, int creditos, String url, DtFecha fechaR) throws CursoRepetido, InstitutoInexistente {
-		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
+		/*ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 		if(!mI.exists(instituto)) {
 			throw new InstitutoInexistente("No existe el Instituto seleccionado.");
 		}
@@ -153,8 +153,8 @@ public class ControladorAltaCurso implements IControladorAltaCurso{
 		setCreditos(creditos);
 		setUrl(url);
 		setFechaR(fechaR);
-
-	}
+		Comento para poder correr el programa*/
+	} 
 	
 	
 }

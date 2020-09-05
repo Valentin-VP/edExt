@@ -40,11 +40,11 @@ public class ManejadorCurso {
 		return retorno;
 	}
 	
-	public Map<String, Curso> getCursos() { // Modifiqué a List en vez de Map, revisar en equipo (rcastro)
+	public List<Curso> getCursos() { // Modifiqué a List en vez de Map, revisar en equipo (rcastro)
 		return cursos;
 	}
 
-	public void setCursos(Map<String, Curso> cursos) { // Modifiqué a List en vez de Map, revisar en equipo (rcastro)
+	public void setCursos(List<Curso> cursos) { // Modifiqué a List en vez de Map, revisar en equipo (rcastro)
 		this.cursos = cursos;
 	}
 }

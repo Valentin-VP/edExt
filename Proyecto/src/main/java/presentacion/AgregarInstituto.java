@@ -72,13 +72,13 @@ public class AgregarInstituto extends JInternalFrame {
 		if(nombreInstituto.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(this, "No puede haber campos vacios", "Nombre Vacio", JOptionPane.ERROR_MESSAGE);
 		}else {
-			if(this.icon.darAltaInstituto(nombreInstituto.getText())) { //controlo si ya existe el nombre
-				this.icon.confirmar();
-				JOptionPane.showMessageDialog(this, "Instituto registrado", "", JOptionPane.INFORMATION_MESSAGE);
+			try {
+				this.icon.darAltaInstituto(nombreInstituto.getText());
+				JOptionPane.showMessageDialog(this, "El Instituto fue ingresado con exito", "Instituto Creado", JOptionPane.INFORMATION_MESSAGE);
 				nombreInstituto.setText("");
 				setVisible(false);
-			}else {
-				JOptionPane.showMessageDialog(this, "Nombre no disponible", "Nombre", JOptionPane.ERROR_MESSAGE);
+			}catch(Exception exc){
+				JOptionPane.showMessageDialog(this, exc.getLocalizedMessage() , "Error en Alta", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 	}

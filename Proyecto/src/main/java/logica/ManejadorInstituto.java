@@ -1,12 +1,11 @@
 package logica;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class ManejadorInstituto {
     private static ManejadorInstituto instancia;
-    private List<Instituto> institutos = new ArrayList<>();
+    private ArrayList<Instituto> institutos = new ArrayList<>();
 
     public ManejadorInstituto() {}
 
@@ -15,31 +14,30 @@ public class ManejadorInstituto {
             instancia = new ManejadorInstituto();
         return instancia;
     }
-
-    public boolean exists(String nombre) {
+    
+    public Instituto find(String nombre) { //aca es ell problema
+    	Instituto aretornar = null;
     	for(Instituto i: institutos) {
-    		if(i.getNombre()==nombre) {
-    			return true;
+    		if(i.getNombre().equals(nombre)) {
+    			aretornar=i;
     		}
     	}
-    	return false;
+    	return aretornar;
     }
 
-    public void agregarInstituto(String nombre) {
-        Instituto i = new Instituto(nombre);
-        institutos.put(i.getNombre(), i);
-    }
-//desde aca es mio
-    public Instituto find(String instituto) {
-        return this.institutos.get(instituto);
+    public void agregarInstituto(String ins) {
+        Instituto i = new Instituto(ins);
+        institutos.add(i);
     }
 
-    public HashMap<String, Instituto> getInstitutos() {
+
+    public ArrayList<Instituto> getInstitutos() {
         return institutos;
     }
 
-    public void setInstitutos(HashMap<String, Instituto> institutos) {
+    public void setInstitutos(ArrayList<Instituto> institutos) {
         this.institutos = institutos;
     }
 
+    
 }
