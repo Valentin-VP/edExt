@@ -4,7 +4,7 @@ import java.util.*;
 
 public class ManejadorUsuario {
 	private static ManejadorUsuario instancia = null;
-	private ArrayList<Usuario> usuarios = null;
+	private ArrayList<Usuario> usuarios = new ArrayList<>();
 	
 	private ManejadorUsuario() {
 		super();
@@ -33,6 +33,6 @@ public class ManejadorUsuario {
 		//hacer remove
 	}
 	public void agregarUsuario(Usuario usuario) {
-		//hacer add
+		this.usuarios.add(usuario);
 	}
 }

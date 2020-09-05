@@ -90,7 +90,6 @@ public class AgregarUsuario extends JInternalFrame {
 		getContentPane().add(lblFechanac);
 		
 		diaNac = new JComboBox<String>();
-		//diaNac.setMaximumRowCount(2);
 		diaNac.setBounds(170, 283, 54, 24);
 		diaNac.addItem("1");
 		diaNac.addItem("2");
@@ -123,7 +122,6 @@ public class AgregarUsuario extends JInternalFrame {
 		diaNac.addItem("29");
 		diaNac.addItem("30");
 		diaNac.addItem("31");
-		//diaNac.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"}));
 		diaNac.setSelectedItem("1");
 		getContentPane().add(diaNac);
 		
@@ -141,25 +139,22 @@ public class AgregarUsuario extends JInternalFrame {
 		mesNac.addItem("10");
 		mesNac.addItem("11");
 		mesNac.addItem("12");
-		//mesNac.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"}));
-		//mesNac.setMaximumRowCount(12);
 		mesNac.setSelectedItem("1");
 		getContentPane().add(mesNac);
 		
 		anioNac = new JComboBox<String>();
 		anioNac.setBounds(339, 283, 60, 24);
-		anioNac.addItem("1");
-		anioNac.addItem("2");
-		anioNac.addItem("3");
-		anioNac.addItem("4");
-		anioNac.addItem("5");
-		anioNac.addItem("6");
-		anioNac.addItem("7");
-		anioNac.addItem("8");
-		anioNac.addItem("9");
-		anioNac.addItem("10");
-		//anioNac.setModel(new DefaultComboBoxModel(new String[] {"1992", "1993", "1994", "1995", "1996", "1997", "1998", "1999", "2000", "2001", "2002"}));
-		//anioNac.setMaximumRowCount(10);
+		anioNac.addItem("1992");
+		anioNac.addItem("1993");
+		anioNac.addItem("1994");
+		anioNac.addItem("1995");
+		anioNac.addItem("1996");
+		anioNac.addItem("1997");
+		anioNac.addItem("1998");
+		anioNac.addItem("1999");
+		anioNac.addItem("2000");
+		anioNac.addItem("2001");
+		anioNac.addItem("2002");
 		anioNac.setSelectedItem("1992");
 		getContentPane().add(anioNac);
 		
@@ -216,10 +211,9 @@ public class AgregarUsuario extends JInternalFrame {
 				JOptionPane.showMessageDialog(this, "El Usuario se ha agregado con exito", "Agregar Usuario",
 				JOptionPane.INFORMATION_MESSAGE);
 			} catch (UsuarioRepetido e) {
-				JOptionPane.showConfirmDialog(this, e.getMessage(), "Agregar Usuario", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, e.getMessage(), "Agregar Usuario", JOptionPane.ERROR_MESSAGE);
 			}
-			limpiar();
-			//setVisible(false);
+			//limpiar();
 		}
 	}	
 
@@ -232,7 +226,7 @@ public class AgregarUsuario extends JInternalFrame {
 		String mes = (String) this.mesNac.getSelectedItem();
 		String anio = (String) this.anioNac.getSelectedItem();
 		if(nickname.isEmpty() || correo.isEmpty() || nombre.isEmpty() || apellido.isEmpty() || dia.equals("") || mes.equals("") || anio.equals("")) {
-			JOptionPane.showConfirmDialog(this, "No puede haber campos vacios", "Agregar Usuario", 
+			JOptionPane.showMessageDialog(this, "No puede haber campos vacios", "Agregar Usuario", 
 			JOptionPane.ERROR_MESSAGE);
 			return false;
 		}

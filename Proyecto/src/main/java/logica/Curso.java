@@ -15,8 +15,8 @@ public class Curso {
 	private Integer creditos;
 	private DtFecha fechaR;
 	private String url;
-	private ArrayList<String> previas;//visibilidad <-- Modifiqué a String en vez de Curso, verificar (rcastro)
-	private ArrayList<DtEdicionBase> ediciones;//visibilidad
+	private ArrayList<String> previas = new ArrayList<>();//visibilidad <-- Modifiquï¿½ a String en vez de Curso, verificar (rcastro)
+	private ArrayList<DtEdicionBase> ediciones = new ArrayList<>();//visibilidad
 	
 	public Curso(String nombre, String descripcion, String duracion, DtTime cantHoras, Integer creditos, DtFecha fechaR,
 			String url, List<String> list) {

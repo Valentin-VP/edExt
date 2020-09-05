@@ -16,9 +16,11 @@ public class ControladorAltaUsuario implements IControladorAltaUsuario {
 	@Override
 	public void altaUsuario(String nick, String correo, String nombre, String apellido, DtFecha fechaNac) throws UsuarioRepetido {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
-		Usuario user = mU.getUsuario(nick, correo);
-		if(user != null)
+		Usuario user = null;
+		user = mU.getUsuario(nick, correo);
+		if(!(user == null)) {
 			throw new UsuarioRepetido("El usuario " + nick + " ya se encuentra registrado");
+		}	
 		this.usuario = new DtUsuario(nick, correo, nombre, apellido, fechaNac);
 	}
 	

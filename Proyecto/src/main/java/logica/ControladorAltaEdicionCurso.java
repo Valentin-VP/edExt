@@ -16,6 +16,7 @@ public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso
 	private boolean tieneCupos;//no lo uso
 	private Integer cupos;//no lo uso
 	private DtEdicion edicion;
+	private Curso c;
 	
 	@Override
 	public ArrayList<DtCursoBase> seleccionarInstituto(String instituto) {
@@ -32,7 +33,7 @@ public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso
 		Instituto i = mI.find(this.instituto);
 		this.curso = curso;
 		ManejadorCurso mC = ManejadorCurso.getInstancia();
-		Curso c = mC.find(curso);
+		c = mC.find(curso);
 		if (c != null) {
 			throw new CursoNoExiste("El curso" + curso + " no esta en el sistema");
 		}
