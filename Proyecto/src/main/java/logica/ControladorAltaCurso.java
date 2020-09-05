@@ -24,7 +24,6 @@ public class ControladorAltaCurso implements IControladorAltaCurso{
 	
 	public ControladorAltaCurso() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	
 	public ControladorAltaCurso(DtCurso curso, String instituto, String nombre, String descripcion, String duracion,
@@ -91,7 +90,7 @@ public class ControladorAltaCurso implements IControladorAltaCurso{
 	public List<String> getPrevias() {
 		return previas;
 	}
-	@Override
+
 	public void setPrevias(List<String> previas) {
 		this.previas=previas;
 	}
@@ -104,7 +103,7 @@ public class ControladorAltaCurso implements IControladorAltaCurso{
 		this.url = url;
 	}
 	
-	public void agregarPrevias(String previa) {
+	public void agregarPrevia(String previa) {
 		this.previas.add(previa);
 	}
 	
@@ -121,7 +120,7 @@ public class ControladorAltaCurso implements IControladorAltaCurso{
 		
 	}
 	@Override
-	// Quiero revisar si amerita algo así y cómo lo implementamos bien
+
 	public void cancelarAltaCurso() {
 		setInstituto(null);
 		setNombre(null);
@@ -136,8 +135,8 @@ public class ControladorAltaCurso implements IControladorAltaCurso{
 	
 	@Override
 	public void altaCurso(String instituto, String nombre, String descripcion, String duracion, DtTime cantHoras, int creditos, String url, DtFecha fechaR) throws CursoRepetido, InstitutoInexistente {
-		/*ManejadorInstituto mI = ManejadorInstituto.getInstancia();
-		if(!mI.exists(instituto)) {
+		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
+		if(!mI.existeInstituto(instituto)) {
 			throw new InstitutoInexistente("No existe el Instituto seleccionado.");
 		}
 		ManejadorCurso mC = ManejadorCurso.getInstancia();
@@ -153,7 +152,7 @@ public class ControladorAltaCurso implements IControladorAltaCurso{
 		setCreditos(creditos);
 		setUrl(url);
 		setFechaR(fechaR);
-		Comento para poder correr el programa*/
+
 	} 
 	
 	

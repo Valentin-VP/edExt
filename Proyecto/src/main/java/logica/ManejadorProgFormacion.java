@@ -1,10 +1,10 @@
 package logica;
 
-import java.util.Map;
+import java.util.*;
 
 public class ManejadorProgFormacion {
 	private static ManejadorProgFormacion instancia;
-	private Map<String,ProgFormacion> programas;
+	private ArrayList<ProgFormacion> programas;
 	
 	public static ManejadorProgFormacion getInstancia() {
 		if(instancia == null)
@@ -13,17 +13,35 @@ public class ManejadorProgFormacion {
 	}
 	
 	public boolean exists(String nombre) {
-		if(programas.containsKey(nombre))
-			return true;
-		else 
-			return false;
+		for(ProgFormacion pf: programas) {
+			if(pf.getNombre()==nombre) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	public void agregarProgFormacion(ProgFormacion pf) {
-		programas.put(pf.getNombre(), pf);
+		programas.add(pf);
 	}
 	
 	public ProgFormacion getProgFormacion(String nombre) {
-		return programas.get(nombre); 
+		ProgFormacion retorno=null;
+		for(ProgFormacion pf: programas) {
+			if(pf.getNombre()==nombre) {
+				retorno = pf;
+			}
+		}
+		return retorno;
 	}
+
+	public ArrayList<ProgFormacion> getProgramas() {
+		return programas;
+	}
+
+	public void setProgramas(ArrayList<ProgFormacion> programas) {
+		this.programas = programas;
+	}
+
+
 }

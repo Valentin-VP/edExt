@@ -1,7 +1,6 @@
 package datatypes;
 
-import datatypes.DtFecha;
-import datatypes.DtTime;
+import java.util.ArrayList;
 
 public class DtCurso extends DtCursoBase {
 	private String descripcion;
@@ -9,21 +8,24 @@ public class DtCurso extends DtCursoBase {
 	private DtTime cantHoras;
 	private Integer creditos;
 	private DtFecha fechaR;
-	private String URL;
+	private String url;
+	private ArrayList<DtEdicionBase> ediciones;
+	private ArrayList<DtProgramaBase> programas;
 	
 	public DtCurso() {
 		super();
 	}
 
-	public DtCurso(String descripcion, String duracion, DtTime cantHoras, Integer creditos, DtFecha fechaR,
-			String uRL, String nombre) {
+	public DtCurso(String descripcion, String duracion, DtTime cantHoras, Integer creditos, DtFecha fechaR, String url, String nombre, ArrayList<DtEdicionBase> ediciones, ArrayList<DtProgramaBase> programas) {
 		super(nombre);
 		this.descripcion = descripcion;
 		this.duracion = duracion;
 		this.cantHoras = cantHoras;
 		this.creditos = creditos;
 		this.fechaR = fechaR;
-		URL = uRL;
+		this.url = url;
+		this.ediciones = ediciones;
+		this.programas = programas;
 	}
 	
 	public String getDescripcion() {
@@ -66,12 +68,28 @@ public class DtCurso extends DtCursoBase {
 		this.fechaR = fechaR;
 	}
 	
-	public String getURL() {
-		return URL;
+	public String getUrl() {
+		return url;
 	}
 	
-	public void setURL(String uRL) {
-		URL = uRL;
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public ArrayList<DtEdicionBase> getEdiciones() {
+		return ediciones;
+	}
+
+	public void setEdiciones(ArrayList<DtEdicionBase> ediciones) {
+		this.ediciones = ediciones;
+	}
+
+	public ArrayList<DtProgramaBase> getProgramas() {
+		return programas;
+	}
+
+	public void setProgramas(ArrayList<DtProgramaBase> programas) {
+		this.programas = programas;
 	}
 	
 }

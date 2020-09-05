@@ -4,5 +4,5 @@ package interfaces;
 public interface IControladorConsultaUsuario {
 	public void listarUsuarios();
 	
-	public void ElejirUsuario(String nick, String correo);
+	public void ElegirUsuario(String nick, String correo);
 }
