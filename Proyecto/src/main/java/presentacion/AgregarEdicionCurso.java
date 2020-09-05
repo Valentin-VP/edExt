@@ -54,7 +54,7 @@ public class AgregarEdicionCurso extends JInternalFrame {
 	private JComboBox<String> fpDia;
 	private JComboBox<String> fpMes;
 	private JComboBox<String> fpAnio;
-	private JTextField textField;
+	private JTextField nombreDocente;
 	
 	public AgregarEdicionCurso(IControladorAltaEdicionCurso icon) {
 		this.icon = icon;
@@ -399,7 +399,8 @@ public class AgregarEdicionCurso extends JInternalFrame {
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//limpio todo
+				limpiar();
+				setVisible(false);
 			}
 		});
 		btnCancelar.setBounds(57, 401, 117, 25);
@@ -408,6 +409,7 @@ public class AgregarEdicionCurso extends JInternalFrame {
 		JButton btnAceptar = new JButton("Aceptar");
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				AgregarEdicionCursoAceptarActionPerformed(e);
 				//llamo a altaEdicionCurso y hago arreglos necesarios
 			}
 		});
@@ -418,20 +420,41 @@ public class AgregarEdicionCurso extends JInternalFrame {
 		lblDocentes.setBounds(35, 360, 70, 15);
 		getContentPane().add(lblDocentes);
 		
-		textField = new JTextField();
-		textField.setBounds(123, 358, 145, 19);
-		getContentPane().add(textField);
-		textField.setColumns(10);
+		nombreDocente = new JTextField();
+		nombreDocente.setBounds(123, 358, 145, 19);
+		getContentPane().add(nombreDocente);
+		nombreDocente.setColumns(10);
 		
 		JButton btnAgregar = new JButton("Agregar");
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//llamo funcion que agrega a un ArrayList de Docentes que luego
-				//uso en el altaEdicionCurso
+				//uso en el altaEdicionCurso(uso el textField de arriba)
 			}
 		});
 		btnAgregar.setBounds(296, 355, 117, 25);
 		getContentPane().add(btnAgregar);
 
 	}
+	
+	private void limpiar() {
+		this.nombreCurso.setText("");
+		this.nombreEdicion.setText("");
+		this.nombreDocente.setText("");
+		this.fiDia.setSelectedItem("1");
+		this.fiMes.setSelectedItem("1");
+		this.fiAnio.setSelectedItem("1992");
+		this.ffDia.setSelectedItem("1");
+		this.ffMes.setSelectedItem("1");
+		this.ffAnio.setSelectedItem("1992");
+		this.fpDia.setSelectedItem("1");
+		this.fpMes.setSelectedItem("1");
+		this.fpAnio.setSelectedItem("1992");
+	}
+	
+	private void AgregarEdicionCursoAceptarActionPerformed(ActionEvent e) {
+		
+	}
 }
+
+

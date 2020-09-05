@@ -16,11 +16,10 @@ public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso
 	private boolean tieneCupos;//no lo uso
 	private Integer cupos;//no lo uso
 	private DtEdicion edicion;
-	private Curso c;
 	
 	@Override
 	public ArrayList<DtCursoBase> seleccionarInstituto(String instituto) {
-		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
+		ManejadorInstituto mI = ManejadorInstituto.getInstancia();//falta controlar que exista el instituto
 		Instituto i = mI.find(instituto);
 		this.instituto = i.getNombre();
 		return i.getCursos();
@@ -28,13 +27,11 @@ public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso
 	
 	@Override
 	public void altaEdicionCurso(String curso, String nombre, DtFecha fechaI, DtFecha fechaF, ArrayList<String> docentes, boolean tieneCupos, Integer cupos, DtFecha fechaPub) throws EdicionRepetida, CursoNoExiste {
-		//si tieneCupos es false, seteo cupos en 0
-		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
+		ManejadorInstituto mI = ManejadorInstituto.getInstancia();//falta controlar que exista el instituto
 		Instituto i = mI.find(this.instituto);
 		this.curso = curso;
 		ManejadorCurso mC = ManejadorCurso.getInstancia();
-		c = mC.find(curso);
-		if (c != null) {
+		if (mC.find(curso) != null) {
 			throw new CursoNoExiste("El curso" + curso + " no esta en el sistema");
 		}
 		for (DtCursoBase dtC: i.getCursos()) {
@@ -42,16 +39,20 @@ public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso
 				throw new CursoNoExiste("El curso" + curso + " no esta en este instituto");
 			}
 		}
-		for (DtEdicionBase e: c.getEdiciones()) {//revisar
+		for (DtEdicionBase e: mC.find(curso).getEdiciones()) {
 			if (e.getNombre() == nombre) {
 				throw new EdicionRepetida("La edicion " + nombre + " ya se encuentra integrada al curso");
 			}
 		}
-		edicion = new DtEdicion(nombre, fechaI, fechaF, tieneCupos, cupos, fechaPub);
+		if (!tieneCupos) {
+			Integer misCupos = 0;
+			edicion = new DtEdicion(nombre, fechaI, fechaF, tieneCupos, misCupos, fechaPub);
+		} else 	edicion = new DtEdicion(nombre, fechaI, fechaF, tieneCupos, cupos, fechaPub);
+		
 		DtEdicionBase eBase = new DtEdicionBase(nombre);
-		c.getEdiciones().add(eBase);
+		mC.find(curso).getEdiciones().add(eBase);
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
-		for (Usuario u: mU.getUsuarios()) {//creo que esta bien
+		for (Usuario u: mU.getUsuarios()) {
 			if (u instanceof Docente) {
 				for (String nick: docentes) {
 					if (u.getNick() == nick) {
