@@ -163,8 +163,8 @@ public class AgregarCurso extends JInternalFrame {
 		scrollPane.setBounds(325, 70, 180, 280);
 		getContentPane().add(scrollPane);
 		
-		JList sourceList = new JList((ListModel) null);
-		scrollPane.setViewportView(sourceList);
+		/*JList sourceList = new JList((ListModel) null);
+		scrollPane.setViewportView(sourceList);*/
 		
 		JButton addButton = new JButton("Agregar >");
 		addButton.setBounds(513, 150, 98, 25);
@@ -183,8 +183,8 @@ public class AgregarCurso extends JInternalFrame {
 		scrollPane_1.setBounds(616, 70, 180, 280);
 		getContentPane().add(scrollPane_1);
 		
-		JList sourceList_1 = new JList((ListModel) null);
-		scrollPane_1.setViewportView(sourceList_1);
+		/*JList sourceList_1 = new JList((ListModel) null);
+		scrollPane_1.setViewportView(sourceList_1);*/
 		
 
 	}

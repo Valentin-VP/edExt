@@ -30,7 +30,7 @@ public class ManejadorUsuario {
 		return retorno;
 	}
 	public void removerUsuario(Usuario usuario) {
-		//hacer remove
+		//
 	}
 	public void agregarUsuario(Usuario usuario) {
 		this.usuarios.add(usuario);
