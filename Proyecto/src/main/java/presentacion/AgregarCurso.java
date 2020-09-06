@@ -24,6 +24,12 @@ import java.awt.event.ActionEvent;
 import interfaces.IControladorAltaCurso;
 import excepciones.InstitutoInexistente;
 import excepciones.CursoRepetido;
+import javax.swing.JRadioButton;
+import javax.swing.JPanel;
+import javax.swing.JList;
+import javax.swing.JScrollPane;
+import javax.swing.ListModel;
+import java.awt.Component;
 
 public class AgregarCurso extends JInternalFrame {
 	
@@ -42,7 +48,7 @@ public class AgregarCurso extends JInternalFrame {
 	public AgregarCurso(IControladorAltaCurso icon) {
 		this.icon = icon;
 		setTitle("Alta Curso");
-		setBounds(100, 100, 361, 427);
+		setBounds(100, 100, 834, 440);
 		getContentPane().setLayout(null);
 		
 		JLabel altaCursoInstitutoLabel = new JLabel("Instituto");
@@ -135,6 +141,51 @@ public class AgregarCurso extends JInternalFrame {
 		altaCursoUrltextField.setBounds(110, 262, 203, 22);
 		getContentPane().add(altaCursoUrltextField);
 		
+		JLabel altaCursotienePreviasLabel = new JLabel("Tiene Previas");
+		altaCursotienePreviasLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		altaCursotienePreviasLabel.setBounds(345, 13, 107, 28);
+		getContentPane().add(altaCursotienePreviasLabel);
+		
+		JRadioButton altaCursoPreviasButtonNo = new JRadioButton("No");
+		altaCursoPreviasButtonNo.setBounds(460, 16, 43, 25);
+		getContentPane().add(altaCursoPreviasButtonNo);
+		
+		JRadioButton altaCursoPreviasButtonSi = new JRadioButton("Si");
+		altaCursoPreviasButtonSi.setBounds(507, 16, 43, 25);
+		getContentPane().add(altaCursoPreviasButtonSi);
+		
+		JLabel sourceLabel = new JLabel("Cursos Disponibles");
+		sourceLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		sourceLabel.setBounds(325, 54, 139, 16);
+		getContentPane().add(sourceLabel);
+		
+		JScrollPane scrollPane = new JScrollPane((Component) null);
+		scrollPane.setBounds(325, 70, 180, 280);
+		getContentPane().add(scrollPane);
+		
+		JList sourceList = new JList((ListModel) null);
+		scrollPane.setViewportView(sourceList);
+		
+		JButton addButton = new JButton("Agregar >");
+		addButton.setBounds(513, 150, 98, 25);
+		getContentPane().add(addButton);
+		
+		JButton removeButton = new JButton("< Remover");
+		removeButton.setBounds(510, 275, 101, 25);
+		getContentPane().add(removeButton);
+		
+		JLabel destLabel = new JLabel("Previas Seleccionadas");
+		destLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		destLabel.setBounds(616, 54, 155, 16);
+		getContentPane().add(destLabel);
+		
+		JScrollPane scrollPane_1 = new JScrollPane((Component) null);
+		scrollPane_1.setBounds(616, 70, 180, 280);
+		getContentPane().add(scrollPane_1);
+		
+		JList sourceList_1 = new JList((ListModel) null);
+		scrollPane_1.setViewportView(sourceList_1);
+		
 
 	}
 	// String instituto, String nombre, String descripcion, 
@@ -146,17 +197,7 @@ public class AgregarCurso extends JInternalFrame {
 		String descripcion = this.altaCursoDescripciontextField.getText();
 		String duracion = this.altaCursoDuraciontextField.getText();
 		int cantHoras = 0;
-		try {
-			cantHoras = Integer.parseInt(this.altaCursoCantHorastextField.getText());
-		}catch(NumberFormatException e) {
-			JOptionPane.showMessageDialog(this, e.getMessage(), "Alta Curso", JOptionPane.ERROR_MESSAGE);
-		}
 		int creditos = 0;
-		try {
-			creditos = Integer.parseInt(this.altaCursoCreditostextField.getText());
-		}catch(NumberFormatException e) {
-			JOptionPane.showMessageDialog(this, e.getMessage(), "Alta Curso", JOptionPane.ERROR_MESSAGE);
-		}
 		String url = this.altaCursoUrltextField.getText();
 		LocalDate date = LocalDate.now();
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("D-M-u");
@@ -181,10 +222,27 @@ public class AgregarCurso extends JInternalFrame {
 	}
 	
 	private boolean checkeo(String instituto, String nombre, String descripcion, String duracion, int cantHoras, int creditos, String url) {
-		if(instituto.isEmpty() || nombre.isEmpty() || nombre.isEmpty() || descripcion.isEmpty() || duracion.isEmpty() || cantHoras == 0 || creditos == 0){
-			JOptionPane.showConfirmDialog(this, "No puede haber campos vacios", "Alta Curso", 
+		if(instituto.isEmpty() || nombre.isEmpty() || nombre.isEmpty() || descripcion.isEmpty() || duracion.isEmpty()){
+			JOptionPane.showMessageDialog(this, "No puede haber campos vacios", "Alta Curso", 
 			JOptionPane.ERROR_MESSAGE);
 			return false;
+		}else {
+			try {
+				cantHoras = Integer.parseInt(this.altaCursoCantHorastextField.getText());
+			}catch(NumberFormatException e) {
+				JOptionPane.showMessageDialog(this, "Valor incorrecto en cantHoras", "Alta Curso", JOptionPane.ERROR_MESSAGE);
+			}
+			try {
+				creditos = Integer.parseInt(this.altaCursoCreditostextField.getText());
+			}catch(NumberFormatException e) {
+				JOptionPane.showMessageDialog(this, "Valor incorrecto en creditos", "Alta Curso", JOptionPane.ERROR_MESSAGE);
+			}
+			int duracionint = Integer.parseInt(duracion);
+			if(cantHoras == 0 || creditos == 0 || duracionint == 0) {
+				JOptionPane.showMessageDialog(this, "No se permiten valores iguales a 0", "Alta Curso", 
+				JOptionPane.ERROR_MESSAGE);
+				return false;
+			}
 		}
 		return true;
 	}

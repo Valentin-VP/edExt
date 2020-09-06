@@ -4,10 +4,9 @@ import interfaces.IControladorAltaCurso;
 import excepciones.CursoRepetido;
 import excepciones.InstitutoInexistente;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import datatypes.DtCurso;
-import datatypes.DtTime;
 import datatypes.DtFecha;
 
 public class ControladorAltaCurso implements IControladorAltaCurso{
@@ -20,7 +19,7 @@ public class ControladorAltaCurso implements IControladorAltaCurso{
 	private int creditos;
 	private DtFecha fechaR;
 	private String url;
-	private List<String> previas;
+	private ArrayList<Curso> previas;
 	
 	public ControladorAltaCurso() {
 		super();
@@ -87,11 +86,11 @@ public class ControladorAltaCurso implements IControladorAltaCurso{
 		this.fechaR = fechaR;
 	}
 	
-	public List<String> getPrevias() {
+	public ArrayList<Curso> getPrevias() {
 		return previas;
 	}
 
-	public void setPrevias(List<String> previas) {
+	public void setPrevias(ArrayList<Curso> previas) {
 		this.previas=previas;
 	}
 	
@@ -104,14 +103,14 @@ public class ControladorAltaCurso implements IControladorAltaCurso{
 	}
 	
 	public void agregarPrevia(String previa) {
-		this.previas.add(previa);
+		ManejadorCurso mC = ManejadorCurso.getInstancia();
+		Curso cursoprevio = mC.find(previa);
+		if(cursoprevio != null ) {
+			this.previas.add(cursoprevio);
+		}
+		
 	}
 	
-	@Override
-	public boolean modificarAltacurso(String nombre) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 	@Override
 	public void confirmarAltaCurso() {
 		ManejadorCurso mC = ManejadorCurso.getInstancia();

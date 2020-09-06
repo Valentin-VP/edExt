@@ -15,11 +15,11 @@ public class Curso {
 	private Integer creditos;
 	private DtFecha fechaR;
 	private String url;
-	private ArrayList<String> previas = new ArrayList<>();//visibilidad <-- Modifiqu� a String en vez de Curso, verificar (rcastro)
-	private ArrayList<DtEdicionBase> ediciones = new ArrayList<>();//visibilidad
+	private ArrayList<Curso> previas = new ArrayList<>();
+	private ArrayList<DtEdicionBase> ediciones = new ArrayList<>();
 	
 	public Curso(String nombre, String descripcion, String duracion, int cantHoras, Integer creditos, DtFecha fechaR,
-			String url, List<String> list) {
+			String url, ArrayList<Curso> previas) {
 		super();
 		this.nombre = nombre;
 		this.descripcion = descripcion;
@@ -28,6 +28,7 @@ public class Curso {
 		this.creditos = creditos;
 		this.fechaR = fechaR;
 		this.url = url;
+		this.previas = previas;
 	}
 
 	public Curso() {
@@ -90,12 +91,12 @@ public class Curso {
 		this.url = url;
 	}
 
-	public ArrayList<String> getPrevias() {
+	public ArrayList<Curso> getPrevias() {
 		//Controlar en llamado si tiene elementos
 		return previas;
 	}
 
-	public void setPrevias(ArrayList<String> previas) {
+	public void setPrevias(ArrayList<Curso> previas) {
 		this.previas = previas;
 	}
 

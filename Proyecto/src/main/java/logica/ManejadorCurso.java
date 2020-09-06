@@ -7,7 +7,7 @@ import datatypes.DtTime;
 
 public class ManejadorCurso {
 	private static ManejadorCurso instancia = null;
-	private List<Curso> cursos = new ArrayList<>();
+	private ArrayList<Curso> cursos = new ArrayList<>();
 	
 	public ManejadorCurso() {}
 	
@@ -29,7 +29,7 @@ public class ManejadorCurso {
 	public void agregarCurso(Curso curso) {
 		cursos.add(curso);
 	}
-//desde aca es mio  ***Completé este método como ejemplo de los find con List, pero podemos dejarlo como Map (rcastro)***
+
 	public Curso find(String curso) {
 		Curso retorno = null;
 		for(Curso c: cursos) {
@@ -40,11 +40,11 @@ public class ManejadorCurso {
 		return retorno;
 	}
 	
-	public List<Curso> getCursos() { // Modifiqué a List en vez de Map, revisar en equipo (rcastro)
+	public ArrayList<Curso> getCursos() { 
 		return cursos;
 	}
 
-	public void setCursos(List<Curso> cursos) { // Modifiqué a List en vez de Map, revisar en equipo (rcastro)
+	public void setCursos(ArrayList<Curso> cursos) { 
 		this.cursos = cursos;
 	}
 }
