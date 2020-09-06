@@ -109,6 +109,7 @@ public class AgregarCurso extends JInternalFrame {
 		altaCursoCancelarButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
+				limpiar();
 			}
 		});
 		altaCursoCancelarButton.setBounds(12, 316, 97, 25);
@@ -119,6 +120,7 @@ public class AgregarCurso extends JInternalFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				// altaCurso
 				altaCursoAceptarActionPerformed(arg0);
+				limpiar();
 			}
 		});
 		btnNewButton.setBounds(216, 316, 97, 25);

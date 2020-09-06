@@ -184,6 +184,8 @@ public class AgregarUsuario extends JInternalFrame {
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				agregarUsuarioAceptarActionPerformed(arg0);
+				setVisible(false);
+				limpiar();
 			}
 		});
 		btnAceptar.setBounds(293, 400, 117, 25);
@@ -210,7 +212,6 @@ public class AgregarUsuario extends JInternalFrame {
 			} catch (UsuarioRepetido e) {
 				JOptionPane.showMessageDialog(this, e.getMessage(), "Agregar Usuario", JOptionPane.ERROR_MESSAGE);
 			}
-			//limpiar();
 		}
 	}	
 
