@@ -16,6 +16,12 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 	private Date fecha;
 	
 	@Override
+	public ArrayList<Instituto> listarInstitutos() {
+		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
+		return mI.getInstitutos();
+	}
+
+	@Override
 	public ArrayList<DtCursoBase> seleccionarInstituto(String nomIns) {
 		this.nomIns = nomIns;
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
@@ -41,7 +47,7 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		Usuario u = mU.getUsuario(nick, correo);
 		if(u instanceof Estudiante) {
-		//return ((Estudiante) u).existeInscripcion(nombreEd);
+			return ((Estudiante) u).existeInscripcion(nombreEd);
 		}
 		return false;
 	}
@@ -75,7 +81,7 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		Usuario u = mU.getUsuario(nick, correo);
 		if(u instanceof Estudiante) {
-		//	((Estudiante) u).agregarInscripcionEd(ie);
+			((Estudiante) u).agregarInscripcionEd(ie);
 		}
 	}
 

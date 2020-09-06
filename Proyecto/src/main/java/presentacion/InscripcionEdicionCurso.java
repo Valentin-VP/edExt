@@ -6,10 +6,12 @@ import javax.swing.JInternalFrame;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 
 import datatypes.DtCursoBase;
+import datatypes.DtEdicionBase;
 import interfaces.IControladorInscripcionEdicionCurso;
 import logica.Instituto;
 import logica.ManejadorInstituto;
@@ -17,7 +19,11 @@ import logica.ManejadorInstituto;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.awt.event.ActionEvent;
 
 public class InscripcionEdicionCurso extends JInternalFrame {
@@ -31,6 +37,7 @@ public class InscripcionEdicionCurso extends JInternalFrame {
 	private JComboBox<String> comboBoxDia;
 	private JComboBox<String> comboBoxMes;
 	private JComboBox<String> comboBoxAnio;
+	private JTextPane textPane;
 	
 	public InscripcionEdicionCurso(IControladorInscripcionEdicionCurso icon) {
 		this.icon = icon;
@@ -49,19 +56,25 @@ public class InscripcionEdicionCurso extends JInternalFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				ArrayList<DtCursoBase> cursos = icon.seleccionarInstituto(comboBoxIns.getSelectedItem().toString());
-				ArrayList<String> nombresCursos = new ArrayList<String>();
+				//ArrayList<String> nombresCursos = new ArrayList<String>();
 				for(DtCursoBase dts:cursos) {
-					nombresCursos.add(dts.getNombre());
+					comboBoxCur.addItem(dts.getNombre());//nombresCursos.add(dts.getNombre());
 				}
 				
-				DefaultComboBoxModel<String> modelclases = new DefaultComboBoxModel<String>(nombresCursos.toArray(new String[0]));
-				comboBoxCur.setModel(modelclases);
+				//DefaultComboBoxModel<String> modelclases = new DefaultComboBoxModel<String>(nombresCursos.toArray(new String[0]));
+				//comboBoxCur.setModel(modelclases);
 			}
 		});
 		comboBoxIns.setBounds(90, 60, 119, 20);
 		getContentPane().add(comboBoxIns);
 		
 		JComboBox comboBoxCur = new JComboBox();
+		comboBoxCur.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DtEdicionBase dteb = icon.seleccionarCurso(comboBoxIns.getSelectedItem().toString());
+				textPane.setText(dteb.getNombre());
+			}
+		});
 		comboBoxCur.setBounds(90, 116, 119, 20);
 		getContentPane().add(comboBoxCur);
 		comboBoxCur.setEnabled(false);
@@ -90,7 +103,19 @@ public class InscripcionEdicionCurso extends JInternalFrame {
 		JButton btnNewButton = new JButton("Aceptar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				icon.seleccionarInstituto(comboBoxIns.getSelectedItem().toString());
+				SimpleDateFormat sdf = new SimpleDateFormat("dd/M/yyyy");
+				String f = comboBoxDia.getSelectedItem().toString() + "/" + comboBoxMes.getSelectedItem().toString() + "/" + comboBoxAnio.getSelectedItem().toString();
+				Date fecha;
+				try {
+					fecha = sdf.parse(f);
+					if (icon.registrarInscripcionEd(comboBoxEst.getSelectedItem().toString(), "", textPane.getText(), fecha) == true) {
+						//JOptionPane.showOptionDialog(this, "Desea Modificar", "Modificar Inscripcion", EXIT_ON_CLOSE);
+					}
+					//icon.modificarInscripcionEd(comboBoxEst.getSelectedItem().toString(), "", textPane.getText(), fecha);
+					icon.confirmar();
+				} catch (ParseException e1) {
+					e1.printStackTrace();
+				}
 			}
 		});
 		btnNewButton.setBounds(277, 288, 89, 23);
@@ -99,6 +124,7 @@ public class InscripcionEdicionCurso extends JInternalFrame {
 		JButton btnNewButton_1 = new JButton("Cancelar");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				icon.cancelar();
 				comboBoxCur.setEnabled(false);
 				comboBoxCur.removeAll();
 				setVisible(false);
@@ -132,33 +158,29 @@ public class InscripcionEdicionCurso extends JInternalFrame {
 		getContentPane().add(lblNewLabel_3);
 		
 		JLabel lblNewLabel_4 = new JLabel("Anio");
-		lblNewLabel_4.setBounds(231, 205, 46, 14);
+		lblNewLabel_4.setBounds(235, 210, 46, 14);
 		getContentPane().add(lblNewLabel_4);
 		
 	}
-		
+	
 	public void inicializarComboBoxes() {
-		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 		
-		ArrayList<Instituto> cursos = mI.getInstitutos();
-		ArrayList<String> nombresInstitutos = new ArrayList<String>();
-		for(Instituto i:cursos) {
-			nombresInstitutos.add(i.getNombre());
+		ArrayList<Instituto> institutos = icon.listarInstitutos();
+		//ArrayList<String> nombresInstitutos = new ArrayList<String>();
+		for(Instituto i:institutos) {
+			comboBoxIns.addItem(i.getNombre());//nombresInstitutos.add(i.getNombre());
 		}
 		
-		
-		DefaultComboBoxModel<String> modelclases = new DefaultComboBoxModel<String>(nombresInstitutos.toArray(new String[0]));
-		comboBoxIns.setModel(modelclases);
+		//DefaultComboBoxModel<String> modelclases = new DefaultComboBoxModel<String>(nombresInstitutos.toArray(new String[0]));
+		//comboBoxIns.setModel(modelclases);
 		//DefaultComboBoxModel<Integer> modelclases = new DefaultComboBoxModel<Integer>(icon.);
 		//comboBoxIDClase.setModel(modelclases);
-
 		
 		/*
 		DefaultComboBoxModel dml= new DefaultComboBoxModel();
 		for (int i = 0; i < <ArrayList>.size(); i++) {
 		  dml.addElement(<ArrayList>.get(i).getField());
 		}
-
 		<ComboBoxName>.setModel(dml);
 		*/
 		
