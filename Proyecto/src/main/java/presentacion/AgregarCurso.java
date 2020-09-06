@@ -120,7 +120,6 @@ public class AgregarCurso extends JInternalFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				// altaCurso
 				altaCursoAceptarActionPerformed(arg0);
-				limpiar();
 			}
 		});
 		btnNewButton.setBounds(216, 316, 97, 25);
@@ -173,10 +172,11 @@ public class AgregarCurso extends JInternalFrame {
 				this.icon.altaCurso(instituto, nombre, descripcion, duracion, cantHoras, creditos, url, fechaR);
 				this.icon.confirmarAltaCurso();
 				JOptionPane.showMessageDialog(this, "El curso fue ingresado con exito", "Alta Curso", JOptionPane.INFORMATION_MESSAGE);
+				limpiar();
+				setVisible(false);
 			}catch(CursoRepetido | InstitutoInexistente e) {
 				JOptionPane.showMessageDialog(this, e.getMessage(), "Alta Curso", JOptionPane.ERROR_MESSAGE);
 			}
-			limpiar();
 		}
 	}
 	

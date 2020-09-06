@@ -21,7 +21,7 @@ public class ManejadorUsuario {
 		Usuario retorno = null;
 		if (!usuarios.isEmpty()){
 			for (Usuario u: usuarios) {
-				if ((u.getNick().equals(nick)) || (u.getCorreo().equals(correo))) {
+				if ((u.getNick().toLowerCase().equals(nick.toLowerCase())) || (u.getCorreo().toLowerCase().equals(correo.toLowerCase()))) {
 					retorno = u;
 				}
 			}
