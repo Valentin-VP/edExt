@@ -16,7 +16,7 @@ public class ControladorAltaCurso implements IControladorAltaCurso{
 	private String nombre;
 	private String descripcion;
 	private String duracion;
-	private DtTime cantHoras;
+	private int cantHoras;
 	private int creditos;
 	private DtFecha fechaR;
 	private String url;
@@ -27,7 +27,7 @@ public class ControladorAltaCurso implements IControladorAltaCurso{
 	}
 	
 	public ControladorAltaCurso(DtCurso curso, String instituto, String nombre, String descripcion, String duracion,
-			DtTime cantHoras, int creditos, DtFecha fechaR) {
+			int cantHoras, int creditos, DtFecha fechaR) {
 		super();
 		this.curso = curso;
 		this.instituto = instituto;
@@ -68,10 +68,10 @@ public class ControladorAltaCurso implements IControladorAltaCurso{
 	public void setDuracion(String duracion) {
 		this.duracion = duracion;
 	}
-	public DtTime getCantHoras() {
+	public int getCantHoras() {
 		return cantHoras;
 	}
-	public void setCantHoras(DtTime cantHoras) {
+	public void setCantHoras(int cantHoras) {
 		this.cantHoras = cantHoras;
 	}
 	public int getCreditos() {
@@ -126,7 +126,7 @@ public class ControladorAltaCurso implements IControladorAltaCurso{
 		setNombre(null);
 		setDescripcion(null);
 		setDuracion(null);
-		setCantHoras(null);
+		setCantHoras(0);
 		setCreditos(0);
 		setUrl(null);
 		setFechaR(null);
@@ -134,7 +134,7 @@ public class ControladorAltaCurso implements IControladorAltaCurso{
 	
 	
 	@Override
-	public void altaCurso(String instituto, String nombre, String descripcion, String duracion, DtTime cantHoras, int creditos, String url, DtFecha fechaR) throws CursoRepetido, InstitutoInexistente {
+	public void altaCurso(String instituto, String nombre, String descripcion, String duracion, int cantHoras, int creditos, String url, DtFecha fechaR) throws CursoRepetido, InstitutoInexistente {
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 		if(!mI.existeInstituto(instituto)) {
 			throw new InstitutoInexistente("No existe el Instituto seleccionado.");
@@ -143,7 +143,6 @@ public class ControladorAltaCurso implements IControladorAltaCurso{
 		if(mC.exists(nombre)) {
 			throw new CursoRepetido("Ya existe un Curso con ese nombre en el Instituto seleccionado.");
 		}
-		// Se superan controles de operacion, es seguro guardar variables
 		setInstituto(instituto);
 		setNombre(nombre);
 		setDescripcion(descripcion);
@@ -152,7 +151,7 @@ public class ControladorAltaCurso implements IControladorAltaCurso{
 		setCreditos(creditos);
 		setUrl(url);
 		setFechaR(fechaR);
-
+		
 	} 
 	
 	

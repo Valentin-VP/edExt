@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class DtCurso extends DtCursoBase {
 	private String descripcion;
 	private String duracion;
-	private DtTime cantHoras;
+	private int cantHoras;
 	private Integer creditos;
 	private DtFecha fechaR;
 	private String url;
@@ -16,7 +16,7 @@ public class DtCurso extends DtCursoBase {
 		super();
 	}
 
-	public DtCurso(String descripcion, String duracion, DtTime cantHoras, Integer creditos, DtFecha fechaR, String url, String nombre, ArrayList<DtEdicionBase> ediciones, ArrayList<DtProgramaBase> programas) {
+	public DtCurso(String descripcion, String duracion, int cantHoras, Integer creditos, DtFecha fechaR, String url, String nombre, ArrayList<DtEdicionBase> ediciones, ArrayList<DtProgramaBase> programas) {
 		super(nombre);
 		this.descripcion = descripcion;
 		this.duracion = duracion;
@@ -44,11 +44,11 @@ public class DtCurso extends DtCursoBase {
 		this.duracion = duracion;
 	}
 	
-	public DtTime getCantHoras() {
+	public int getCantHoras() {
 		return cantHoras;
 	}
 	
-	public void setCantHoras(DtTime cantHoras) {
+	public void setCantHoras(int cantHoras) {
 		this.cantHoras = cantHoras;
 	}
 	

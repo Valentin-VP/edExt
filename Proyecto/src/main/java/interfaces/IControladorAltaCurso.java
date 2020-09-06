@@ -7,7 +7,7 @@ import excepciones.InstitutoInexistente;
 import datatypes.DtFecha;
 
 public interface IControladorAltaCurso {
-	public void altaCurso (String instituto,String nombre,String descripcion,String duracion,DtTime cantHoras,int creditos,String url,DtFecha fechaR) throws CursoRepetido, InstitutoInexistente;
+	public void altaCurso (String instituto,String nombre,String descripcion,String duracion,int cantHoras,int creditos,String url,DtFecha fechaR) throws CursoRepetido, InstitutoInexistente;
 	
 	public boolean modificarAltacurso (String nombre);
 	

@@ -41,7 +41,7 @@ public class ControladorConsultaCurso implements IControladorConsultaCurso{
 
 	@Override
 	public DtCurso consultarCurso(String curso) {
-		ArrayList<DtProgramaBase> programas=null;
+		ArrayList<DtProgramaBase> programas = new ArrayList<>();
 		Curso temp;
 		ManejadorCurso mC = ManejadorCurso.getInstancia();
 		temp = mC.find(curso);

@@ -11,14 +11,14 @@ public class Curso {
 	private String nombre;
 	private String descripcion;
 	private String duracion;
-	private DtTime cantHoras;
+	private int cantHoras;
 	private Integer creditos;
 	private DtFecha fechaR;
 	private String url;
 	private ArrayList<String> previas = new ArrayList<>();//visibilidad <-- Modifiqu� a String en vez de Curso, verificar (rcastro)
 	private ArrayList<DtEdicionBase> ediciones = new ArrayList<>();//visibilidad
 	
-	public Curso(String nombre, String descripcion, String duracion, DtTime cantHoras, Integer creditos, DtFecha fechaR,
+	public Curso(String nombre, String descripcion, String duracion, int cantHoras, Integer creditos, DtFecha fechaR,
 			String url, List<String> list) {
 		super();
 		this.nombre = nombre;
@@ -58,11 +58,11 @@ public class Curso {
 		this.duracion = duracion;
 	}
 
-	public DtTime getCantHoras() {
+	public int getCantHoras() {
 		return cantHoras;
 	}
 
-	public void setCantHoras(DtTime cantHoras) {
+	public void setCantHoras(int cantHoras) {
 		this.cantHoras = cantHoras;
 	}
 
