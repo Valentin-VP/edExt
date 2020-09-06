@@ -32,7 +32,7 @@ public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso
 		Instituto i = mI.find(this.instituto);
 		this.curso = curso;
 		ManejadorCurso mC = ManejadorCurso.getInstancia();
-		if (mC.find(curso) != null) {
+		if (mC.find(curso) != null) {//cambios
 			throw new CursoNoExiste("El curso" + curso + " no esta en el sistema");
 		}
 		for (DtCursoBase dtC: i.getCursos()) {
