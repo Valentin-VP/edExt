@@ -9,7 +9,7 @@ import interfaces.IControladorInscripcionEdicionCurso;
 
 public class ControladorInscripcionEdicionCurso implements IControladorInscripcionEdicionCurso{
 	private String nomIns;
-	private String nomC;
+	private String nomCurso;
 	private String nick;
 	private String correo;
 	private String nombreEd;
@@ -30,34 +30,36 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 	}
 
 	@Override
-	public DtEdicionBase seleccionarCurso(String nomC) {
-		this.nomC = nomC;
+	public DtEdicionBase seleccionarCurso(String nomCurso) {
+		this.nomCurso = nomCurso;
 		ManejadorCurso mC = ManejadorCurso.getInstancia();
-		Curso c = mC.find(nomC);
-		return c.getEdicionVigente();
+		Curso c = mC.find(nomCurso);
+		DtEdicionBase dteb = c.getEdicionVigente();
+		this.nombreEd = dteb.getNombre();
+		return dteb;
 	}
 
 	@Override
-	public boolean registrarInscripcionEd(String nick, String correo, String nombreEd, Date fecha) {
+	public boolean registrarInscripcionEd(String nick, String correo, String nomCurso, Date fecha) {
 		// TODO Auto-generated method stub
 		this.nick = nick;
 		this.correo = correo;
-		this.nombreEd = nombreEd;
+		this.nomCurso = nomCurso;
 		this.fecha = fecha;
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		Usuario u = mU.getUsuario(nick, correo);
 		if(u instanceof Estudiante) {
-			return ((Estudiante) u).existeInscripcion(nombreEd);
+			return ((Estudiante) u).existeInscripcion(nomCurso);
 		}
 		return false;
 	}
 
 	@Override
-	public void modificarInscripcionEd(String nick, String correo, String nombreEd, Date fecha) {
+	public void modificarInscripcionEd(String nick, String correo, String nomCurso, Date fecha) {
 		// TODO Auto-generated method stub
 		this.nick = nick;
 		this.correo = correo;
-		this.nombreEd = nombreEd;
+		this.nomCurso = nomCurso;
 		this.fecha = fecha;
 	}
 
@@ -65,7 +67,7 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 	public void cancelar() {
 		// TODO Auto-generated method stub
 		this.nomIns=null;
-		this.nomC=null;
+		this.nomCurso=null;
 		this.nick=null;
 		this.correo=null;
 		this.nombreEd=null;
@@ -79,7 +81,7 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 		Edicion ed = mE.find(this.nombreEd);
 		InscripcionEd ie=new InscripcionEd(this.fecha,ed);
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
-		Usuario u = mU.getUsuario(nick, correo);
+		Usuario u = mU.getUsuario(this.nick, this.correo);
 		if(u instanceof Estudiante) {
 			((Estudiante) u).agregarInscripcionEd(ie);
 		}

@@ -12,11 +12,11 @@ public interface IControladorInscripcionEdicionCurso {
 	
 	public ArrayList<DtCursoBase> seleccionarInstituto(String nomIns);
 	
-	public DtEdicionBase seleccionarCurso(String nomC);
+	public DtEdicionBase seleccionarCurso(String nomCurso);
 	
-	public boolean registrarInscripcionEd(String nick, String correo, String nombreEd, Date fecha);
+	public boolean registrarInscripcionEd(String nick, String correo, String nomCurso, Date fecha);
 	
-	public void modificarInscripcionEd(String nick, String correo, String nombreEd, Date fecha);
+	public void modificarInscripcionEd(String nick, String correo, String nomCurso, Date fecha);
 	
 	public void cancelar();
 	
