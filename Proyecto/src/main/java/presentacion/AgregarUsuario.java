@@ -3,22 +3,27 @@ package presentacion;
 //import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 
 import interfaces.IControladorAltaUsuario;
+import logica.Instituto;
+import logica.ManejadorInstituto;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
+//import javax.swing.DefaultComboBoxModel;
 //import javax.swing.JToggleButton;
 
 import excepciones.UsuarioRepetido;
 
 import datatypes.DtFecha;
 import javax.swing.JButton;
+import javax.swing.JRadioButton;
 //import javax.swing.JSpinner;
 //import javax.swing.SpinnerNumberModel;
 //import java.awt.Choice;
@@ -36,6 +41,8 @@ public class AgregarUsuario extends JInternalFrame {
 	private JComboBox<String> diaNac;
 	private JComboBox<String> mesNac;
 	private JComboBox<String> anioNac;
+	private JComboBox<String> comboBoxInstitutos;
+	private JRadioButton DocenteSi;
 
 	public AgregarUsuario(IControladorAltaUsuario icon) {
 		this.icon = icon;
@@ -177,7 +184,7 @@ public class AgregarUsuario extends JInternalFrame {
 				setVisible(false);
 			}
 		});
-		btnCancelar.setBounds(79, 400, 117, 25);
+		btnCancelar.setBounds(60, 408, 117, 25);
 		getContentPane().add(btnCancelar);
 		
 		JButton btnAceptar = new JButton("Aceptar");
@@ -188,8 +195,40 @@ public class AgregarUsuario extends JInternalFrame {
 				limpiar();
 			}
 		});
-		btnAceptar.setBounds(293, 400, 117, 25);
+		btnAceptar.setBounds(301, 408, 117, 25);
 		getContentPane().add(btnAceptar);
+		
+		JLabel lblDocente = new JLabel("Docente");
+		lblDocente.setBounds(58, 347, 70, 15);
+		getContentPane().add(lblDocente);
+		
+		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
+		ArrayList<Instituto> institutos = mI.getInstitutos();
+		String[] array = new String[500];
+		for (Instituto i: institutos) {
+			int p = 0;
+			array[p] = i.getNombre();
+			p++;
+		}
+
+		JComboBox<String> comboBoxInstitutos = new JComboBox<String>();
+		for (int i = 0; i < institutos.size(); i++) {//no me carga los institutos en el comboBox
+			comboBoxInstitutos.addItem(array[i]);
+		}
+		comboBoxInstitutos.setEnabled(false);
+		comboBoxInstitutos.setBounds(254, 342, 145, 24);
+		getContentPane().add(comboBoxInstitutos);
+		
+		JRadioButton DocenteSi = new JRadioButton("");
+		DocenteSi.setSelected(false);
+		DocenteSi.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				DocenteSi.setSelected(true);
+				comboBoxInstitutos.setEnabled(true);
+			}
+		});
+		DocenteSi.setBounds(165, 343, 59, 23);
+		getContentPane().add(DocenteSi);
 
 	}
 	
@@ -199,14 +238,22 @@ public class AgregarUsuario extends JInternalFrame {
 		String correo = this.textFieldCorreo.getText();
 		String nombre = this.textFieldNombre.getText();
 		String apellido = this.textFieldApellido.getText();
+		boolean esDocente = this.DocenteSi.isSelected();
+		String instituto = (String) this.comboBoxInstitutos.getSelectedItem();
 	    String dia = (String) this.diaNac.getSelectedItem();
 		String mes = (String) this.mesNac.getSelectedItem();
 		String anio = (String) this.anioNac.getSelectedItem();
 		DtFecha fechaNac = new DtFecha(Integer.parseInt(dia), Integer.parseInt(mes), Integer.parseInt(anio));
 		if (checkeo()) {
 			try {
-				this.icon.altaUsuario(nickname, correo, nombre, apellido, fechaNac);
-				this.icon.confirmarAltaUsuario();
+				if (esDocente) {
+					this.icon.altaUsuario(nickname, correo, nombre, apellido, fechaNac);
+					this.icon.seleccionarInstituto(instituto);
+					this.icon.confirmarAltaUsuario(esDocente);
+				} else {
+					this.icon.altaUsuario(nickname, correo, nombre, apellido, fechaNac);
+					this.icon.confirmarAltaUsuario(esDocente);
+				}
 				JOptionPane.showMessageDialog(this, "El Usuario se ha agregado con exito", "Agregar Usuario",
 				JOptionPane.INFORMATION_MESSAGE);
 			} catch (UsuarioRepetido e) {
@@ -236,6 +283,7 @@ public class AgregarUsuario extends JInternalFrame {
 		this.textFieldCorreo.setText("");
 		this.textFieldNombre.setText("");
 		this.textFieldApellido.setText("");
+		this.comboBoxInstitutos.setSelectedIndex(0);
 		this.diaNac.setSelectedItem("1");
 		this.mesNac.setSelectedItem("1");
 		this.anioNac.setSelectedItem("1992");

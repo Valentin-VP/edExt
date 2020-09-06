@@ -10,6 +10,7 @@ import datatypes.DtUsuarioBase;
 import datatypes.DtCursoBase;
 import datatypes.DtFecha;
 import interfaces.IControladorAltaEdicionCurso;
+import excepciones.InstitutoInexistente;
 
 public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso {
 	private String instituto;
@@ -19,51 +20,61 @@ public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso
 	private DtEdicion edicion;
 	
 	@Override
-	public ArrayList<DtCursoBase> seleccionarInstituto(String instituto) {
-		ManejadorInstituto mI = ManejadorInstituto.getInstancia();//falta controlar que exista el instituto
+	public ArrayList<DtCursoBase> seleccionarInstituto(String instituto) throws InstitutoInexistente {
+		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 		Instituto i = mI.find(instituto);
+		if (i.equals(null)) {
+			throw new InstitutoInexistente("El instituto " + instituto + " no esta en el sistema");
+		}
 		this.instituto = i.getNombre();
 		return i.getCursos();
 	}
 	
 	@Override
-	public void altaEdicionCurso(String curso, String nombre, DtFecha fechaI, DtFecha fechaF, ArrayList<DtUsuarioBase> docentes, boolean tieneCupos, Integer cupos, DtFecha fechaPub) throws EdicionRepetida, CursoNoExiste {
-		ManejadorInstituto mI = ManejadorInstituto.getInstancia();//falta controlar que exista el instituto
+	public void altaEdicionCurso(String curso, String nombre, DtFecha fechaI, DtFecha fechaF, ArrayList<DtUsuarioBase> docentes, boolean tieneCupos, Integer cupos, DtFecha fechaPub) throws EdicionRepetida, CursoNoExiste, InstitutoInexistente {
+		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 		Instituto i = mI.find(this.instituto);
+		if (i.equals(null)) {
+			throw new InstitutoInexistente("El instituto " + instituto + " no esta en el sistema");
+		}
 		this.curso = curso;
 		ManejadorCurso mC = ManejadorCurso.getInstancia();
-		if (mC.find(curso) != null) {//cambios
+		if (mC.find(curso) == null) {
 			throw new CursoNoExiste("El curso" + curso + " no esta en el sistema");
 		}
-		for (DtCursoBase dtC: i.getCursos()) {
-			if (dtC.getNombre() == curso) {
-				throw new CursoNoExiste("El curso" + curso + " no esta en este instituto");
-			}
+		DtCursoBase dtC = new DtCursoBase(curso);
+		boolean cursoValido = false;
+		if (i.getCursos().contains(dtC)) {
+			cursoValido = true;
 		}
-		for (DtEdicionBase e: mC.find(curso).getEdiciones()) {
-			if (e.getNombre() == nombre) {
-				throw new EdicionRepetida("La edicion " + nombre + " ya se encuentra integrada al curso");
+		if (!cursoValido) {
+			throw new CursoNoExiste("El curso " + curso + " no esta en el instituto");
+		} else {
+			for (DtEdicionBase e: mC.find(curso).getEdiciones()) {
+				if (e.getNombre().equals(nombre)) {
+					throw new EdicionRepetida("La edicion " + nombre + " ya se encuentra integrada al curso");
+				}
 			}
-		}
-		if (!tieneCupos) {
-			Integer misCupos = 0;
-			edicion = new DtEdicion(nombre, fechaI, fechaF, tieneCupos, misCupos, fechaPub);
-		} else 	edicion = new DtEdicion(nombre, fechaI, fechaF, tieneCupos, cupos, fechaPub);
-		
-		DtEdicionBase eBase = new DtEdicionBase(nombre);
-		mC.find(curso).getEdiciones().add(eBase);
-		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
-		for (Usuario u: mU.getUsuarios()) {
-			if (u instanceof Docente) {
-				for (DtUsuarioBase nick: docentes) {
-					if (u.getNick() == nick.getNick()) {
-						if (!((Docente) u).find(this.edicion)) {
-							((Docente) u).getEdiciones().add(edicion);
-						} else throw new EdicionRepetida("El docente " + nick + " ya dicta la edicion " + this.edicion.getNombre());
+			if (!tieneCupos) {
+				Integer misCupos = 0;
+				edicion = new DtEdicion(nombre, fechaI, fechaF, tieneCupos, misCupos, fechaPub);
+			} else 	{ edicion = new DtEdicion(nombre, fechaI, fechaF, tieneCupos, cupos, fechaPub); }
+			
+			DtEdicionBase eBase = new DtEdicionBase(nombre);
+			mC.find(curso).getEdiciones().add(eBase);//ojo
+			ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+			for (Usuario u: mU.getUsuarios()) {
+				if (u instanceof Docente) {
+					for (DtUsuarioBase nick: docentes) {
+						if (u.getNick() == nick.getNick()) {
+							if (!((Docente) u).find(this.edicion)) {
+								((Docente) u).getEdiciones().add(edicion);//ojo
+							} else throw new EdicionRepetida("El docente " + nick + " ya dicta la edicion " + this.edicion.getNombre());
+						}
 					}
 				}
 			}
-		}
+		}	
 	}
 
 	@Override

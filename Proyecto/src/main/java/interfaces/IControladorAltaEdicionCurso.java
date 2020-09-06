@@ -7,11 +7,12 @@ import excepciones.EdicionRepetida;
 import excepciones.EdicionSinCupos;
 import excepciones.CursoNoExiste;
 import datatypes.DtUsuarioBase;
+import excepciones.InstitutoInexistente;
 
 public interface IControladorAltaEdicionCurso {
-	public ArrayList<DtCursoBase> seleccionarInstituto(String instituto);
+	public ArrayList<DtCursoBase> seleccionarInstituto(String instituto) throws InstitutoInexistente;
 	
-	public void altaEdicionCurso(String curso, String nombre, DtFecha fechaI, DtFecha fechaF, ArrayList<DtUsuarioBase> docentes, boolean tieneCupos, Integer cupos, DtFecha fechaPub) throws EdicionRepetida, CursoNoExiste;
+	public void altaEdicionCurso(String curso, String nombre, DtFecha fechaI, DtFecha fechaF, ArrayList<DtUsuarioBase> docentes, boolean tieneCupos, Integer cupos, DtFecha fechaPub) throws EdicionRepetida, CursoNoExiste, InstitutoInexistente;
 	
 	public void ingresarCupos(Integer cupos) throws EdicionSinCupos;
 	
