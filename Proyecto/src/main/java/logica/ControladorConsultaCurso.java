@@ -11,13 +11,11 @@ import datatypes.DtTime;
 import excepciones.InstitutoInexistente;
 import interfaces.IControladorConsultaCurso;
 import excepciones.InstitutoInexistente;
+import excepciones.InstitutoSinCursos;
 
 public class ControladorConsultaCurso implements IControladorConsultaCurso{
-	private ArrayList<DtCursoBase> cursos;
-	/*
-	 * private DtCurso curso; private ArrayList<DtEdicionBase> ediciones; private
-	 * 
-	 */
+	private ArrayList<DtCursoBase> cursos = new ArrayList<DtCursoBase>();
+
 	public ControladorConsultaCurso() {
 		super();
 	}
@@ -30,10 +28,16 @@ public class ControladorConsultaCurso implements IControladorConsultaCurso{
 		this.cursos = cursos;
 	}
 	@Override
-	public ArrayList<DtCursoBase> listarCursosInstituto(String instituto) throws InstitutoInexistente{
+	public ArrayList<DtCursoBase> listarCursosInstituto(String instituto) throws InstitutoInexistente, InstitutoSinCursos{
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
+		Instituto institutoI = mI.find(instituto);
 		if(!mI.existeInstituto(instituto)) {
 			throw new InstitutoInexistente("No existe el Instituto seleccionado.");
+		}
+		ArrayList <DtCursoBase> cursosinstituto = new ArrayList <DtCursoBase>();
+		cursosinstituto = mI.find(instituto).getCursos();
+		if(cursosinstituto.isEmpty()) {
+			throw new InstitutoSinCursos("El Instituto seleccionado no posee cursos aún");
 		}
 		setCursos(mI.find(instituto).getCursos());
 		return this.cursos;

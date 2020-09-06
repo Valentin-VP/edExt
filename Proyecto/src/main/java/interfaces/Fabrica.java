@@ -5,6 +5,7 @@ import logica.ControladorAltaInstituto;
 import logica.ControladorAltaUsuario;
 import logica.ControladorConsultaEdicionCurso;
 import logica.ControladorModificarDatosUsuario;
+import logica.ControladorConsultaCurso;
 
 public class Fabrica {
 	private static Fabrica instancia = null;
@@ -23,6 +24,10 @@ public class Fabrica {
 	
 	public IControladorAltaCurso getIControladorAltaCurso() {
 		return new ControladorAltaCurso();
+	}
+	
+	public IControladorConsultaCurso getIControladorConsultaCurso() {
+		return new ControladorConsultaCurso();
 	}
 	
 	public IControladorAltaEdicionCurso getIControladorAltaEdicionCurso() {

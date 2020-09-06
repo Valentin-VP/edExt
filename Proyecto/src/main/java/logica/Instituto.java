@@ -5,7 +5,7 @@ import datatypes.DtCursoBase;
 
 public class Instituto {
 	private String nombre;
-	private ArrayList<DtCursoBase> cursos;
+	private ArrayList<DtCursoBase> cursos = new ArrayList<DtCursoBase>();
 	
 	public Instituto() {
 		super();

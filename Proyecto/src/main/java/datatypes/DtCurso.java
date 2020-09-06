@@ -9,8 +9,8 @@ public class DtCurso extends DtCursoBase {
 	private Integer creditos;
 	private DtFecha fechaR;
 	private String url;
-	private ArrayList<DtEdicionBase> ediciones;
-	private ArrayList<DtProgramaBase> programas;
+	private ArrayList<DtEdicionBase> ediciones = new ArrayList<>();
+	private ArrayList<DtProgramaBase> programas = new ArrayList<>();
 	
 	public DtCurso() {
 		super();
