@@ -11,9 +11,9 @@ public interface IControladorInscripcionEdicionCurso {
 	
 	public DtEdicionBase seleccionarCurso(String nomC);
 	
-	public boolean registrarInscripcionEd(String nick, String nombreEd, Date fecha);
+	public boolean registrarInscripcionEd(String nick, String correo, String nombreEd, Date fecha);
 	
-	public void modificarInscripcionEd(String nick, String nombreEd, Date fecha);
+	public void modificarInscripcionEd(String nick, String correo, String nombreEd, Date fecha);
 	
 	public void cancelar();
 	
