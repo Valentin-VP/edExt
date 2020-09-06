@@ -14,7 +14,11 @@ import javax.swing.DefaultComboBoxModel;
 //import javax.swing.JToggleButton;
 import javax.swing.JRadioButton;
 import javax.swing.SwingConstants;
+
+import datatypes.DtUsuarioBase;
+
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 //import javax.swing.JList;
 //import javax.swing.JScrollBar;
@@ -23,6 +27,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JTextArea;
 import javax.swing.JTable;
@@ -54,7 +59,11 @@ public class AgregarEdicionCurso extends JInternalFrame {
 	private JComboBox<String> fpDia;
 	private JComboBox<String> fpMes;
 	private JComboBox<String> fpAnio;
-	private JTextField nombreDocente;
+	private JTextField nickDocente;
+	private JTextField correoDocente;
+	
+	//arreglo de docentes
+	ArrayList<DtUsuarioBase> docentes = new ArrayList<>();
 	
 	public AgregarEdicionCurso(IControladorAltaEdicionCurso icon) {
 		this.icon = icon;
@@ -65,7 +74,7 @@ public class AgregarEdicionCurso extends JInternalFrame {
         setClosable(true);
         setTitle("Alta de Edicion de un Curso");
  
-		setBounds(100, 100, 511, 491);
+		setBounds(100, 100, 511, 525);
 		getContentPane().setLayout(null);
 		
 		JLabel lblCurso = new JLabel("Curso");
@@ -403,7 +412,7 @@ public class AgregarEdicionCurso extends JInternalFrame {
 				setVisible(false);
 			}
 		});
-		btnCancelar.setBounds(57, 401, 117, 25);
+		btnCancelar.setBounds(56, 432, 117, 25);
 		getContentPane().add(btnCancelar);
 		
 		JButton btnAceptar = new JButton("Aceptar");
@@ -413,34 +422,47 @@ public class AgregarEdicionCurso extends JInternalFrame {
 				//llamo a altaEdicionCurso y hago arreglos necesarios
 			}
 		});
-		btnAceptar.setBounds(296, 401, 117, 25);
+		btnAceptar.setBounds(296, 432, 117, 25);
 		getContentPane().add(btnAceptar);
 		
 		JLabel lblDocentes = new JLabel("Docentes");
-		lblDocentes.setBounds(35, 360, 70, 15);
+		lblDocentes.setBounds(12, 334, 70, 15);
 		getContentPane().add(lblDocentes);
 		
-		nombreDocente = new JTextField();
-		nombreDocente.setBounds(123, 358, 145, 19);
-		getContentPane().add(nombreDocente);
-		nombreDocente.setColumns(10);
+		nickDocente = new JTextField();
+		nickDocente.setBounds(119, 358, 145, 19);
+		getContentPane().add(nickDocente);
+		nickDocente.setColumns(10);
 		
 		JButton btnAgregar = new JButton("Agregar");
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//llamo funcion que agrega a un ArrayList de Docentes que luego
-				//uso en el altaEdicionCurso(uso el textField de arriba)
+				AgregarEdicionCursoAgregarActionPerformed(e);
 			}
 		});
 		btnAgregar.setBounds(296, 355, 117, 25);
 		getContentPane().add(btnAgregar);
+		
+		correoDocente = new JTextField();
+		correoDocente.setColumns(10);
+		correoDocente.setBounds(119, 401, 145, 19);
+		getContentPane().add(correoDocente);
+		
+		JLabel lblNick = new JLabel("nick");
+		lblNick.setBounds(12, 361, 70, 15);
+		getContentPane().add(lblNick);
+		
+		JLabel lblCorreo = new JLabel("correo");
+		lblCorreo.setBounds(12, 403, 70, 15);
+		getContentPane().add(lblCorreo);
 
 	}
 	
-	private void limpiar() {
+	protected void limpiar() {
 		this.nombreCurso.setText("");
 		this.nombreEdicion.setText("");
-		this.nombreDocente.setText("");
+		this.nickDocente.setText("");
+		this.correoDocente.setText("");
 		this.fiDia.setSelectedItem("1");
 		this.fiMes.setSelectedItem("1");
 		this.fiAnio.setSelectedItem("1992");
@@ -452,9 +474,22 @@ public class AgregarEdicionCurso extends JInternalFrame {
 		this.fpAnio.setSelectedItem("1992");
 	}
 	
-	private void AgregarEdicionCursoAceptarActionPerformed(ActionEvent e) {
-		
+	protected void AgregarEdicionCursoAgregarActionPerformed(ActionEvent e) {
+		String nick = this.nickDocente.getText();
+		String correo = this.correoDocente.getText();
+		if (nick.isEmpty() || correo.isEmpty()) {
+			JOptionPane.showMessageDialog(this, "No puede haber campos vacios", "Agregar Usuario", 
+					JOptionPane.ERROR_MESSAGE);
+		} else {
+			DtUsuarioBase user = new DtUsuarioBase(nick, correo);
+			docentes.add(user);
+		}
 	}
+	
+	protected void AgregarEdicionCursoAceptarActionPerformed(ActionEvent e) {
+		//un aceptar mas y despues lidiar con la logica
+	}
+	
 }
 
 

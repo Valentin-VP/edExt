@@ -17,7 +17,7 @@ public class ControladorModificarDatosUsuario implements IControladorModificarDa
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		ArrayList<DtUsuarioBase> usuarios = null;
 		for (Usuario u: mU.getUsuarios()) {
-			DtUsuarioBase dtUsuarioBase = new DtUsuarioBase(u.getNombre());
+			DtUsuarioBase dtUsuarioBase = new DtUsuarioBase(u.getNick(), u.getCorreo());
 			usuarios.add(dtUsuarioBase);
 		}
 		return usuarios;

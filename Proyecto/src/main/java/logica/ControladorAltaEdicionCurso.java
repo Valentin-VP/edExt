@@ -6,6 +6,7 @@ import excepciones.EdicionRepetida;
 import excepciones.EdicionSinCupos;
 import excepciones.CursoNoExiste;
 import datatypes.DtEdicionBase;
+import datatypes.DtUsuarioBase;
 import datatypes.DtCursoBase;
 import datatypes.DtFecha;
 import interfaces.IControladorAltaEdicionCurso;
@@ -26,7 +27,7 @@ public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso
 	}
 	
 	@Override
-	public void altaEdicionCurso(String curso, String nombre, DtFecha fechaI, DtFecha fechaF, ArrayList<String> docentes, boolean tieneCupos, Integer cupos, DtFecha fechaPub) throws EdicionRepetida, CursoNoExiste {
+	public void altaEdicionCurso(String curso, String nombre, DtFecha fechaI, DtFecha fechaF, ArrayList<DtUsuarioBase> docentes, boolean tieneCupos, Integer cupos, DtFecha fechaPub) throws EdicionRepetida, CursoNoExiste {
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();//falta controlar que exista el instituto
 		Instituto i = mI.find(this.instituto);
 		this.curso = curso;
@@ -54,8 +55,8 @@ public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		for (Usuario u: mU.getUsuarios()) {
 			if (u instanceof Docente) {
-				for (String nick: docentes) {
-					if (u.getNick() == nick) {
+				for (DtUsuarioBase nick: docentes) {
+					if (u.getNick() == nick.getNick()) {
 						if (!((Docente) u).find(this.edicion)) {
 							((Docente) u).getEdiciones().add(edicion);
 						} else throw new EdicionRepetida("El docente " + nick + " ya dicta la edicion " + this.edicion.getNombre());

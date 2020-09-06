@@ -1,23 +1,33 @@
 package datatypes;
 
 public class DtUsuarioBase {
-	private String nombre;
+	private String nick;
+	private String correo;
 
 	public DtUsuarioBase() {
 		super();
 	}
 
-	public DtUsuarioBase(String nombre) {
+	public DtUsuarioBase(String nick, String correo) {
 		super();
-		this.nombre = nombre;
+		this.nick = nick;
+		this.correo = correo;
 	}
 
-	public String getNombre() {
-		return nombre;
+	public String getNick() {
+		return nick;
 	}
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public void setNick(String nick) {
+		this.nick = nick;
+	}
+
+	public String getCorreo() {
+		return correo;
+	}
+
+	public void setCorreo(String correo) {
+		this.correo = correo;
 	}
 	
 }
