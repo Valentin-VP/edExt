@@ -19,7 +19,7 @@ public class ManejadorCurso {
 	
 	public boolean exists(String nombre) {
 		for(Curso c: cursos) {
-			if(c.getNombre()==nombre) {
+			if(c.getNombre().equals(nombre)) {
 				return true;
 			}
 		}
@@ -33,7 +33,7 @@ public class ManejadorCurso {
 	public Curso find(String curso) {
 		Curso retorno = null;
 		for(Curso c: cursos) {
-			if(c.getNombre()==curso) {
+			if(c.getNombre().equals(curso)) {
 				retorno =c ;
 			}
 		}

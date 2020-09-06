@@ -25,7 +25,7 @@ import interfaces.IControladorAltaCurso;
 import excepciones.InstitutoInexistente;
 import excepciones.CursoRepetido;
 
-public class AltaCurso extends JInternalFrame {
+public class AgregarCurso extends JInternalFrame {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -39,14 +39,14 @@ public class AltaCurso extends JInternalFrame {
 	private JTextField altaCursoUrltextField;
 
 
-	public AltaCurso(IControladorAltaCurso icon) {
+	public AgregarCurso(IControladorAltaCurso icon) {
 		this.icon = icon;
 		setTitle("Alta Curso");
 		setBounds(100, 100, 361, 427);
 		getContentPane().setLayout(null);
 		
 		JLabel altaCursoInstitutoLabel = new JLabel("Instituto");
-		altaCursoInstitutoLabel.setFont(new Font("Dubai", Font.PLAIN, 18));
+		altaCursoInstitutoLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		altaCursoInstitutoLabel.setBounds(12, 13, 86, 28);
 		getContentPane().add(altaCursoInstitutoLabel);
 		
@@ -56,7 +56,7 @@ public class AltaCurso extends JInternalFrame {
 		altaCursoInstitutotextField.setColumns(10);
 		
 		JLabel altaCursoCustoLabel = new JLabel("Nombre");
-		altaCursoCustoLabel.setFont(new Font("Dubai", Font.PLAIN, 18));
+		altaCursoCustoLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		altaCursoCustoLabel.setBounds(12, 54, 86, 28);
 		getContentPane().add(altaCursoCustoLabel);
 		
@@ -66,7 +66,7 @@ public class AltaCurso extends JInternalFrame {
 		getContentPane().add(altaCursoNombretextField);
 		
 		JLabel altaCursoDescripcionLabel = new JLabel("Descripcion");
-		altaCursoDescripcionLabel.setFont(new Font("Dubai", Font.PLAIN, 18));
+		altaCursoDescripcionLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		altaCursoDescripcionLabel.setBounds(12, 95, 86, 28);
 		getContentPane().add(altaCursoDescripcionLabel);
 		
@@ -76,7 +76,7 @@ public class AltaCurso extends JInternalFrame {
 		getContentPane().add(altaCursoDescripciontextField);
 		
 		JLabel altaCursoDuracionLabel = new JLabel("Duracion");
-		altaCursoDuracionLabel.setFont(new Font("Dubai", Font.PLAIN, 18));
+		altaCursoDuracionLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		altaCursoDuracionLabel.setBounds(12, 136, 93, 28);
 		getContentPane().add(altaCursoDuracionLabel);
 		
@@ -86,7 +86,7 @@ public class AltaCurso extends JInternalFrame {
 		getContentPane().add(altaCursoDuraciontextField);
 		
 		JLabel altaCursoCantHorasLabel = new JLabel("Cant. Horas");
-		altaCursoCantHorasLabel.setFont(new Font("Dubai", Font.PLAIN, 18));
+		altaCursoCantHorasLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		altaCursoCantHorasLabel.setBounds(12, 177, 93, 28);
 		getContentPane().add(altaCursoCantHorasLabel);
 		
@@ -96,7 +96,7 @@ public class AltaCurso extends JInternalFrame {
 		getContentPane().add(altaCursoCantHorastextField);
 		
 		JLabel altaCursoCreditosLabel = new JLabel("Creditos");
-		altaCursoCreditosLabel.setFont(new Font("Dubai", Font.PLAIN, 18));
+		altaCursoCreditosLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		altaCursoCreditosLabel.setBounds(12, 218, 93, 28);
 		getContentPane().add(altaCursoCreditosLabel);
 		
@@ -106,10 +106,15 @@ public class AltaCurso extends JInternalFrame {
 		getContentPane().add(altaCursoCreditostextField);
 		
 		JButton altaCursoCancelarButton = new JButton("Cancelar");
+		altaCursoCancelarButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+			}
+		});
 		altaCursoCancelarButton.setBounds(12, 316, 97, 25);
 		getContentPane().add(altaCursoCancelarButton);
 		
-		JButton btnNewButton = new JButton("Confirmar");
+		JButton btnNewButton = new JButton("Aceptar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				// altaCurso
@@ -120,7 +125,7 @@ public class AltaCurso extends JInternalFrame {
 		getContentPane().add(btnNewButton);
 		
 		JLabel altaCursoUrlLabel = new JLabel("URL");
-		altaCursoUrlLabel.setFont(new Font("Dubai", Font.PLAIN, 18));
+		altaCursoUrlLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		altaCursoUrlLabel.setBounds(12, 259, 93, 28);
 		getContentPane().add(altaCursoUrlLabel);
 		
@@ -164,12 +169,10 @@ public class AltaCurso extends JInternalFrame {
 		if(checkeo(instituto,nombre,descripcion,duracion,cantHoras,creditos,url)) {
 			try {
 				this.icon.altaCurso(instituto, nombre, descripcion, duracion, cantHoras, creditos, url, fechaR);
-				int reply = JOptionPane.showConfirmDialog(this, "Datos ingresados correctamente. Desea confirmar?", "Alta Curso", JOptionPane.YES_NO_OPTION);
-				if (reply == JOptionPane.YES_OPTION) {
-					this.icon.confirmarAltaCurso();
-				}
+				this.icon.confirmarAltaCurso();
+				JOptionPane.showMessageDialog(this, "El curso fue ingresado con exito", "Alta Curso", JOptionPane.INFORMATION_MESSAGE);
 			}catch(CursoRepetido | InstitutoInexistente e) {
-				JOptionPane.showConfirmDialog(this, e.getMessage(), "Alta Curso", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, e.getMessage(), "Alta Curso", JOptionPane.ERROR_MESSAGE);
 			}
 			limpiar();
 		}

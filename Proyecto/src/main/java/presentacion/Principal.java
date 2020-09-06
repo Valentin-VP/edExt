@@ -31,9 +31,10 @@ import javax.swing.JTable;
 public class Principal {
 	
 	private JFrame frame;
-	private AgregarInstituto agregarInstitutoInternalFrame;
 	private AgregarEdicionCurso agregarEdicionCursoInternalFrame;
 	private AgregarUsuario agregarUsuarioInternalFrame;
+	private AgregarCurso agregarCursoInternalFrame;
+	private AgregarInstituto agregarInstitutoInternalFrame;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -51,54 +52,63 @@ public class Principal {
 	public Principal() {
 		initialize();
 		
-		Fabrica fabrica = Fabrica.getInstancia();
-
 		//Dimension desktopSize = frame.getMaximumSize(); esto y lo de abajo es para dejar el internal frame en el medio
 		//Dimension jInternalFrameSize;
+	
 		
-		agregarInstitutoInternalFrame = new AgregarInstituto(fabrica.getIControladorAltaInstituto());
-		agregarInstitutoInternalFrame.setLocation(188, 105);
+		Fabrica fabrica = Fabrica.getInstancia();
+		
+		agregarInstitutoInternalFrame = new AgregarInstituto(fabrica.getIControladorAltaInstituto()); // Alta Instituto
+		agregarInstitutoInternalFrame.setBounds(255, 23, 335, 171);
 		frame.getContentPane().add(agregarInstitutoInternalFrame);
 		
-		/*agregarEdicionCursoInternalFrame = new AgregarEdicionCurso(fabrica.getIControladorAltaEdicionCurso());
-		agregarEdicionCursoInternalFrame.setLocation(188, 105);
-		frame.getContentPane().add(agregarEdicionCursoInternalFrame);*/
-		
-		agregarUsuarioInternalFrame = new AgregarUsuario(fabrica.getIControladorAltaUsuario());
-		agregarUsuarioInternalFrame.setLocation(188, 105);
+		agregarUsuarioInternalFrame = new AgregarUsuario(fabrica.getIControladorAltaUsuario());  //Alta usuario
+		agregarUsuarioInternalFrame.setLocation(124, 23);
 		frame.getContentPane().add(agregarUsuarioInternalFrame);
+		
+		agregarCursoInternalFrame = new AgregarCurso(fabrica.getIControladorAltaCurso());  //Alta Curso
+		agregarCursoInternalFrame.setLocation(651, 117);
+		frame.getContentPane().add(agregarCursoInternalFrame);
+		
+		
 	}
 
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 643, 478);
+		//frame.setExtendedState(JFrame.MAXIMIZED_BOTH); INICIAR MAXIMIZADO
+		frame.setBounds(100, 100, 1280, 720);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		JMenuBar menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
 		
-		JMenu mnAlltas = new JMenu("Altas");
-		menuBar.add(mnAlltas);
+		JMenu mnAltas = new JMenu("Altas");
+		menuBar.add(mnAltas);
 		
-		JMenuItem mntmNewMenuItem = new JMenuItem("Instituto");
-		mntmNewMenuItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {//mostrar internal frame para el nombre del instituto
+		JMenuItem mntmInstituto = new JMenuItem("Instituto");
+		mntmInstituto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent AEInstituo) {//mostrar internal frame para el nombre del instituto
 				agregarInstitutoInternalFrame.setVisible(true);
 			}
 		});
-		mnAlltas.add(mntmNewMenuItem);
+		mnAltas.add(mntmInstituto);
 		
 		JMenuItem mntmCurso = new JMenuItem("Curso");
-		mnAlltas.add(mntmCurso);
+		mntmCurso.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent AECurso) {
+				agregarCursoInternalFrame.setVisible(true);
+			}
+		});
+		mnAltas.add(mntmCurso);
 		
-		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Usuario");
-		mntmNewMenuItem_1.addActionListener(new ActionListener() {
+		JMenuItem mntmUsuario = new JMenuItem("Usuario");
+		mntmUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				agregarUsuarioInternalFrame.setVisible(true);
 			}
 		});
-		mnAlltas.add(mntmNewMenuItem_1);
+		mnAltas.add(mntmUsuario);
 		
 		JMenu mnInformacin = new JMenu("Informaci\u00F3n");
 		menuBar.add(mnInformacin);

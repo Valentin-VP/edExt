@@ -12,7 +12,7 @@ public class ManejadorInstituto {
     
     public boolean existeInstituto(String nombre) {
     	for(Instituto i: institutos) {
-    		if(i.getNombre()==nombre) {
+    		if(i.getNombre().equals(nombre)) {
     			return true;
     		}
     	}

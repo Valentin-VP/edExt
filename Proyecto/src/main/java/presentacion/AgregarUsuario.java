@@ -173,7 +173,8 @@ public class AgregarUsuario extends JInternalFrame {
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				agregarUsuarioCancelarActionPerformed(arg0);
+				limpiar();
+				setVisible(false);
 			}
 		});
 		btnCancelar.setBounds(79, 400, 117, 25);
@@ -190,10 +191,6 @@ public class AgregarUsuario extends JInternalFrame {
 
 	}
 	
-	protected void agregarUsuarioCancelarActionPerformed(ActionEvent arg0) {
-		limpiar();
-		setVisible(false);
-	}
 	
 	protected void agregarUsuarioAceptarActionPerformed(ActionEvent arg0) {
 		String nickname = this.textFieldNick.getText();
