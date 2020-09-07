@@ -4,6 +4,7 @@ import java.util.*;
 
 import datatypes.DtCurso;
 import datatypes.DtCursoBase;
+import datatypes.DtEdicionBase;
 import datatypes.DtProgramaBase;
 import excepciones.InstitutoInexistente;
 import excepciones.InstitutoSinCursos;
@@ -46,7 +47,8 @@ public class ControladorConsultaCurso implements IControladorConsultaCurso{
 
 	@Override
 	public DtCurso consultarCurso(String curso) {
-		ArrayList<DtProgramaBase> programas = new ArrayList<>();
+		ArrayList<DtProgramaBase> programas = new ArrayList<DtProgramaBase>();
+		ArrayList<DtEdicionBase> ediciones = new ArrayList<DtEdicionBase>();
 		Curso temp;
 		ManejadorCurso mC = ManejadorCurso.getInstancia();
 		temp = mC.find(curso);
@@ -60,7 +62,11 @@ public class ControladorConsultaCurso implements IControladorConsultaCurso{
 				}
 			}
 		}
-		return new DtCurso(temp.getDescripcion(),temp.getDuracion(),temp.getCantHoras(),temp.getCreditos(),temp.getFechaR(),temp.getUrl(),temp.getNombre(),temp.getEdiciones(),programas);
+		for(Edicion e: temp.getEdiciones()) {
+			DtEdicionBase dteb = new DtEdicionBase(e.getNombre());
+			ediciones.add(dteb);
+		}
+		return new DtCurso(temp.getDescripcion(),temp.getDuracion(),temp.getCantHoras(),temp.getCreditos(),temp.getFechaR(),temp.getUrl(),temp.getNombre(),ediciones,programas);
 	 }
 }	
 
