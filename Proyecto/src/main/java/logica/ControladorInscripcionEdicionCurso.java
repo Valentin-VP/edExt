@@ -15,6 +15,11 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 	private String nombreEd;
 	private Date fecha;
 	
+	public ControladorInscripcionEdicionCurso() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	@Override
 	public ArrayList<Instituto> listarInstitutos() {
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
