@@ -1,10 +1,10 @@
 package interfaces;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import datatypes.DtCursoBase;
 import datatypes.DtEdicionBase;
+import datatypes.DtFecha;
 import logica.Instituto;
 
 public interface IControladorInscripcionEdicionCurso {
@@ -14,9 +14,9 @@ public interface IControladorInscripcionEdicionCurso {
 	
 	public DtEdicionBase seleccionarCurso(String nomCurso);
 	
-	public boolean registrarInscripcionEd(String nick, String correo, String nomCurso, Date fecha);
+	public boolean registrarInscripcionEd(String nick, String correo, String nomCurso, DtFecha fecha);
 	
-	public void modificarInscripcionEd(String nick, String correo, String nomCurso, Date fecha);
+	public void modificarInscripcionEd(String nick, String correo, String nomCurso, DtFecha fecha);
 	
 	public void cancelar();
 	

@@ -1,17 +1,18 @@
 package logica;
 
-import java.util.*;
+import java.util.ArrayList;
 
+import datatypes.DtFecha;
 import datatypes.DtProgramaBase;
 
 public class ProgFormacion {
 	private String nombre;
 	private String desc;
-	private Date fechaI;
-	private Date fechaF;
-	private Date fechaAlta;
+	private DtFecha fechaI;
+	private DtFecha fechaF;
+	private DtFecha fechaAlta;
 	private ArrayList<Curso> cursos;
-	public ProgFormacion(String nombre, String desc, Date fechaI, Date fechaF, Date fechaAlta) {
+	public ProgFormacion(String nombre, String desc, DtFecha fechaI, DtFecha fechaF, DtFecha fechaAlta) {
 		super();
 		this.nombre = nombre;
 		this.desc = desc;
@@ -31,22 +32,22 @@ public class ProgFormacion {
 	public void setDesc(String desc) {
 		this.desc = desc;
 	}
-	public Date getFechaI() {
+	public DtFecha getFechaI() {
 		return fechaI;
 	}
-	public void setFechaI(Date fechaI) {
+	public void setFechaI(DtFecha fechaI) {
 		this.fechaI = fechaI;
 	}
-	public Date getFechaF() {
+	public DtFecha getFechaF() {
 		return fechaF;
 	}
-	public void setFechaF(Date fechaF) {
+	public void setFechaF(DtFecha fechaF) {
 		this.fechaF = fechaF;
 	}
-	public Date getFechaAlta() {
+	public DtFecha getFechaAlta() {
 		return fechaAlta;
 	}
-	public void setFechaAlta(Date fechaAlta) {
+	public void setFechaAlta(DtFecha fechaAlta) {
 		this.fechaAlta = fechaAlta;
 	}
 	public ArrayList<Curso> getCursos() {

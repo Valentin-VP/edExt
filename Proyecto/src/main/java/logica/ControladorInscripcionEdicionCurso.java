@@ -1,10 +1,10 @@
 package logica;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import datatypes.DtCursoBase;
 import datatypes.DtEdicionBase;
+import datatypes.DtFecha;
 import interfaces.IControladorInscripcionEdicionCurso;
 
 public class ControladorInscripcionEdicionCurso implements IControladorInscripcionEdicionCurso{
@@ -13,7 +13,7 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 	private String nick;
 	private String correo;
 	private String nombreEd;
-	private Date fecha;
+	private DtFecha fecha;
 	
 	public ControladorInscripcionEdicionCurso() {
 		super();
@@ -51,7 +51,7 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 	}
 
 	@Override
-	public boolean registrarInscripcionEd(String nick, String correo, String nomCurso, Date fecha) {
+	public boolean registrarInscripcionEd(String nick, String correo, String nomCurso, DtFecha fecha) {
 		// TODO Auto-generated method stub
 		this.nick = nick;
 		this.correo = correo;
@@ -66,7 +66,7 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 	}
 
 	@Override
-	public void modificarInscripcionEd(String nick, String correo, String nomCurso, Date fecha) {
+	public void modificarInscripcionEd(String nick, String correo, String nomCurso, DtFecha fecha) {
 		// TODO Auto-generated method stub
 		this.nick = nick;
 		this.correo = correo;

@@ -4,7 +4,7 @@ import java.util.*;
 
 public class ManejadorProgFormacion {
 	private static ManejadorProgFormacion instancia;
-	private ArrayList<ProgFormacion> programas;
+	private ArrayList<ProgFormacion> programas = new ArrayList<ProgFormacion>();
 	
 	public static ManejadorProgFormacion getInstancia() {
 		if(instancia == null)
@@ -13,9 +13,11 @@ public class ManejadorProgFormacion {
 	}
 	
 	public boolean exists(String nombre) {
-		for(ProgFormacion pf: programas) {
-			if(pf.getNombre()==nombre) {
-				return true;
+		if(programas != null) {
+			for(ProgFormacion pf: programas) {
+				if(pf.getNombre().equals(nombre)) {
+					return true;
+				}
 			}
 		}
 		return false;

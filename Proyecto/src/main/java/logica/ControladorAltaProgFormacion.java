@@ -1,14 +1,16 @@
 package logica;
 
 import java.util.Date;
+
+import datatypes.DtFecha;
 import interfaces.IControladorAltaProgFormacion;
 
 public class ControladorAltaProgFormacion implements IControladorAltaProgFormacion{
 	private String nombre;
 	private String descripcion;
-	private Date fechaI;
-	private Date fechaF;
-	private Date fechaA;
+	private DtFecha fechaI;
+	private DtFecha fechaF;
+	private DtFecha fechaA;
 	
 	public ControladorAltaProgFormacion() {
 		super();
@@ -16,7 +18,7 @@ public class ControladorAltaProgFormacion implements IControladorAltaProgFormaci
 	}
 
 	@Override
-	public boolean ingresarProgFormacion(String nom, String des, Date fechaI, Date fechaF, Date fechaA) {
+	public boolean ingresarProgFormacion(String nom, String des, DtFecha fechaI, DtFecha fechaF, DtFecha fechaA) {
 		// TODO Auto-generated method stub
 		this.nombre=nom;
 		this.descripcion=des;
@@ -28,7 +30,7 @@ public class ControladorAltaProgFormacion implements IControladorAltaProgFormaci
 	}
 	
 	@Override
-	public void modificarProgFormacion(String nom, String des, Date fechaI, Date fechaF, Date fechaA) {
+	public void modificarProgFormacion(String nom, String des, DtFecha fechaI, DtFecha fechaF, DtFecha fechaA) {
 		// TODO Auto-generated method stub
 		this.nombre=nom;
 		this.descripcion=des;

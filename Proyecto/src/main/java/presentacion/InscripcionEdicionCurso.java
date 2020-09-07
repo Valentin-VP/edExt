@@ -12,6 +12,7 @@ import javax.swing.JTextPane;
 
 import datatypes.DtCursoBase;
 import datatypes.DtEdicionBase;
+import datatypes.DtFecha;
 import interfaces.IControladorInscripcionEdicionCurso;
 import logica.Instituto;
 import logica.ManejadorInstituto;
@@ -114,26 +115,9 @@ public class InscripcionEdicionCurso extends JInternalFrame {
 		btnNewButton.setBounds(165, 350, 89, 23);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-				String f = comboBoxDia.getSelectedItem().toString() + "/" + comboBoxMes.getSelectedItem().toString() + "/" + comboBoxAnio.getSelectedItem().toString();
-				Date fecha;
-				
-				try {
-					fecha = sdf.parse(f);
-					
-					if (icon.registrarInscripcionEd(textFieldEst.getText(), textFieldCorreo.getText(), comboBoxCur.getSelectedItem().toString(), fecha) == true) {
-						int opcion = JOptionPane.showConfirmDialog(null, "Elige una opcion", "Modificar Inscripcion", JOptionPane.YES_NO_OPTION);
-							if(opcion == 0) {
-								icon.modificarInscripcionEd(textFieldEst.getText(), textFieldCorreo.getText(), comboBoxCur.getSelectedItem().toString(), fecha);
-							}
-					}
-					icon.confirmar();
-					
-				} catch (ParseException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				
+				InscripcionEdicionCursoAceptarActionPerformed(e);
+				setVisible(false);
+				limpiar();
 			}
 		});
 		getContentPane().add(btnNewButton);
@@ -143,13 +127,8 @@ public class InscripcionEdicionCurso extends JInternalFrame {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				icon.cancelar();
-				comboBoxCur.setEnabled(false);
-				comboBoxCur.removeAll();
 				setVisible(false);
-				//comboBoxDia.setSelectedIndex(0);;
-				//comboBoxMes.setSelectedIndex(0);;
-				//comboBoxAnio.setSelectedIndex(0);;
-				textFieldEd.setText("");
+				limpiar();
 			}
 		});
 		getContentPane().add(btnNewButton_1);
@@ -241,6 +220,44 @@ public class InscripcionEdicionCurso extends JInternalFrame {
 		getContentPane().add(lblNewLabel_1_2);
 		
 	}
+	
+	
+	
+	private void InscripcionEdicionCursoAceptarActionPerformed(ActionEvent e) {
+		String dia = (String) comboBoxDia.getSelectedItem();
+		String mes = (String) comboBoxMes.getSelectedItem();
+		String anio = (String) comboBoxAnio.getSelectedItem();
+		DtFecha fecha = new DtFecha(Integer.parseInt(dia),Integer.parseInt(mes),Integer.parseInt(anio));
+
+			if (icon.registrarInscripcionEd(textFieldEst.getText(), textFieldCorreo.getText(), comboBoxCur.getSelectedItem().toString(), fecha) == true) {
+				int opcion = JOptionPane.showConfirmDialog(null, "Elige una opcion", "Modificar Inscripcion", JOptionPane.YES_NO_OPTION);
+					if(opcion == 0) {
+						icon.modificarInscripcionEd(textFieldEst.getText(), textFieldCorreo.getText(), comboBoxCur.getSelectedItem().toString(), fecha);
+					}
+			}
+			icon.confirmar();
+		
+	}
+	
+	
+	private boolean checkeo(String nombre, String descripcion) {
+		if(nombre.isEmpty() || descripcion.isEmpty()){
+			JOptionPane.showMessageDialog(this, "No puede haber campos vacios", "Crear Programa", 
+			JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		return true;
+	}
+	
+	private void limpiar() {
+		textFieldEst.setText("");
+		textFieldCorreo.setText("");
+		comboBoxCur.setEnabled(false);
+		comboBoxCur.removeAll();
+	}
+	
+	
+	
 	
 	public void inicializarComboBoxes() {
 		
