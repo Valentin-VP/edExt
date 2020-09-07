@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class ManejadorInstituto {
     private static ManejadorInstituto instancia;
-    private ArrayList<Instituto> institutos = new ArrayList<>();
+    private ArrayList<Instituto> institutos = new ArrayList<Instituto>();
 
     public ManejadorInstituto() {}
     
