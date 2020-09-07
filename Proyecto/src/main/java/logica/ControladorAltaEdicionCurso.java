@@ -24,7 +24,7 @@ public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso
 		ArrayList <DtCursoBase> cursosinstituto = new ArrayList <DtCursoBase>();
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 		Instituto i = mI.find(instituto);
-		if (i.equals(null)) {
+		if (i == null) {//error????
 			throw new InstitutoInexistente("El instituto " + instituto + " no esta en el sistema");
 		}
 		this.instituto = i.getNombre();
@@ -45,18 +45,19 @@ public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso
 		}
 		this.curso = curso;
 		ManejadorCurso mC = ManejadorCurso.getInstancia();
-		if (mC.find(curso) == null) {
+		Curso c = mC.find(curso);
+		if (c == null) {
 			throw new CursoNoExiste("El curso" + curso + " no esta en el sistema");
 		}
-		DtCursoBase dtC = new DtCursoBase(curso);//
+		//DtCursoBase dtC = new DtCursoBase(curso);//
 		boolean cursoValido = false;
-		if (i.getCursos().contains(dtC)) {
+		if (i.getCursos().contains(c)) {
 			cursoValido = true;
 		}
 		if (!cursoValido) {
 			throw new CursoNoExiste("El curso " + curso + " no esta en el instituto");
 		} else {
-			for (Edicion e: mC.find(curso).getEdiciones()) {
+			for (Edicion e: c.getEdiciones()) {
 				if (e.getNombre().equals(nombre)) {
 					throw new EdicionRepetida("La edicion " + nombre + " ya se encuentra integrada al curso");
 				}
@@ -69,15 +70,15 @@ public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso
 			Edicion edi = new Edicion(edicion.getNombre(), edicion.getFechaI(), edicion.getFechaF(), edicion.isTieneCupos(), edicion.getCupo(), edicion.getFechaPub());
 			ArrayList<Edicion> edis = mC.find(curso).getEdiciones();
 			edis.add(edi);
-			mC.find(curso).setEdiciones(edis);
+			c.setEdiciones(edis);
 			ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 			for (Usuario u: mU.getUsuarios()) {
 				if (u instanceof Docente) {
-					for (DtUsuarioBase nick: docentes) {
-						if (u.getNick() == nick.getNick()) {
-							if (!((Docente) u).find(this.edicion)) {
+					for (DtUsuarioBase profe: docentes) {
+						if (u.getNick().equals(profe.getNick()) && u.getCorreo().equals(profe.getCorreo())) {
+							if (!((Docente) u).find(edi)) {
 								((Docente) u).agregarEdicion(edi);
-							} else throw new EdicionRepetida("El docente " + nick + " ya dicta la edicion " + this.edicion.getNombre());
+							} else throw new EdicionRepetida("El docente " + profe + " ya dicta la edicion " + this.edicion.getNombre());
 						}
 					}
 				}

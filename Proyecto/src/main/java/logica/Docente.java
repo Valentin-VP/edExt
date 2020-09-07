@@ -1,7 +1,7 @@
 package logica;
 
 import java.util.*;
-import datatypes.DtEdicion;
+//import datatypes.DtEdicion;
 import datatypes.DtFecha;
 
 public class Docente extends Usuario {
@@ -18,7 +18,7 @@ public class Docente extends Usuario {
 		super(nick, nombre, apellido, correo, fechaNac);
 	}
 	
-	public boolean find(DtEdicion edicion) {
+	public boolean find(Edicion edicion) {
 		for (Edicion e: ediciones) {
 			if (e.getNombre() == edicion.getNombre()) {
 				return true;
