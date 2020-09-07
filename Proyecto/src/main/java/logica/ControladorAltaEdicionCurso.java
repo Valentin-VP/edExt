@@ -118,8 +118,7 @@ public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso
 	@Override
 	public void confirmarAltaEdicion() {
 		ManejadorEdicion mE = ManejadorEdicion.getInstancia();
-		Edicion ed = new Edicion(edicion.getNombre(), edicion.getFechaI(), edicion.getFechaF(), edicion.isTieneCupos(), edicion.getCupo(), edicion.getFechaPub());
-		mE.getEdiciones().add(ed);
+		mE.agregarEdicion(edicion.getNombre(), edicion.getFechaI(), edicion.getFechaF(), edicion.isTieneCupos(), edicion.getCupo(), edicion.getFechaPub());
 	}
 
 }
