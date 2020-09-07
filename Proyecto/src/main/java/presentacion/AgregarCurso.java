@@ -56,6 +56,15 @@ public class AgregarCurso extends JInternalFrame {
 		setTitle("Alta Curso");
 		setBounds(100, 100, 561, 449);
 		getContentPane().setLayout(null);
+//		iconaux.prueba();
+//		try {
+//			ArrayList<DtCursoBase> temp = new ArrayList<DtCursoBase>(iconaux.listarCursosInstituto("caca"));
+//			System.out.println("Entra en try");
+//		} catch (InstitutoInexistente | InstitutoSinCursos e1) {
+//			// TODO Auto-generated catch block
+//			System.out.println(e1.getMessage());
+//			e1.printStackTrace();
+//		}
 		
 		JLabel altaCursoInstitutoLabel = new JLabel("Instituto");
 		altaCursoInstitutoLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -187,7 +196,7 @@ public class AgregarCurso extends JInternalFrame {
 			public void actionPerformed(ActionEvent e) {
 				altaCursoPreviasButtonSi.setSelected(true);
 				altaCursoPreviasButtonNo.setSelected(false);
-				populatePreviasList();
+				populatePreviasList(iconaux);
 				altaCursoPreviasList.setVisible(true);
 				//arrojar excepcion "Instituto invalido" en caso que el Instituto no sea correcto, y "Debe seleccionar un instituto" en caso que no se haya cargado nada.
 			}
@@ -264,16 +273,17 @@ public class AgregarCurso extends JInternalFrame {
 		this.altaCursoUrltextField.setText("");
 	}
 	
-	private void populatePreviasList() {
+	private void populatePreviasList(IControladorConsultaCurso iconaux) {
 		ArrayList<String> cursosdisponibles = new ArrayList<String>();
+		ArrayList<DtCursoBase> dtcursosbase = new ArrayList<DtCursoBase>();
 		try {
-			String instituto = this.altaCursoInstitutotextField.getText();
-			ArrayList<DtCursoBase> dtcursosbase = iconaux.listarCursosInstituto(instituto);
+			String instituto = (String) this.altaCursoInstitutotextField.getText();
+			dtcursosbase = iconaux.listarCursosInstituto(instituto);
 			for(DtCursoBase cb: dtcursosbase) {
 				 cursosdisponibles.add(cb.getNombre());
 			}
-		}catch(InstitutoInexistente | InstitutoSinCursos e) { // | NullPointerException
-			JOptionPane.showMessageDialog(this, e.getMessage(), "Alta Curso", JOptionPane.ERROR_MESSAGE);
+		}catch(InstitutoInexistente | InstitutoSinCursos ex) { // | NullPointerException
+			JOptionPane.showMessageDialog(this, ex.getMessage(), "Alta Curso", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 }

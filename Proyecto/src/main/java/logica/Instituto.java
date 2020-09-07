@@ -5,7 +5,7 @@ import datatypes.DtCursoBase;
 
 public class Instituto {
 	private String nombre;
-	private ArrayList<DtCursoBase> cursos = new ArrayList<DtCursoBase>();
+	private ArrayList<Curso> cursos = new ArrayList<Curso>();
 	
 	public Instituto() {
 		super();
@@ -24,12 +24,16 @@ public class Instituto {
 		this.nombre = nombre;
 	}
 
-	public ArrayList<DtCursoBase> getCursos() {
+	public ArrayList<Curso> getCursos() {
 		return cursos;
 	}
 
-	public void setCursos(ArrayList<DtCursoBase> cursos) {
+	public void setCursos(ArrayList<Curso> cursos) {
 		this.cursos = cursos;
+	}
+	
+	public void agregarCurso(Curso curso) {
+		this.cursos.add(curso);
 	}
 	
 }

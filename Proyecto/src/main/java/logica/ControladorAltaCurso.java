@@ -19,7 +19,7 @@ public class ControladorAltaCurso implements IControladorAltaCurso{
 	private int creditos;
 	private DtFecha fechaR;
 	private String url;
-	private ArrayList<Curso> previas;
+	private ArrayList<Curso> previas = new ArrayList<Curso>();
 	
 	public ControladorAltaCurso() {
 		super();
@@ -114,8 +114,10 @@ public class ControladorAltaCurso implements IControladorAltaCurso{
 	@Override
 	public void confirmarAltaCurso() {
 		ManejadorCurso mC = ManejadorCurso.getInstancia();
+		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 		Curso curso = new Curso(getNombre(), getDescripcion(), getDuracion(), getCantHoras(), getCreditos(), getFechaR(), getUrl(), getPrevias());
 		mC.agregarCurso(curso);
+		mI.find(this.instituto).agregarCurso(curso);
 		
 	}
 	@Override

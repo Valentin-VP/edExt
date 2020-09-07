@@ -7,9 +7,9 @@ import datatypes.DtTime;
 
 public class ManejadorCurso {
 	private static ManejadorCurso instancia = null;
-	private ArrayList<Curso> cursos = new ArrayList<>();
+	private ArrayList<Curso> cursos = new ArrayList<Curso>();
 	
-	public ManejadorCurso() {}
+	private ManejadorCurso() {}
 	
 	public static ManejadorCurso getInstancia() {
 		if(instancia == null)

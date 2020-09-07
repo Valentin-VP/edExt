@@ -23,9 +23,15 @@ public class ControladorConsultaEdicionCurso implements IControladorConsultaEdic
 	}
 	@Override
 	public ArrayList<DtCursoBase> seleccionarInstituto(String instituto) {
+		ArrayList <DtCursoBase> cursosinstituto = new ArrayList <DtCursoBase>();
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 		Instituto i = mI.find(instituto);
-		return i.getCursos();
+		ArrayList<Curso> cursos = mI.find(instituto).getCursos();
+		for(Curso c: cursos) {
+			DtCursoBase dtcb = new DtCursoBase (c.getNombre());
+			cursosinstituto.add(dtcb);
+		}
+		return cursosinstituto;
 	}
 	@Override
 	public ArrayList<DtEdicionBase> seleccionarCurso(String curso) {
