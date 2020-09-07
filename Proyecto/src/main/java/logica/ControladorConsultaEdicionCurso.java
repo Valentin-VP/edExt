@@ -34,7 +34,7 @@ public class ControladorConsultaEdicionCurso implements IControladorConsultaEdic
 		return cursosinstituto;
 	}
 	@Override
-	public ArrayList<DtEdicionBase> seleccionarCurso(String curso) {
+	public ArrayList<Edicion> seleccionarCurso(String curso) {
 		ManejadorCurso mC = ManejadorCurso.getInstancia();
 		Curso c = mC.find(curso);
 		return c.getEdiciones();

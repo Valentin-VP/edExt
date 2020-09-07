@@ -1,5 +1,7 @@
  package logica;
 
+import java.util.ArrayList;
+
 import datatypes.DtFecha;
 import datatypes.DtUsuario;
 import interfaces.IControladorAltaUsuario;
@@ -78,5 +80,8 @@ public class ControladorAltaUsuario implements IControladorAltaUsuario {
 		this.instituto = instituto;
 	}
 	
-	
+	public ArrayList<Instituto> getInstitutos() {
+		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
+		return mI.getInstitutos();
+	}
 }

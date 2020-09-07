@@ -48,7 +48,7 @@ public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso
 		if (mC.find(curso) == null) {
 			throw new CursoNoExiste("El curso" + curso + " no esta en el sistema");
 		}
-		DtCursoBase dtC = new DtCursoBase(curso);
+		DtCursoBase dtC = new DtCursoBase(curso);//
 		boolean cursoValido = false;
 		if (i.getCursos().contains(dtC)) {
 			cursoValido = true;
@@ -56,7 +56,7 @@ public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso
 		if (!cursoValido) {
 			throw new CursoNoExiste("El curso " + curso + " no esta en el instituto");
 		} else {
-			for (DtEdicionBase e: mC.find(curso).getEdiciones()) {
+			for (Edicion e: mC.find(curso).getEdiciones()) {
 				if (e.getNombre().equals(nombre)) {
 					throw new EdicionRepetida("La edicion " + nombre + " ya se encuentra integrada al curso");
 				}
@@ -66,15 +66,17 @@ public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso
 				edicion = new DtEdicion(nombre, fechaI, fechaF, tieneCupos, misCupos, fechaPub);
 			} else 	{ edicion = new DtEdicion(nombre, fechaI, fechaF, tieneCupos, cupos, fechaPub); }
 			
-			DtEdicionBase eBase = new DtEdicionBase(nombre);
-			mC.find(curso).getEdiciones().add(eBase);//ojo
+			Edicion edi = new Edicion(edicion.getNombre(), edicion.getFechaI(), edicion.getFechaF(), edicion.isTieneCupos(), edicion.getCupo(), edicion.getFechaPub());
+			ArrayList<Edicion> edis = mC.find(curso).getEdiciones();
+			edis.add(edi);
+			mC.find(curso).setEdiciones(edis);
 			ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 			for (Usuario u: mU.getUsuarios()) {
 				if (u instanceof Docente) {
 					for (DtUsuarioBase nick: docentes) {
 						if (u.getNick() == nick.getNick()) {
 							if (!((Docente) u).find(this.edicion)) {
-								((Docente) u).getEdiciones().add(edicion);//ojo
+								((Docente) u).agregarEdicion(edi);
 							} else throw new EdicionRepetida("El docente " + nick + " ya dicta la edicion " + this.edicion.getNombre());
 						}
 					}

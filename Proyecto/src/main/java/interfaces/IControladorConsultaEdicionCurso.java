@@ -1,14 +1,14 @@
 package interfaces;
 
 import datatypes.DtCursoBase;
-import datatypes.DtEdicionBase;
+import logica.Edicion;
 import datatypes.DtEdicion;
 import java.util.*;
 
 public interface IControladorConsultaEdicionCurso {
 	public ArrayList<DtCursoBase> seleccionarInstituto(String instituto);
 	
-	public ArrayList<DtEdicionBase> seleccionarCurso(String curso);
+	public ArrayList<Edicion> seleccionarCurso(String curso);
 	
 	public DtEdicion seleccionarEdicion(String edicion);
 }

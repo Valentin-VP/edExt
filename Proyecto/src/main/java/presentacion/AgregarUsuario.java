@@ -10,7 +10,6 @@ import javax.swing.JInternalFrame;
 
 import interfaces.IControladorAltaUsuario;
 import logica.Instituto;
-import logica.ManejadorInstituto;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -22,8 +21,6 @@ import excepciones.UsuarioRepetido;
 
 import datatypes.DtFecha;
 
-import javax.swing.AbstractButton;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JRadioButton;
 //import javax.swing.JSpinner;
@@ -47,9 +44,6 @@ public class AgregarUsuario extends JInternalFrame {
 	private JComboBox<String> comboBoxInstitutos;
 	private JRadioButton DocenteSi;
 	
-	ManejadorInstituto mI = ManejadorInstituto.getInstancia();
-	ArrayList<Instituto> institutos = mI.getInstitutos();
-	String[] array = new String[institutos.size()];
 
 	public AgregarUsuario(IControladorAltaUsuario icon) {
 		this.icon = icon;
@@ -199,29 +193,23 @@ public class AgregarUsuario extends JInternalFrame {
 		lblDocente.setBounds(58, 347, 70, 15);
 		getContentPane().add(lblDocente);
 		
-		int p = 0;
-		for (Instituto i: institutos) {
-			array[p] = i.getNombre();
-			p++;
-		}
-		comboBoxInstitutos = new JComboBox<String>();
-		comboBoxInstitutos.setEnabled(false);
-		comboBoxInstitutos.setBounds(254, 342, 145, 24);
-		for (int i = 0; i < institutos.size(); i++) {//no me carga los institutos en el comboBox
-			comboBoxInstitutos.addItem(array[i]);
-		}
-		getContentPane().add(comboBoxInstitutos);
 		
-		JRadioButton DocenteSi = new JRadioButton("");
+		DocenteSi = new JRadioButton("");
 		DocenteSi.setSelected(false);
 		DocenteSi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				DocenteSi.setSelected(true);
 				comboBoxInstitutos.setEnabled(true);
+				DocenteSi.setEnabled(false);
+				agregarEdicionCursoCargarComboBox(arg0);
 			}
 		});
 		DocenteSi.setBounds(165, 343, 59, 23);
 		getContentPane().add(DocenteSi);
+		
+		comboBoxInstitutos = new JComboBox<String>();
+		comboBoxInstitutos.setBounds(254, 342, 145, 24);
+		getContentPane().add(comboBoxInstitutos);
 		
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
@@ -250,13 +238,13 @@ public class AgregarUsuario extends JInternalFrame {
 		DtFecha fechaNac = new DtFecha(Integer.parseInt(dia), Integer.parseInt(mes), Integer.parseInt(anio));
 		if (checkeo()) {
 			try {
-				if (this.DocenteSi.isSelected()) {//me da error en el booleano
+				if (DocenteSi.isSelected()) {
 					this.icon.altaUsuario(nickname, correo, nombre, apellido, fechaNac);
 					this.icon.seleccionarInstituto(instituto);
-					this.icon.confirmarAltaUsuario(this.DocenteSi.isSelected());
+					this.icon.confirmarAltaUsuario(DocenteSi.isSelected());
 				} else {
 					this.icon.altaUsuario(nickname, correo, nombre, apellido, fechaNac);
-					this.icon.confirmarAltaUsuario(this.DocenteSi.isSelected());
+					this.icon.confirmarAltaUsuario(DocenteSi.isSelected());
 				}
 				JOptionPane.showMessageDialog(this, "El Usuario se ha agregado con exito", "Agregar Usuario",
 				JOptionPane.INFORMATION_MESSAGE);
@@ -287,9 +275,25 @@ public class AgregarUsuario extends JInternalFrame {
 		this.textFieldCorreo.setText("");
 		this.textFieldNombre.setText("");
 		this.textFieldApellido.setText("");
-		this.comboBoxInstitutos.setSelectedItem(array[0]);
+		this.DocenteSi.setSelected(false);
 		this.diaNac.setSelectedItem("1");
 		this.mesNac.setSelectedItem("1");
 		this.anioNac.setSelectedItem("1992");
+		this.comboBoxInstitutos.removeAllItems();
+		//this.comboBoxInstitutos.setEnabled(false);
+		this.DocenteSi.setEnabled(true);
+	}
+	
+	private void agregarEdicionCursoCargarComboBox(ActionEvent arg0) {
+		ArrayList<Instituto> institutos = icon.getInstitutos();
+		String[] array = new String[institutos.size()];
+		int p = 0;
+		for (Instituto i: institutos) {
+			array[p] = i.getNombre();
+			p++;
+		}
+		for (int i = 0; i < institutos.size(); i++) {
+			comboBoxInstitutos.addItem(array[i]);
+		}
 	}
 }

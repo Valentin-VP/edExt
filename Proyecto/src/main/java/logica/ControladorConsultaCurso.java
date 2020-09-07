@@ -34,7 +34,7 @@ public class ControladorConsultaCurso implements IControladorConsultaCurso{
 		}
 		ArrayList<Curso> cursos = mI.find(instituto).getCursos();
 		if(cursos.isEmpty()) {
-			throw new InstitutoSinCursos("El Instituto seleccionado no posee cursos aún");
+			throw new InstitutoSinCursos("El Instituto seleccionado no posee cursos aï¿½n");
 		}
 		for(Curso c: cursos) {
 			DtCursoBase dtcb = new DtCursoBase (c.getNombre());
@@ -61,5 +61,6 @@ public class ControladorConsultaCurso implements IControladorConsultaCurso{
 			}
 		}
 		return new DtCurso(temp.getDescripcion(),temp.getDuracion(),temp.getCantHoras(),temp.getCreditos(),temp.getFechaR(),temp.getUrl(),temp.getNombre(),temp.getEdiciones(),programas);
-	}
-	
+	 }
+}	
+
