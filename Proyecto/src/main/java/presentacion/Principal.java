@@ -39,6 +39,7 @@ public class Principal {
 	private AgregarInstituto agregarInstitutoInternalFrame;
 	private InscripcionEdicionCurso inscripcionEdicionCursoInternalFrame;
 	private AltaProgFormacion altaProgFormacionInternalFrame;
+	private InfoEdicionCurso infoEdicionCursoInternalFrame;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -85,6 +86,11 @@ public class Principal {
 		/*agregarEdicionCursoInternalFrame = new AgregarEdicionCurso(fabrica.getIControladorAltaEdicionCurso());
 		agregarEdicionCursoInternalFrame.setLocation(188, 105);
 		frame.getContentPane().add(agregarEdicionCursoInternalFrame);*/
+		
+		infoEdicionCursoInternalFrame = new InfoEdicionCurso(fabrica.getIControladorConsultaEdicionCurso());
+		altaProgFormacionInternalFrame.setLocation(188, 105);
+		frame.getContentPane().add(altaProgFormacionInternalFrame);
+		
 	}
 
 	private void initialize() {
