@@ -37,6 +37,8 @@ public class Principal {
 	private AgregarUsuario agregarUsuarioInternalFrame;
 	private AgregarCurso agregarCursoInternalFrame;
 	private AgregarInstituto agregarInstitutoInternalFrame;
+	private InscripcionEdicionCurso inscripcionEdicionCursoInternalFrame;
+	private AltaProgFormacion altaProgFormacionInternalFrame;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -72,6 +74,13 @@ public class Principal {
 		agregarCursoInternalFrame.setLocation(651, 117);
 		frame.getContentPane().add(agregarCursoInternalFrame);
 		
+		inscripcionEdicionCursoInternalFrame = new InscripcionEdicionCurso(fabrica.getIControladorInscripcionEdicionCurso());
+		inscripcionEdicionCursoInternalFrame.setLocation(188, 105);
+		frame.getContentPane().add(inscripcionEdicionCursoInternalFrame);
+		
+		altaProgFormacionInternalFrame = new AltaProgFormacion(fabrica.getIControladorAltaProgFormacion());
+		altaProgFormacionInternalFrame.setLocation(188, 105);
+		frame.getContentPane().add(altaProgFormacionInternalFrame);
 		
 	}
 
@@ -117,5 +126,27 @@ public class Principal {
 		
 		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Usuario");
 		mnInformacin.add(mntmNewMenuItem_2);
+		
+		JMenu mnNewMenu = new JMenu("Inscripcion");
+		menuBar.add(mnNewMenu);
+		
+		JMenuItem mntmNewMenuItem = new JMenuItem("Edicion");
+		mntmNewMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				inscripcionEdicionCursoInternalFrame.setVisible(true);
+			}
+		});
+		mnNewMenu.add(mntmNewMenuItem);
+		
+		JMenu mnNewMenu_1 = new JMenu("Programa");
+		menuBar.add(mnNewMenu_1);
+		
+		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Crear");
+		mntmNewMenuItem_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				altaProgFormacionInternalFrame.setVisible(true);
+			}
+		});
+		mnNewMenu_1.add(mntmNewMenuItem_1);
 	}
 }

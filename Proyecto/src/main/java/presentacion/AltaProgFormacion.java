@@ -26,6 +26,7 @@ public class AltaProgFormacion extends JInternalFrame {
 	private JTextField textFieldNom;
 	private JTextField textFieldDes;
 	private JComboBox comboBoxDiaI;
+	private JComboBox comboBoxMesI;
 	
 	public AltaProgFormacion(IControladorAltaProgFormacion icon) {
 		this.icon = icon;
@@ -96,8 +97,21 @@ public class AltaProgFormacion extends JInternalFrame {
 		comboBoxDiaI.setSelectedItem("1");
 		getContentPane().add(comboBoxDiaI);
 		
-		JComboBox comboBoxMesI = new JComboBox();
+		comboBoxMesI = new JComboBox<String>();
 		comboBoxMesI.setBounds(101, 163, 46, 20);
+		comboBoxMesI.addItem("1");
+		comboBoxMesI.addItem("2");
+		comboBoxMesI.addItem("3");
+		comboBoxMesI.addItem("4");
+		comboBoxMesI.addItem("5");
+		comboBoxMesI.addItem("6");
+		comboBoxMesI.addItem("7");
+		comboBoxMesI.addItem("8");
+		comboBoxMesI.addItem("9");
+		comboBoxMesI.addItem("10");
+		comboBoxMesI.addItem("11");
+		comboBoxMesI.addItem("12");
+		comboBoxMesI.setSelectedItem("1");
 		getContentPane().add(comboBoxMesI);
 		
 		JComboBox comboBoxAnioI = new JComboBox();
@@ -123,6 +137,10 @@ public class AltaProgFormacion extends JInternalFrame {
 		JButton btnNewButton = new JButton("Aceptar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				if(textFieldNom.getText() == "" && textFieldDes.getText() == "") {
+					
+				}
 				
 				/*Calendar calendar = Calendar.getInstance();
 				SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
