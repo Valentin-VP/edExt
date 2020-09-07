@@ -1,53 +1,30 @@
 package presentacion;
 
-//import java.awt.EventQueue;
+
 
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-
 import interfaces.IControladorAltaEdicionCurso;
+//import logica.Instituto;
 import javax.swing.JComboBox;
 import java.awt.Font;
-import javax.swing.DefaultComboBoxModel;
-//import javax.swing.JToggleButton;
 import javax.swing.JRadioButton;
 import javax.swing.SwingConstants;
-
 import datatypes.DtFecha;
 import datatypes.DtUsuarioBase;
+import datatypes.DtCursoBase;
 import excepciones.CursoNoExiste;
 import excepciones.EdicionRepetida;
 import excepciones.InstitutoInexistente;
-
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
-//import javax.swing.JList;
-//import javax.swing.JScrollBar;
-//import javax.swing.JScrollPane;
-//import javax.swing.JFormattedTextField;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JTextArea;
-import javax.swing.JTable;
-import javax.swing.JToggleButton;
 import javax.swing.JButton;
-import javax.swing.JProgressBar;
-import javax.swing.JTree;
-import javax.swing.JPanel;
-import javax.swing.JSpinner;
-import javax.swing.JTextPane;
-import javax.swing.JEditorPane;
-//import javax.swing.JTabbedPane;
-//import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class AgregarEdicionCurso extends JInternalFrame {
-	private JTextField nombreCurso;
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -66,9 +43,8 @@ public class AgregarEdicionCurso extends JInternalFrame {
 	private JTextField nickDocente;
 	private JTextField correoDocente;
 	private JRadioButton cuposBool;
+	private JComboBox<String> comboBoxNombreCurso;
 	
-	//arreglo de docentes
-	ArrayList<DtUsuarioBase> docentes = new ArrayList<>();
 	private JTextField textFieldInstituto;
 	
 	public AgregarEdicionCurso(IControladorAltaEdicionCurso icon) {
@@ -85,11 +61,6 @@ public class AgregarEdicionCurso extends JInternalFrame {
 		
 		JLabel lblCurso = new JLabel("Curso");
 		lblCurso.setBounds(35, 64, 70, 15);
-		
-		nombreCurso = new JTextField();
-		nombreCurso.setBounds(122, 60, 277, 19);
-		nombreCurso.setFont(new Font("Dialog", Font.PLAIN, 14));
-		nombreCurso.setColumns(10);
 		
 		JLabel lblfechainicio = new JLabel("Fecha de Inicio");
 		lblfechainicio.setBounds(12, 119, 123, 15);
@@ -383,7 +354,6 @@ public class AgregarEdicionCurso extends JInternalFrame {
 		
 		getContentPane().setLayout(null);
 		getContentPane().add(lblCurso);
-		getContentPane().add(nombreCurso);
 		getContentPane().add(lblDia);
 		getContentPane().add(lblMes);
 		getContentPane().add(lblAno);
@@ -425,6 +395,7 @@ public class AgregarEdicionCurso extends JInternalFrame {
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				AgregarEdicionCursoAceptarActionPerformed(e);
+				limpiar();
 			}
 		});
 		btnAceptar.setBounds(296, 505, 117, 25);
@@ -443,6 +414,8 @@ public class AgregarEdicionCurso extends JInternalFrame {
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				AgregarEdicionCursoAgregarActionPerformed(e);
+				nickDocente.setText("");
+				correoDocente.setText("");
 			}
 		});
 		btnAgregar.setBounds(296, 416, 117, 25);
@@ -469,11 +442,33 @@ public class AgregarEdicionCurso extends JInternalFrame {
 		JLabel lblInstituto = new JLabel("Instituto");
 		lblInstituto.setBounds(12, 14, 70, 15);
 		getContentPane().add(lblInstituto);
+		
+		comboBoxNombreCurso = new JComboBox<String>();
+		comboBoxNombreCurso.setBounds(161, 55, 192, 24);
+		getContentPane().add(comboBoxNombreCurso);
+		
+		ArrayList<DtCursoBase> cursos = new ArrayList<>();
+		String instituto = (String) this.textFieldInstituto.getText();
+		try {
+			cursos = this.icon.seleccionarInstituto(instituto);
+		} catch (InstitutoInexistente e) {
+			JOptionPane.showMessageDialog(this, e.getMessage(), "Agregar Edicion", JOptionPane.ERROR_MESSAGE);
+		}	
+		
+		String[] array = new String[cursos.size()];
+		int p = 0;
+		for (DtCursoBase c: cursos) {
+			array[p] = c.getNombre();
+			p++;
+		}
+		for (int i = 0; i < cursos.size(); i++) {
+			comboBoxNombreCurso.addItem(array[i]);
+		}
 
 	}
 	
 	protected void limpiar() {
-		this.nombreCurso.setText("");
+		
 		this.nombreEdicion.setText("");
 		this.nickDocente.setText("");
 		this.correoDocente.setText("");
@@ -489,6 +484,7 @@ public class AgregarEdicionCurso extends JInternalFrame {
 		this.fpAnio.setSelectedItem("1992");
 	}
 	
+	ArrayList<DtUsuarioBase> docentes = new ArrayList<>();
 	protected void AgregarEdicionCursoAgregarActionPerformed(ActionEvent e) {
 		String nick = this.nickDocente.getText();
 		String correo = this.correoDocente.getText();
@@ -504,7 +500,7 @@ public class AgregarEdicionCurso extends JInternalFrame {
 	protected void AgregarEdicionCursoAceptarActionPerformed(ActionEvent e) {
 		String nick = (String) this.nickDocente.getText();
 		String correo = (String) this.correoDocente.getText();
-		String curso = (String) this.nombreCurso.getText();
+		String curso = (String) this.comboBoxNombreCurso.getSelectedItem();
 		String nombre = (String) this.nombreEdicion.getText();
 		String cupos = (String) this.cantCupos.getText();
 		String diaI = (String) this.fiDia.getSelectedItem();
@@ -516,20 +512,18 @@ public class AgregarEdicionCurso extends JInternalFrame {
 		String diaP = (String) this.fpDia.getSelectedItem();
 		String mesP = (String) this.fpMes.getSelectedItem();
 		String anioP = (String) this.fpAnio.getSelectedItem();
-		String instituto = (String) this.textFieldInstituto.getText();
 		DtFecha fechaI = new DtFecha(Integer.parseInt(diaI), Integer.parseInt(mesI), Integer.parseInt(anioI));
 		DtFecha fechaF = new DtFecha(Integer.parseInt(diaF), Integer.parseInt(mesF), Integer.parseInt(anioF));
 		DtFecha fechaPub = new DtFecha(Integer.parseInt(diaP), Integer.parseInt(mesP), Integer.parseInt(anioP));
 		if (curso.isEmpty() || nombre.isEmpty()) {
-		 	JOptionPane.showMessageDialog(this, "No puede haber campos vacios", "Agregar Usuario", 
+		 	JOptionPane.showMessageDialog(this, "No puede haber campos vacios", "Agregar Edicion", 
 					JOptionPane.ERROR_MESSAGE);
 		} else if (!nick.isEmpty() && !correo.isEmpty() && !curso.isEmpty() && !nombre.isEmpty()) {
 			try {
-				this.icon.seleccionarInstituto(instituto);
 				this.icon.altaEdicionCurso(curso, nombre, fechaI, fechaF, docentes, cuposBool.isSelected(), Integer.parseInt(cupos), fechaPub);
 				this.icon.confirmarAltaEdicion();
 			} catch (EdicionRepetida | CursoNoExiste | InstitutoInexistente a) {
-				JOptionPane.showMessageDialog(this, a.getMessage(), "Agregar Usuario", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, a.getMessage(), "Agregar Edicion", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 	}
