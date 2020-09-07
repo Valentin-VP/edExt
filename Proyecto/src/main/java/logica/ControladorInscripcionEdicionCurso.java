@@ -28,10 +28,16 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 
 	@Override
 	public ArrayList<DtCursoBase> seleccionarInstituto(String nomIns) {
+		ArrayList <DtCursoBase> cursosinstituto = new ArrayList <DtCursoBase>();
 		this.nomIns = nomIns;
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 		Instituto i = mI.find(nomIns);
-		return i.getCursos();
+		ArrayList<Curso> cursos = mI.find(nomIns).getCursos();
+		for(Curso c: cursos) {
+			DtCursoBase dtcb = new DtCursoBase (c.getNombre());
+			cursosinstituto.add(dtcb);
+		}
+		return cursosinstituto;
 	}
 
 	@Override

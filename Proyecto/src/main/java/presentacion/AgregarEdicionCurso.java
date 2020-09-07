@@ -15,7 +15,11 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JRadioButton;
 import javax.swing.SwingConstants;
 
+import datatypes.DtFecha;
 import datatypes.DtUsuarioBase;
+import excepciones.CursoNoExiste;
+import excepciones.EdicionRepetida;
+import excepciones.InstitutoInexistente;
 
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -61,6 +65,7 @@ public class AgregarEdicionCurso extends JInternalFrame {
 	private JComboBox<String> fpAnio;
 	private JTextField nickDocente;
 	private JTextField correoDocente;
+	private JRadioButton cuposBool;
 	
 	//arreglo de docentes
 	ArrayList<DtUsuarioBase> docentes = new ArrayList<>();
@@ -419,7 +424,6 @@ public class AgregarEdicionCurso extends JInternalFrame {
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				AgregarEdicionCursoAceptarActionPerformed(e);
-				//llamo a altaEdicionCurso y hago arreglos necesarios
 			}
 		});
 		btnAceptar.setBounds(296, 432, 117, 25);
@@ -480,14 +484,41 @@ public class AgregarEdicionCurso extends JInternalFrame {
 		if (nick.isEmpty() || correo.isEmpty()) {
 			JOptionPane.showMessageDialog(this, "No puede haber campos vacios", "Agregar Usuario", 
 					JOptionPane.ERROR_MESSAGE);
-		} else {
+		} else if (!nick.isEmpty() && !correo.isEmpty()) {
 			DtUsuarioBase user = new DtUsuarioBase(nick, correo);
 			docentes.add(user);
 		}
 	}
 	
 	protected void AgregarEdicionCursoAceptarActionPerformed(ActionEvent e) {
-		//un aceptar mas y despues lidiar con la logica
+		String nick = (String) this.nickDocente.getText();
+		String correo = (String) this.correoDocente.getText();
+		String curso = (String) this.nombreCurso.getText();
+		String nombre = (String) this.nombreEdicion.getText();
+		String cupos = (String) this.cantCupos.getText();
+		String diaI = (String) this.fiDia.getSelectedItem();
+		String mesI = (String) this.fiMes.getSelectedItem();
+		String anioI = (String) this.fiAnio.getSelectedItem();
+		String diaF = (String) this.ffDia.getSelectedItem();
+		String mesF = (String) this.ffMes.getSelectedItem();
+		String anioF = (String) this.ffAnio.getSelectedItem();
+		String diaP = (String) this.fpDia.getSelectedItem();
+		String mesP = (String) this.fpMes.getSelectedItem();
+		String anioP = (String) this.fpAnio.getSelectedItem();
+		DtFecha fechaI = new DtFecha(Integer.parseInt(diaI), Integer.parseInt(mesI), Integer.parseInt(anioI));
+		DtFecha fechaF = new DtFecha(Integer.parseInt(diaF), Integer.parseInt(mesF), Integer.parseInt(anioF));
+		DtFecha fechaPub = new DtFecha(Integer.parseInt(diaP), Integer.parseInt(mesP), Integer.parseInt(anioP));
+		if (curso.isEmpty() || nombre.isEmpty()) {
+			JOptionPane.showMessageDialog(this, "No puede haber campos vacios", "Agregar Usuario", 
+					JOptionPane.ERROR_MESSAGE);
+		} else if (!nick.isEmpty() && !correo.isEmpty() && !curso.isEmpty() && !nombre.isEmpty()) {
+			try {
+				this.icon.altaEdicionCurso(curso, nombre, fechaI, fechaF, docentes, cuposBool.isSelected(), Integer.parseInt(cupos), fechaPub);
+				this.icon.confirmarAltaEdicion();
+			} catch (EdicionRepetida | CursoNoExiste | InstitutoInexistente a) {
+				JOptionPane.showMessageDialog(this, a.getMessage(), "Agregar Usuario", JOptionPane.ERROR_MESSAGE);
+			}
+		}
 	}
 	
 }

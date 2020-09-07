@@ -21,6 +21,8 @@ import interfaces.Fabrica;
 import interfaces.IControladorAltaInstituto;
 import interfaces.IControladorAltaEdicionCurso;
 import interfaces.IControladorAltaUsuario;
+import interfaces.IControladorConsultaCurso;
+import interfaces.IControladorAltaCurso;
 
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
@@ -66,7 +68,7 @@ public class Principal {
 		agregarUsuarioInternalFrame.setLocation(124, 23);
 		frame.getContentPane().add(agregarUsuarioInternalFrame);
 		
-		agregarCursoInternalFrame = new AgregarCurso(fabrica.getIControladorAltaCurso());  //Alta Curso
+		agregarCursoInternalFrame = new AgregarCurso(fabrica.getIControladorAltaCurso(), fabrica.getIControladorConsultaCurso());  //Alta Curso
 		agregarCursoInternalFrame.setLocation(651, 117);
 		frame.getContentPane().add(agregarCursoInternalFrame);
 		

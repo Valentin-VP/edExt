@@ -21,13 +21,19 @@ public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso
 	
 	@Override
 	public ArrayList<DtCursoBase> seleccionarInstituto(String instituto) throws InstitutoInexistente {
+		ArrayList <DtCursoBase> cursosinstituto = new ArrayList <DtCursoBase>();
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 		Instituto i = mI.find(instituto);
 		if (i.equals(null)) {
 			throw new InstitutoInexistente("El instituto " + instituto + " no esta en el sistema");
 		}
 		this.instituto = i.getNombre();
-		return i.getCursos();
+		ArrayList<Curso> cursos = mI.find(instituto).getCursos();
+		for(Curso c: cursos) {
+			DtCursoBase dtcb = new DtCursoBase (c.getNombre());
+			cursosinstituto.add(dtcb);
+		}
+		return cursosinstituto;
 	}
 	
 	@Override
@@ -118,8 +124,7 @@ public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso
 	@Override
 	public void confirmarAltaEdicion() {
 		ManejadorEdicion mE = ManejadorEdicion.getInstancia();
-		Edicion ed = new Edicion(edicion.getNombre(), edicion.getFechaI(), edicion.getFechaF(), edicion.isTieneCupos(), edicion.getCupo(), edicion.getFechaPub());
-		mE.getEdiciones().add(ed);
+		mE.agregarEdicion(edicion.getNombre(), edicion.getFechaI(), edicion.getFechaF(), edicion.isTieneCupos(), edicion.getCupo(), edicion.getFechaPub());
 	}
 
 }

@@ -15,8 +15,8 @@ public class Curso {
 	private Integer creditos;
 	private DtFecha fechaR;
 	private String url;
-	private ArrayList<Curso> previas = new ArrayList<>();
-	private ArrayList<DtEdicionBase> ediciones = new ArrayList<>();
+	private ArrayList<Curso> previas = new ArrayList<Curso>();
+	private ArrayList<Edicion> ediciones = new ArrayList<Edicion>();
 	
 	public Curso(String nombre, String descripcion, String duracion, int cantHoras, Integer creditos, DtFecha fechaR,
 			String url, ArrayList<Curso> previas) {
@@ -100,16 +100,17 @@ public class Curso {
 		this.previas = previas;
 	}
 
-	public ArrayList<DtEdicionBase> getEdiciones() {
+	public ArrayList<Edicion> getEdiciones() {
 		return ediciones;
 	}
 	
 	// Para obtener la edicion vigente del curso -- Mauri
+	// Revisar
 	public DtEdicionBase getEdicionVigente() {
 		DtEdicionBase dteb=null;
 			for(int i=0;i < ediciones.size();i++) {
 				if(dteb instanceof DtEdicion) {
-					if ( ((DtEdicion) ediciones.get(i)).getFechaPub().getAnio() == 2020 ) {
+					if ( ((Edicion) ediciones.get(i)).getFechaPub().getAnio() == 2020 ) {
 						return dteb;
 					}
 				}
@@ -117,7 +118,7 @@ public class Curso {
 		return dteb;
 	}
 	
-	public void setEdiciones(ArrayList<DtEdicionBase> ediciones) {
+	public void setEdiciones(ArrayList<Edicion> ediciones) {
 		this.ediciones = ediciones;
 	}
 	
