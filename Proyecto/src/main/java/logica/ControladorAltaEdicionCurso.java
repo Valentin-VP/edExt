@@ -46,7 +46,7 @@ public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso
 		ManejadorCurso mC = ManejadorCurso.getInstancia();
 		Curso c = mC.find(curso);
 		if (c == null) {
-			throw new CursoNoExiste("El curso" + curso + " no esta en el sistema");
+			throw new CursoNoExiste("El curso " + curso + " no esta en el sistema");
 		}
 		boolean cursoValido = false;
 		if (i.getCursos().contains(c)) {
