@@ -7,15 +7,12 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextPane;
 
 import datatypes.DtCursoBase;
 import datatypes.DtEdicionBase;
 import datatypes.DtFecha;
+import datatypes.DtInstituto;
 import interfaces.IControladorInscripcionEdicionCurso;
-import logica.Instituto;
-import logica.ManejadorInstituto;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -261,9 +258,9 @@ public class InscripcionEdicionCurso extends JInternalFrame {
 	
 	public void inicializarComboBoxes() {
 		
-		ArrayList<Instituto> institutos = icon.listarInstitutos();
+		ArrayList<DtInstituto> institutos = icon.listarInstitutos();
 		//ArrayList<String> nombresInstitutos = new ArrayList<String>();
-		for(Instituto i:institutos) {
+		for(DtInstituto i:institutos) {
 			comboBoxIns.addItem(i.getNombre());//nombresInstitutos.add(i.getNombre());
 		}
 		
