@@ -5,7 +5,7 @@ import datatypes.DtEdicion;
 import excepciones.EdicionRepetida;
 import excepciones.EdicionSinCupos;
 import excepciones.CursoNoExiste;
-import datatypes.DtEdicionBase;
+//import datatypes.DtEdicionBase;
 import datatypes.DtUsuarioBase;
 import datatypes.DtCursoBase;
 import datatypes.DtFecha;
@@ -14,7 +14,7 @@ import excepciones.InstitutoInexistente;
 
 public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso {
 	private String instituto;
-	private String curso;
+	private String curso;//no lo uso
 	private boolean tieneCupos;//no lo uso
 	private Integer cupos;//no lo uso
 	private DtEdicion edicion;
@@ -49,7 +49,6 @@ public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso
 		if (c == null) {
 			throw new CursoNoExiste("El curso" + curso + " no esta en el sistema");
 		}
-		//DtCursoBase dtC = new DtCursoBase(curso);//
 		boolean cursoValido = false;
 		if (i.getCursos().contains(c)) {
 			cursoValido = true;

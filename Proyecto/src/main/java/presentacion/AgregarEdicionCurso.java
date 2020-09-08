@@ -255,11 +255,12 @@ public class AgregarEdicionCurso extends JInternalFrame {
 		});
 		
 		cantCupos = new JTextField();
+		cantCupos.setText("0");
 		cantCupos.setBounds(161, 285, 61, 19);
 		cantCupos.setColumns(10);
 		
 		cuposBool.setSelected(false);
-		cantCupos.setEditable(false);
+		//cantCupos.setEditable(false);
 		cuposBool.setHorizontalAlignment(SwingConstants.LEFT);
 		
 		JLabel lblCantCupos = new JLabel("Cant Cupos");
@@ -513,11 +514,10 @@ public class AgregarEdicionCurso extends JInternalFrame {
 	}
 	
 	protected void AgregarEdicionCursoAceptarActionPerformed(ActionEvent e) {
-		String nick = (String) this.nickDocente.getText();
-		String correo = (String) this.correoDocente.getText();
 		String curso = (String) this.comboBoxNombreCurso.getSelectedItem();
 		String nombre = (String) this.nombreEdicion.getText();
 		String cupos = (String) this.cantCupos.getText();
+		boolean tieneCupos = (boolean) this.cuposBool.isSelected();
 		String diaI = (String) this.fiDia.getSelectedItem();
 		String mesI = (String) this.fiMes.getSelectedItem();
 		String anioI = (String) this.fiAnio.getSelectedItem();
@@ -533,11 +533,11 @@ public class AgregarEdicionCurso extends JInternalFrame {
 		if (curso.isEmpty() || nombre.isEmpty()) {
 		 	JOptionPane.showMessageDialog(this, "No puede haber campos vacios", "Agregar Edicion", 
 					JOptionPane.ERROR_MESSAGE);
-		} else if (!nick.isEmpty() && !correo.isEmpty() && !curso.isEmpty() && !nombre.isEmpty()) {
+		} else if (!curso.isEmpty() && !nombre.isEmpty()) {
 			try {
-				this.icon.altaEdicionCurso(curso, nombre, fechaI, fechaF, docentes, cuposBool.isSelected(), Integer.parseInt(cupos), fechaPub);
+				this.icon.altaEdicionCurso(curso, nombre, fechaI, fechaF, docentes, tieneCupos, Integer.parseInt(cupos), fechaPub);
 				this.icon.confirmarAltaEdicion();
-				JOptionPane.showMessageDialog(this, "La edicion fue agregada con exito", "Agregar Edicion", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "La edicion fue agregada con exito", "Agregar Edicion", JOptionPane.INFORMATION_MESSAGE);
 			} catch (EdicionRepetida | CursoNoExiste | InstitutoInexistente a) {
 				JOptionPane.showMessageDialog(this, a.getMessage(), "Agregar Edicion", JOptionPane.ERROR_MESSAGE);
 			}
