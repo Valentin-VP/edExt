@@ -3,9 +3,11 @@ package logica;
 import java.util.*;
 import datatypes.DtCursoBase;
 import datatypes.DtEdicion;
+import datatypes.DtEdicionBase;
 import interfaces.IControladorConsultaEdicionCurso;
 import logica.ManejadorInstituto;
 import excepciones.CursoNoExiste;
+import excepciones.EdicionNoExiste;
 
 public class ControladorConsultaEdicionCurso implements IControladorConsultaEdicionCurso {
 	private String edicion;
@@ -40,10 +42,17 @@ public class ControladorConsultaEdicionCurso implements IControladorConsultaEdic
 	}
 	
 	@Override
-	public ArrayList<Edicion> seleccionarCurso(String curso) {
+	public ArrayList<DtEdicionBase> seleccionarCurso(String curso) throws EdicionNoExiste{
+		ArrayList<DtEdicionBase> ediciones = new ArrayList<>();
 		ManejadorCurso mC = ManejadorCurso.getInstancia();
 		Curso c = mC.find(curso);
-		return c.getEdiciones();
+		if(c == null)
+			throw new EdicionNoExiste("Edicion Inexistente");
+		for(Edicion e: c.getEdiciones()) {
+			DtEdicionBase edic = new DtEdicionBase(e.getNombre());
+			ediciones.add(edic);
+		}
+		return ediciones;
 	}
 	
 	@Override
