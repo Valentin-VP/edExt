@@ -34,7 +34,7 @@ public class ControladorConsultaCurso implements IControladorConsultaCurso{
 		}
 		ArrayList<Curso> cursos = mI.find(instituto).getCursos();
 		if(cursos.isEmpty()) {
-			throw new InstitutoSinCursos("El Instituto seleccionado no posee cursos a�n");
+			throw new InstitutoSinCursos("El Instituto seleccionado no posee cursos aun");
 		}
 		for(Curso c: cursos) {
 			DtCursoBase dtcb = new DtCursoBase (c.getNombre());

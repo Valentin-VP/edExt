@@ -10,13 +10,12 @@ public class DtCurso extends DtCursoBase {
 	private DtFecha fechaR;
 	private String url;
 	private ArrayList<DtEdicionBase> ediciones = new ArrayList<>();
-	private ArrayList<DtProgramaBase> programas = new ArrayList<>();
 	
 	public DtCurso() {
 		super();
 	}
 
-	public DtCurso(String descripcion, String duracion, int cantHoras, Integer creditos, DtFecha fechaR, String url, String nombre, ArrayList<DtEdicionBase> ediciones, ArrayList<DtProgramaBase> programas) {
+	public DtCurso(String descripcion, String duracion, int cantHoras, Integer creditos, DtFecha fechaR, String url, String nombre, ArrayList<DtEdicionBase> ediciones) {
 		super(nombre);
 		this.descripcion = descripcion;
 		this.duracion = duracion;
@@ -25,7 +24,6 @@ public class DtCurso extends DtCursoBase {
 		this.fechaR = fechaR;
 		this.url = url;
 		this.ediciones = ediciones;
-		this.programas = programas;
 	}
 	
 	public String getDescripcion() {
@@ -84,12 +82,5 @@ public class DtCurso extends DtCursoBase {
 		this.ediciones = ediciones;
 	}
 
-	public ArrayList<DtProgramaBase> getProgramas() {
-		return programas;
-	}
-
-	public void setProgramas(ArrayList<DtProgramaBase> programas) {
-		this.programas = programas;
-	}
 	
 }

@@ -14,4 +14,10 @@ public interface IControladorConsultaEdicionCurso {
 	public ArrayList<DtEdicionBase> seleccionarCurso(String curso) throws EdicionNoExiste;
 	
 	public DtEdicion seleccionarEdicion(String edicion);
+	
+	public void setEdicion(String edicion);
+	
+	public String getEdicion();
+	
+	public DtEdicion getDtEdicion(); 
 }

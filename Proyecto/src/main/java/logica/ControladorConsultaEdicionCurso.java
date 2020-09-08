@@ -87,5 +87,10 @@ public class ControladorConsultaEdicionCurso implements IControladorConsultaEdic
 		this.curso = curso;
 	}
 	
+	public DtEdicion getDtEdicion() {
+		ManejadorEdicion mE = ManejadorEdicion.getInstancia();
+		Edicion e = mE.find(this.edicion);
+		return e.getDtEdicion();
+	}
 	
 }

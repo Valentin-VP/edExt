@@ -5,7 +5,6 @@ import datatypes.DtEdicion;
 import excepciones.EdicionRepetida;
 import excepciones.EdicionSinCupos;
 import excepciones.CursoNoExiste;
-//import datatypes.DtEdicionBase;
 import datatypes.DtUsuarioBase;
 import datatypes.DtCursoBase;
 import datatypes.DtFecha;
@@ -128,6 +127,17 @@ public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso
 	public void confirmarAltaEdicion() {
 		ManejadorEdicion mE = ManejadorEdicion.getInstancia();
 		mE.agregarEdicion(edicion.getNombre(), edicion.getFechaI(), edicion.getFechaF(), edicion.isTieneCupos(), edicion.getCupo(), edicion.getFechaPub());
+	}
+	
+	@Override
+	public ArrayList<DtUsuarioBase> getUsuarios(){
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		ArrayList<DtUsuarioBase> users = new ArrayList<>();
+		for (Usuario u: mU.getUsuarios()) {
+			DtUsuarioBase user = new DtUsuarioBase(u.getNick(), u.getCorreo());
+			users.add(user);
+		}
+		return users;
 	}
 
 }

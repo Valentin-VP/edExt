@@ -10,12 +10,12 @@ import javax.swing.JOptionPane;
 import java.awt.Font;
 import javax.swing.JTextField;
 
+import datatypes.DtCurso;
 import datatypes.DtCursoBase;
 import datatypes.DtFecha;
 import datatypes.DtTime;
 import interfaces.IControladorAltaUsuario;
 import interfaces.IControladorConsultaCurso;
-import logica.Curso;
 
 import javax.swing.JSeparator;
 import javax.swing.JButton;
@@ -191,7 +191,7 @@ public class AgregarCurso extends JInternalFrame {
 		altaCursoLimpiarPreviasButton.setEnabled(false);
 		altaCursoLimpiarPreviasButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ArrayList<Curso> previas = new ArrayList<Curso>();
+				ArrayList<DtCursoBase> previas = new ArrayList<DtCursoBase>();
 				icon.setPrevias(previas); // Setea las previas en null
 				altaCursoPreviasList.clearSelection();
 				JOptionPane.showMessageDialog(getContentPane(), "Se han eliminado las Previas asociadas", "Alta Curso", DISPOSE_ON_CLOSE);

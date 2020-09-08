@@ -46,4 +46,22 @@ public class Instituto {
 		this.cursos.add(curso);
 	}
 	
+	public boolean existsCurso(String curso) {
+		if(!cursos.isEmpty()) {
+			for(Curso c: cursos) {
+				if(c.getNombre().equals(curso))
+					return true;
+			}
+		}
+		return false;
+	}
+	
+	public Curso findCurso(String curso) {
+		Curso retorno = new Curso();
+		for(Curso c: cursos) {
+			if(c.getNombre()==curso);
+			retorno=c;
+		}
+		return retorno;
+	}
 }
