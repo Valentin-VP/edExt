@@ -15,6 +15,7 @@ import datatypes.DtFecha;
 import datatypes.DtTime;
 import interfaces.IControladorAltaUsuario;
 import interfaces.IControladorConsultaCurso;
+import logica.Curso;
 
 import javax.swing.JSeparator;
 import javax.swing.JButton;
@@ -190,7 +191,8 @@ public class AgregarCurso extends JInternalFrame {
 		altaCursoLimpiarPreviasButton.setEnabled(false);
 		altaCursoLimpiarPreviasButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				icon.setPrevias(null); // Setea las previas en null
+				ArrayList<Curso> previas = new ArrayList<Curso>();
+				icon.setPrevias(previas); // Setea las previas en null
 				altaCursoPreviasList.clearSelection();
 				JOptionPane.showMessageDialog(getContentPane(), "Se han eliminado las Previas asociadas", "Alta Curso", DISPOSE_ON_CLOSE);
 			}
@@ -223,9 +225,7 @@ public class AgregarCurso extends JInternalFrame {
 			public void actionPerformed(ActionEvent e) {
 				altaCursoPreviasButtonSi.setSelected(true);
 				altaCursoPreviasButtonNo.setSelected(false);
-				populatePreviasList(iconaux);
-				//arrojar excepcion "Instituto invalido" en caso que el Instituto no sea correcto, y "Debe seleccionar un instituto" en caso que no se haya cargado nada.
-			}
+				populatePreviasList(iconaux);			}
 		});
 		altaCursoPreviasButtonSi.setSelected(false);
 		altaCursoPreviasButtonSi.setBounds(478, 16, 43, 25);
@@ -306,6 +306,8 @@ public class AgregarCurso extends JInternalFrame {
 		this.altaCursoUrltextField.setText("");
 		previasmodel = new DefaultListModel<String>();
 		this.altaCursoPreviasList.setModel(previasmodel);
+		altaCursoAgregarPreviasButton.setEnabled(false);
+		altaCursoLimpiarPreviasButton.setEnabled(false);
 	}
 	
 	private void populatePreviasList(IControladorConsultaCurso iconaux) {
@@ -318,8 +320,6 @@ public class AgregarCurso extends JInternalFrame {
 			for(DtCursoBase cb: dtcursosbase) {
 				previasmodel.addElement(cb.getNombre());
 			}
-			// Cargar cursosdisponibles en lista y retornarlos (modificar firma de retorno de populate)
-			// DefaultComboBoxModel<Integer> modelclases = new DefaultComboBoxModel<Integer>(icon.listarClases());
 			altaCursoPreviasList.setModel(previasmodel);
 			altaCursoPreviasList.setVisible(true);
 			altaCursoPreviasList.setEnabled(true);
@@ -330,7 +330,8 @@ public class AgregarCurso extends JInternalFrame {
 			altaCursoPreviasButtonSi.setSelected(false);
 			altaCursoAgregarPreviasButton.setEnabled(false);
 			altaCursoLimpiarPreviasButton.setEnabled(false);
-			// limpiar lista de cursos
+			previasmodel = new DefaultListModel<String>();
+			this.altaCursoPreviasList.setModel(previasmodel);
 			JOptionPane.showMessageDialog(this, ex.getMessage(), "Alta Curso", JOptionPane.ERROR_MESSAGE);
 		}
 	}
