@@ -22,6 +22,9 @@ import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 import javax.swing.JButton;
+import java.awt.Color;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class AgregarEdicionCurso extends JInternalFrame {
 	
@@ -61,10 +64,10 @@ public class AgregarEdicionCurso extends JInternalFrame {
 		getContentPane().setLayout(null);
 		
 		JLabel lblCurso = new JLabel("Curso");
-		lblCurso.setBounds(35, 64, 70, 15);
+		lblCurso.setBounds(35, 60, 70, 15);
 		
 		JLabel lblfechainicio = new JLabel("Fecha de Inicio");
-		lblfechainicio.setBounds(12, 119, 123, 15);
+		lblfechainicio.setBounds(35, 119, 93, 15);
 		
 		fiDia = new JComboBox<String>();
 		fiDia.setBounds(161, 114, 48, 24);
@@ -151,7 +154,7 @@ public class AgregarEdicionCurso extends JInternalFrame {
 		lblAno.setBounds(329, 88, 70, 15);
 		
 		JLabel lblFechaDeFin = new JLabel("Fecha de fin");
-		lblFechaDeFin.setBounds(12, 186, 123, 15);
+		lblFechaDeFin.setBounds(35, 182, 100, 15);
 		
 		JLabel lblDia_2 = new JLabel("dia");
 		lblDia_2.setBounds(169, 150, 40, 15);
@@ -237,45 +240,42 @@ public class AgregarEdicionCurso extends JInternalFrame {
 		ffAnio.addItem("2021");
 		ffAnio.addItem("2022");
 		
+		cantCupos = new JTextField();
+		cantCupos.setEnabled(false);
+		cantCupos.setText("0");
+		cantCupos.setBounds(161, 285, 61, 19);
+		
 		JLabel lblNombre = new JLabel("Nombre"); 
 		lblNombre.setBounds(35, 227, 70, 15);
 		
 		nombreEdicion = new JTextField();
-		nombreEdicion.setBounds(123, 225, 270, 19);
+		nombreEdicion.setBounds(143, 223, 270, 19);
 		nombreEdicion.setFont(new Font("Dialog", Font.PLAIN, 14));
 		nombreEdicion.setColumns(10);
-		
-		cuposBool = new JRadioButton("Cupos");
-		cuposBool.setBounds(35, 283, 87, 23);
-		cuposBool.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if (cuposBool.isSelected()) {
-					cuposBool.setSelected(false);
-					cantCupos.setText("0");
-					cantCupos.setEditable(false);
-				} else {
-					cuposBool.setSelected(true);
-					cantCupos.setText("0");
-					cantCupos.setEditable(true);
-				}
-			}
-		});
-		
-		cantCupos = new JTextField();
-		cantCupos.setText("0");
-		cantCupos.setBounds(161, 285, 61, 19);
-		cantCupos.setColumns(10);
-
-		cuposBool.setHorizontalAlignment(SwingConstants.LEFT);
 		
 		JLabel lblCantCupos = new JLabel("Cant Cupos");
 		lblCantCupos.setBounds(161, 258, 129, 15);
 		
 		JLabel lblFechaDePub = new JLabel("Fecha de publicacion");
-		lblFechaDePub.setBounds(12, 353, 131, 15);
+		lblFechaDePub.setBounds(35, 353, 117, 15);
 		
 		JLabel lblDia_2_1 = new JLabel("dia");
 		lblDia_2_1.setBounds(169, 317, 40, 15);
+		
+		cuposBool = new JRadioButton("Cupos");
+		cuposBool.setSelected(false);
+		cuposBool.setBounds(35, 283, 87, 23);
+		cuposBool.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(cuposBool.isSelected())
+					cantCupos.setEnabled(true);
+				else {
+					cantCupos.setEnabled(false);
+					cantCupos.setText("0");
+				}
+			}
+		});
+
 		
 		fpDia = new JComboBox<String>();
 		fpDia.setBounds(161, 344, 48, 24);
@@ -389,7 +389,7 @@ public class AgregarEdicionCurso extends JInternalFrame {
 		
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent c) {
 				limpiar();
 				setVisible(false);
 			}
@@ -399,16 +399,17 @@ public class AgregarEdicionCurso extends JInternalFrame {
 		
 		JButton btnAceptar = new JButton("Aceptar");
 		btnAceptar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				AgregarEdicionCursoAceptarActionPerformed(e);
-				limpiar();
+			public void actionPerformed(ActionEvent a) {
+				AgregarEdicionCursoAceptarActionPerformed(a);
 			}
 		});
 		btnAceptar.setBounds(296, 505, 117, 25);
 		getContentPane().add(btnAceptar);
 		
 		JLabel lblDocentes = new JLabel("Docentes");
-		lblDocentes.setBounds(12, 394, 70, 15);
+		lblDocentes.setBackground(Color.WHITE);
+		lblDocentes.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblDocentes.setBounds(35, 392, 70, 15);
 		getContentPane().add(lblDocentes);
 		
 		nickDocente = new JTextField();
@@ -418,8 +419,8 @@ public class AgregarEdicionCurso extends JInternalFrame {
 		
 		JButton btnAgregar = new JButton("Agregar");
 		btnAgregar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				AgregarEdicionCursoAgregarActionPerformed(e);
+			public void actionPerformed(ActionEvent ag) {
+				AgregarEdicionCursoAgregarActionPerformed(ag);
 				nickDocente.setText("");
 				correoDocente.setText("");
 			}
@@ -433,11 +434,11 @@ public class AgregarEdicionCurso extends JInternalFrame {
 		getContentPane().add(correoDocente);
 		
 		JLabel lblNick = new JLabel("nick");
-		lblNick.setBounds(12, 421, 70, 15);
+		lblNick.setBounds(58, 422, 40, 15);
 		getContentPane().add(lblNick);
 		
 		JLabel lblCorreo = new JLabel("correo");
-		lblCorreo.setBounds(12, 464, 70, 15);
+		lblCorreo.setBounds(54, 465, 70, 15);
 		getContentPane().add(lblCorreo);
 		
 		textFieldInstituto = new JTextField();
@@ -446,7 +447,7 @@ public class AgregarEdicionCurso extends JInternalFrame {
 		textFieldInstituto.setColumns(10);
 		
 		JLabel lblInstituto = new JLabel("Instituto");
-		lblInstituto.setBounds(12, 14, 70, 15);
+		lblInstituto.setBounds(35, 15, 70, 15);
 		getContentPane().add(lblInstituto);
 		
 		comboBoxNombreCurso = new JComboBox<String>();
@@ -455,9 +456,9 @@ public class AgregarEdicionCurso extends JInternalFrame {
 		
 		JButton btnRefresh = new JButton("Refresh");
 		btnRefresh.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent r) {
 				comboBoxNombreCurso.removeAllItems();
-				AgregarEdicionCursoRefreshActionPerformed(arg0);
+				AgregarEdicionCursoRefreshActionPerformed(r);
 			}
 		});
 		btnRefresh.setBounds(357, 9, 117, 25);
@@ -465,7 +466,7 @@ public class AgregarEdicionCurso extends JInternalFrame {
 				
 	}
 	
-	private void AgregarEdicionCursoRefreshActionPerformed(ActionEvent arg0) {
+	private void AgregarEdicionCursoRefreshActionPerformed(ActionEvent agr) {
 		String instituto = (String) this.textFieldInstituto.getText();
 		try {
 			cursos = icon.seleccionarInstituto(instituto);
@@ -531,38 +532,37 @@ public class AgregarEdicionCurso extends JInternalFrame {
 	}
 	
 	protected void AgregarEdicionCursoAceptarActionPerformed(ActionEvent e) {
-		String curso = (String) this.comboBoxNombreCurso.getSelectedItem();
-		String nombre = (String) this.nombreEdicion.getText();
-		String cupos = (String) this.cantCupos.getText();
-		boolean tieneCupos = (boolean) this.cuposBool.isSelected();
-		String diaI = (String) this.fiDia.getSelectedItem();
-		String mesI = (String) this.fiMes.getSelectedItem();
-		String anioI = (String) this.fiAnio.getSelectedItem();
-		String diaF = (String) this.ffDia.getSelectedItem();
-		String mesF = (String) this.ffMes.getSelectedItem();
-		String anioF = (String) this.ffAnio.getSelectedItem();
-		String diaP = (String) this.fpDia.getSelectedItem();
-		String mesP = (String) this.fpMes.getSelectedItem();
-		String anioP = (String) this.fpAnio.getSelectedItem();
+		String curso = this.comboBoxNombreCurso.getSelectedItem().toString();
+		String nombre = this.nombreEdicion.getText();
+		String cupos = this.cantCupos.getText();
+		boolean tieneCupos = this.cuposBool.isSelected();
+		String diaI =  this.fiDia.getSelectedItem().toString();
+		String mesI = this.fiMes.getSelectedItem().toString();
+		String anioI = this.fiAnio.getSelectedItem().toString();
+		String diaF = this.ffDia.getSelectedItem().toString();
+		String mesF = this.ffMes.getSelectedItem().toString();
+		String anioF = this.ffAnio.getSelectedItem().toString();
+		String diaP = this.fpDia.getSelectedItem().toString();
+		String mesP = this.fpMes.getSelectedItem().toString();
+		String anioP = this.fpAnio.getSelectedItem().toString();
 		DtFecha fechaI = new DtFecha(Integer.parseInt(diaI), Integer.parseInt(mesI), Integer.parseInt(anioI));
 		DtFecha fechaF = new DtFecha(Integer.parseInt(diaF), Integer.parseInt(mesF), Integer.parseInt(anioF));
 		DtFecha fechaPub = new DtFecha(Integer.parseInt(diaP), Integer.parseInt(mesP), Integer.parseInt(anioP));
 		if (curso.isEmpty() || nombre.isEmpty()) {
-		 	JOptionPane.showMessageDialog(this, "No puede haber campos vacios", "Agregar Edicion", 
-					JOptionPane.ERROR_MESSAGE);
-		} else if (!curso.isEmpty() && !nombre.isEmpty() && !docentes.isEmpty()) {
+		 	JOptionPane.showMessageDialog(this, "No puede haber campos vacios", "Agregar Edicion", JOptionPane.ERROR_MESSAGE);
+		} else/* if (!curso.isEmpty() && !nombre.isEmpty() && !docentes.isEmpty())*/ {
 			try {
 				this.icon.altaEdicionCurso(curso, nombre, fechaI, fechaF, docentes, tieneCupos, Integer.parseInt(cupos), fechaPub);
 				this.icon.confirmarAltaEdicion();
 				JOptionPane.showMessageDialog(this, "La edicion fue agregada con exito", "Agregar Edicion", JOptionPane.INFORMATION_MESSAGE);
+				setVisible(false);
 			} catch (EdicionRepetida | CursoNoExiste | InstitutoInexistente a) {
-				JOptionPane.showMessageDialog(this, a.getMessage(), "Agregar Edicion", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, a.getLocalizedMessage(), "Agregar Edicion", JOptionPane.ERROR_MESSAGE);
 			}
-		} else if (docentes.isEmpty()) {
+		}/* else if (docentes.isEmpty()) {
 			JOptionPane.showMessageDialog(this, "La edicion debe tener docentes", "Agregar Usuario", 
 					JOptionPane.ERROR_MESSAGE);
-		}
-		setVisible(false);
+		}descomentar esto y arriba para obligar a agregar docentes*/
 	}
 }
 
