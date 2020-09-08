@@ -90,7 +90,7 @@ public class Principal {
 		
 		infoEdicionCursoInternalFrame = new InfoEdicionCurso(fabrica.getIControladorConsultaEdicionCurso());
 		altaProgFormacionInternalFrame.setLocation(188, 105);
-		frame.getContentPane().add(altaProgFormacionInternalFrame);
+		frame.getContentPane().add(infoEdicionCursoInternalFrame);
 		
 		infoCursoInternalFrame = new InfoCurso(fabrica.getIControladorConsultaCurso());
 		infoCursoInternalFrame.setLocation(188, 105);
@@ -155,6 +155,14 @@ public class Principal {
 			}
 		});
 		mnInformacin.add(mntmInfoCurso);
+		
+		JMenuItem mntmEdicionDeCurso = new JMenuItem("Edicion de Curso");
+		mntmEdicionDeCurso.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				infoEdicionCursoInternalFrame.setVisible(true);
+			}
+		});
+		mnInformacin.add(mntmEdicionDeCurso);
 		
 		JMenu mnNewMenu = new JMenu("Inscripcion");
 		menuBar.add(mnNewMenu);
