@@ -2,13 +2,20 @@ package logica;
 
 import java.util.ArrayList;
 
+import datatypes.DtInstituto;
+
 
 public class ManejadorInstituto {
     private static ManejadorInstituto instancia;
     private ArrayList<Instituto> institutos = new ArrayList<Instituto>();
 
-    public ManejadorInstituto() {}
+    private ManejadorInstituto() {}
     
+    public static ManejadorInstituto getInstancia() {
+        if(instancia == null)
+            instancia = new ManejadorInstituto();
+        return instancia;
+    }
     
     public boolean existeInstituto(String nombre) {
     	if(institutos!=null) {
@@ -19,13 +26,6 @@ public class ManejadorInstituto {
         	}
     	}
     	return false;
-    }
-    
-    
-    public static ManejadorInstituto getInstancia() {
-        if(instancia == null)
-            instancia = new ManejadorInstituto();
-        return instancia;
     }
     
     public Instituto find(String nombre) { 
@@ -51,6 +51,14 @@ public class ManejadorInstituto {
     public void setInstitutos(ArrayList<Instituto> institutos) {
         this.institutos = institutos;
     }
-
     
+    public ArrayList<DtInstituto> getDtInstitutos() {
+        ArrayList<DtInstituto> dtins = new ArrayList<DtInstituto>();
+    	for(int i=0; i < institutos.size();i++) {
+        	DtInstituto dti = new DtInstituto(institutos.get(i).getNombre());
+    		dtins.add(dti);
+        }
+    	return dtins;
+    }
+
 }

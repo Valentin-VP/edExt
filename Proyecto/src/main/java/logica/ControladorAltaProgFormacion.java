@@ -1,7 +1,5 @@
 package logica;
 
-import java.util.Date;
-
 import datatypes.DtFecha;
 import interfaces.IControladorAltaProgFormacion;
 
@@ -14,7 +12,6 @@ public class ControladorAltaProgFormacion implements IControladorAltaProgFormaci
 	
 	public ControladorAltaProgFormacion() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

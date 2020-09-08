@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import datatypes.DtCursoBase;
 import datatypes.DtEdicionBase;
 import datatypes.DtFecha;
-import logica.Instituto;
+import datatypes.DtInstituto;
 
 public interface IControladorInscripcionEdicionCurso {
-	public ArrayList<Instituto> listarInstitutos();
+	public ArrayList<DtInstituto> listarInstitutos();
 	
 	public ArrayList<DtCursoBase> seleccionarInstituto(String nomIns);
 	

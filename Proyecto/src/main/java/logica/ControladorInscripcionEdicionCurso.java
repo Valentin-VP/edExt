@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import datatypes.DtCursoBase;
 import datatypes.DtEdicionBase;
 import datatypes.DtFecha;
+import datatypes.DtInstituto;
 import interfaces.IControladorInscripcionEdicionCurso;
 
 public class ControladorInscripcionEdicionCurso implements IControladorInscripcionEdicionCurso{
@@ -17,13 +18,12 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 	
 	public ControladorInscripcionEdicionCurso() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public ArrayList<Instituto> listarInstitutos() {
+	public ArrayList<DtInstituto> listarInstitutos() {
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
-		return mI.getInstitutos();
+		return mI.getDtInstitutos();
 	}
 
 	@Override
