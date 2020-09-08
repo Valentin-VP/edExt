@@ -25,6 +25,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class InfoEdicionCurso extends JInternalFrame {
+	private InfoEdicionCurso2 infoEdicionCurso2Panel;
+	
 	private JTextField nombreInstituto;
 
 	private DefaultListModel<String> nombreCursos = new DefaultListModel<String>();
@@ -33,11 +35,18 @@ public class InfoEdicionCurso extends JInternalFrame {
 	private JList<String> listEdiciones;
 	private JList<String> listCursos;
 	
+	
 	private static final long serialVersionUID = 1L;
 
     private IControladorConsultaEdicionCurso icon;
 	
 	public InfoEdicionCurso(IControladorConsultaEdicionCurso icon) {
+		this.icon = icon;
+		infoEdicionCurso2Panel = new InfoEdicionCurso2(icon);
+		infoEdicionCurso2Panel.setBounds(0, 0, 477, 494);
+		this.getContentPane().add(infoEdicionCurso2Panel);
+		infoEdicionCurso2Panel.setVisible(false);
+		
 		getContentPane().setEnabled(false);
 		this.icon = icon;
 		setBounds(100, 100, 493, 524);
@@ -56,12 +65,20 @@ public class InfoEdicionCurso extends JInternalFrame {
         nombreInstituto.setColumns(10);
         
         listEdiciones = new JList<String>();
-        listEdiciones.setBounds(255, 164, 180, 319);
+        listEdiciones.addMouseListener(new MouseAdapter() {
+        	@Override
+        	public void mouseClicked(MouseEvent me2) {
+        		icon.setEdicion(listEdiciones.getSelectedValue().toString());
+        		infoEdicionCurso2Panel.mostrarDatos();
+        	}
+        });
+        listEdiciones.setBounds(267, 164, 180, 319);
         getContentPane().add(listEdiciones);
         
         JButton btnNewButton = new JButton("Aceptar");
         btnNewButton.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent arg0) {
+        	public void actionPerformed(ActionEvent arg0) { 
+        		limpiarListas();
         		cargarCursos(arg0);
         	}
         });
@@ -72,7 +89,8 @@ public class InfoEdicionCurso extends JInternalFrame {
         cancelar.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		setVisible(false);
-        		limpiar();
+        		nombreInstituto.setText("");
+        		limpiarListas();
         	}
         });
         cancelar.setBounds(112, 69, 89, 23);
@@ -85,23 +103,21 @@ public class InfoEdicionCurso extends JInternalFrame {
         
         JLabel lblInstitutos = new JLabel("Ediciones del Curso");
         lblInstitutos.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        lblInstitutos.setBounds(278, 131, 157, 22);
+        lblInstitutos.setBounds(290, 131, 157, 22);
         getContentPane().add(lblInstitutos);
         
         listCursos = new JList<String>();
         listCursos.addMouseListener(new MouseAdapter() {
         	@Override
-        	public void mouseClicked(MouseEvent arg0) {
-        		String cursoSelected = null;
-        		int[] selectedIx = listCursos.getSelectedIndices();
-				for (int i = 0; i < selectedIx.length; i++) {
-					cursoSelected = listCursos.getModel().getElementAt(selectedIx[i]).toString();
-				}
-				cargarEdicionCurso(arg0, cursoSelected);
+        	public void mouseClicked(MouseEvent me1) {
+        		nombreEdiciones.clear();
+        		listEdiciones.setModel(nombreEdiciones);
+				cargarEdicionCurso(me1, listCursos.getSelectedValue().toString());
         	}
         });
         listCursos.setBounds(35, 164, 180, 319);
         getContentPane().add(listCursos);
+       
 
 	}
 	
@@ -125,13 +141,15 @@ public class InfoEdicionCurso extends JInternalFrame {
 		}
 	}
 	
-	protected void cargarEdicionCurso(MouseEvent me, String curso) {
+	protected void cargarEdicionCurso(MouseEvent me1, String curso) {
 		try {
-			for(DtEdicionBase dc: icon.seleccionarCurso(curso)) {
-				nombreEdiciones.addElement(dc.getNombre());
+			ArrayList<DtEdicionBase> dtEdicionBase = new ArrayList<>();
+			dtEdicionBase = icon.seleccionarCurso(curso);
+			for(DtEdicionBase de: dtEdicionBase) {
+				nombreEdiciones.addElement(de.getNombre());
 			}
 			
-			listEdiciones.setModel(nombreCursos);
+			listEdiciones.setModel(nombreEdiciones);
 			listEdiciones.setEnabled(true);
 			listEdiciones.setVisible(true);
 		}catch(Exception e) {
@@ -139,8 +157,11 @@ public class InfoEdicionCurso extends JInternalFrame {
 		}
 	}
 	
-	private void limpiar(){
-		nombreInstituto.setText("");
+	private void limpiarListas(){
+		nombreCursos.clear();
+		nombreEdiciones.clear();
+		listEdiciones.setModel(nombreEdiciones);
+		listCursos.setModel(nombreCursos);
 	
 	}
 }
