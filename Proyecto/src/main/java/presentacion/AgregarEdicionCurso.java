@@ -265,8 +265,7 @@ public class AgregarEdicionCurso extends JInternalFrame {
 		cantCupos.setText("0");
 		cantCupos.setBounds(161, 285, 61, 19);
 		cantCupos.setColumns(10);
-		
-		cuposBool.setSelected(false);
+
 		cuposBool.setHorizontalAlignment(SwingConstants.LEFT);
 		
 		JLabel lblCantCupos = new JLabel("Cant Cupos");
@@ -503,18 +502,32 @@ public class AgregarEdicionCurso extends JInternalFrame {
 		this.cuposBool.setSelected(false);
 		this.cantCupos.setText("0");
 		this.cantCupos.setEditable(false);
+		this.comboBoxNombreCurso.removeAllItems();
 	}
 	
 	protected void AgregarEdicionCursoAgregarActionPerformed(ActionEvent e) {
 		String nick = this.nickDocente.getText();
 		String correo = this.correoDocente.getText();
-		if (nick.isEmpty() || correo.isEmpty()) {
-			JOptionPane.showMessageDialog(this, "No puede haber campos vacios", "Agregar Usuario", 
-					JOptionPane.ERROR_MESSAGE);
-		} else if (!nick.isEmpty() && !correo.isEmpty()) {
-			DtUsuarioBase user = new DtUsuarioBase(nick, correo);
-			docentes.add(user);
+		DtUsuarioBase usuario = new DtUsuarioBase(nick, correo);
+		ArrayList<DtUsuarioBase> usuarios = new ArrayList<>();
+		usuarios = this.icon.getUsuarios();
+		for (DtUsuarioBase dtUser: usuarios) {
+			System.out.println(dtUser.getNick());
 		}
+		boolean usuarioValido = usuarios.contains(usuario);
+		System.out.print(usuarioValido);
+		if (usuarioValido) {
+			if (nick.isEmpty() || correo.isEmpty()) {
+				JOptionPane.showMessageDialog(this, "No puede haber campos vacios", "Agregar Usuario", 
+						JOptionPane.ERROR_MESSAGE);
+			} else if (!nick.isEmpty() && !correo.isEmpty()) {
+				DtUsuarioBase user = new DtUsuarioBase(nick, correo);
+				docentes.add(user);
+			}
+		} else {
+			JOptionPane.showMessageDialog(this, "No existe el usuario", "Agregar Usuario", 
+					JOptionPane.ERROR_MESSAGE);
+		}	
 	}
 	
 	protected void AgregarEdicionCursoAceptarActionPerformed(ActionEvent e) {
@@ -545,7 +558,11 @@ public class AgregarEdicionCurso extends JInternalFrame {
 			} catch (EdicionRepetida | CursoNoExiste | InstitutoInexistente a) {
 				JOptionPane.showMessageDialog(this, a.getMessage(), "Agregar Edicion", JOptionPane.ERROR_MESSAGE);
 			}
+		} else if (docentes.isEmpty()) {
+			JOptionPane.showMessageDialog(this, "La edicion debe tener docentes", "Agregar Usuario", 
+					JOptionPane.ERROR_MESSAGE);
 		}
+		setVisible(false);
 	}
 }
 

@@ -21,4 +21,6 @@ public interface IControladorAltaEdicionCurso {
 	public void cancelarAltaEdicion();
 	
 	public void confirmarAltaEdicion();
+	
+	public ArrayList<DtUsuarioBase> getUsuarios();
 }
