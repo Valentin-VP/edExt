@@ -244,10 +244,10 @@ public class AgregarEdicionCurso extends JInternalFrame {
 		nombreEdicion.setFont(new Font("Dialog", Font.PLAIN, 14));
 		nombreEdicion.setColumns(10);
 		
-		JRadioButton cuposBool = new JRadioButton("Cupos");
+		cuposBool = new JRadioButton("Cupos");
 		cuposBool.setBounds(35, 283, 87, 23);
 		cuposBool.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {//no me sale lo del boton y el texto
+			public void actionPerformed(ActionEvent arg0) {
 				cuposBool.setSelected(true);
 				cantCupos.setText("");
 				cantCupos.setEditable(true);
@@ -435,7 +435,7 @@ public class AgregarEdicionCurso extends JInternalFrame {
 		getContentPane().add(lblCorreo);
 		
 		textFieldInstituto = new JTextField();
-		textFieldInstituto.setBounds(122, 12, 271, 19);
+		textFieldInstituto.setBounds(122, 12, 193, 19);
 		getContentPane().add(textFieldInstituto);
 		textFieldInstituto.setColumns(10);
 		
@@ -447,10 +447,23 @@ public class AgregarEdicionCurso extends JInternalFrame {
 		comboBoxNombreCurso.setBounds(161, 55, 192, 24);
 		getContentPane().add(comboBoxNombreCurso);
 		
-		ArrayList<DtCursoBase> cursos = new ArrayList<>();
+		JButton btnRefresh = new JButton("Refresh");
+		btnRefresh.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				comboBoxNombreCurso.removeAllItems();
+				AgregarEdicionCursoRefreshActionPerformed(arg0);
+			}
+		});
+		btnRefresh.setBounds(357, 9, 117, 25);
+		getContentPane().add(btnRefresh);
+				
+	}
+	
+	ArrayList<DtCursoBase> cursos = new ArrayList<>();
+	private void AgregarEdicionCursoRefreshActionPerformed(ActionEvent arg0) {
 		String instituto = (String) this.textFieldInstituto.getText();
 		try {
-			cursos = this.icon.seleccionarInstituto(instituto);
+			cursos = icon.seleccionarInstituto(instituto);
 		} catch (InstitutoInexistente e) {
 			JOptionPane.showMessageDialog(this, e.getMessage(), "Agregar Edicion", JOptionPane.ERROR_MESSAGE);
 		}	
@@ -464,8 +477,7 @@ public class AgregarEdicionCurso extends JInternalFrame {
 		for (int i = 0; i < cursos.size(); i++) {
 			comboBoxNombreCurso.addItem(array[i]);
 		}
-
-	}
+	}	
 	
 	protected void limpiar() {
 		
@@ -482,6 +494,9 @@ public class AgregarEdicionCurso extends JInternalFrame {
 		this.fpDia.setSelectedItem("1");
 		this.fpMes.setSelectedItem("1");
 		this.fpAnio.setSelectedItem("1992");
+		this.cuposBool.setSelected(false);
+		this.cantCupos.setText("");
+		this.cantCupos.setEditable(false);
 	}
 	
 	ArrayList<DtUsuarioBase> docentes = new ArrayList<>();
@@ -522,6 +537,7 @@ public class AgregarEdicionCurso extends JInternalFrame {
 			try {
 				this.icon.altaEdicionCurso(curso, nombre, fechaI, fechaF, docentes, cuposBool.isSelected(), Integer.parseInt(cupos), fechaPub);
 				this.icon.confirmarAltaEdicion();
+				JOptionPane.showMessageDialog(this, "La edicion fue agregada con exito", "Agregar Edicion", JOptionPane.ERROR_MESSAGE);
 			} catch (EdicionRepetida | CursoNoExiste | InstitutoInexistente a) {
 				JOptionPane.showMessageDialog(this, a.getMessage(), "Agregar Edicion", JOptionPane.ERROR_MESSAGE);
 			}

@@ -83,9 +83,9 @@ public class Principal {
 		altaProgFormacionInternalFrame.setLocation(188, 105);
 		frame.getContentPane().add(altaProgFormacionInternalFrame);
 		
-		/*agregarEdicionCursoInternalFrame = new AgregarEdicionCurso(fabrica.getIControladorAltaEdicionCurso());
+		agregarEdicionCursoInternalFrame = new AgregarEdicionCurso(fabrica.getIControladorAltaEdicionCurso());
 		agregarEdicionCursoInternalFrame.setLocation(188, 105);
-		frame.getContentPane().add(agregarEdicionCursoInternalFrame);*/
+		frame.getContentPane().add(agregarEdicionCursoInternalFrame);
 		
 		infoEdicionCursoInternalFrame = new InfoEdicionCurso(fabrica.getIControladorConsultaEdicionCurso());
 		altaProgFormacionInternalFrame.setLocation(188, 105);
@@ -130,11 +130,11 @@ public class Principal {
 		});
 		
 		JMenuItem mntmEdicion = new JMenuItem("Edicion");
-		/*mntmEdicion.addActionListener(new ActionListener() {
+		mntmEdicion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				agregarEdicionCursoInternalFrame.setVisible(true);
 			}
-		});*/
+		});
 		mnAltas.add(mntmEdicion);
 		mnAltas.add(mntmUsuario);
 		

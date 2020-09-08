@@ -24,7 +24,7 @@ public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso
 		ArrayList <DtCursoBase> cursosinstituto = new ArrayList <DtCursoBase>();
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 		Instituto i = mI.find(instituto);
-		if (i == null) {//error????
+		if (i == null) {
 			throw new InstitutoInexistente("El instituto " + instituto + " no esta en el sistema");
 		}
 		this.instituto = i.getNombre();
