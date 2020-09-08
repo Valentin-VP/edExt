@@ -5,6 +5,8 @@ import datatypes.DtTime;
 import excepciones.CursoRepetido;
 import excepciones.InstitutoInexistente;
 import logica.Curso;
+import datatypes.DtCurso;
+import datatypes.DtCursoBase;
 import datatypes.DtFecha;
 
 public interface IControladorAltaCurso {
@@ -14,7 +16,7 @@ public interface IControladorAltaCurso {
 	
 	public void cancelarAltaCurso();
 
-	public void setPrevias(ArrayList<Curso> previas);
+	public void setPrevias(ArrayList<DtCursoBase> previas);
 	
 	public void agregarPrevia(String previa);
 	

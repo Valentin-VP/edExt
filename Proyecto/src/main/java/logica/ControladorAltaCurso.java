@@ -7,6 +7,7 @@ import excepciones.InstitutoInexistente;
 import java.util.ArrayList;
 
 import datatypes.DtCurso;
+import datatypes.DtCursoBase;
 import datatypes.DtFecha;
 
 public class ControladorAltaCurso implements IControladorAltaCurso{
@@ -19,7 +20,7 @@ public class ControladorAltaCurso implements IControladorAltaCurso{
 	private int creditos;
 	private DtFecha fechaR;
 	private String url;
-	private ArrayList<Curso> previas = new ArrayList<Curso>();
+	private ArrayList<DtCursoBase> previas = new ArrayList<DtCursoBase>();
 	
 	public ControladorAltaCurso() {
 		super();
@@ -86,11 +87,11 @@ public class ControladorAltaCurso implements IControladorAltaCurso{
 		this.fechaR = fechaR;
 	}
 	
-	public ArrayList<Curso> getPrevias() {
+	public ArrayList<DtCursoBase> getPrevias() {
 		return previas;
 	}
-
-	public void setPrevias(ArrayList<Curso> previas) {
+	@Override
+	public void setPrevias(ArrayList<DtCursoBase> previas) {
 		this.previas=previas;
 	}
 	
@@ -103,20 +104,23 @@ public class ControladorAltaCurso implements IControladorAltaCurso{
 	}
 	
 	public void agregarPrevia(String previa) {
-		ManejadorCurso mC = ManejadorCurso.getInstancia();
-		Curso cursoprevio = mC.find(previa);
-		if(cursoprevio != null ) {
-			this.previas.add(cursoprevio);
+		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
+		if(mI.find(this.instituto).existsCurso(previa)) {
+			DtCursoBase dtcb = new DtCursoBase(mI.find(this.instituto).findCurso(previa).getNombre());
+			previas.add(dtcb);
 		}
-		
 	}
 	
 	@Override
 	public void confirmarAltaCurso() {
-		ManejadorCurso mC = ManejadorCurso.getInstancia();
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
-		Curso curso = new Curso(getNombre(), getDescripcion(), getDuracion(), getCantHoras(), getCreditos(), getFechaR(), getUrl(), getPrevias());
-		mC.agregarCurso(curso);
+		ArrayList<Curso> previascursos = new ArrayList <Curso>();
+		for(DtCursoBase dtcb: previas) {
+			if(mI.find(this.instituto).existsCurso(dtcb.getNombre())) {
+				previascursos.add((mI.find(this.instituto).findCurso(dtcb.getNombre())));
+			}
+		}
+		Curso curso = new Curso(getNombre(), getDescripcion(), getDuracion(), getCantHoras(), getCreditos(), getFechaR(), getUrl(), previascursos);
 		mI.find(this.instituto).agregarCurso(curso);
 		resetearDatos();
 	}
@@ -140,8 +144,7 @@ public class ControladorAltaCurso implements IControladorAltaCurso{
 		if(!mI.existeInstituto(instituto)) {
 			throw new InstitutoInexistente("No existe el Instituto seleccionado.");
 		}
-		ManejadorCurso mC = ManejadorCurso.getInstancia();
-		if(mC.exists(nombre)) {
+		if(mI.find(instituto).existsCurso(nombre)) {
 			throw new CursoRepetido("Ya existe un Curso con ese nombre en el Instituto seleccionado.");
 		}
 		setInstituto(instituto);
@@ -165,7 +168,7 @@ public class ControladorAltaCurso implements IControladorAltaCurso{
 		this.creditos = 0;
 		this.fechaR = null;
 		this.url = null;
-		this.previas = new ArrayList<Curso>();
+		this.previas = new ArrayList<DtCursoBase>();
 		
 	}
 	
