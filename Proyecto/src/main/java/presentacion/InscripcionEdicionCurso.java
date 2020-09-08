@@ -29,6 +29,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
 public class InscripcionEdicionCurso extends JInternalFrame {
 
@@ -52,24 +54,13 @@ public class InscripcionEdicionCurso extends JInternalFrame {
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setClosable(true);
         setTitle("Inscripcion a edicion de Curso");
-		
 		setBounds(100, 100, 372, 427);
 		
 		comboBoxIns = new JComboBox<String>();
-		comboBoxIns.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				comboBoxIns.removeAllItems();
-				inicializarComboBoxs(e);
-			}
-		});
-		comboBoxIns.setBounds(53, 48, 168, 20);
-		comboBoxIns.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		comboBoxIns.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
 				
-				//inicializarComboBoxs(e);
 				try {
-					
 					comboBoxCur.setEnabled(true);
 					ArrayList<DtCursoBase> cursos = icon.seleccionarInstituto(comboBoxIns.getSelectedItem().toString());
 					DefaultComboBoxModel dml= new DefaultComboBoxModel();
@@ -86,11 +77,17 @@ public class InscripcionEdicionCurso extends JInternalFrame {
 						//System.out.print(dts.getNombre());
 					//}
 					
-					
 				} catch (CursoNoExiste n) {
 					JOptionPane.showMessageDialog(null, n.getMessage(), "Inscripcion Edicion Curso", JOptionPane.ERROR_MESSAGE);
 				}
 				
+			}
+		});
+		comboBoxIns.setBounds(53, 48, 168, 20);
+		comboBoxIns.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				inicializarComboBoxs();
 			}
 		});
 		getContentPane().setLayout(null);
@@ -286,7 +283,7 @@ public class InscripcionEdicionCurso extends JInternalFrame {
 		comboBoxCur.removeAll();
 	}
 	
-	private void inicializarComboBoxs(MouseEvent e) {
+	private void inicializarComboBoxs() {
 		
 		try {
 			ArrayList<DtInstituto> institutos = icon.listarInstitutos();

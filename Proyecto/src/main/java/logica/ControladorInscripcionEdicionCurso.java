@@ -36,15 +36,27 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 	@Override
 	public ArrayList<DtCursoBase> seleccionarInstituto(String nomIns) throws CursoNoExiste{
 		ArrayList <DtCursoBase> cursosinstituto = new ArrayList<DtCursoBase>();
-		this.nomIns = nomIns;
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 		Instituto ins = mI.find(nomIns);
-		System.out.print(ins.getNombre());
-		cursosinstituto = ins.getDtCursosBase();
-		if (cursosinstituto.isEmpty()) {
-			throw new CursoNoExiste("El instituto no tiene cursos ingresados");
+		this.nomIns = nomIns;
+		ArrayList <Curso> cursos = mI.find(nomIns).getCursos();
+		for(int i=0;i < cursos.size();i++) {
+			DtCursoBase dtcb = new DtCursoBase (cursos.get(i).getNombre());
+			cursosinstituto.add(dtcb);
 		}
 		return cursosinstituto;
+		
+		/*public ArrayList<DtCursoBase> getDtCursosBase() {
+			ArrayList<DtCursoBase> dtcursos = new ArrayList<DtCursoBase>();
+			for (int i=0;i < cursos.size(); i++) {
+				DtCursoBase dtc = new DtCursoBase(cursos.get(i).getNombre());
+				dtcursos.add(dtc);
+			}
+			return dtcursos;
+		}
+		*/
+		
+		
 		//ArrayList<Curso> cursos = mI.find(nomIns).getDtCursos();
 		//for (int i=0;i<cursos.size();i++) {
 			
@@ -61,7 +73,7 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 		ManejadorCurso mC = ManejadorCurso.getInstancia();
 		Curso c = mC.find(nomCurso);
 		DtEdicionBase dteb = c.getEdicionVigente();
-		if (dteb.getNombre() == null) {
+		if (dteb.getNombre() == "") {
 			throw new EdicionVigenteNoExiste("No existe una edicion vigente para el curso seleccionado");
 		}
 		this.nombreEd = dteb.getNombre();
