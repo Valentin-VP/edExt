@@ -8,8 +8,8 @@ import datatypes.DtFecha;
 import datatypes.DtInstituto;
 import excepciones.CursoNoExiste;
 import excepciones.EdicionVigenteNoExiste;
+import excepciones.InscripcionEdRepetido;
 import excepciones.InstitutoInexistente;
-import excepciones.ProgramaRepetido;
 import interfaces.IControladorInscripcionEdicionCurso;
 
 public class ControladorInscripcionEdicionCurso implements IControladorInscripcionEdicionCurso{
@@ -39,41 +39,24 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 		Instituto ins = mI.find(nomIns);
 		this.nomIns = nomIns;
-		ArrayList <Curso> cursos = mI.find(nomIns).getCursos();
+		//ArrayList <Curso> cursos = mI.find(nomIns).getCursos();
+		ArrayList <Curso> cursos = ins.getCursos();
 		for(int i=0;i < cursos.size();i++) {
 			DtCursoBase dtcb = new DtCursoBase (cursos.get(i).getNombre());
 			cursosinstituto.add(dtcb);
 		}
 		return cursosinstituto;
-		
-		/*public ArrayList<DtCursoBase> getDtCursosBase() {
-			ArrayList<DtCursoBase> dtcursos = new ArrayList<DtCursoBase>();
-			for (int i=0;i < cursos.size(); i++) {
-				DtCursoBase dtc = new DtCursoBase(cursos.get(i).getNombre());
-				dtcursos.add(dtc);
-			}
-			return dtcursos;
-		}
-		*/
-		
-		
-		//ArrayList<Curso> cursos = mI.find(nomIns).getDtCursos();
-		//for (int i=0;i<cursos.size();i++) {
-			
-		//}
-		//for(Curso c: cursos) {
-			//DtCursoBase dtcb = new DtCursoBase (c.getNombre());
-			//cursosinstituto.add(dtcb);
-		//}
 	}
 
 	@Override
 	public DtEdicionBase seleccionarCurso(String nomCurso) throws EdicionVigenteNoExiste{
 		this.nomCurso = nomCurso;
-		ManejadorCurso mC = ManejadorCurso.getInstancia();
-		Curso c = mC.find(nomCurso);
+		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
+		Instituto ins = mI.find(this.nomIns);
+		//ManejadorCurso mC = ManejadorCurso.getInstancia();
+		Curso c = ins.findCurso(nomCurso);
 		DtEdicionBase dteb = c.getEdicionVigente();
-		if (dteb.getNombre() == "") {
+		if (dteb == null) {
 			throw new EdicionVigenteNoExiste("No existe una edicion vigente para el curso seleccionado");
 		}
 		this.nombreEd = dteb.getNombre();
@@ -81,7 +64,7 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 	}
 
 	@Override
-	public boolean registrarInscripcionEd(String nick, String correo, String nomCurso, DtFecha fecha) {
+	public boolean registrarInscripcionEd(String nick, String correo, String nomCurso, DtFecha fecha) throws InscripcionEdRepetido {
 		// TODO Auto-generated method stub
 		this.nick = nick;
 		this.correo = correo;
@@ -90,7 +73,10 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		Usuario u = mU.getUsuario(nick, correo);
 		if(u instanceof Estudiante) {
-			return ((Estudiante) u).existeInscripcion(nomCurso);
+			boolean existe = ((Estudiante) u).existeInscripcion(nomCurso);
+			if (existe == true) {
+				throw new InscripcionEdRepetido("Ya existe una inscripcion a la edicion");
+			}
 		}
 		return false;
 	}

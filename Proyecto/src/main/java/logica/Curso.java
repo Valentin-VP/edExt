@@ -105,18 +105,20 @@ public class Curso {
 	}
 	
 	// Para obtener la edicion vigente del curso -- Mauri
-	// Revisar
-	public DtEdicionBase getEdicionVigente() {
-		DtEdicionBase dteb=null;
-			for(int i=0;i < ediciones.size();i++) {
-				if(dteb instanceof DtEdicion) {
-					if ( ((Edicion) ediciones.get(i)).getFechaPub().getAnio() == 2020 ) {
-						return dteb;
+		// Revisar
+		public DtEdicionBase getEdicionVigente() {
+			DtEdicionBase dteb=new DtEdicionBase();
+				for(int i=0;i < ediciones.size();i++) {
+					//if(dteb instanceof DtEdicion) {
+						if (ediciones.get(i).getFechaPub().getAnio() == 2020 ) {
+							dteb.setNombre(ediciones.get(i).getNombre());
+							return dteb;
+						//}
 					}
 				}
-			}
-		return dteb;
-	}
+			return null;
+		}
+		
 	
 	public void setEdiciones(ArrayList<Edicion> ediciones) {
 		this.ediciones = ediciones;
