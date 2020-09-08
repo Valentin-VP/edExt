@@ -40,6 +40,7 @@ public class Principal {
 	private InscripcionEdicionCurso inscripcionEdicionCursoInternalFrame;
 	private AltaProgFormacion altaProgFormacionInternalFrame;
 	private InfoEdicionCurso infoEdicionCursoInternalFrame;
+	private InfoCurso infoCursoInternalFrame;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -91,6 +92,9 @@ public class Principal {
 		altaProgFormacionInternalFrame.setLocation(188, 105);
 		frame.getContentPane().add(altaProgFormacionInternalFrame);
 		
+		infoCursoInternalFrame = new InfoCurso(fabrica.getIControladorConsultaCurso());
+		infoCursoInternalFrame.setLocation(188, 105);
+		frame.getContentPane().add(infoCursoInternalFrame);
 	}
 
 	private void initialize() {
@@ -143,6 +147,14 @@ public class Principal {
 		
 		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Usuario");
 		mnInformacin.add(mntmNewMenuItem_2);
+		
+		JMenuItem mntmInfoCurso = new JMenuItem("Curso");
+		mntmInfoCurso.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				infoCursoInternalFrame.setVisible(true);
+			}
+		});
+		mnInformacin.add(mntmInfoCurso);
 		
 		JMenu mnNewMenu = new JMenu("Inscripcion");
 		menuBar.add(mnNewMenu);
