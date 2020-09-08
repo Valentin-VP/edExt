@@ -1,6 +1,7 @@
 package logica;
 
 import java.util.*;
+
 import datatypes.DtCursoBase;
 
 public class Instituto {
@@ -26,6 +27,15 @@ public class Instituto {
 
 	public ArrayList<Curso> getCursos() {
 		return cursos;
+	}
+	
+	public ArrayList<DtCursoBase> getDtCursosBase() {
+		ArrayList<DtCursoBase> dtcursos = new ArrayList<DtCursoBase>();
+		for (int i=0;i < cursos.size(); i++) {
+			DtCursoBase dtc = new DtCursoBase(cursos.get(i).getNombre());
+			dtcursos.add(dtc);
+		}
+		return dtcursos;
 	}
 
 	public void setCursos(ArrayList<Curso> cursos) {

@@ -6,13 +6,16 @@ import datatypes.DtCursoBase;
 import datatypes.DtEdicionBase;
 import datatypes.DtFecha;
 import datatypes.DtInstituto;
+import excepciones.CursoNoExiste;
+import excepciones.EdicionVigenteNoExiste;
+import excepciones.InstitutoInexistente;
 
 public interface IControladorInscripcionEdicionCurso {
-	public ArrayList<DtInstituto> listarInstitutos();
+	public ArrayList<DtInstituto> listarInstitutos() throws InstitutoInexistente;
 	
-	public ArrayList<DtCursoBase> seleccionarInstituto(String nomIns);
+	public ArrayList<DtCursoBase> seleccionarInstituto(String nomIns) throws CursoNoExiste;
 	
-	public DtEdicionBase seleccionarCurso(String nomCurso);
+	public DtEdicionBase seleccionarCurso(String nomCurso) throws EdicionVigenteNoExiste;
 	
 	public boolean registrarInscripcionEd(String nick, String correo, String nomCurso, DtFecha fecha);
 	
