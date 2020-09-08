@@ -14,7 +14,7 @@ import excepciones.InstitutoInexistente;
 
 public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso {
 	private String instituto;
-	private String curso;//no lo uso
+	private String curso;
 	private boolean tieneCupos;//no lo uso
 	private Integer cupos;//no lo uso
 	private DtEdicion edicion;
@@ -67,7 +67,8 @@ public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso
 			} else 	{ edicion = new DtEdicion(nombre, fechaI, fechaF, tieneCupos, cupos, fechaPub); }
 			
 			Edicion edi = new Edicion(edicion.getNombre(), edicion.getFechaI(), edicion.getFechaF(), edicion.isTieneCupos(), edicion.getCupo(), edicion.getFechaPub());
-			ArrayList<Edicion> edis = mC.find(curso).getEdiciones();
+			ArrayList<Edicion> edis = new ArrayList<Edicion>();
+			edis = mC.find(curso).getEdiciones();
 			edis.add(edi);
 			c.setEdiciones(edis);
 			ManejadorUsuario mU = ManejadorUsuario.getInstancia();

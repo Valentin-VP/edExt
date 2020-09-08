@@ -7,7 +7,6 @@ import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import interfaces.IControladorAltaEdicionCurso;
-//import logica.Instituto;
 import javax.swing.JComboBox;
 import java.awt.Font;
 import javax.swing.JRadioButton;
@@ -44,8 +43,10 @@ public class AgregarEdicionCurso extends JInternalFrame {
 	private JTextField correoDocente;
 	private JRadioButton cuposBool;
 	private JComboBox<String> comboBoxNombreCurso;
-	
 	private JTextField textFieldInstituto;
+	
+	ArrayList<DtCursoBase> cursos = new ArrayList<>();
+	ArrayList<DtUsuarioBase> docentes = new ArrayList<>();
 	
 	public AgregarEdicionCurso(IControladorAltaEdicionCurso icon) {
 		this.icon = icon;
@@ -248,9 +249,15 @@ public class AgregarEdicionCurso extends JInternalFrame {
 		cuposBool.setBounds(35, 283, 87, 23);
 		cuposBool.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				cuposBool.setSelected(true);
-				cantCupos.setText("");
-				cantCupos.setEditable(true);
+				if (cuposBool.isSelected()) {
+					cuposBool.setSelected(false);
+					cantCupos.setText("0");
+					cantCupos.setEditable(false);
+				} else {
+					cuposBool.setSelected(true);
+					cantCupos.setText("0");
+					cantCupos.setEditable(true);
+				}
 			}
 		});
 		
@@ -260,7 +267,6 @@ public class AgregarEdicionCurso extends JInternalFrame {
 		cantCupos.setColumns(10);
 		
 		cuposBool.setSelected(false);
-		//cantCupos.setEditable(false);
 		cuposBool.setHorizontalAlignment(SwingConstants.LEFT);
 		
 		JLabel lblCantCupos = new JLabel("Cant Cupos");
@@ -460,7 +466,6 @@ public class AgregarEdicionCurso extends JInternalFrame {
 				
 	}
 	
-	ArrayList<DtCursoBase> cursos = new ArrayList<>();
 	private void AgregarEdicionCursoRefreshActionPerformed(ActionEvent arg0) {
 		String instituto = (String) this.textFieldInstituto.getText();
 		try {
@@ -496,11 +501,10 @@ public class AgregarEdicionCurso extends JInternalFrame {
 		this.fpMes.setSelectedItem("1");
 		this.fpAnio.setSelectedItem("1992");
 		this.cuposBool.setSelected(false);
-		this.cantCupos.setText("");
+		this.cantCupos.setText("0");
 		this.cantCupos.setEditable(false);
 	}
 	
-	ArrayList<DtUsuarioBase> docentes = new ArrayList<>();
 	protected void AgregarEdicionCursoAgregarActionPerformed(ActionEvent e) {
 		String nick = this.nickDocente.getText();
 		String correo = this.correoDocente.getText();
@@ -533,7 +537,7 @@ public class AgregarEdicionCurso extends JInternalFrame {
 		if (curso.isEmpty() || nombre.isEmpty()) {
 		 	JOptionPane.showMessageDialog(this, "No puede haber campos vacios", "Agregar Edicion", 
 					JOptionPane.ERROR_MESSAGE);
-		} else if (!curso.isEmpty() && !nombre.isEmpty()) {
+		} else if (!curso.isEmpty() && !nombre.isEmpty() && !docentes.isEmpty()) {
 			try {
 				this.icon.altaEdicionCurso(curso, nombre, fechaI, fechaF, docentes, tieneCupos, Integer.parseInt(cupos), fechaPub);
 				this.icon.confirmarAltaEdicion();
