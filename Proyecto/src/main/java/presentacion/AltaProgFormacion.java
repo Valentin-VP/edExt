@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import datatypes.DtFecha;
+import excepciones.ProgramaRepetido;
 
 import javax.swing.JComboBox;
 import javax.swing.JButton;
@@ -40,25 +41,25 @@ public class AltaProgFormacion extends JInternalFrame {
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setClosable(true);
         setTitle("Crear Programa de Formacion");
-		setBounds(100, 100, 333, 337);
+		setBounds(100, 100, 390, 358);
 		getContentPane().setLayout(null);
 		
 		JLabel lblNombre = new JLabel("Nombre:");
-		lblNombre.setBounds(32, 42, 46, 14);
+		lblNombre.setBounds(32, 42, 83, 14);
 		getContentPane().add(lblNombre);
 		
 		textFieldNom = new JTextField();
-		textFieldNom.setBounds(101, 39, 129, 20);
+		textFieldNom.setBounds(136, 39, 142, 20);
 		getContentPane().add(textFieldNom);
 		textFieldNom.setColumns(10);
 		
 		textFieldDes = new JTextField();
-		textFieldDes.setBounds(101, 88, 129, 20);
+		textFieldDes.setBounds(136, 88, 142, 20);
 		getContentPane().add(textFieldDes);
 		textFieldDes.setColumns(10);
 		
 		JLabel lblNewLabel = new JLabel("Descripcion:");
-		lblNewLabel.setBounds(32, 91, 65, 14);
+		lblNewLabel.setBounds(32, 91, 83, 14);
 		getContentPane().add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("Fecha de Inicio");
@@ -66,7 +67,7 @@ public class AltaProgFormacion extends JInternalFrame {
 		getContentPane().add(lblNewLabel_1);
 		
 		comboBoxDiaI = new JComboBox<String>();
-		comboBoxDiaI.setBounds(120, 138, 46, 20);
+		comboBoxDiaI.setBounds(154, 138, 46, 20);
 		comboBoxDiaI.addItem("1");
 		comboBoxDiaI.addItem("2");
 		comboBoxDiaI.addItem("3");
@@ -102,7 +103,7 @@ public class AltaProgFormacion extends JInternalFrame {
 		getContentPane().add(comboBoxDiaI);
 		
 		comboBoxMesI = new JComboBox<String>();
-		comboBoxMesI.setBounds(176, 138, 46, 20);
+		comboBoxMesI.setBounds(215, 138, 46, 20);
 		comboBoxMesI.addItem("1");
 		comboBoxMesI.addItem("2");
 		comboBoxMesI.addItem("3");
@@ -119,24 +120,24 @@ public class AltaProgFormacion extends JInternalFrame {
 		getContentPane().add(comboBoxMesI);
 		
 		comboBoxAnioI = new JComboBox<String>();
-		comboBoxAnioI.setBounds(232, 138, 46, 20);
-		comboBoxAnioI.addItem("1");
-		comboBoxAnioI.addItem("2");
-		comboBoxAnioI.addItem("3");
-		comboBoxAnioI.addItem("4");
-		comboBoxAnioI.addItem("5");
-		comboBoxAnioI.addItem("6");
-		comboBoxAnioI.addItem("7");
-		comboBoxAnioI.addItem("8");
-		comboBoxAnioI.addItem("9");
-		comboBoxAnioI.addItem("10");
-		comboBoxAnioI.addItem("11");
-		comboBoxAnioI.addItem("12");
-		comboBoxAnioI.setSelectedItem("1");
+		comboBoxAnioI.setBounds(279, 138, 65, 20);
+		comboBoxAnioI.addItem("2020");
+		comboBoxAnioI.addItem("2021");
+		comboBoxAnioI.addItem("2022");
+		comboBoxAnioI.addItem("2023");
+		comboBoxAnioI.addItem("2024");
+		comboBoxAnioI.addItem("2025");
+		comboBoxAnioI.addItem("2026");
+		comboBoxAnioI.addItem("2027");
+		comboBoxAnioI.addItem("2028");
+		comboBoxAnioI.addItem("2029");
+		comboBoxAnioI.addItem("2030");
+		comboBoxAnioI.addItem("2031");
+		comboBoxAnioI.setSelectedItem("2020");
 		getContentPane().add(comboBoxAnioI);
 		
 		comboBoxDiaF = new JComboBox<String>();
-		comboBoxDiaF.setBounds(143, 191, 46, 20);
+		comboBoxDiaF.setBounds(154, 191, 46, 20);
 		comboBoxDiaF.addItem("1");
 		comboBoxDiaF.addItem("2");
 		comboBoxDiaF.addItem("3");
@@ -172,7 +173,7 @@ public class AltaProgFormacion extends JInternalFrame {
 		getContentPane().add(comboBoxDiaF);
 		
 		comboBoxMesF = new JComboBox<String>();
-		comboBoxMesF.setBounds(199, 191, 46, 20);
+		comboBoxMesF.setBounds(215, 191, 46, 20);
 		comboBoxMesF.addItem("1");
 		comboBoxMesF.addItem("2");
 		comboBoxMesF.addItem("3");
@@ -189,20 +190,20 @@ public class AltaProgFormacion extends JInternalFrame {
 		getContentPane().add(comboBoxMesF);
 		
 		comboBoxAnioF = new JComboBox<String>();
-		comboBoxAnioF.setBounds(251, 191, 46, 20);
-		comboBoxAnioF.addItem("1");
-		comboBoxAnioF.addItem("2");
-		comboBoxAnioF.addItem("3");
-		comboBoxAnioF.addItem("4");
-		comboBoxAnioF.addItem("5");
-		comboBoxAnioF.addItem("6");
-		comboBoxAnioF.addItem("7");
-		comboBoxAnioF.addItem("8");
-		comboBoxAnioF.addItem("9");
-		comboBoxAnioF.addItem("10");
-		comboBoxAnioF.addItem("11");
-		comboBoxAnioF.addItem("12");
-		comboBoxAnioF.setSelectedItem("1");
+		comboBoxAnioF.setBounds(279, 191, 65, 20);
+		comboBoxAnioF.addItem("2020");
+		comboBoxAnioF.addItem("2021");
+		comboBoxAnioF.addItem("2022");
+		comboBoxAnioF.addItem("2023");
+		comboBoxAnioF.addItem("2024");
+		comboBoxAnioF.addItem("2025");
+		comboBoxAnioF.addItem("2026");
+		comboBoxAnioF.addItem("2027");
+		comboBoxAnioF.addItem("2028");
+		comboBoxAnioF.addItem("2029");
+		comboBoxAnioF.addItem("2030");
+		comboBoxAnioF.addItem("2031");
+		comboBoxAnioF.setSelectedItem("2020");
 		getContentPane().add(comboBoxAnioF);
 		
 		JLabel lblNewLabel_1_1 = new JLabel("Fecha de Finalizacion");
@@ -243,28 +244,39 @@ public class AltaProgFormacion extends JInternalFrame {
 		String anioF = (String) comboBoxAnioF.getSelectedItem();
 		
 		LocalDate date = LocalDate.now();
-		DtFecha fechaI = new DtFecha(Integer.parseInt(diaI),Integer.parseInt(mesI),Integer.parseInt(anioI));
-		DtFecha fechaF = new DtFecha(Integer.parseInt(diaF),Integer.parseInt(mesF),Integer.parseInt(anioF));
-		DtFecha fechaA = new DtFecha((Integer)date.getDayOfMonth(),(Integer)date.getMonthValue(),(Integer)date.getYear());
-		if (checkeo(textFieldNom.getText(),textFieldDes.getText())) {
-			if (icon.ingresarProgFormacion(textFieldNom.getText(), textFieldDes.getText(), fechaI, fechaF, fechaA)) {
-				int opcion = JOptionPane.showConfirmDialog(null, "Elige una opcion", "Modificar Programa", JOptionPane.YES_NO_OPTION);
-				if(opcion == 0) {
-					icon.modificarProgFormacion(textFieldNom.getText(), textFieldDes.getText(), fechaI, fechaF, fechaA);
-				}
+		if (checkeo(textFieldNom.getText(),textFieldDes.getText(),diaI,mesI,anioI,diaF,mesF,anioF)) {
+			DtFecha fechaI = new DtFecha(Integer.parseInt(diaI),Integer.parseInt(mesI),Integer.parseInt(anioI));
+			DtFecha fechaF = new DtFecha(Integer.parseInt(diaF),Integer.parseInt(mesF),Integer.parseInt(anioF));
+			DtFecha fechaA = new DtFecha((Integer)date.getDayOfMonth(),(Integer)date.getMonthValue(),(Integer)date.getYear());
+			try {
+				icon.ingresarProgFormacion(textFieldNom.getText(), textFieldDes.getText(), fechaI, fechaF, fechaA);
+				icon.confirmar();
+				JOptionPane.showMessageDialog(this, "El Programa se ha creado con exito", "Crear Programa",
+						JOptionPane.INFORMATION_MESSAGE);
+				limpiar();
+			}catch(ProgramaRepetido pr) {
+				JOptionPane.showMessageDialog(this, pr.getMessage(), "Crear Programa", JOptionPane.ERROR_MESSAGE);
 			}
-			icon.confirmar();
-			JOptionPane.showMessageDialog(this, "El Programa se ha creado con exito", "Crear Programa",
-					JOptionPane.INFORMATION_MESSAGE);
-			limpiar();
 		}
 
 	}
 	
-	private boolean checkeo(String nombre, String descripcion) {
+	private boolean checkeo(String nombre, String descripcion, String diaI, String mesI, String anioI, String diaF, String mesF, String anioF) {
 		if(nombre.isEmpty() || descripcion.isEmpty()){
 			JOptionPane.showMessageDialog(this, "No puede haber campos vacios", "Crear Programa", 
 			JOptionPane.ERROR_MESSAGE);
+			return false;
+		} else if(Integer.parseInt(anioI) > Integer.parseInt(anioF)) {
+			JOptionPane.showMessageDialog(this, "Error en el año", "Crear Programa", 
+					JOptionPane.ERROR_MESSAGE);
+			return false;
+		} else if(Integer.parseInt(anioI) == Integer.parseInt(anioF) && Integer.parseInt(mesI) > Integer.parseInt(mesF)) {
+			JOptionPane.showMessageDialog(this, "Error en el mes", "Crear Programa", 
+					JOptionPane.ERROR_MESSAGE);
+			return false;
+		} else if(Integer.parseInt(anioI) == Integer.parseInt(anioF) && Integer.parseInt(mesI) == Integer.parseInt(mesF) && Integer.parseInt(diaI) > Integer.parseInt(diaF)) {
+			JOptionPane.showMessageDialog(this, "Error en el dia", "Crear Programa", 
+					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		return true;
@@ -273,6 +285,12 @@ public class AltaProgFormacion extends JInternalFrame {
 	private void limpiar() {
 		textFieldNom.setText("");
 		textFieldDes.setText("");
+		comboBoxDiaI.setSelectedIndex(0);
+		comboBoxMesI.setSelectedIndex(0);
+		comboBoxAnioI.setSelectedIndex(0);
+		comboBoxDiaF.setSelectedIndex(0);
+		comboBoxMesF.setSelectedIndex(0);
+		comboBoxAnioF.setSelectedIndex(0);
 	}
 	
 }

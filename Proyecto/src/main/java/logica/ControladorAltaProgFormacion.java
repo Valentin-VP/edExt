@@ -1,6 +1,8 @@
 package logica;
 
 import datatypes.DtFecha;
+import excepciones.ProgramaRepetido;
+import excepciones.UsuarioRepetido;
 import interfaces.IControladorAltaProgFormacion;
 
 public class ControladorAltaProgFormacion implements IControladorAltaProgFormacion{
@@ -15,7 +17,7 @@ public class ControladorAltaProgFormacion implements IControladorAltaProgFormaci
 	}
 
 	@Override
-	public boolean ingresarProgFormacion(String nom, String des, DtFecha fechaI, DtFecha fechaF, DtFecha fechaA) {
+	public boolean ingresarProgFormacion(String nom, String des, DtFecha fechaI, DtFecha fechaF, DtFecha fechaA) throws ProgramaRepetido{
 		// TODO Auto-generated method stub
 		this.nombre=nom;
 		this.descripcion=des;
@@ -23,6 +25,9 @@ public class ControladorAltaProgFormacion implements IControladorAltaProgFormaci
 		this.fechaF=fechaF;
 		this.fechaA=fechaA;
 		ManejadorProgFormacion mPF = ManejadorProgFormacion.getInstancia();
+		if (mPF.exists(nom) == true) {
+			throw new ProgramaRepetido("El programa " + nom + " ya se encuentra registrado");
+		}
 		return mPF.exists(nom);
 	}
 	
