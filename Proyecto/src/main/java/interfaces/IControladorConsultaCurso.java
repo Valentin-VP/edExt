@@ -7,7 +7,7 @@ import excepciones.InstitutoSinCursos;
 import datatypes.DtCurso;
 
 public interface IControladorConsultaCurso {
-	public ArrayList<DtCursoBase> listarCursosInstituto(String instituto) throws InstitutoInexistente, InstitutoSinCursos;
+	public ArrayList<DtCurso> listarCursosInstituto(String instituto) throws InstitutoInexistente, InstitutoSinCursos;
 	
 	public DtCurso consultarCurso(String curso);
 	

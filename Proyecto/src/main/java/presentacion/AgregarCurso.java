@@ -292,6 +292,12 @@ public class AgregarCurso extends JInternalFrame {
 				JOptionPane.ERROR_MESSAGE);
 				return false;
 			}
+			else {
+				if (altaCursoPreviasButtonSi.isSelected() && previasseleccionadas.isEmpty()) {
+					JOptionPane.showMessageDialog(this, "Debe seleccionar alguna Previa", "Alta Curso", JOptionPane.ERROR_MESSAGE);
+					return false;
+				}
+			}
 		}
 		return true;
 	}
@@ -312,7 +318,7 @@ public class AgregarCurso extends JInternalFrame {
 	
 	private void populatePreviasList(IControladorConsultaCurso iconaux) {
 		ArrayList<String> cursosdisponibles = new ArrayList<String>();
-		ArrayList<DtCursoBase> dtcursosbase = new ArrayList<DtCursoBase>();
+		ArrayList<DtCurso> dtcursosbase = new ArrayList<DtCurso>();
 		try {
 			String instituto = (String) this.altaCursoInstitutotextField.getText();
 			previasmodel = new DefaultListModel<String>();
