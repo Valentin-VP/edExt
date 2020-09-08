@@ -118,7 +118,7 @@ public class ControladorAltaCurso implements IControladorAltaCurso{
 		Curso curso = new Curso(getNombre(), getDescripcion(), getDuracion(), getCantHoras(), getCreditos(), getFechaR(), getUrl(), getPrevias());
 		mC.agregarCurso(curso);
 		mI.find(this.instituto).agregarCurso(curso);
-		
+		resetearDatos();
 	}
 	@Override
 
@@ -155,5 +155,18 @@ public class ControladorAltaCurso implements IControladorAltaCurso{
 		
 	} 
 	
+	private void resetearDatos() {
+		this.curso = null;
+		this.instituto = null;
+		this.nombre = null;
+		this.descripcion = null;
+		this.duracion = null;
+		this.cantHoras = 0;
+		this.creditos = 0;
+		this.fechaR = null;
+		this.url = null;
+		this.previas = new ArrayList<Curso>();
+		
+	}
 	
 }

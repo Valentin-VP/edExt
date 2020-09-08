@@ -26,7 +26,6 @@ public class ControladorConsultaCurso implements IControladorConsultaCurso{
 	}
 	@Override
 	public ArrayList<DtCursoBase> listarCursosInstituto(String instituto) throws InstitutoInexistente, InstitutoSinCursos{
-		System.out.println("Entra en listarCursos");
 		ArrayList <DtCursoBase> cursosinstituto = new ArrayList <DtCursoBase>();
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 		Instituto institutoI = mI.find(instituto);

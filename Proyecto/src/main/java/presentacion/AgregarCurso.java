@@ -32,7 +32,10 @@ import javax.swing.JPanel;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.ListModel;
+import javax.swing.DefaultListModel;
 import java.awt.Component;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.ListSelectionEvent;
 
 public class AgregarCurso extends JInternalFrame {
 	
@@ -49,6 +52,11 @@ public class AgregarCurso extends JInternalFrame {
 	private JTextField altaCursoUrltextField;
 	private JRadioButton altaCursoPreviasButtonNo;
 	private JRadioButton altaCursoPreviasButtonSi;
+	public JList<String> altaCursoPreviasList;
+	public DefaultListModel<String> previasmodel;
+	public JButton altaCursoAgregarPreviasButton;
+	public JButton altaCursoLimpiarPreviasButton;
+	private ArrayList<String> previasseleccionadas = new ArrayList<String>();
 
 
 	public AgregarCurso(IControladorAltaCurso icon, IControladorConsultaCurso iconaux) {
@@ -56,15 +64,6 @@ public class AgregarCurso extends JInternalFrame {
 		setTitle("Alta Curso");
 		setBounds(100, 100, 561, 449);
 		getContentPane().setLayout(null);
-//		iconaux.prueba();
-//		try {
-//			ArrayList<DtCursoBase> temp = new ArrayList<DtCursoBase>(iconaux.listarCursosInstituto("caca"));
-//			System.out.println("Entra en try");
-//		} catch (InstitutoInexistente | InstitutoSinCursos e1) {
-//			// TODO Auto-generated catch block
-//			System.out.println(e1.getMessage());
-//			e1.printStackTrace();
-//		}
 		
 		JLabel altaCursoInstitutoLabel = new JLabel("Instituto");
 		altaCursoInstitutoLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -130,6 +129,8 @@ public class AgregarCurso extends JInternalFrame {
 		altaCursoCancelarButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
+				altaCursoPreviasButtonNo.setSelected(true);
+				altaCursoPreviasButtonSi.setSelected(false);
 				limpiar();
 			}
 		});
@@ -160,18 +161,40 @@ public class AgregarCurso extends JInternalFrame {
 		scrollPane.setBounds(325, 54, 208, 229);
 		getContentPane().add(scrollPane);
 		
-		JList altaCursoPreviasList = new JList();
-		// --Lista de Cursos Disponibles
+		altaCursoPreviasList = new JList<String>();
 		scrollPane.setViewportView(altaCursoPreviasList);
 		altaCursoPreviasList.setVisible(false);
+		// --Lista de Cursos Disponibles
 		
 		// aqui
 		
-		JButton altaCursoAgregarPreviasButton = new JButton("Agregar");
+		altaCursoAgregarPreviasButton = new JButton("Agregar");
+		altaCursoAgregarPreviasButton.setEnabled(false);
+		altaCursoAgregarPreviasButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int[] selectedIx = altaCursoPreviasList.getSelectedIndices();
+				for (int i = 0; i < selectedIx.length; i++) {
+				      String previa = altaCursoPreviasList.getModel().getElementAt(selectedIx[i]).toString();
+				      if(!previasseleccionadas.contains(previa)) {
+				    	  previasseleccionadas.add(previa);
+				      } //Revisar luego si no quedan duplicados
+				      
+				    }
+				JOptionPane.showMessageDialog(getContentPane(), "Se han agregado las Previas asociadas", "Alta Curso", DISPOSE_ON_CLOSE);
+			}
+		});
 		altaCursoAgregarPreviasButton.setBounds(436, 299, 97, 25);
 		getContentPane().add(altaCursoAgregarPreviasButton);
 		
-		JButton altaCursoLimpiarPreviasButton = new JButton("Limpiar");
+		altaCursoLimpiarPreviasButton = new JButton("Limpiar");
+		altaCursoLimpiarPreviasButton.setEnabled(false);
+		altaCursoLimpiarPreviasButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				icon.setPrevias(null); // Setea las previas en null
+				altaCursoPreviasList.clearSelection();
+				JOptionPane.showMessageDialog(getContentPane(), "Se han eliminado las Previas asociadas", "Alta Curso", DISPOSE_ON_CLOSE);
+			}
+		});
 		altaCursoLimpiarPreviasButton.setBounds(325, 299, 97, 25);
 		getContentPane().add(altaCursoLimpiarPreviasButton);
 		
@@ -185,6 +208,10 @@ public class AgregarCurso extends JInternalFrame {
 			public void actionPerformed(ActionEvent e) {
 				altaCursoPreviasButtonNo.setSelected(true);
 				altaCursoPreviasButtonSi.setSelected(false);
+				altaCursoPreviasList.setVisible(false);
+				altaCursoPreviasList.setEnabled(false);
+				altaCursoAgregarPreviasButton.setEnabled(false);
+				altaCursoLimpiarPreviasButton.setEnabled(false);
 			}
 		});
 		altaCursoPreviasButtonNo.setSelected(true);
@@ -197,7 +224,6 @@ public class AgregarCurso extends JInternalFrame {
 				altaCursoPreviasButtonSi.setSelected(true);
 				altaCursoPreviasButtonNo.setSelected(false);
 				populatePreviasList(iconaux);
-				altaCursoPreviasList.setVisible(true);
 				//arrojar excepcion "Instituto invalido" en caso que el Instituto no sea correcto, y "Debe seleccionar un instituto" en caso que no se haya cargado nada.
 			}
 		});
@@ -227,8 +253,15 @@ public class AgregarCurso extends JInternalFrame {
 		if(checkeo(instituto,nombre,descripcion,duracion,cantHoras,creditos,url)) {
 			try {
 				this.icon.altaCurso(instituto, nombre, descripcion, duracion, cantHoras, creditos, url, fechaR);
+				if(previasseleccionadas!=null) {
+					for(String previa: previasseleccionadas) {
+						this.icon.agregarPrevia(previa);
+					}
+				}
 				this.icon.confirmarAltaCurso();
 				JOptionPane.showMessageDialog(this, "El curso fue ingresado con exito", "Alta Curso", JOptionPane.INFORMATION_MESSAGE);
+				altaCursoPreviasButtonNo.setSelected(true);
+				altaCursoPreviasButtonSi.setSelected(false);
 				limpiar();
 				setVisible(false);
 			}catch(CursoRepetido | InstitutoInexistente e) {
@@ -271,6 +304,8 @@ public class AgregarCurso extends JInternalFrame {
 		this.altaCursoCantHorastextField.setText("");
 		this.altaCursoCreditostextField.setText("");
 		this.altaCursoUrltextField.setText("");
+		previasmodel = new DefaultListModel<String>();
+		this.altaCursoPreviasList.setModel(previasmodel);
 	}
 	
 	private void populatePreviasList(IControladorConsultaCurso iconaux) {
@@ -278,11 +313,24 @@ public class AgregarCurso extends JInternalFrame {
 		ArrayList<DtCursoBase> dtcursosbase = new ArrayList<DtCursoBase>();
 		try {
 			String instituto = (String) this.altaCursoInstitutotextField.getText();
+			previasmodel = new DefaultListModel<String>();
 			dtcursosbase = iconaux.listarCursosInstituto(instituto);
 			for(DtCursoBase cb: dtcursosbase) {
-				 cursosdisponibles.add(cb.getNombre());
+				previasmodel.addElement(cb.getNombre());
 			}
+			// Cargar cursosdisponibles en lista y retornarlos (modificar firma de retorno de populate)
+			// DefaultComboBoxModel<Integer> modelclases = new DefaultComboBoxModel<Integer>(icon.listarClases());
+			altaCursoPreviasList.setModel(previasmodel);
+			altaCursoPreviasList.setVisible(true);
+			altaCursoPreviasList.setEnabled(true);
+			altaCursoAgregarPreviasButton.setEnabled(true);
+			altaCursoLimpiarPreviasButton.setEnabled(true);
 		}catch(InstitutoInexistente | InstitutoSinCursos ex) { // | NullPointerException
+			altaCursoPreviasButtonNo.setSelected(true);
+			altaCursoPreviasButtonSi.setSelected(false);
+			altaCursoAgregarPreviasButton.setEnabled(false);
+			altaCursoLimpiarPreviasButton.setEnabled(false);
+			// limpiar lista de cursos
 			JOptionPane.showMessageDialog(this, ex.getMessage(), "Alta Curso", JOptionPane.ERROR_MESSAGE);
 		}
 	}

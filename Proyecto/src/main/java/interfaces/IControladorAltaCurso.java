@@ -16,4 +16,6 @@ public interface IControladorAltaCurso {
 
 	public void setPrevias(ArrayList<Curso> previas);
 	
+	public void agregarPrevia(String previa);
+	
 }
