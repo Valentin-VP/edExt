@@ -57,9 +57,9 @@ public class ControladorAltaUsuario implements IControladorAltaUsuario {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		Usuario user;
 		if (esDocente) {
-			user = new Docente(usuario.getNick(), usuario.getCorreo(), usuario.getNombre(), usuario.getApellido(), usuario.getFechaNac());
+			user = new Docente(usuario.getNick(), usuario.getNombre(), usuario.getApellido(),usuario.getCorreo(), usuario.getFechaNac());
 		} else {
-			user = new Estudiante(usuario.getNick(), usuario.getCorreo(), usuario.getNombre(), usuario.getApellido(), usuario.getFechaNac());
+			user = new Estudiante(usuario.getNick(), usuario.getNombre(), usuario.getApellido(),usuario.getCorreo(), usuario.getFechaNac());
 		}	
 		mU.agregarUsuario(user);
 	}
