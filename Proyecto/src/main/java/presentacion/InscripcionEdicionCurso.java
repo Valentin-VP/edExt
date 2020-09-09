@@ -64,7 +64,6 @@ public class InscripcionEdicionCurso extends JInternalFrame {
 			public void actionPerformed(ActionEvent e) {
 			
 				try {
-					comboBoxCur.setEnabled(true);
 					ArrayList<DtCursoBase> cursos = icon.seleccionarInstituto(comboBoxIns.getSelectedItem().toString());
 					DefaultComboBoxModel dml= new DefaultComboBoxModel();
 					for (int i = 0; i < cursos.size(); i++) {
@@ -89,8 +88,8 @@ public class InscripcionEdicionCurso extends JInternalFrame {
 		comboBoxIns.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				
+				textFieldEd.setText("");
 				try {
-					comboBoxCur.setEnabled(true);
 					ArrayList<DtCursoBase> cursos = icon.seleccionarInstituto(comboBoxIns.getSelectedItem().toString());
 					DefaultComboBoxModel dml= new DefaultComboBoxModel();
 					for (int i = 0; i < cursos.size(); i++) {
@@ -120,6 +119,7 @@ public class InscripcionEdicionCurso extends JInternalFrame {
 		comboBoxCur.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
+				textFieldEd.setText("");
 				try {
 					
 					DtEdicionBase dteb = null;
@@ -163,7 +163,6 @@ public class InscripcionEdicionCurso extends JInternalFrame {
 		});
 		comboBoxCur.setBounds(53, 104, 168, 20);
 		getContentPane().add(comboBoxCur);
-		comboBoxCur.setEnabled(false);
 		
 		JLabel lblNewLabel = new JLabel("Seleccione Instituto");
 		lblNewLabel.setBounds(53, 23, 99, 14);
@@ -190,8 +189,8 @@ public class InscripcionEdicionCurso extends JInternalFrame {
 		JButton btnNewButton = new JButton("Aceptar");
 		btnNewButton.setBounds(165, 350, 89, 23);
 		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				InscripcionEdicionCursoAceptarActionPerformed(e);
+			public void actionPerformed(ActionEvent ea) {
+				InscripcionEdicionCursoAceptarActionPerformed(ea);
 				setVisible(false);
 				limpiar();
 			}
@@ -307,33 +306,47 @@ public class InscripcionEdicionCurso extends JInternalFrame {
 		
 	}
 	
-	private void InscripcionEdicionCursoAceptarActionPerformed(ActionEvent e) {
+	private void InscripcionEdicionCursoAceptarActionPerformed(ActionEvent ea) {
 		String dia = (String) comboBoxDia.getSelectedItem();
 		String mes = (String) comboBoxMes.getSelectedItem();
 		String anio = (String) comboBoxAnio.getSelectedItem();
+		int diai = Integer.parseInt(dia);
+		int mesi = Integer.parseInt(mes);
+		int anioi = Integer.parseInt(anio);
 		
 		LocalDate date = LocalDate.now();
-		if (checkeo(textFieldEst.getText(),textFieldCorreo.getText())) {
-			DtFecha fecha = new DtFecha(Integer.parseInt(dia),Integer.parseInt(mes),Integer.parseInt(anio));
+		if (checkeo(textFieldEst.getText(),textFieldCorreo.getText(),textFieldEd.getText(),diai,mesi,anioi,date)) {
+			DtFecha fecha = new DtFecha(diai,mesi,anioi);
 		
 			try {
-				icon.registrarInscripcionEd(textFieldEst.getText(), textFieldCorreo.getText(), comboBoxCur.getSelectedItem().toString(), fecha);
+				icon.registrarInscripcionEd(textFieldEst.getText(), textFieldCorreo.getText(),comboBoxCur.getSelectedItem().toString(), fecha);
 				icon.confirmar();
-				JOptionPane.showMessageDialog(this, "El Programa se ha creado con exito", "Crear Programa",
+				JOptionPane.showMessageDialog(this, "La inscripcion se realizo con exito", "Inscripcion a Edicion Curso",
 						JOptionPane.INFORMATION_MESSAGE);
-				limpiar();
 			} catch (InscripcionEdRepetido ie) {
-				JOptionPane.showMessageDialog(this, ie.getMessage(), "Crear Programa", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, ie.getMessage(), "Inscripcion a Edicion Curso", JOptionPane.ERROR_MESSAGE);
 			}	
 		
 		}
-			//DtFecha fechaA = new DtFecha((Integer)date.getDayOfMonth(),(Integer)date.getMonthValue(),(Integer)date.getYear());
+		
 	}
 	
-	private boolean checkeo(String nombre, String descripcion) {
-		if(nombre.isEmpty() || descripcion.isEmpty()){
-			JOptionPane.showMessageDialog(this, "No puede haber campos vacios", "Crear Programa", 
+	private boolean checkeo(String estudiante, String correo, String edicion, int dia, int mes, int anio, LocalDate factual) {
+		if(estudiante.isEmpty() || correo.isEmpty() || edicion.isEmpty()){
+			JOptionPane.showMessageDialog(this, "No puede haber campos vacios", "Inscripcion a Edicion Curso", 
 			JOptionPane.ERROR_MESSAGE);
+			return false;
+		} else if(anio > factual.getYear()) {
+			JOptionPane.showMessageDialog(this, "Error en el año", "Inscripcion a Edicion Curso", 
+					JOptionPane.ERROR_MESSAGE);
+			return false;
+		} else if((anio == factual.getYear()) && (mes > factual.getMonthValue())) {
+			JOptionPane.showMessageDialog(this, "Error en el mes", "Inscripcion a Edicion Curso", 
+					JOptionPane.ERROR_MESSAGE);
+			return false;
+		} else if(anio == factual.getYear() && (mes == factual.getYear()) && (dia > factual.getDayOfMonth())) {
+			JOptionPane.showMessageDialog(this, "Error en el dia", "Inscripcion a Edicion Curso", 
+					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		return true;
@@ -342,8 +355,12 @@ public class InscripcionEdicionCurso extends JInternalFrame {
 	private void limpiar() {
 		textFieldEst.setText("");
 		textFieldCorreo.setText("");
-		comboBoxCur.removeAll();
-		comboBoxCur.setEnabled(false);
+		textFieldEd.setText("");
+		comboBoxIns.removeAllItems();
+		comboBoxCur.removeAllItems();
+		comboBoxDia.setSelectedIndex(0);
+		comboBoxMes.setSelectedIndex(0);
+		comboBoxAnio.setSelectedIndex(0);
 	}
 	
 	public void inicializarComboBoxsInscripcionEdicion() {

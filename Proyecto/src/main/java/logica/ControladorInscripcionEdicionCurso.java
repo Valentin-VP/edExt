@@ -41,6 +41,9 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 		this.nomIns = nomIns;
 		//ArrayList <Curso> cursos = mI.find(nomIns).getCursos();
 		ArrayList <Curso> cursos = ins.getCursos();
+		if (cursos.isEmpty()) {
+			throw new CursoNoExiste("El instituto no tiene cursos ingresados");
+		}
 		for(int i=0;i < cursos.size();i++) {
 			DtCursoBase dtcb = new DtCursoBase (cursos.get(i).getNombre());
 			cursosinstituto.add(dtcb);
