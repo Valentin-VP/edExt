@@ -48,6 +48,7 @@ public class InfoCurso extends JInternalFrame {
 	private JButton edicionButton;
 	private JButton cerrarButton;
 	private String institutoseleccionado;
+	private String cursoseleccionado;
 	
 	
 	public InfoCurso(IControladorConsultaCurso icon) {
@@ -99,11 +100,23 @@ public class InfoCurso extends JInternalFrame {
 		getContentPane().add(cursoLabel);
 		
 		cursoComboBox = new JComboBox<String>();
+		cursoComboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JComboBox cb = (JComboBox)e.getSource();
+		        cursoseleccionado = (String)cb.getSelectedItem().toString();
+		        cursoButton.setEnabled(true);
+			}
+		});
 		cursoComboBox.setEnabled(false);
 		cursoComboBox.setBounds(90, 47, 121, 22);
 		getContentPane().add(cursoComboBox);
 		
 		cursoButton = new JButton("Seleccionar");
+		cursoButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 		cursoButton.setEnabled(false);
 		cursoButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		cursoButton.setBounds(223, 46, 99, 25);
@@ -196,6 +209,7 @@ public class InfoCurso extends JInternalFrame {
 	}
 	
 	private void limpiar() {
+		// No aplica para el institutoComboBox!
 		DefaultComboBoxModel<String> cursocombo = new DefaultComboBoxModel<String>();
 		cursoComboBox.setModel(cursocombo);
 	}

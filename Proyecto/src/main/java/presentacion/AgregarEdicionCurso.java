@@ -458,6 +458,11 @@ public class AgregarEdicionCurso extends JInternalFrame {
 		getContentPane().add(lblInstituto);
 		
 		comboBoxNombreCurso = new JComboBox<String>();
+		comboBoxNombreCurso.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// Manu aca *****
+			}
+		});
 		comboBoxNombreCurso.setBounds(161, 55, 192, 24);
 		getContentPane().add(comboBoxNombreCurso);
 		

@@ -48,11 +48,11 @@ public class ControladorConsultaEdicionCurso implements IControladorConsultaEdic
 		this.curso = curso;
 		ArrayList<DtEdicionBase> ediciones = new ArrayList<>();
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
-		Instituto i = mI.find(this.instituto);
-		Curso c = i.findCurso(curso);
-		if(c == null)
-			throw new CursoNoExiste("Curso Inexistente");
-		for(Edicion e: c.getEdiciones()) {
+		curso = mI.find(this.instituto).findCurso(curso).getNombre();
+		if(curso.isEmpty()) {
+			throw new CursoNoExiste("No existe el curso seleccionado");
+		}
+		for(Edicion e: mI.find(this.instituto).findCurso(curso).getEdiciones()) {
 			DtEdicionBase edic = new DtEdicionBase(e.getNombre());
 			ediciones.add(edic);
 		}
@@ -63,9 +63,7 @@ public class ControladorConsultaEdicionCurso implements IControladorConsultaEdic
 	public DtEdicion seleccionarEdicion(String edicion) {
 		this.edicion = edicion;
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
-		Instituto i= mI.find(this.instituto);
-		Curso c = i.findCurso(this.curso);
-		Edicion e = c.findEdicion(this.edicion);
+		Edicion e = mI.find(this.instituto).findCurso(this.curso).findEdicion(this.edicion);
 		DtEdicion edition = new DtEdicion(e.getNombre(), e.getFechaI(), e.getFechaF(), e.isTieneCupos(), e.getCupos(), e.getFechaPub());
 		return edition;
 	}

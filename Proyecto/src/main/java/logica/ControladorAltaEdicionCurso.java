@@ -42,31 +42,41 @@ public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso
 	public void altaEdicionCurso(String curso, String nombre, DtFecha fechaI, DtFecha fechaF, ArrayList<String> docentes, boolean tieneCupos, Integer cantCupos, DtFecha fechaPub) throws EdicionRepetida, CursoNoExiste, InstitutoInexistente, UsuarioNoDocente {
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 		Instituto i = mI.find(this.instituto);
+		Edicion edicion;
 		if (i.equals(null)) {
 			throw new InstitutoInexistente("El instituto " + instituto + " no esta en el sistema");
 		}
-		Curso c = new Curso();
-		c = i.findCurso(curso);
-		if (c == null) {
+		if(i.existsCurso(curso)) {
+			if(i.findCurso(curso).findEdicion(nombre) == null) {
+				if (!tieneCupos) {
+					edicion = new Edicion(nombre, fechaI, fechaF, tieneCupos, 0, fechaPub);
+				} else {
+					edicion = new Edicion(nombre, fechaI, fechaF, tieneCupos, cantCupos, fechaPub);
+				}
+				// Agregar edicion al curso
+				i.findCurso(curso).addEdicion(edicion);
+			}
+			else {
+				throw new EdicionRepetida("La edicion " + nombre + " ya se encuentra integrada al curso:" + i.findCurso(curso).getNombre());
+			}
+		}
+		else {
 			throw new CursoNoExiste("El curso " + curso + " no esta en el sistema");
 		}
-		Edicion edicion;
-		edicion = c.findEdicion(nombre);
-		if(edicion != null) {
-			throw new EdicionRepetida("La edicion " + nombre + " ya se encuentra integrada al curso:" + c.getNombre());
-		}
-		if (!tieneCupos) {
-			edicion = new Edicion(nombre, fechaI, fechaF, tieneCupos, 0, fechaPub);
-		} else {
-			edicion = new Edicion(nombre, fechaI, fechaF, tieneCupos, cantCupos, fechaPub);
-		}
-		c.addEdicion(edicion);
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		for(String user: docentes) {
 			((Docente) mU.findUsuario(user)).addDictaEdicion(edicion);
 		}
 	}	
-
+		/*
+		 * Curso c = new Curso(); c = i.findCurso(curso); Edicion edicion; edicion =
+		 * c.findEdicion(nombre); if(edicion != null) { throw new
+		 * EdicionRepetida("La edicion " + nombre +
+		 * " ya se encuentra integrada al curso:" + c.getNombre()); } if (!tieneCupos) {
+		 * edicion = new Edicion(nombre, fechaI, fechaF, tieneCupos, 0, fechaPub); }
+		 * else { edicion = new Edicion(nombre, fechaI, fechaF, tieneCupos, cantCupos,
+		 * fechaPub); } c.addEdicion(edicion);
+		 */
 	
 	@Override
 	public ArrayList<DtUsuarioBase> getUsuarios(){
