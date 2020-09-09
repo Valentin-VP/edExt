@@ -19,6 +19,8 @@ import interfaces.IControladorConsultaCurso;
 
 import javax.swing.JSeparator;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -63,6 +65,11 @@ public class AgregarCurso extends JInternalFrame {
 	public AgregarCurso(IControladorAltaCurso icon, IControladorConsultaCurso iconaux) {
 		this.icon = icon;
 		setTitle("Alta Curso");
+        setResizable(true);
+        setIconifiable(true);
+        setMaximizable(true);
+        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        setClosable(true);
 		setBounds(100, 100, 561, 449);
 		getContentPane().setLayout(null);
 		
