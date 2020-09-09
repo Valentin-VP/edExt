@@ -30,6 +30,15 @@ public class Curso {
 		this.url = url;
 		this.previas = previas;
 	}
+	
+	public Edicion findEdicion(String edicion) {
+		for (Edicion e: ediciones) {
+			if (e.getNombre().equals(edicion)) {
+				return e;
+			}
+		}
+		return null;
+	}
 
 	public Curso() {
 		super();

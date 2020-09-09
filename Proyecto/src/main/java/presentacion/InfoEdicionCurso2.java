@@ -35,15 +35,7 @@ public class InfoEdicionCurso2 extends JPanel {
 		this.icon = icon;
 		setLayout(null);
 		
-		JButton atras = new JButton("Atras");
-		atras.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				setVisible(false);
-				limpiar();
-			}
-		});
-		atras.setBounds(10, 11, 89, 23);
-		add(atras);
+		
 		
 		JLabel asdas = new JLabel("Nombre");
 		asdas.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -104,10 +96,10 @@ public class InfoEdicionCurso2 extends JPanel {
 		DtFecha ff = dtE.getFechaF();
 		DtFecha fp = dtE.getFechaPub();
 		nombre.setText(dtE.getNombre());
-		fechaIni.setText(fi.getDia().toString() + fi.getMes().toString() + fi.getAnio().toString());
-		fechaFin.setText(ff.getDia().toString() + ff.getMes().toString() + ff.getAnio().toString());
+		fechaIni.setText(fi.getDia().toString() +"/" + fi.getMes().toString() + "/" + fi.getAnio().toString());
+		fechaFin.setText(ff.getDia().toString() + "/" + ff.getMes().toString() + "/" + ff.getAnio().toString());
 		cupos.setText(dtE.getCupo().toString());
-		fechaPub.setText(fp.getDia().toString() + fp.getMes().toString() + fp.getAnio().toString());
+		fechaPub.setText(fp.getDia().toString() + "/" + fp.getMes().toString() + "/" + fp.getAnio().toString());
 		setVisible(true);
 	}
 	

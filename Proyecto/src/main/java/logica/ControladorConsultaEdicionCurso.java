@@ -8,6 +8,7 @@ import interfaces.IControladorConsultaEdicionCurso;
 import logica.ManejadorInstituto;
 import excepciones.CursoNoExiste;
 import excepciones.EdicionNoExiste;
+import excepciones.InstitutoInexistente;
 
 public class ControladorConsultaEdicionCurso implements IControladorConsultaEdicionCurso {
 	private String edicion;
@@ -25,13 +26,14 @@ public class ControladorConsultaEdicionCurso implements IControladorConsultaEdic
 		this.curso = curso;
 	}
 	@Override
-	public ArrayList<DtCursoBase> seleccionarInstituto(String instituto) throws CursoNoExiste{
+	public ArrayList<DtCursoBase> seleccionarInstituto(String instituto) throws InstitutoInexistente{
+		this.instituto = instituto;
 			ArrayList<DtCursoBase> DtCursos = new ArrayList<DtCursoBase>();
 			ArrayList<Curso> cursos = new ArrayList<Curso>();
 			ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 			Instituto i = mI.find(instituto);
 			if(i == null) {
-				throw new CursoNoExiste("Curso Inexistente");
+				throw new InstitutoInexistente("Instituto Inexistente");
 			}
 			cursos = i.getCursos();
 			for(Curso c: cursos) {
@@ -42,12 +44,14 @@ public class ControladorConsultaEdicionCurso implements IControladorConsultaEdic
 	}
 	
 	@Override
-	public ArrayList<DtEdicionBase> seleccionarCurso(String curso) throws EdicionNoExiste{
+	public ArrayList<DtEdicionBase> seleccionarCurso(String curso) throws CursoNoExiste{
+		this.curso = curso;
 		ArrayList<DtEdicionBase> ediciones = new ArrayList<>();
-		ManejadorCurso mC = ManejadorCurso.getInstancia();
-		Curso c = mC.find(curso);
+		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
+		Instituto i = mI.find(this.instituto);
+		Curso c = i.findCurso(curso);
 		if(c == null)
-			throw new EdicionNoExiste("Edicion Inexistente");
+			throw new CursoNoExiste("Curso Inexistente");
 		for(Edicion e: c.getEdiciones()) {
 			DtEdicionBase edic = new DtEdicionBase(e.getNombre());
 			ediciones.add(edic);
@@ -57,8 +61,11 @@ public class ControladorConsultaEdicionCurso implements IControladorConsultaEdic
 	
 	@Override
 	public DtEdicion seleccionarEdicion(String edicion) {
-		ManejadorEdicion mE = ManejadorEdicion.getInstancia();
-		Edicion e = mE.find(edicion);
+		this.edicion = edicion;
+		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
+		Instituto i= mI.find(this.instituto);
+		Curso c = i.findCurso(this.curso);
+		Edicion e = c.findEdicion(this.edicion);
 		DtEdicion edition = new DtEdicion(e.getNombre(), e.getFechaI(), e.getFechaF(), e.isTieneCupos(), e.getCupos(), e.getFechaPub());
 		return edition;
 	}
@@ -88,8 +95,10 @@ public class ControladorConsultaEdicionCurso implements IControladorConsultaEdic
 	}
 	
 	public DtEdicion getDtEdicion() {
-		ManejadorEdicion mE = ManejadorEdicion.getInstancia();
-		Edicion e = mE.find(this.edicion);
+		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
+		Instituto i= mI.find(this.instituto);
+		Curso c = i.findCurso(this.curso);
+		Edicion e = c.findEdicion(this.edicion);
 		return e.getDtEdicion();
 	}
 	

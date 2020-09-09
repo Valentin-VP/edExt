@@ -17,6 +17,8 @@ import datatypes.DtCursoBase;
 import excepciones.CursoNoExiste;
 import excepciones.EdicionRepetida;
 import excepciones.InstitutoInexistente;
+import excepciones.UsuarioNoDocente;
+
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
@@ -551,12 +553,14 @@ public class AgregarEdicionCurso extends JInternalFrame {
 		if (curso.isEmpty() || nombre.isEmpty()) {
 		 	JOptionPane.showMessageDialog(this, "No puede haber campos vacios", "Agregar Edicion", JOptionPane.ERROR_MESSAGE);
 		} else/* if (!curso.isEmpty() && !nombre.isEmpty() && !docentes.isEmpty())*/ {
+			System.out.println("cuendo entra a aceptar " + curso);
 			try {
 				this.icon.altaEdicionCurso(curso, nombre, fechaI, fechaF, docentes, tieneCupos, Integer.parseInt(cupos), fechaPub);
-				this.icon.confirmarAltaEdicion();
 				JOptionPane.showMessageDialog(this, "La edicion fue agregada con exito", "Agregar Edicion", JOptionPane.INFORMATION_MESSAGE);
 				setVisible(false);
-			} catch (EdicionRepetida | CursoNoExiste | InstitutoInexistente a) {
+				limpiar();
+				this.icon.listarEdiciones();
+			} catch (EdicionRepetida | CursoNoExiste | UsuarioNoDocente | InstitutoInexistente a) {
 				JOptionPane.showMessageDialog(this, a.getLocalizedMessage(), "Agregar Edicion", JOptionPane.ERROR_MESSAGE);
 			}
 		}/* else if (docentes.isEmpty()) {

@@ -6,12 +6,11 @@ import datatypes.DtFecha;
 
 public class Docente extends Usuario {
 	private Instituto instituto;//visibilidad
-	private ArrayList<Edicion> ediciones;//visibilidad
+	private ArrayList<Edicion> dicta;//visibilidad
 	
-	public Docente(String nick, String nombre, String apellido, String correo, DtFecha fechaNac, Instituto instituto, ArrayList<Edicion> ediciones) {
+	public Docente(String nick, String nombre, String apellido, String correo, DtFecha fechaNac, Instituto instituto) {
 		super(nick, nombre, apellido, correo, fechaNac);
 		this.instituto = instituto;
-		this.ediciones = ediciones;
 	}
 
 	public Docente(String nick, String nombre, String apellido, String correo, DtFecha fechaNac) {
@@ -19,7 +18,7 @@ public class Docente extends Usuario {
 	}
 	
 	public boolean find(Edicion edicion) {
-		for (Edicion e: ediciones) {
+		for (Edicion e: dicta) {
 			if (e.getNombre() == edicion.getNombre()) {
 				return true;
 			}
@@ -27,8 +26,8 @@ public class Docente extends Usuario {
 		return false;
 	}
 	
-	public void agregarEdicion(Edicion edicion) {
-		ediciones.add(edicion);
+	public void addDictaEdicion(Edicion edi) {
+		this.dicta.add(edi);
 	}
 
 	public Instituto getInstituto() {
@@ -40,11 +39,11 @@ public class Docente extends Usuario {
 	}
 
 	public ArrayList<Edicion> getEdiciones() {
-		return ediciones;
+		return dicta;
 	}
 
 	public void setEdiciones(ArrayList<Edicion> ediciones) {
-		this.ediciones = ediciones;
+		this.dicta = ediciones;
 	}
 	
 }
