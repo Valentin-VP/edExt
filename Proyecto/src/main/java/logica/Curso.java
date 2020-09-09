@@ -129,8 +129,8 @@ public class Curso {
 		}
 		
 	
-	public void setEdiciones(ArrayList<Edicion> ediciones) {
-		this.ediciones = ediciones;
+	public void addEdicion(Edicion edi) {
+		this.ediciones.add(edi);
 	}
 	
 }
