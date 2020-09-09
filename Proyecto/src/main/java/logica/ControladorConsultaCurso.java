@@ -5,9 +5,11 @@ import java.util.*;
 import datatypes.DtCurso;
 import datatypes.DtCursoBase;
 import datatypes.DtEdicionBase;
+import datatypes.DtInstituto;
 import datatypes.DtProgramaBase;
 import excepciones.InstitutoInexistente;
 import excepciones.InstitutoSinCursos;
+import excepciones.SinInstitutos;
 import interfaces.IControladorConsultaCurso;
 
 public class ControladorConsultaCurso implements IControladorConsultaCurso{
@@ -69,6 +71,20 @@ public class ControladorConsultaCurso implements IControladorConsultaCurso{
 		}
 		return retorno;
 	 }
+
+	@Override
+	public ArrayList<DtInstituto> listarInstitutos() throws SinInstitutos{
+		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
+		ArrayList<DtInstituto> dtinstitutos = new ArrayList<DtInstituto>();
+		if(mI.getInstitutos().isEmpty()) {
+			throw new SinInstitutos("No se han ingresado institutos aun");
+		}
+		for(DtInstituto i: mI.getDtInstitutos()) {
+			DtInstituto dti = new DtInstituto(i.getNombre());
+			dtinstitutos.add(dti);
+		}
+		return dtinstitutos;
+	}
 	
 }	
 

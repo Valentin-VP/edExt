@@ -152,6 +152,7 @@ public class Principal {
 		mntmInfoCurso.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				infoCursoInternalFrame.setVisible(true);
+				infoCursoInternalFrame.cargarInstitutos();
 			}
 		});
 		mnInformacin.add(mntmInfoCurso);
