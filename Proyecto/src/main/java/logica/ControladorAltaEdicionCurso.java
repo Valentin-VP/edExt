@@ -5,12 +5,14 @@ import datatypes.DtEdicion;
 import excepciones.EdicionRepetida;
 import excepciones.EdicionSinCupos;
 import excepciones.CursoNoExiste;
+import excepciones.DocenteDeOtroInstituto;
 import datatypes.DtUsuarioBase;
 import datatypes.DtCursoBase;
 import datatypes.DtFecha;
 import interfaces.IControladorAltaEdicionCurso;
 import excepciones.InstitutoInexistente;
 import excepciones.UsuarioNoDocente;
+import excepciones.UsuarioNoExiste;
 
 public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso {
 	private String instituto;
@@ -37,7 +39,7 @@ public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso
 	}
 	
 	@Override
-	public void altaEdicionCurso(String curso, String nombre, DtFecha fechaI, DtFecha fechaF, ArrayList<DtUsuarioBase> docentes, boolean tieneCupos, Integer cantCupos, DtFecha fechaPub) throws EdicionRepetida, CursoNoExiste, InstitutoInexistente, UsuarioNoDocente {
+	public void altaEdicionCurso(String curso, String nombre, DtFecha fechaI, DtFecha fechaF, ArrayList<String> docentes, boolean tieneCupos, Integer cantCupos, DtFecha fechaPub) throws EdicionRepetida, CursoNoExiste, InstitutoInexistente, UsuarioNoDocente {
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 		Instituto i = mI.find(this.instituto);
 		if (i.equals(null)) {
@@ -59,56 +61,12 @@ public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso
 			edicion = new Edicion(nombre, fechaI, fechaF, tieneCupos, cantCupos, fechaPub);
 		}
 		c.addEdicion(edicion);
-		
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
-		for (Usuario u: mU.getUsuarios()) {
-			if (u instanceof Docente) {
-				((Docente) u).addDictaEdicion(edicion);
-			}else {
-				throw new UsuarioNoDocente("El usuario " + u.getNick() + " no es un doncente");
-			}		
+		for(String user: docentes) {
+			((Docente) mU.findUsuario(user)).addDictaEdicion(edicion);
 		}
 	}	
 
-	/*@Override
-	public void ingresarCupos(Integer cupos) throws EdicionSinCupos {
-		if (!edicion.isTieneCupos()) {
-			throw new EdicionSinCupos("La edicion " + edicion.getNombre() + " no tiene cupos");
-		}
-		edicion.setCupo(cupos);
-		ManejadorEdicion mE = ManejadorEdicion.getInstancia();
-		Edicion e = mE.find(this.edicion.getNombre());
-		e.setCupos(cupos);
-	}*/
-
-	/*@Override
-	public void modificarAltaEdicion(String nuevoNombre) throws EdicionRepetida {
-		ManejadorEdicion mE = ManejadorEdicion.getInstancia();
-		if (mE.exists(nuevoNombre)) {
-			throw new EdicionRepetida("La edicion " + nuevoNombre + " ya se encuentra en el sistema");
-		}
-		mE.find(edicion.getNombre()).setNombre(nuevoNombre);
-		this.edicion.setNombre(nuevoNombre);
-		ManejadorCurso mC = ManejadorCurso.getInstancia();
-		Curso c = mC.find(curso);
-		for (DtEdicionBase e: c.getEdiciones()) {
-			if (e.getNombre() == nuevoNombre) {
-				throw new EdicionRepetida("La edicion " + nuevoNombre + " ya se encuentra integrada al curso");
-			}
-		}
-		for (DtEdicionBase e: c.getEdiciones()) {
-			if (e.getNombre() == edicion.getNombre()) {
-				e.setNombre(nuevoNombre);
-			}
-		}
-	}*/
-
-
-	/*@Override
-	public void confirmarAltaEdicion() {
-		ManejadorEdicion mE = ManejadorEdicion.getInstancia();
-		mE.agregarEdicion(edicion.getNombre(), edicion.getFechaI(), edicion.getFechaF(), edicion.isTieneCupos(), edicion.getCupo(), edicion.getFechaPub());
-	}*/
 	
 	@Override
 	public ArrayList<DtUsuarioBase> getUsuarios(){
@@ -133,6 +91,22 @@ public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso
 				}
 			}
 		}
+	}
+	
+	public void verificarUsuario(String nick, String correo) throws UsuarioNoExiste, UsuarioNoDocente, DocenteDeOtroInstituto {
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		Usuario u = mU.findUsuario(nick);
+		boolean docenteDeInstituto;
+		if(u == null)
+			throw new UsuarioNoExiste("El usuario " + nick + " no se encuentra en el sistema");
+		if(u instanceof Docente) { 
+			if(!(u.getCorreo().equals(correo)))
+				throw new UsuarioNoExiste("Correo incorrecto");
+			docenteDeInstituto = ((Docente) u).getInstituto().getNombre().equals(this.instituto);
+			if(!docenteDeInstituto) 
+				throw new DocenteDeOtroInstituto("El usuario " + nick + " no es de ese instituto");
+		}else
+			throw new UsuarioNoDocente("El usuario " + nick + " no es un docente");
 	}
 	
 }

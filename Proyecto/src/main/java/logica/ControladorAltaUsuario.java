@@ -29,11 +29,7 @@ public class ControladorAltaUsuario implements IControladorAltaUsuario {
 	@Override
 	public void seleccionarInstituto(String instituto) {
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
-		Instituto i = mI.find(instituto);
-		Usuario user = new Usuario(usuario.getNick(), usuario.getCorreo(), usuario.getNombre(), usuario.getApellido(), usuario.getFechaNac());
-		if (user instanceof Docente) {
-			((Docente) user).setInstituto(i);
-		}
+		this.instituto = mI.find(instituto);
 	}
 	
 	/*@Override
@@ -49,7 +45,7 @@ public class ControladorAltaUsuario implements IControladorAltaUsuario {
 	
 	@Override
 	public void cancelarAltaUsuario() {
-		//nose
+		
 	}
 	
 	@Override
@@ -57,7 +53,7 @@ public class ControladorAltaUsuario implements IControladorAltaUsuario {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		Usuario user;
 		if (esDocente) {
-			user = new Docente(usuario.getNick(), usuario.getNombre(), usuario.getApellido(),usuario.getCorreo(), usuario.getFechaNac());
+			user = new Docente(usuario.getNick(), usuario.getNombre(), usuario.getApellido(),usuario.getCorreo(), usuario.getFechaNac(), this.instituto);
 		} else {
 			user = new Estudiante(usuario.getNick(), usuario.getNombre(), usuario.getApellido(),usuario.getCorreo(), usuario.getFechaNac());
 		}	

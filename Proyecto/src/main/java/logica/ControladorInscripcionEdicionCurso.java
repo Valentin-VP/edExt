@@ -94,7 +94,7 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 	}
 
 	@Override
-	public void cancelar() {
+	public void limpiar() {
 		// TODO Auto-generated method stub
 		this.nomIns=null;
 		this.nomCurso=null;

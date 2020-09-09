@@ -22,7 +22,7 @@ public interface IControladorInscripcionEdicionCurso {
 	
 	public void modificarInscripcionEd(String nick, String correo, String nomCurso, DtFecha fecha);
 	
-	public void cancelar();
+	public void limpiar();
 	
 	public void confirmar();
 }

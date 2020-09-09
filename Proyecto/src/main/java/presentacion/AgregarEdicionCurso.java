@@ -15,9 +15,11 @@ import datatypes.DtFecha;
 import datatypes.DtUsuarioBase;
 import datatypes.DtCursoBase;
 import excepciones.CursoNoExiste;
+import excepciones.DocenteDeOtroInstituto;
 import excepciones.EdicionRepetida;
 import excepciones.InstitutoInexistente;
 import excepciones.UsuarioNoDocente;
+import excepciones.UsuarioNoExiste;
 
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -50,8 +52,11 @@ public class AgregarEdicionCurso extends JInternalFrame {
 	private JComboBox<String> comboBoxNombreCurso;
 	private JTextField textFieldInstituto;
 	
+	String nick;
+	String correo;
+	
 	ArrayList<DtCursoBase> cursos = new ArrayList<>();
-	ArrayList<DtUsuarioBase> docentes = new ArrayList<>();
+	ArrayList<String> docentes = new ArrayList<>();
 	
 	public AgregarEdicionCurso(IControladorAltaEdicionCurso icon) {
 		this.icon = icon;
@@ -422,7 +427,7 @@ public class AgregarEdicionCurso extends JInternalFrame {
 		JButton btnAgregar = new JButton("Agregar");
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ag) {
-				AgregarEdicionCursoAgregarActionPerformed(ag);
+				AgregarDocenteActionPerformed(ag);
 				nickDocente.setText("");
 				correoDocente.setText("");
 			}
@@ -508,28 +513,18 @@ public class AgregarEdicionCurso extends JInternalFrame {
 		this.comboBoxNombreCurso.removeAllItems();
 	}
 	
-	protected void AgregarEdicionCursoAgregarActionPerformed(ActionEvent e) {
-		String nick = this.nickDocente.getText();
-		String correo = this.correoDocente.getText();
-		DtUsuarioBase usuario = new DtUsuarioBase(nick, correo);
-		ArrayList<DtUsuarioBase> usuarios = new ArrayList<>();
-		usuarios = this.icon.getUsuarios();
-		for (DtUsuarioBase dtUser: usuarios) {
-			System.out.println(dtUser.getNick());
-		}
-		boolean usuarioValido = usuarios.contains(usuario);
-		System.out.print(usuarioValido);
-		if (usuarioValido) {
-			if (nick.isEmpty() || correo.isEmpty()) {
-				JOptionPane.showMessageDialog(this, "No puede haber campos vacios", "Agregar Usuario", 
-						JOptionPane.ERROR_MESSAGE);
-			} else if (!nick.isEmpty() && !correo.isEmpty()) {
-				DtUsuarioBase user = new DtUsuarioBase(nick, correo);
-				docentes.add(user);
-			}
+	protected void AgregarDocenteActionPerformed(ActionEvent e) {
+		nick = this.nickDocente.getText();
+		correo = this.correoDocente.getText();
+		if (nick.isEmpty() || correo.isEmpty()) {
+			JOptionPane.showMessageDialog(this, "No puede haber campos vacios", "Agregar Usuario", JOptionPane.ERROR_MESSAGE);
 		} else {
-			JOptionPane.showMessageDialog(this, "No existe el usuario", "Agregar Usuario", 
-					JOptionPane.ERROR_MESSAGE);
+			try {
+				icon.verificarUsuario(nick, correo);
+				docentes.add(nick);
+			}catch(UsuarioNoExiste | DocenteDeOtroInstituto | UsuarioNoDocente exc) {
+				JOptionPane.showMessageDialog(this, exc.getLocalizedMessage(), "Agregar Usuario", JOptionPane.ERROR_MESSAGE);
+				}
 		}	
 	}
 	
@@ -552,7 +547,7 @@ public class AgregarEdicionCurso extends JInternalFrame {
 		DtFecha fechaPub = new DtFecha(Integer.parseInt(diaP), Integer.parseInt(mesP), Integer.parseInt(anioP));
 		if (curso.isEmpty() || nombre.isEmpty()) {
 		 	JOptionPane.showMessageDialog(this, "No puede haber campos vacios", "Agregar Edicion", JOptionPane.ERROR_MESSAGE);
-		} else/* if (!curso.isEmpty() && !nombre.isEmpty() && !docentes.isEmpty())*/ {
+		} else {
 			System.out.println("cuendo entra a aceptar " + curso);
 			try {
 				this.icon.altaEdicionCurso(curso, nombre, fechaI, fechaF, docentes, tieneCupos, Integer.parseInt(cupos), fechaPub);
@@ -563,10 +558,7 @@ public class AgregarEdicionCurso extends JInternalFrame {
 			} catch (EdicionRepetida | CursoNoExiste | UsuarioNoDocente | InstitutoInexistente a) {
 				JOptionPane.showMessageDialog(this, a.getLocalizedMessage(), "Agregar Edicion", JOptionPane.ERROR_MESSAGE);
 			}
-		}/* else if (docentes.isEmpty()) {
-			JOptionPane.showMessageDialog(this, "La edicion debe tener docentes", "Agregar Usuario", 
-					JOptionPane.ERROR_MESSAGE);
-		}descomentar esto y arriba para obligar a agregar docentes*/
+		}
 	}
 }
 

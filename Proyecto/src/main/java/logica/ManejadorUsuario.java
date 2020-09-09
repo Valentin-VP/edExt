@@ -35,4 +35,12 @@ public class ManejadorUsuario {
 	public void agregarUsuario(Usuario usuario) {
 		this.usuarios.add(usuario);
 	}
+	
+	public Usuario findUsuario(String nick) {
+		for(Usuario u: usuarios) {
+			if(u.getNick().equals(nick))
+				return u;
+		}
+		return null;
+	}
 }

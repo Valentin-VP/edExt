@@ -192,6 +192,7 @@ public class InscripcionEdicionCurso extends JInternalFrame {
 			public void actionPerformed(ActionEvent ea) {
 				InscripcionEdicionCursoAceptarActionPerformed(ea);
 				setVisible(false);
+				icon.limpiar();
 				limpiar();
 			}
 		});
@@ -201,7 +202,7 @@ public class InscripcionEdicionCurso extends JInternalFrame {
 		btnNewButton_1.setBounds(41, 350, 89, 23);
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				icon.cancelar();
+				icon.limpiar();
 				setVisible(false);
 				limpiar();
 			}
