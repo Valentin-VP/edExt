@@ -525,6 +525,7 @@ public class AgregarEdicionCurso extends JInternalFrame {
 		DefaultComboBoxModel<String> cursoNombre = new DefaultComboBoxModel<String>();
 		comboBoxNombreCurso.setModel(cursoNombre);
 		Curso = "";
+		docentes.clear();
 	}
 	
 	protected void AgregarDocenteActionPerformed(ActionEvent e) {
