@@ -115,7 +115,7 @@ public class InfoEdicionCurso extends JInternalFrame {
         	public void mouseClicked(MouseEvent me2) {
         		icon.setEdicion(listEdiciones.getSelectedValue().toString());
         		ocultar();
-        		infoEdicionCurso2Panel.mostrarDatos();
+        		infoEdicionCurso2Panel.mostrarDatos(icon.getInstituto(), icon.getCurso(), icon.getEdicion());
         	}
         });
         listEdiciones.setBounds(267, 164, 180, 319);

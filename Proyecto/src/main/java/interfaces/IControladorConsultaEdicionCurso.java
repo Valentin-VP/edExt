@@ -18,8 +18,12 @@ public interface IControladorConsultaEdicionCurso {
 	public void setEdicion(String edicion);
 	
 	public String getEdicion();
+
+	public String getInstituto();
 	
-	public DtEdicion getDtEdicion();
+	public String getCurso();
+	
+	public DtEdicion getDtEdicion(String instituto, String curso, String edicion);
 
 	public ArrayList<String> getDocentes(String edicion);
 
