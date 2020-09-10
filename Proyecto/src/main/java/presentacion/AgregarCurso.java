@@ -140,6 +140,7 @@ public class AgregarCurso extends JInternalFrame {
 				altaCursoPreviasButtonNo.setSelected(true);
 				altaCursoPreviasButtonSi.setSelected(false);
 				limpiar();
+				icon.cancelarAltaCurso();
 			}
 		});
 		altaCursoCancelarButton.setBounds(12, 316, 97, 25);
@@ -245,8 +246,8 @@ public class AgregarCurso extends JInternalFrame {
 		String nombre = this.altaCursoNombretextField.getText();
 		String descripcion = this.altaCursoDescripciontextField.getText();
 		String duracion = this.altaCursoDuraciontextField.getText();
-		int cantHoras = Integer.parseInt(this.altaCursoCantHorastextField.getText());
-		int creditos = Integer.parseInt(this.altaCursoCreditostextField.getText());
+		String strcantHoras = this.altaCursoCantHorastextField.getText();
+		String strcreditos = this.altaCursoCreditostextField.getText();
 		String url = this.altaCursoUrltextField.getText();
 		
 		LocalDate date = LocalDate.now();
@@ -259,7 +260,9 @@ public class AgregarCurso extends JInternalFrame {
 		}
 		DtFecha fechaR = new DtFecha(datos.get(0),datos.get(1),datos.get(2));
 		
-		if(checkeo(instituto,nombre,descripcion,duracion,cantHoras,creditos,url)) {
+		if(checkeo(instituto,nombre,descripcion,duracion,strcantHoras,strcreditos,url)) {
+			int cantHoras = Integer.parseInt(this.altaCursoCantHorastextField.getText());
+			int creditos = Integer.parseInt(this.altaCursoCreditostextField.getText());
 			try {
 				this.icon.altaCurso(instituto, nombre, descripcion, duracion, cantHoras, creditos, url, fechaR);
 				if(previasseleccionadas!=null) {
@@ -279,21 +282,25 @@ public class AgregarCurso extends JInternalFrame {
 		}
 	}
 	
-	private boolean checkeo(String instituto, String nombre, String descripcion, String duracion, int cantHoras, int creditos, String url) {
+	private boolean checkeo(String instituto, String nombre, String descripcion, String duracion, String strcantHoras, String strcreditos, String url) {
+		int cantHoras = 0;
+		int creditos = 0;
 		if(instituto.isEmpty() || nombre.isEmpty() || nombre.isEmpty() || descripcion.isEmpty() || duracion.isEmpty()){
 			JOptionPane.showMessageDialog(this, "No puede haber campos vacios", "Alta Curso", 
 			JOptionPane.ERROR_MESSAGE);
 			return false;
 		}else {
 			try {
-				cantHoras = Integer.parseInt(this.altaCursoCantHorastextField.getText());
+				cantHoras = Integer.parseInt(strcantHoras);
 			}catch(NumberFormatException e) {
 				JOptionPane.showMessageDialog(this, "Valor incorrecto en cantHoras", "Alta Curso", JOptionPane.ERROR_MESSAGE);
+				return false;
 			}
 			try {
-				creditos = Integer.parseInt(this.altaCursoCreditostextField.getText());
+				creditos = Integer.parseInt(strcreditos);
 			}catch(NumberFormatException e) {
 				JOptionPane.showMessageDialog(this, "Valor incorrecto en creditos", "Alta Curso", JOptionPane.ERROR_MESSAGE);
+				return false;
 			}
 			int duracionint = Integer.parseInt(duracion);
 			if(cantHoras == 0 || creditos == 0 || duracionint == 0) {
@@ -326,8 +333,8 @@ public class AgregarCurso extends JInternalFrame {
 	}
 	
 	private void populatePreviasList(IControladorConsultaCurso iconaux) {
-		ArrayList<String> cursosdisponibles = new ArrayList<String>();
-		ArrayList<DtCurso> dtcursosbase = new ArrayList<DtCurso>();
+		// ArrayList<String> cursosdisponibles = new ArrayList<String>();
+		ArrayList<DtCursoBase> dtcursosbase = new ArrayList<DtCursoBase>();
 		try {
 			String instituto = (String) this.altaCursoInstitutotextField.getText();
 			previasmodel = new DefaultListModel<String>();
@@ -340,7 +347,7 @@ public class AgregarCurso extends JInternalFrame {
 			altaCursoPreviasList.setEnabled(true);
 			altaCursoAgregarPreviasButton.setEnabled(true);
 			altaCursoLimpiarPreviasButton.setEnabled(true);
-		}catch(InstitutoInexistente | InstitutoSinCursos ex) { // | NullPointerException
+		}catch(InstitutoInexistente | InstitutoSinCursos ex) { 
 			altaCursoPreviasButtonNo.setSelected(true);
 			altaCursoPreviasButtonSi.setSelected(false);
 			altaCursoAgregarPreviasButton.setEnabled(false);

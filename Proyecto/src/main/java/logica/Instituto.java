@@ -58,9 +58,10 @@ public class Instituto {
 	
 	public Curso findCurso(String curso) {
 		Curso retorno = new Curso();
-		for(Curso c: cursos) {
-			if(c.getNombre()==curso);
-			retorno=c;
+		for(Curso c: cursos){
+			if(c.getNombre().equals(curso)){
+				retorno=c;
+			}
 		}
 		return retorno;
 	}

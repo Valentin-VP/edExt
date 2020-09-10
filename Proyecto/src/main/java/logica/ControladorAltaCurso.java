@@ -115,26 +115,30 @@ public class ControladorAltaCurso implements IControladorAltaCurso{
 	public void confirmarAltaCurso() {
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 		ArrayList<Curso> previascursos = new ArrayList <Curso>();
-		for(DtCursoBase dtcb: previas) {
-			if(mI.find(this.instituto).existsCurso(dtcb.getNombre())) {
-				previascursos.add((mI.find(this.instituto).findCurso(dtcb.getNombre())));
+		if(!getPrevias().isEmpty()) {
+			for(DtCursoBase dtcb: getPrevias()) {
+				if(mI.find(this.instituto).existsCurso(dtcb.getNombre())) {
+					previascursos.add((mI.find(this.instituto).findCurso(dtcb.getNombre())));
+				}
 			}
 		}
 		Curso curso = new Curso(getNombre(), getDescripcion(), getDuracion(), getCantHoras(), getCreditos(), getFechaR(), getUrl(), previascursos);
 		mI.find(this.instituto).agregarCurso(curso);
-		resetearDatos();
+		cancelarAltaCurso();
 	}
 	@Override
 
 	public void cancelarAltaCurso() {
-		setInstituto(null);
-		setNombre(null);
-		setDescripcion(null);
-		setDuracion(null);
-		setCantHoras(0);
-		setCreditos(0);
-		setUrl(null);
-		setFechaR(null);
+		this.curso = null;
+		this.instituto = null;
+		this.nombre = null;
+		this.descripcion = null;
+		this.duracion = null;
+		this.cantHoras = 0;
+		this.creditos = 0;
+		this.fechaR = null;
+		this.url = null;
+		this.previas = new ArrayList<DtCursoBase>();
 	}
 	
 	
@@ -157,19 +161,5 @@ public class ControladorAltaCurso implements IControladorAltaCurso{
 		setFechaR(fechaR);
 		
 	} 
-	
-	private void resetearDatos() {
-		this.curso = null;
-		this.instituto = null;
-		this.nombre = null;
-		this.descripcion = null;
-		this.duracion = null;
-		this.cantHoras = 0;
-		this.creditos = 0;
-		this.fechaR = null;
-		this.url = null;
-		this.previas = new ArrayList<DtCursoBase>();
-		
-	}
 	
 }

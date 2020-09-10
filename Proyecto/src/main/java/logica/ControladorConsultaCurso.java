@@ -5,6 +5,7 @@ import java.util.*;
 import datatypes.DtCurso;
 import datatypes.DtCursoBase;
 import datatypes.DtEdicionBase;
+import datatypes.DtFecha;
 import datatypes.DtInstituto;
 import datatypes.DtProgramaBase;
 import excepciones.InstitutoInexistente;
@@ -13,68 +14,85 @@ import excepciones.SinInstitutos;
 import interfaces.IControladorConsultaCurso;
 
 public class ControladorConsultaCurso implements IControladorConsultaCurso{
-	private ArrayList<DtCurso> cursos = new ArrayList<DtCurso>();
+	private String institutoCon;
+	private ArrayList<DtCursoBase> cursos = new ArrayList<DtCursoBase>();
 	ArrayList<DtProgramaBase> programas = new ArrayList<DtProgramaBase>();
 
 	public ControladorConsultaCurso() {
 		super();
 	}
 	
-	public ArrayList<DtCurso> getCursos() {
+	public ArrayList<DtCursoBase> getCursos() {
 		return cursos;
 	}
 
-	public void setCursos(ArrayList<DtCurso> cursos) {
+	public void setCursos(ArrayList<DtCursoBase> cursos) {
 		this.cursos = cursos;
 	}
+	
 	@Override
-	public ArrayList<DtCurso> listarCursosInstituto(String instituto) throws InstitutoInexistente, InstitutoSinCursos{
-		ArrayList <DtCurso> cursosinstituto = new ArrayList <DtCurso>();
+	public ArrayList<DtProgramaBase> getProgramas(){
+		return this.programas;
+	}
+	
+	@Override
+	public ArrayList<DtCursoBase> listarCursosInstituto(String instituto) throws InstitutoInexistente, InstitutoSinCursos{
+		ArrayList <DtCursoBase> cursosinstituto = new ArrayList <DtCursoBase>();
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 		if(!mI.existeInstituto(instituto)) {
 			throw new InstitutoInexistente("No existe el Instituto seleccionado.");
 		}
-		ArrayList<Curso> cursos = mI.find(instituto).getCursos();
-		if(cursos.isEmpty()) {
+		if(mI.find(instituto).getCursos().isEmpty()) {
 			throw new InstitutoSinCursos("El Instituto seleccionado no posee cursos aun");
 		}
-		for(Curso c: cursos) {
-			ArrayList<DtEdicionBase> dteb = new ArrayList<DtEdicionBase>();
-			ArrayList<DtCursoBase> dtprevias = new ArrayList<DtCursoBase>();
-			for(Edicion ed: c.getEdiciones()) {
-				DtEdicionBase edb = new DtEdicionBase(ed.getNombre());
-				dteb.add(edb);
+		else {
+			for(Curso c: mI.find(instituto).getCursos()) {
+				DtCursoBase dtcb = new DtCursoBase(c.getNombre());
+				cursosinstituto.add(dtcb);
 			}
-			for(Curso previa: c.getPrevias()) {
-				DtCursoBase dtprevia = new DtCursoBase(previa.getNombre());
-				dtprevias.add(dtprevia);
-			}
-			DtCurso dtcb = new DtCurso (c.getDescripcion(),c.getDuracion(),c.getCantHoras(),c.getCreditos(),c.getFechaR(),c.getUrl(),c.getNombre(),dteb,dtprevias);
-			cursosinstituto.add(dtcb);
 		}
+		institutoCon = instituto;
 		setCursos(cursosinstituto);
-		return this.cursos;
+		return getCursos();		
 	}
 
+	
 	@Override
 	public DtCurso consultarCurso(String curso) {
-		DtCurso retorno = new DtCurso();
+		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
+		DtCurso retorno;
 		this.programas = new ArrayList<DtProgramaBase>();
 		ManejadorProgFormacion mP = ManejadorProgFormacion.getInstancia();
+		ArrayList<DtEdicionBase> dteb = new ArrayList<DtEdicionBase>();
+		ArrayList<DtCursoBase> dtprevias = new ArrayList<DtCursoBase>();
+		String nombre = mI.find(institutoCon).findCurso(curso).getNombre();
+		String descripcion = mI.find(institutoCon).findCurso(curso).getDescripcion();
+		String duracion = mI.find(institutoCon).findCurso(curso).getDuracion();
+		int cantHoras = mI.find(institutoCon).findCurso(curso).getCantHoras();
+		int creditos = mI.find(institutoCon).findCurso(curso).getCreditos();
+		DtFecha fechaR = mI.find(institutoCon).findCurso(curso).getFechaR();
+		String url = mI.find(institutoCon).findCurso(curso).getUrl();
 		// Buscar ProgFormacion que incluyan a este curso y guardarlos para crear el DtCurso a retornar 
-		for(ProgFormacion pf: mP.getProgramas()) {
-			for(Curso c: pf.getCursos()) {
-				if(c.getNombre().equals(curso)) {
-					DtProgramaBase progf = new DtProgramaBase(pf.getNombre());
-					this.programas.add(progf);
+		if(!mP.getProgramas().isEmpty()) {
+			for(ProgFormacion pf: mP.getProgramas()) {
+				for(Curso c: pf.getCursos()) {
+					if(c.getNombre().equals(curso)) {
+						DtProgramaBase progf = new DtProgramaBase(pf.getNombre());
+						this.programas.add(progf);
+					}
 				}
 			}
 		}
-		for(DtCurso dtc: this.cursos) {
-			if (dtc.getNombre().equals(curso)) {
-				retorno = dtc;
-			}
+		for(Edicion ed: mI.find(institutoCon).findCurso(curso).getEdiciones()) { 
+			  DtEdicionBase edb = new DtEdicionBase(ed.getNombre());
+			  dteb.add(edb);
 		}
+		for(Curso previa: mI.find(institutoCon).findCurso(curso).getPrevias()) { 
+			  DtCursoBase dtprevia = new DtCursoBase(previa.getNombre());
+			  System.out.println(dtprevia.getNombre()); 
+			  dtprevias.add(dtprevia); 
+		} 
+		retorno = new DtCurso(descripcion,duracion,cantHoras,creditos,fechaR,url,nombre,dteb,dtprevias);
 		return retorno;
 	 }
 
@@ -91,9 +109,6 @@ public class ControladorConsultaCurso implements IControladorConsultaCurso{
 		}
 		return dtinstitutos;
 	}
-	@Override
-	public ArrayList<DtProgramaBase> getProgramasCurso(){
-		return this.programas;
-	}
+	
 }	
 
