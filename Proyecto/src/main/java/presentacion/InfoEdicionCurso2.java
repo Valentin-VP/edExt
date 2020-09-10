@@ -6,8 +6,11 @@ import datatypes.DtEdicion;
 import datatypes.DtEdicionBase;
 import datatypes.DtFecha;
 import interfaces.IControladorConsultaEdicionCurso;
+
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -20,6 +23,7 @@ import javax.swing.border.MatteBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.JEditorPane;
 import javax.swing.JLabel;
+import javax.swing.JList;
 
 
 public class InfoEdicionCurso2 extends JPanel {
@@ -30,6 +34,9 @@ public class InfoEdicionCurso2 extends JPanel {
 	private JEditorPane fechaFin;
 	private JEditorPane cupos;
 	private JEditorPane fechaPub;
+	private JLabel docentesEdicion;
+	private JList<String> listDocentes;
+	private DefaultListModel<String> docentes;
 
 	public InfoEdicionCurso2(IControladorConsultaEdicionCurso icon) {
 		this.icon = icon;
@@ -87,6 +94,15 @@ public class InfoEdicionCurso2 extends JPanel {
 		fechaPub.setBounds(165, 179, 106, 20);
 		add(fechaPub);
 		
+		docentesEdicion = new JLabel("Docentes");
+		docentesEdicion.setFont(new Font("Dialog", Font.PLAIN, 16));
+		docentesEdicion.setBounds(34, 230, 126, 20);
+		add(docentesEdicion);
+		
+		listDocentes = new JList<String>();
+		listDocentes.setBounds(62, 262, 303, 178);
+		add(listDocentes);
+		
 		
 	}
 	
@@ -100,6 +116,13 @@ public class InfoEdicionCurso2 extends JPanel {
 		fechaFin.setText(ff.getDia().toString() + "/" + ff.getMes().toString() + "/" + ff.getAnio().toString());
 		cupos.setText(dtE.getCupo().toString());
 		fechaPub.setText(fp.getDia().toString() + "/" + fp.getMes().toString() + "/" + fp.getAnio().toString());
+		docentes = new DefaultListModel<String>();
+		ArrayList<String> docentesDictan = new ArrayList<>();
+		docentesDictan = icon.getDocentes(dtE.getNombre());
+		for (String s: docentesDictan) {
+			docentes.addElement(s);
+		}
+		this.listDocentes.setModel(docentes);
 		setVisible(true);
 	}
 	

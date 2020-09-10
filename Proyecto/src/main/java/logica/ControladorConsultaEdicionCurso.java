@@ -99,5 +99,20 @@ public class ControladorConsultaEdicionCurso implements IControladorConsultaEdic
 		Edicion e = c.findEdicion(this.edicion);
 		return e.getDtEdicion();
 	}
+	@Override
+	public ArrayList<String> getDocentes(String edicion) {
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		ArrayList<String> docentes = new ArrayList<>();
+		for (Usuario u: mU.getUsuarios()) {
+			if (u instanceof Docente) {
+				for(Edicion e: ((Docente) u).getEdiciones()) {
+					if (e.getNombre().equals(edicion)) {
+						docentes.add(u.getNick());
+					}
+				}
+			}
+		}
+		return docentes;
+	}
 	
 }

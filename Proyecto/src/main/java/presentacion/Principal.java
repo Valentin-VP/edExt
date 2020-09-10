@@ -145,9 +145,6 @@ public class Principal {
 		JMenu mnInformacin = new JMenu("Informaci\u00F3n");
 		menuBar.add(mnInformacin);
 		
-		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Usuario");
-		mnInformacin.add(mntmNewMenuItem_2);
-		
 		JMenuItem mntmInfoCurso = new JMenuItem("Curso");
 		mntmInfoCurso.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
