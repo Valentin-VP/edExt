@@ -53,6 +53,7 @@ public class AgregarEdicionCurso extends JInternalFrame {
 	private JRadioButton cuposBool;
 	private JComboBox<String> comboBoxNombreCurso;
 	private JTextField textFieldInstituto;
+	private JButton btnRefresh;
 	
 	String nick;
 	String correo;
@@ -400,6 +401,10 @@ public class AgregarEdicionCurso extends JInternalFrame {
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent c) {
+				comboBoxNombreCurso.setEnabled(true);
+				btnRefresh.setEnabled(true);
+				nombreEdicion.setEditable(true);
+				textFieldInstituto.setEditable(true);
 				limpiar();
 				setVisible(false);
 			}
@@ -411,6 +416,10 @@ public class AgregarEdicionCurso extends JInternalFrame {
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent a) {
 				AgregarEdicionCursoAceptarActionPerformed(a);
+				comboBoxNombreCurso.setEnabled(true);
+				btnRefresh.setEnabled(true);
+				nombreEdicion.setEditable(true);
+				textFieldInstituto.setEditable(true);
 				//limpiar();
 			}
 		});
@@ -471,7 +480,7 @@ public class AgregarEdicionCurso extends JInternalFrame {
 		comboBoxNombreCurso.setBounds(161, 55, 192, 24);
 		getContentPane().add(comboBoxNombreCurso);
 		
-		JButton btnRefresh = new JButton("Refresh");
+		btnRefresh = new JButton("Refresh");
 		btnRefresh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent r) {
 				DefaultComboBoxModel<String> cursoNombre = new DefaultComboBoxModel<String>();
@@ -541,7 +550,11 @@ public class AgregarEdicionCurso extends JInternalFrame {
 			}catch(UsuarioNoExiste | DocenteDeOtroInstituto | DocenteYaAgregado | UsuarioNoDocente exc) {
 				JOptionPane.showMessageDialog(this, exc.getLocalizedMessage(), "Agregar Usuario", JOptionPane.ERROR_MESSAGE);
 				}
-		}	
+		}
+		comboBoxNombreCurso.setEnabled(false);
+		btnRefresh.setEnabled(false);
+		nombreEdicion.setEditable(false);
+		textFieldInstituto.setEditable(false);
 	}
 	
 	protected void AgregarEdicionCursoAceptarActionPerformed(ActionEvent e) {
