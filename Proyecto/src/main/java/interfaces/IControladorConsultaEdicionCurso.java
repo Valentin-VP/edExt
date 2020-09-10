@@ -21,4 +21,6 @@ public interface IControladorConsultaEdicionCurso {
 	
 	public DtEdicion getDtEdicion();
 
+	public ArrayList<String> getDocentes(String edicion);
+
 }
