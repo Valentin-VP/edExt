@@ -1,10 +1,9 @@
 package logica;
 
-import datatypes.DtTime;
 import datatypes.DtFecha;
-import datatypes.DtCurso;
-import datatypes.DtEdicion;
 import datatypes.DtEdicionBase;
+
+import java.time.LocalDate;
 import java.util.*;
 
 public class Curso {
@@ -114,23 +113,33 @@ public class Curso {
 	}
 	
 	// Para obtener la edicion vigente del curso -- Mauri
-		// Revisar
-		public DtEdicionBase getEdicionVigente() {
-			DtEdicionBase dteb=new DtEdicionBase();
-				for(int i=0;i < ediciones.size();i++) {
-					//if(dteb instanceof DtEdicion) {
-						if (ediciones.get(i).getFechaPub().getAnio() == 2020 ) {
-							dteb.setNombre(ediciones.get(i).getNombre());
-							return dteb;
-						//}
-					}
-				}
-			return null;
+	public DtEdicionBase getEdicionVigente() {
+		LocalDate date = LocalDate.now();
+		DtEdicionBase dteb=new DtEdicionBase();
+		for(int i=0;i < ediciones.size();i++) {
+			if (fechaValidaInicio(ediciones.get(i).getFechaI(),date)) {
+			dteb.setNombre(ediciones.get(i).getNombre());
+			return dteb;
+			}
 		}
+		return null;
+	}
 		
+	// if (ediciones.get(i).getFechaPub().getAnio().intValue() == 2000) {
 	
 	public void addEdicion(Edicion edi) {
 		this.ediciones.add(edi);
+	}
+	
+	public boolean fechaValidaInicio(DtFecha fecha,LocalDate date) {
+		if(fecha.getAnio().intValue() > date.getYear()) {
+			return false;
+		} else if(fecha.getAnio().intValue() == date.getYear() && fecha.getMes().intValue() > date.getMonthValue()) {
+			return false;
+		} else if(fecha.getAnio().intValue() == date.getYear() && fecha.getMes().intValue() == date.getMonthValue() && fecha.getDia().intValue() > date.getDayOfMonth()) {
+			return false;
+		}
+		return true;
 	}
 	
 }
