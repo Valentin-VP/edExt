@@ -20,7 +20,9 @@ import javax.swing.JTextArea;
 
 import datatypes.DtCurso;
 import datatypes.DtCursoBase;
+import datatypes.DtEdicionBase;
 import datatypes.DtInstituto;
+import datatypes.DtProgramaBase;
 import excepciones.InstitutoInexistente;
 import excepciones.InstitutoSinCursos;
 import excepciones.SinInstitutos;
@@ -234,12 +236,40 @@ public class InfoCurso extends JInternalFrame {
 		infoCursoTextArea.setText(infoCursoTexto);
 		infoCursoTextArea.setLineWrap(true);
 		infoCursoTextArea.setWrapStyleWord(true);
+		// Setear ComboBoxes Ediciones y Programas
+		ArrayList <String> programas = new ArrayList<String>();
+		if(!icon.getProgramasCurso().isEmpty()) {
+			programaLabel.setEnabled(true);
+			programaComboBox.setEnabled(true);
+			for(DtProgramaBase dtpb: icon.getProgramasCurso()) {
+				String programa = dtpb.getNombre();
+				programas.add(programa);
+			}
+			String [] strprogramas = programas.toArray(new String[programas.size()]);
+			DefaultComboBoxModel<String> programacombo = new DefaultComboBoxModel<String>(strprogramas);
+			edicionComboBox.setModel(programacombo);
+		}
+		ArrayList <String> ediciones = new ArrayList<String>();
+		if(!dtcurso.getEdiciones().isEmpty()) {
+			edicionLabel.setEnabled(true);
+			edicionComboBox.setEnabled(true);
+			for(DtEdicionBase dted: dtcurso.getEdiciones()) {
+				String edicion = dted.getNombre();
+				ediciones.add(edicion);
+			}
+			String [] strediciones = ediciones.toArray(new String[ediciones.size()]);
+			DefaultComboBoxModel<String> edicioncombo = new DefaultComboBoxModel<String>(strediciones);
+			edicionComboBox.setModel(edicioncombo);
+		}
+		
 	}
 	
 	private void limpiar() {
 		// No aplica para el institutoComboBox!
-		DefaultComboBoxModel<String> cursocombo = new DefaultComboBoxModel<String>();
-		cursoComboBox.setModel(cursocombo);
+		DefaultComboBoxModel<String> emptycombo = new DefaultComboBoxModel<String>();
+		cursoComboBox.setModel(emptycombo);
+		edicionComboBox.setModel(emptycombo);
+		programaComboBox.setModel(emptycombo);
 		institutoseleccionado = "";
 		cursoseleccionado = "";
 				
