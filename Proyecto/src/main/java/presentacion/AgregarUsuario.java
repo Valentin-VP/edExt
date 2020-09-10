@@ -255,14 +255,14 @@ public class AgregarUsuario extends JInternalFrame {
 	}	
 
 	private boolean checkeo() {
-		String nickname = this.textFieldNick.getText();
-		String correo = this.textFieldCorreo.getText();
+		//String nickname = this.textFieldNick.getText();
+		//String correo = this.textFieldCorreo.getText();
 		String nombre = this.textFieldNombre.getText();
 		String apellido = this.textFieldApellido.getText();
 		String dia = (String) this.diaNac.getSelectedItem();
 		String mes = (String) this.mesNac.getSelectedItem();
 		String anio = (String) this.anioNac.getSelectedItem();
-		if(nickname.isEmpty() || correo.isEmpty() || nombre.isEmpty() || apellido.isEmpty() || dia.equals("") || mes.equals("") || anio.equals("")) {
+		if(nombre.isEmpty() || apellido.isEmpty() || dia.equals("") || mes.equals("") || anio.equals("")) {
 			JOptionPane.showMessageDialog(this, "No puede haber campos vacios", "Agregar Usuario", 
 			JOptionPane.ERROR_MESSAGE);
 			return false;

@@ -65,7 +65,10 @@ public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso
 		}
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		for(String user: docentes) {
-			((Docente) mU.findUsuario(user)).addDictaEdicion(edicion);
+			if (mU.findUsuario(user) instanceof Docente) {
+				((Docente) mU.findUsuario(user)).addDictaEdicion(edicion);
+				System.out.println("es docente");
+			}
 		}
 	}	
 		/*
@@ -117,6 +120,18 @@ public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso
 				throw new DocenteDeOtroInstituto("El usuario " + nick + " no es de ese instituto");
 		}else
 			throw new UsuarioNoDocente("El usuario " + nick + " no es un docente");
+	}
+	
+	@Override
+	public void imprimirEdiciones() {
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		for(Usuario u: mU.getUsuarios()) {
+			if (u instanceof Docente) {
+				for (Edicion e: ((Docente) u).getEdiciones()) {
+					System.out.println(e.getNombre());
+				}
+			}
+		}
 	}
 	
 }

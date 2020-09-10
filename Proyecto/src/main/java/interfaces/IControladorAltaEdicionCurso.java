@@ -21,4 +21,6 @@ public interface IControladorAltaEdicionCurso {
 	public void listarEdiciones();
 	
 	public void verificarUsuario(String nick, String correo) throws UsuarioNoExiste, UsuarioNoDocente, DocenteDeOtroInstituto;
+
+	public void imprimirEdiciones();
 }
