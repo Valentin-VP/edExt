@@ -14,6 +14,7 @@ import interfaces.IControladorConsultaCurso;
 
 public class ControladorConsultaCurso implements IControladorConsultaCurso{
 	private ArrayList<DtCurso> cursos = new ArrayList<DtCurso>();
+	ArrayList<DtProgramaBase> programas = new ArrayList<DtProgramaBase>();
 
 	public ControladorConsultaCurso() {
 		super();
@@ -58,14 +59,14 @@ public class ControladorConsultaCurso implements IControladorConsultaCurso{
 	@Override
 	public DtCurso consultarCurso(String curso) {
 		DtCurso retorno = new DtCurso();
-		ArrayList<DtProgramaBase> programas = new ArrayList<DtProgramaBase>();
+		this.programas = new ArrayList<DtProgramaBase>();
 		ManejadorProgFormacion mP = ManejadorProgFormacion.getInstancia();
 		// Buscar ProgFormacion que incluyan a este curso y guardarlos para crear el DtCurso a retornar 
 		for(ProgFormacion pf: mP.getProgramas()) {
 			for(Curso c: pf.getCursos()) {
 				if(c.getNombre().equals(curso)) {
 					DtProgramaBase progf = new DtProgramaBase(pf.getNombre());
-					programas.add(progf);
+					this.programas.add(progf);
 				}
 			}
 		}
@@ -90,6 +91,9 @@ public class ControladorConsultaCurso implements IControladorConsultaCurso{
 		}
 		return dtinstitutos;
 	}
-	
+	@Override
+	public ArrayList<DtProgramaBase> getProgramasCurso(){
+		return this.programas;
+	}
 }	
 
