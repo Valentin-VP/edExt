@@ -39,11 +39,16 @@ public class ControladorConsultaCurso implements IControladorConsultaCurso{
 		}
 		for(Curso c: cursos) {
 			ArrayList<DtEdicionBase> dteb = new ArrayList<DtEdicionBase>();
+			ArrayList<DtCursoBase> dtprevias = new ArrayList<DtCursoBase>();
 			for(Edicion ed: c.getEdiciones()) {
 				DtEdicionBase edb = new DtEdicionBase(ed.getNombre());
 				dteb.add(edb);
 			}
-			DtCurso dtcb = new DtCurso (c.getDescripcion(),c.getDuracion(),c.getCantHoras(),c.getCreditos(),c.getFechaR(),c.getUrl(),c.getNombre(),dteb);
+			for(Curso previa: c.getPrevias()) {
+				DtCursoBase dtprevia = new DtCursoBase(previa.getNombre());
+				dtprevias.add(dtprevia);
+			}
+			DtCurso dtcb = new DtCurso (c.getDescripcion(),c.getDuracion(),c.getCantHoras(),c.getCreditos(),c.getFechaR(),c.getUrl(),c.getNombre(),dteb,dtprevias);
 			cursosinstituto.add(dtcb);
 		}
 		setCursos(cursosinstituto);
