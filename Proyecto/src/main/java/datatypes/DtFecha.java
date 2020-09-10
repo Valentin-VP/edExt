@@ -40,4 +40,9 @@ public class DtFecha {
 		this.anio = anio;
 	}
 	
+	@Override
+	public String toString() {
+		return ""+dia+"/"+mes+"/"+anio;
+	}
+	
 }

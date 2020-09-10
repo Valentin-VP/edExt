@@ -6,7 +6,7 @@ import datatypes.DtFecha;
 
 public class Docente extends Usuario {
 	private Instituto instituto;//visibilidad
-	private ArrayList<Edicion> dicta;//visibilidad
+	private ArrayList<Edicion> dicta = new ArrayList<>();//visibilidad
 	
 	public Docente(String nick, String nombre, String apellido, String correo, DtFecha fechaNac, Instituto instituto) {
 		super(nick, nombre, apellido, correo, fechaNac);

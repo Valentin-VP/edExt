@@ -245,11 +245,12 @@ public class AgregarCurso extends JInternalFrame {
 		String nombre = this.altaCursoNombretextField.getText();
 		String descripcion = this.altaCursoDescripciontextField.getText();
 		String duracion = this.altaCursoDuraciontextField.getText();
-		int cantHoras = 0;
-		int creditos = 0;
+		int cantHoras = Integer.parseInt(this.altaCursoCantHorastextField.getText());
+		int creditos = Integer.parseInt(this.altaCursoCreditostextField.getText());
 		String url = this.altaCursoUrltextField.getText();
+		
 		LocalDate date = LocalDate.now();
-		DateTimeFormatter format = DateTimeFormatter.ofPattern("D-M-u");
+		DateTimeFormatter format = DateTimeFormatter.ofPattern("d-M-u");
 		ArrayList<Integer> datos = new ArrayList<>();
 		String valores [] = (date.format(format)).split("-");
 		for(String s: valores) {
@@ -257,6 +258,7 @@ public class AgregarCurso extends JInternalFrame {
 			datos.add(temp);
 		}
 		DtFecha fechaR = new DtFecha(datos.get(0),datos.get(1),datos.get(2));
+		
 		if(checkeo(instituto,nombre,descripcion,duracion,cantHoras,creditos,url)) {
 			try {
 				this.icon.altaCurso(instituto, nombre, descripcion, duracion, cantHoras, creditos, url, fechaR);

@@ -19,6 +19,7 @@ import java.awt.Component;
 import javax.swing.JTextArea;
 
 import datatypes.DtCurso;
+import datatypes.DtCursoBase;
 import datatypes.DtInstituto;
 import excepciones.InstitutoInexistente;
 import excepciones.InstitutoSinCursos;
@@ -114,7 +115,10 @@ public class InfoCurso extends JInternalFrame {
 		cursoButton = new JButton("Seleccionar");
 		cursoButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				//Habilitar lista, cargarInfoCurso, evaluar habilitacion de combos y labels ediciones y programas
+				scrollPane.setEnabled(true);
+				infoCursoTextArea.setEnabled(true);
+				cargarInfoCurso();
 			}
 		});
 		cursoButton.setEnabled(false);
@@ -124,9 +128,11 @@ public class InfoCurso extends JInternalFrame {
 		
 		scrollPane = new JScrollPane((Component) null);
 		scrollPane.setBounds(12, 80, 310, 175);
+		scrollPane.setEnabled(false);
 		getContentPane().add(scrollPane);
 		
 		infoCursoTextArea = new JTextArea();
+		infoCursoTextArea.setEnabled(false);
 		scrollPane.setViewportView(infoCursoTextArea);
 		
 		programaButton = new JButton("Seleccionar");
@@ -192,7 +198,7 @@ public class InfoCurso extends JInternalFrame {
 
 	}
 	
-	public void cargarCursos() {
+	private void cargarCursos() {
 		ArrayList<String> cursos = new ArrayList<String>();
 		try {
 			for(DtCurso dtc: icon.listarCursosInstituto(institutoseleccionado)) {
@@ -208,10 +214,35 @@ public class InfoCurso extends JInternalFrame {
 		
 	}
 	
+	private void cargarInfoCurso(){
+		// cargarInfoCurso, evaluar habilitacion de combos y labels ediciones y programas
+		DtCurso dtcurso = icon.consultarCurso(cursoseleccionado);
+		String infoCursoTexto = "";
+		infoCursoTexto=infoCursoTexto+dtcurso.getNombre()+"\n";
+		infoCursoTexto=infoCursoTexto+dtcurso.getDescripcion()+"\n";
+		infoCursoTexto=infoCursoTexto+dtcurso.getDuracion()+"\n";
+		infoCursoTexto=infoCursoTexto+(String.valueOf(dtcurso.getCantHoras()))+"\n";
+		infoCursoTexto=infoCursoTexto+(String.valueOf(dtcurso.getCreditos()))+"\n";
+		infoCursoTexto=infoCursoTexto+dtcurso.getFechaR().toString()+"\n";
+		infoCursoTexto=infoCursoTexto+dtcurso.getUrl()+"\n";
+		if(!dtcurso.getPrevias().isEmpty()) {
+			infoCursoTexto=infoCursoTexto+"Tiene las siguientes Previas:\n";
+			for(DtCursoBase dtcb: dtcurso.getPrevias()) {
+				infoCursoTexto=infoCursoTexto+dtcb.getNombre()+"\n";
+			}
+		}
+		infoCursoTextArea.setText(infoCursoTexto);
+		infoCursoTextArea.setLineWrap(true);
+		infoCursoTextArea.setWrapStyleWord(true);
+	}
+	
 	private void limpiar() {
 		// No aplica para el institutoComboBox!
 		DefaultComboBoxModel<String> cursocombo = new DefaultComboBoxModel<String>();
 		cursoComboBox.setModel(cursocombo);
+		institutoseleccionado = "";
+		cursoseleccionado = "";
+				
 	}
 
 }
