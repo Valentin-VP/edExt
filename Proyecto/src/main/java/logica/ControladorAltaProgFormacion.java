@@ -2,7 +2,6 @@ package logica;
 
 import datatypes.DtFecha;
 import excepciones.ProgramaRepetido;
-import excepciones.UsuarioRepetido;
 import interfaces.IControladorAltaProgFormacion;
 
 public class ControladorAltaProgFormacion implements IControladorAltaProgFormacion{

@@ -9,7 +9,9 @@ import datatypes.DtInstituto;
 import excepciones.CursoNoExiste;
 import excepciones.EdicionVigenteNoExiste;
 import excepciones.InscripcionEdRepetido;
-import excepciones.InstitutoInexistente;
+import excepciones.SinInstitutos;
+import excepciones.UsuarioNoEstudiante;
+import excepciones.UsuarioNoExiste;
 import interfaces.IControladorInscripcionEdicionCurso;
 
 public class ControladorInscripcionEdicionCurso implements IControladorInscripcionEdicionCurso{
@@ -24,11 +26,19 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 		super();
 	}
 
+	public String getNomCurso() {
+		return nomCurso;
+	}
+
+	public void setNomCurso(String nomCurso) {
+		this.nomCurso = nomCurso;
+	}
+
 	@Override
-	public ArrayList<DtInstituto> listarInstitutos() throws InstitutoInexistente {
+	public ArrayList<DtInstituto> listarInstitutos() throws SinInstitutos {
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 		if (mI.getDtInstitutos().isEmpty()) {
-			throw new InstitutoInexistente("No hay institutos ingresados");
+			throw new SinInstitutos("No hay institutos ingresados");
 		}
 		return mI.getDtInstitutos();
 	}
@@ -38,8 +48,7 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 		ArrayList <DtCursoBase> cursosinstituto = new ArrayList<DtCursoBase>();
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 		Instituto ins = mI.find(nomIns);
-		this.nomIns = nomIns;
-		//ArrayList <Curso> cursos = mI.find(nomIns).getCursos();
+		this.nomIns = ins.getNombre();
 		ArrayList <Curso> cursos = ins.getCursos();
 		if (cursos.isEmpty()) {
 			throw new CursoNoExiste("El instituto no tiene cursos ingresados");
@@ -53,11 +62,10 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 
 	@Override
 	public DtEdicionBase seleccionarCurso(String nomCurso) throws EdicionVigenteNoExiste{
-		this.nomCurso = nomCurso;
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 		Instituto ins = mI.find(this.nomIns);
-		//ManejadorCurso mC = ManejadorCurso.getInstancia();
 		Curso c = ins.findCurso(nomCurso);
+		this.setNomCurso(c.getNombre());
 		DtEdicionBase dteb = c.getEdicionVigente();
 		if (dteb == null) {
 			throw new EdicionVigenteNoExiste("No existe una edicion vigente para el curso seleccionado");
@@ -67,37 +75,39 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 	}
 
 	@Override
-	public boolean registrarInscripcionEd(String nick, String correo, String nomCurso, DtFecha fecha) throws InscripcionEdRepetido {
-		// TODO Auto-generated method stub
+	public boolean registrarInscripcionEd(String nick, String correo, String nomCurso, DtFecha fecha) throws InscripcionEdRepetido, UsuarioNoExiste, UsuarioNoEstudiante {
 		this.nick = nick;
 		this.correo = correo;
-		this.nomCurso = nomCurso;
+		this.setNomCurso(nomCurso);
 		this.fecha = fecha;
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		Usuario u = mU.getUsuario(nick, correo);
+		if (u == null) {
+			throw new UsuarioNoExiste("No existe el usuario ingresado");
+		}
 		if(u instanceof Estudiante) {
 			boolean existe = ((Estudiante) u).existeInscripcion(nomCurso);
 			if (existe == true) {
 				throw new InscripcionEdRepetido("Ya existe una inscripcion a la edicion");
 			}
+		} else {
+			throw new UsuarioNoEstudiante("El usuario ingresado es un docente");
 		}
 		return false;
 	}
 
 	@Override
 	public void modificarInscripcionEd(String nick, String correo, String nomCurso, DtFecha fecha) {
-		// TODO Auto-generated method stub
 		this.nick = nick;
 		this.correo = correo;
-		this.nomCurso = nomCurso;
+		this.setNomCurso(nomCurso);
 		this.fecha = fecha;
 	}
 
 	@Override
 	public void limpiar() {
-		// TODO Auto-generated method stub
 		this.nomIns=null;
-		this.nomCurso=null;
+		this.setNomCurso(null);
 		this.nick=null;
 		this.correo=null;
 		this.nombreEd=null;
@@ -106,7 +116,6 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 
 	@Override
 	public void confirmar() {
-		// TODO Auto-generated method stub
 		ManejadorEdicion mE = ManejadorEdicion.getInstancia();
 		Edicion ed = mE.find(this.nombreEd);
 		InscripcionEd ie=new InscripcionEd(this.fecha,ed);

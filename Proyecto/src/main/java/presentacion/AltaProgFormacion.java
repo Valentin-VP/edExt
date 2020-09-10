@@ -1,7 +1,5 @@
 package presentacion;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 
@@ -26,12 +24,12 @@ public class AltaProgFormacion extends JInternalFrame {
 	IControladorAltaProgFormacion icon;
 	private JTextField textFieldNom;
 	private JTextField textFieldDes;
-	private JComboBox comboBoxDiaI;
-	private JComboBox comboBoxMesI;
-	private JComboBox comboBoxAnioI;
-	private JComboBox comboBoxDiaF;
-	private JComboBox comboBoxMesF;
-	private JComboBox comboBoxAnioF;
+	private JComboBox<String> comboBoxDiaI;
+	private JComboBox<String> comboBoxMesI;
+	private JComboBox<String> comboBoxAnioI;
+	private JComboBox<String> comboBoxDiaF;
+	private JComboBox<String> comboBoxMesF;
+	private JComboBox<String> comboBoxAnioF;
 	
 	public AltaProgFormacion(IControladorAltaProgFormacion icon) {
 		this.icon = icon;
