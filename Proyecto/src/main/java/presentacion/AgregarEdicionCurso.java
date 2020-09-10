@@ -16,6 +16,7 @@ import datatypes.DtUsuarioBase;
 import datatypes.DtCursoBase;
 import excepciones.CursoNoExiste;
 import excepciones.DocenteDeOtroInstituto;
+import excepciones.DocenteYaAgregado;
 import excepciones.EdicionRepetida;
 import excepciones.InstitutoInexistente;
 import excepciones.UsuarioNoDocente;
@@ -533,9 +534,10 @@ public class AgregarEdicionCurso extends JInternalFrame {
 			JOptionPane.showMessageDialog(this, "No puede haber campos vacios doc", "Agregar Usuario", JOptionPane.ERROR_MESSAGE);
 		} else {
 			try {
-				icon.verificarUsuario(nick, correo);
+				icon.verificarUsuario(nick, correo, docentes);
 				docentes.add(nick);
-			}catch(UsuarioNoExiste | DocenteDeOtroInstituto | UsuarioNoDocente exc) {
+				JOptionPane.showMessageDialog(this, "El docente fue agregado con exito", "Agregar Usuario", JOptionPane.INFORMATION_MESSAGE);
+			}catch(UsuarioNoExiste | DocenteDeOtroInstituto | DocenteYaAgregado | UsuarioNoDocente exc) {
 				JOptionPane.showMessageDialog(this, exc.getLocalizedMessage(), "Agregar Usuario", JOptionPane.ERROR_MESSAGE);
 				}
 		}	

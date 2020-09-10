@@ -10,6 +10,7 @@ import excepciones.InstitutoInexistente;
 import excepciones.UsuarioNoDocente;
 import excepciones.UsuarioNoExiste;
 import excepciones.DocenteDeOtroInstituto;
+import excepciones.DocenteYaAgregado;
 
 public interface IControladorAltaEdicionCurso {
 	public ArrayList<DtCursoBase> seleccionarInstituto(String instituto) throws InstitutoInexistente;
@@ -20,7 +21,9 @@ public interface IControladorAltaEdicionCurso {
 	
 	public void listarEdiciones();
 	
-	public void verificarUsuario(String nick, String correo) throws UsuarioNoExiste, UsuarioNoDocente, DocenteDeOtroInstituto;
+	public void verificarUsuario(String nick, String correo, ArrayList<String> docentes) throws UsuarioNoExiste, UsuarioNoDocente, DocenteDeOtroInstituto, DocenteYaAgregado;
 
 	public void imprimirEdiciones();
+	
+	public boolean docenteEnArray(String nick, ArrayList<String> docentes);
 }

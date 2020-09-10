@@ -6,6 +6,7 @@ import excepciones.EdicionRepetida;
 import excepciones.EdicionSinCupos;
 import excepciones.CursoNoExiste;
 import excepciones.DocenteDeOtroInstituto;
+import excepciones.DocenteYaAgregado;
 import datatypes.DtUsuarioBase;
 import datatypes.DtCursoBase;
 import datatypes.DtFecha;
@@ -106,7 +107,7 @@ public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso
 		}
 	}
 	
-	public void verificarUsuario(String nick, String correo) throws UsuarioNoExiste, UsuarioNoDocente, DocenteDeOtroInstituto {
+	public void verificarUsuario(String nick, String correo, ArrayList<String> docentes) throws UsuarioNoExiste, UsuarioNoDocente, DocenteDeOtroInstituto, DocenteYaAgregado {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		Usuario u = mU.findUsuario(nick);
 		boolean docenteDeInstituto;
@@ -118,6 +119,8 @@ public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso
 			docenteDeInstituto = ((Docente) u).getInstituto().getNombre().equals(this.instituto);
 			if(!docenteDeInstituto) 
 				throw new DocenteDeOtroInstituto("El usuario " + nick + " no es de ese instituto");
+			if(docenteEnArray(nick, docentes))
+				throw new DocenteYaAgregado("El usuario " + nick + " ya fue agregado como docente de la edicion");
 		}else
 			throw new UsuarioNoDocente("El usuario " + nick + " no es un docente");
 	}
@@ -132,6 +135,14 @@ public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso
 				}
 			}
 		}
+	}
+	
+	public boolean docenteEnArray(String nick, ArrayList<String> docentes) {
+		for(String d: docentes) {
+			if(d.equals(nick))
+				return true;
+		}
+		return false;
 	}
 	
 }
