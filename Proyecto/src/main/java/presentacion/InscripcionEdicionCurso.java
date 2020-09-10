@@ -65,14 +65,6 @@ public class InscripcionEdicionCurso extends JInternalFrame {
 					}
 					comboBoxCur.setModel(dml);
 					
-					//ArrayList<DtCursoBase> cursos = icon.seleccionarInstituto(comboBoxIns.getSelectedItem().toString());
-					//ArrayList<String> nombresCursos = new ArrayList<String>();
-					//for(int i=0;i<cursos)
-					//for(DtCursoBase dts:cursos) {
-						//comboBoxCur.addItem(dts.getNombre());//nombresCursos.add(dts.getNombre());
-						//System.out.print(dts.getNombre());
-					//}
-					
 				} catch (CursoNoExiste n) {
 					JOptionPane.showMessageDialog(null, n.getMessage(), "Inscripcion Edicion Curso", JOptionPane.ERROR_MESSAGE);
 				}
@@ -92,7 +84,6 @@ public class InscripcionEdicionCurso extends JInternalFrame {
 				textFieldEd.setText("");
 				try {
 					
-					//DtEdicionBase dteb = null;
 					DtEdicionBase dteb = icon.seleccionarCurso(comboBoxCur.getSelectedItem().toString());
 					if (dteb == null) {
 						JOptionPane.showInternalConfirmDialog(null, "Este curso no tiene edicion vigente, seleccione otro", "Edicion vigente",

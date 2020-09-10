@@ -16,11 +16,13 @@ public class Estudiante extends Usuario {
 	}
 	
 	public boolean existeInscripcion(String nomEd) {
-		for(InscripcionEd i: inscripciones) {
-	    		if(i.getEdicion().getNombre().equals(nomEd)) {
-	    			return true;
-	    		}
-	    }
+		if (!inscripciones.isEmpty()) {
+			for (int i=0;i < inscripciones.size();i++) {
+				if (inscripciones.get(i).getEdicion().getNombre().equals(nomEd)) {
+					return true;
+				}
+			}
+		}
 	    return false;
 	}
 

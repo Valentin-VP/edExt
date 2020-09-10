@@ -86,8 +86,8 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 			throw new UsuarioNoExiste("No existe el usuario ingresado");
 		}
 		if(u instanceof Estudiante) {
-			boolean existe = ((Estudiante) u).existeInscripcion(nomCurso);
-			if (existe == true) {
+			boolean existeInscripcion = ((Estudiante) u).existeInscripcion(this.nombreEd);
+			if (existeInscripcion) {
 				throw new InscripcionEdRepetido("Ya existe una inscripcion a la edicion");
 			}
 		} else {
