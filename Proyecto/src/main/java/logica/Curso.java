@@ -117,7 +117,7 @@ public class Curso {
 		LocalDate date = LocalDate.now();
 		DtEdicionBase dteb=new DtEdicionBase();
 		for(int i=0;i < ediciones.size();i++) {
-			if (fechaValidaInicio(ediciones.get(i).getFechaI(),date)) {
+			if (fechaValidaInicio(ediciones.get(i).getFechaI(),date) && fechaValidaFin(ediciones.get(i).getFechaF(),date)) {
 			dteb.setNombre(ediciones.get(i).getNombre());
 			return dteb;
 			}
@@ -137,6 +137,20 @@ public class Curso {
 		} else if(fecha.getAnio().intValue() == date.getYear() && fecha.getMes().intValue() > date.getMonthValue()) {
 			return false;
 		} else if(fecha.getAnio().intValue() == date.getYear() && fecha.getMes().intValue() == date.getMonthValue() && fecha.getDia().intValue() > date.getDayOfMonth()) {
+			return false;
+		}
+		return true;
+	}
+	
+	public boolean fechaValidaFin(DtFecha fecha,LocalDate date) {
+		if(fecha.getAnio().intValue() < date.getYear()) {
+			System.out.print("Un anio antes");
+			return false;
+		} else if(fecha.getAnio().intValue() == date.getYear() && fecha.getMes().intValue() < date.getMonthValue()) {
+			System.out.print("Un mes antes");
+			return false;
+		} else if(fecha.getAnio().intValue() == date.getYear() && fecha.getMes().intValue() == date.getMonthValue() && fecha.getDia().intValue() < date.getDayOfMonth()) {
+			System.out.print("Un dia antes");
 			return false;
 		}
 		return true;
