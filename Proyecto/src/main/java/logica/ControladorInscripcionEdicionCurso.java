@@ -97,14 +97,6 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 	}
 
 	@Override
-	public void modificarInscripcionEd(String nick, String correo, String nomCurso, DtFecha fecha) {
-		this.nick = nick;
-		this.correo = correo;
-		this.setNomCurso(nomCurso);
-		this.fecha = fecha;
-	}
-
-	@Override
 	public void limpiar() {
 		this.nomIns=null;
 		this.setNomCurso(null);
@@ -116,14 +108,22 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 
 	@Override
 	public void confirmar() {
-		ManejadorEdicion mE = ManejadorEdicion.getInstancia();
-		Edicion ed = mE.find(this.nombreEd);
+		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
+		Instituto ins = mI.find(nomIns);
+		Curso c = ins.findCurso(nomCurso);
+		Edicion ed = c.findEdicion(nombreEd);
 		InscripcionEd ie=new InscripcionEd(this.fecha,ed);
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		Usuario u = mU.getUsuario(this.nick, this.correo);
 		if(u instanceof Estudiante) {
 			((Estudiante) u).agregarInscripcionEd(ie);
 		}
+		System.out.println(ins.getNombre());
+		System.out.println(c.getNombre());
+		System.out.println(ed.getNombre());
+		System.out.println(u.getNick());
+		System.out.print(u.getCorreo());
+		System.out.print(ie.getEdicion().getNombre());
 	}
 
 }

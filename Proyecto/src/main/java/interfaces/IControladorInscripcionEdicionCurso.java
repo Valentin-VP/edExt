@@ -21,9 +21,7 @@ public interface IControladorInscripcionEdicionCurso {
 	public DtEdicionBase seleccionarCurso(String nomCurso) throws EdicionVigenteNoExiste;
 	
 	public boolean registrarInscripcionEd(String nick, String correo, String nomCurso, DtFecha fecha) throws InscripcionEdRepetido, UsuarioNoExiste, UsuarioNoEstudiante;
-	
-	public void modificarInscripcionEd(String nick, String correo, String nomCurso, DtFecha fecha);
-	
+		
 	public void limpiar();
 	
 	public void confirmar();

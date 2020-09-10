@@ -17,7 +17,7 @@ public class Estudiante extends Usuario {
 	
 	public boolean existeInscripcion(String nomEd) {
 		for(InscripcionEd i: inscripciones) {
-	    		if(i.getEdicion().getNombre()==nomEd) {
+	    		if(i.getEdicion().getNombre().equals(nomEd)) {
 	    			return true;
 	    		}
 	    }
