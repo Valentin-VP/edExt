@@ -16,7 +16,7 @@ import excepciones.UsuarioNoExiste;
 public interface IControladorInscripcionEdicionCurso {
 	public ArrayList<DtInstituto> listarInstitutos() throws SinInstitutos;
 	
-	public ArrayList<DtCursoBase> seleccionarInstituto(String nomIns) throws CursoNoExiste;
+	public ArrayList<DtCursoBase> seleccionarInstituto(String nomIns) throws CursoNoExiste, SinInstitutos;
 	
 	public DtEdicionBase seleccionarCurso(String nomCurso) throws EdicionVigenteNoExiste;
 	
