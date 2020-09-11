@@ -92,7 +92,7 @@ public class Principal {
 		altaProgFormacionInternalFrame.setLocation(188, 105);
 		frame.getContentPane().add(infoEdicionCursoInternalFrame);
 		
-		infoCursoInternalFrame = new InfoCurso(fabrica.getIControladorConsultaCurso());
+		infoCursoInternalFrame = new InfoCurso(fabrica.getIControladorConsultaCurso(),infoEdicionCursoInternalFrame);
 		infoCursoInternalFrame.setLocation(188, 105);
 		frame.getContentPane().add(infoCursoInternalFrame);
 	}
@@ -158,6 +158,7 @@ public class Principal {
 		mntmEdicionDeCurso.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				infoEdicionCursoInternalFrame.setVisible(true);
+				infoEdicionCursoInternalFrame.desOcultar();
 			}
 		});
 		mnInformacin.add(mntmEdicionDeCurso);
