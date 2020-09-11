@@ -25,8 +25,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class InscripcionEdicionCurso extends JInternalFrame {
 
@@ -50,22 +48,22 @@ public class InscripcionEdicionCurso extends JInternalFrame {
 		setBounds(100, 100, 343, 384);
 		
 		comboBoxIns = new JComboBox<String>();
-		comboBoxIns.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				
+		comboBoxIns.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			
+				ArrayList<DtCursoBase> cursos = new ArrayList<>();
+				DefaultComboBoxModel<String> dml= new DefaultComboBoxModel<String>();
 				try {
-					ArrayList<DtCursoBase> cursos = icon.seleccionarInstituto(comboBoxIns.getSelectedItem().toString());
-					DefaultComboBoxModel<String> dml= new DefaultComboBoxModel<String>();
-					for (int i = 0; i < cursos.size(); i++) {
-					  dml.addElement(cursos.get(i).getNombre());
-					}
-					comboBoxCur.setModel(dml);
-					
-				} catch (CursoNoExiste n) {
+					cursos = icon.seleccionarInstituto(comboBoxIns.getSelectedItem().toString());
+				} catch (SinInstitutos | CursoNoExiste n) {
 					JOptionPane.showMessageDialog(null, n.getMessage(), "Inscripcion Edicion Curso", JOptionPane.ERROR_MESSAGE);
 				}
-					
+				
+				for (int i = 0; i < cursos.size(); i++) {
+					dml.addElement(cursos.get(i).getNombre());
+				}
+				comboBoxCur.setModel(dml);
+				
 			}
 		});
 		comboBoxIns.setBounds(53, 48, 168, 20);
@@ -73,9 +71,8 @@ public class InscripcionEdicionCurso extends JInternalFrame {
 		getContentPane().add(comboBoxIns);
 		
 		comboBoxCur = new JComboBox<String>();
-		comboBoxCur.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
+		comboBoxCur.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				
 				textFieldEd.setText("");
 				try {
@@ -91,8 +88,8 @@ public class InscripcionEdicionCurso extends JInternalFrame {
 					
 				}catch(EdicionVigenteNoExiste ev) {
 					JOptionPane.showMessageDialog(null, ev.getMessage(), "Inscripcion Edicion Curso", JOptionPane.ERROR_MESSAGE);
-				}
-				
+				}	
+			
 			}
 		});
 		comboBoxCur.setBounds(53, 104, 168, 20);
@@ -123,8 +120,8 @@ public class InscripcionEdicionCurso extends JInternalFrame {
 		JButton btnNewButton = new JButton("Aceptar");
 		btnNewButton.setBounds(173, 301, 89, 23);
 		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent ea) {
-				InscripcionEdicionCursoAceptarActionPerformed(ea);
+			public void actionPerformed(ActionEvent e) {
+				InscripcionEdicionCursoAceptarActionPerformed(e);
 				setVisible(false);
 				icon.limpiar();
 				limpiar();
@@ -136,8 +133,8 @@ public class InscripcionEdicionCurso extends JInternalFrame {
 		btnNewButton_1.setBounds(43, 301, 89, 23);
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				icon.limpiar();
 				setVisible(false);
+				icon.limpiar();
 				limpiar();
 			}
 		});
@@ -159,7 +156,7 @@ public class InscripcionEdicionCurso extends JInternalFrame {
 		
 	}
 	
-	private void InscripcionEdicionCursoAceptarActionPerformed(ActionEvent ea) {
+	private void InscripcionEdicionCursoAceptarActionPerformed(ActionEvent e) {
 		
 		if (checkeo(textFieldEst.getText(),textFieldCorreo.getText(),textFieldEd.getText())) {
 			LocalDate date = LocalDate.now();
@@ -188,8 +185,8 @@ public class InscripcionEdicionCurso extends JInternalFrame {
 	}
 	
 	private void limpiar() {
-		comboBoxIns.removeAllItems();
-		comboBoxCur.removeAllItems();
+		//comboBoxIns.removeAllItems();
+		//comboBoxCur.removeAllItems();
 		textFieldEd.setText("");
 		textFieldEst.setText("");
 		textFieldCorreo.setText("");

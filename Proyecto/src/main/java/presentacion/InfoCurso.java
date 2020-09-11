@@ -5,6 +5,8 @@ import java.awt.EventQueue;
 import javax.swing.JInternalFrame;
 
 import interfaces.IControladorConsultaCurso;
+import interfaces.IControladorConsultaEdicionCurso;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -57,7 +59,7 @@ public class InfoCurso extends JInternalFrame {
 	private InfoEdicionCurso infoEdicionCursoInternalFrame;
 	
 	
-	public InfoCurso(IControladorConsultaCurso icon) {
+	public InfoCurso(IControladorConsultaCurso icon, InfoEdicionCurso infoEdicionCursoInternalFrame) {
 		this.icon=icon;
         setResizable(true);
         setIconifiable(true);
@@ -224,6 +226,8 @@ public class InfoCurso extends JInternalFrame {
 		edicionButton = new JButton("Seleccionar");
 		edicionButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				infoEdicionCursoInternalFrame.mostrarDos(institutoseleccionado, cursoseleccionado, edicionseleccionada);
+				limpiar();
 				//infoEdicionCursoInternalFrame.detallesEdicionCurso(edicionseleccionada); // <----- Llamada a mostrar EdicionCurso
 			}
 		});
@@ -247,6 +251,9 @@ public class InfoCurso extends JInternalFrame {
 	
 	public void cargarInstitutos() {
 		ArrayList<String> institutos = new ArrayList<String>();
+		cursoButton.setVisible(true);
+		edicionButton.setVisible(true);
+		programaButton.setVisible(true);
 		try {
 			for(DtInstituto dti: icon.listarInstitutos()) {
 					String item = dti.getNombre();
@@ -341,6 +348,8 @@ public class InfoCurso extends JInternalFrame {
 		programaLabel.setEnabled(false);
 		institutoButton.setEnabled(false);
 		cursoButton.setEnabled(false);
+//		cursoButton.setVisible(false);
+//		edicionButton.setVisible(false);
 		edicionButton.setEnabled(false);
 		programaButton.setEnabled(false);
 		scrollPane.setEnabled(false);

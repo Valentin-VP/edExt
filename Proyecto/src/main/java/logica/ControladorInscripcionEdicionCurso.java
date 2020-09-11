@@ -44,10 +44,13 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 	}
 
 	@Override
-	public ArrayList<DtCursoBase> seleccionarInstituto(String nomIns) throws CursoNoExiste{
+	public ArrayList<DtCursoBase> seleccionarInstituto(String nomIns) throws CursoNoExiste, SinInstitutos{
 		ArrayList <DtCursoBase> cursosinstituto = new ArrayList<DtCursoBase>();
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 		Instituto ins = mI.find(nomIns);
+		if (ins == null) {
+			throw new SinInstitutos("No hay institutos ingresados");
+		}
 		this.nomIns = ins.getNombre();
 		ArrayList <Curso> cursos = ins.getCursos();
 		if (cursos.isEmpty()) {
@@ -58,6 +61,7 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 			cursosinstituto.add(dtcb);
 		}
 		return cursosinstituto;
+		
 	}
 
 	@Override

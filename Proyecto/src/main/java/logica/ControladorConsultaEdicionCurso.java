@@ -92,11 +92,11 @@ public class ControladorConsultaEdicionCurso implements IControladorConsultaEdic
 		this.curso = curso;
 	}
 	
-	public DtEdicion getDtEdicion() {
+	public DtEdicion getDtEdicion(String instituto, String curso, String edicion) {
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
-		Instituto i= mI.find(this.instituto);
-		Curso c = i.findCurso(this.curso);
-		Edicion e = c.findEdicion(this.edicion);
+		Instituto i= mI.find(instituto);
+		Curso c = i.findCurso(curso);
+		Edicion e = c.findEdicion(edicion);
 		return e.getDtEdicion();
 	}
 	@Override

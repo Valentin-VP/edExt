@@ -27,6 +27,9 @@ import javax.swing.JList;
 
 
 public class InfoEdicionCurso2 extends JPanel {
+
+	private static final long serialVersionUID = 1L;
+
 	private IControladorConsultaEdicionCurso icon;
 	
 	private JEditorPane nombre;
@@ -106,8 +109,8 @@ public class InfoEdicionCurso2 extends JPanel {
 		
 	}
 	
-	public void mostrarDatos() {
-		DtEdicion dtE = icon.getDtEdicion();
+	public void mostrarDatos(String instituto, String curso, String edicion) {
+		DtEdicion dtE = icon.getDtEdicion(instituto, curso, edicion);
 		DtFecha fi = dtE.getFechaI();
 		DtFecha ff = dtE.getFechaF();
 		DtFecha fp = dtE.getFechaPub();
