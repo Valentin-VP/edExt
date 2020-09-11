@@ -41,11 +41,17 @@ public class InfoEdicionCurso extends JInternalFrame {
 	private static final long serialVersionUID = 1L;
 
     private IControladorConsultaEdicionCurso icon;
-	
+	private JButton atras;
+	private JButton cerrarDesdeInfoCursoButton;
+    
+    public InfoEdicionCurso2 getInfoEdicionCurso2() {
+    	return this.infoEdicionCurso2Panel;
+    }
+    
 	public InfoEdicionCurso(IControladorConsultaEdicionCurso icon) {
 		this.icon = icon;
 		infoEdicionCurso2Panel = new InfoEdicionCurso2(icon);
-		infoEdicionCurso2Panel.setBounds(0, 0, 477, 494);
+		infoEdicionCurso2Panel.setBounds(0, 0, 493, 524);
 		this.getContentPane().add(infoEdicionCurso2Panel);
 		infoEdicionCurso2Panel.setVisible(false);
 		
@@ -114,6 +120,8 @@ public class InfoEdicionCurso extends JInternalFrame {
         	@Override
         	public void mouseClicked(MouseEvent me2) {
         		icon.setEdicion(listEdiciones.getSelectedValue().toString());
+        		atras.setEnabled(true);
+        		atras.setVisible(true);
         		ocultar();
         		infoEdicionCurso2Panel.mostrarDatos(icon.getInstituto(), icon.getCurso(), icon.getEdicion());
         	}
@@ -121,7 +129,7 @@ public class InfoEdicionCurso extends JInternalFrame {
         listEdiciones.setBounds(267, 164, 180, 319);
         getContentPane().add(listEdiciones);
         
-        JButton atras = new JButton("Atras");
+        atras = new JButton("Atras");
     	atras.addActionListener(new ActionListener() {
     		public void actionPerformed(ActionEvent atras) {
     			infoEdicionCurso2Panel.setVisible(false);
@@ -131,6 +139,15 @@ public class InfoEdicionCurso extends JInternalFrame {
     	});
     	atras.setBounds(10, 11, 89, 23);
     	infoEdicionCurso2Panel.add(atras);
+    	
+    	cerrarDesdeInfoCursoButton = new JButton("Cerrar");
+    	cerrarDesdeInfoCursoButton.addActionListener(new ActionListener() {
+    		public void actionPerformed(ActionEvent arg0) {
+    			cerrarDos();
+    		}
+    	});
+    	cerrarDesdeInfoCursoButton.setBounds(370, 455, 97, 25);
+    	infoEdicionCurso2Panel.add(cerrarDesdeInfoCursoButton);
         
 	}
 	
@@ -186,17 +203,30 @@ public class InfoEdicionCurso extends JInternalFrame {
 		listEdiciones.setVisible(false);
 	}
 	
-	private void desOcultar() {
+	void desOcultar() {
 		nombreInstituto.setVisible(true);
 		btnNewButton.setVisible(true);
 		cancelar.setVisible(true);
 		listCursos.setVisible(true);
 		listEdiciones.setVisible(true);
 	}
+	
+	public void mostrarDos(String institutoseleccionado, String cursoseleccionado, String edicionseleccionada) {
+		ocultar();
+		setVisible(true);
+		infoEdicionCurso2Panel.mostrarDatos(institutoseleccionado, cursoseleccionado, edicionseleccionada);
+		cerrarDesdeInfoCursoButton.setVisible(true);
+		atras.setVisible(false);
+		atras.setEnabled(false);
+	}
+	
+	public void cerrarDos() {
+		setVisible(false);
+		cerrarDesdeInfoCursoButton.setVisible(false);
+		infoEdicionCurso2Panel.setVisible(false);
+		infoEdicionCurso2Panel.limpiar();
+	}
 }
-
-
-
 
 
 
