@@ -287,8 +287,8 @@ public class AgregarCurso extends JInternalFrame {
 				JOptionPane.showMessageDialog(this, "Valor incorrecto en creditos", "Alta Curso", JOptionPane.ERROR_MESSAGE);
 				return false;
 			}
-			int duracionint = Integer.parseInt(duracion);
-			if(cantHoras == 0 || creditos == 0 || duracionint == 0) {
+			//int duracionint = Integer.parseInt(duracion);
+			if(cantHoras == 0 || creditos == 0) {
 				JOptionPane.showMessageDialog(this, "No se permiten valores iguales a 0", "Alta Curso", 
 				JOptionPane.ERROR_MESSAGE);
 				return false;
