@@ -1,8 +1,7 @@
 package datatypes;
 
-import java.util.*;
-
-import datatypes.DtCursoBase;
+import java.util.ArrayList;
+import java.util.Date;
 
 public class DtPrograma extends DtProgramaBase{
 	private String desc;

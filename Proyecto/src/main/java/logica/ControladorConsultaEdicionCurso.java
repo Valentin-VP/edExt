@@ -1,13 +1,11 @@
 package logica;
 
-import java.util.*;
+import java.util.ArrayList;
 import datatypes.DtCursoBase;
 import datatypes.DtEdicion;
 import datatypes.DtEdicionBase;
 import interfaces.IControladorConsultaEdicionCurso;
-import logica.ManejadorInstituto;
 import excepciones.CursoNoExiste;
-import excepciones.EdicionNoExiste;
 import excepciones.InstitutoInexistente;
 
 public class ControladorConsultaEdicionCurso implements IControladorConsultaEdicionCurso {

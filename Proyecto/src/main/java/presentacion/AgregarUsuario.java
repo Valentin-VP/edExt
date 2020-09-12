@@ -1,33 +1,20 @@
 package presentacion;
 
-//import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
-
 import interfaces.IControladorAltaUsuario;
 import logica.Instituto;
-
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
-//import javax.swing.JToggleButton;
-
 import excepciones.UsuarioRepetido;
-
 import datatypes.DtFecha;
-
 import javax.swing.JButton;
 import javax.swing.JRadioButton;
-//import javax.swing.JSpinner;
-//import javax.swing.SpinnerNumberModel;
-//import java.awt.Choice;
-//import javax.swing.JPasswordField;
-
 
 public class AgregarUsuario extends JInternalFrame {
 	
@@ -44,7 +31,6 @@ public class AgregarUsuario extends JInternalFrame {
 	private JComboBox<String> comboBoxInstitutos;
 	private JRadioButton DocenteSi;
 	
-
 	public AgregarUsuario(IControladorAltaUsuario icon) {
 		this.icon = icon;
         setResizable(true);

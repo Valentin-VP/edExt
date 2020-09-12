@@ -2,15 +2,12 @@ package presentacion;
 
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
-
 import interfaces.IControladorAltaProgFormacion;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-
 import datatypes.DtFecha;
 import excepciones.ProgramaRepetido;
-
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;

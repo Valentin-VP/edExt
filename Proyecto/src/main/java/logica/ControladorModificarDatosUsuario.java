@@ -1,6 +1,6 @@
 package logica;
 
-import java.util.*;
+import java.util.ArrayList;
 import datatypes.DtFecha;
 import datatypes.DtUsuario;
 import datatypes.DtUsuarioBase;
@@ -12,10 +12,34 @@ public class ControladorModificarDatosUsuario implements IControladorModificarDa
 	private String apellido;
 	private DtFecha fechaNac;
 	
+	public String getUsuario() {
+		return usuario;
+	}
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
+	}
+	public String getNombre() {
+		return nombre;
+	}
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+	public String getApellido() {
+		return apellido;
+	}
+	public void setApellido(String apellido) {
+		this.apellido = apellido;
+	}
+	public DtFecha getFechaNac() {
+		return fechaNac;
+	}
+	public void setFechaNac(DtFecha fechaNac) {
+		this.fechaNac = fechaNac;
+	}
 	@Override
 	public ArrayList<DtUsuarioBase> mostrarUsuarios() {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
-		ArrayList<DtUsuarioBase> usuarios = null;
+		ArrayList<DtUsuarioBase> usuarios = new ArrayList<DtUsuarioBase>();
 		for (Usuario u: mU.getUsuarios()) {
 			DtUsuarioBase dtUsuarioBase = new DtUsuarioBase(u.getNick(), u.getCorreo());
 			usuarios.add(dtUsuarioBase);
@@ -30,15 +54,15 @@ public class ControladorModificarDatosUsuario implements IControladorModificarDa
 	}
 	@Override
 	public void editarNombre(String nuevoNombre) {
-		this.nombre = nuevoNombre;//??
+		this.setNombre(nuevoNombre);//??
 	}
 	@Override
 	public void editarApellido(String nuevoApellido) {
-		this.apellido = nuevoApellido;//??
+		this.setApellido(nuevoApellido);//??
 	}
 	@Override
 	public void editarFNac(DtFecha nuevaFecha) {
-		this.fechaNac = nuevaFecha;//??
+		this.setFechaNac(nuevaFecha);//??
 	}
 	
 }

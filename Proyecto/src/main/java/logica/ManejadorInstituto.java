@@ -1,9 +1,7 @@
 package logica;
 
 import java.util.ArrayList;
-
 import datatypes.DtInstituto;
-
 
 public class ManejadorInstituto {
     private static ManejadorInstituto instancia;

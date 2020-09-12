@@ -3,7 +3,6 @@ package logica;
 import java.util.ArrayList;
 import datatypes.DtEdicion;
 import excepciones.EdicionRepetida;
-import excepciones.EdicionSinCupos;
 import excepciones.CursoNoExiste;
 import excepciones.DocenteDeOtroInstituto;
 import excepciones.DocenteYaAgregado;
@@ -22,6 +21,38 @@ public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso
 	private Integer cupos;//no lo uso
 	private DtEdicion dtEdi;
 	
+	public String getCurso() {
+		return curso;
+	}
+
+	public void setCurso(String curso) {
+		this.curso = curso;
+	}
+
+	public boolean isTieneCupos() {
+		return tieneCupos;
+	}
+
+	public void setTieneCupos(boolean tieneCupos) {
+		this.tieneCupos = tieneCupos;
+	}
+
+	public Integer getCupos() {
+		return cupos;
+	}
+
+	public void setCupos(Integer cupos) {
+		this.cupos = cupos;
+	}
+
+	public DtEdicion getDtEdi() {
+		return dtEdi;
+	}
+
+	public void setDtEdi(DtEdicion dtEdi) {
+		this.dtEdi = dtEdi;
+	}
+
 	@Override
 	public ArrayList<DtCursoBase> seleccionarInstituto(String instituto) throws InstitutoInexistente {
 		ArrayList <DtCursoBase> cursosinstituto = new ArrayList <DtCursoBase>();

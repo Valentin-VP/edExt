@@ -1,9 +1,6 @@
 package logica;
 
 import java.util.ArrayList;
-import java.util.List;
-import datatypes.DtFecha;
-import datatypes.DtTime;
 
 public class ManejadorCurso {
 	private static ManejadorCurso instancia = null;

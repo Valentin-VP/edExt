@@ -1,6 +1,5 @@
 package interfaces;
 
-
 public interface IControladorConsultaUsuario {
 	public void listarUsuarios();
 	

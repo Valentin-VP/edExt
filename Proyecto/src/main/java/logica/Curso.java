@@ -4,7 +4,7 @@ import datatypes.DtFecha;
 import datatypes.DtEdicionBase;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
 
 public class Curso {
 	private String nombre;

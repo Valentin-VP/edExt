@@ -1,6 +1,6 @@
 package logica;
 
-import java.util.*;
+import java.util.ArrayList;
 
 public class ManejadorProgFormacion {
 	private static ManejadorProgFormacion instancia;
@@ -44,6 +44,5 @@ public class ManejadorProgFormacion {
 	public void setProgramas(ArrayList<ProgFormacion> programas) {
 		this.programas = programas;
 	}
-
 
 }

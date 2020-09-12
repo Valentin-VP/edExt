@@ -1,19 +1,12 @@
 package presentacion;
 
-import java.awt.EventQueue;
-
 import javax.swing.JInternalFrame;
-
 import interfaces.IControladorConsultaCurso;
-import interfaces.IControladorConsultaEdicionCurso;
-
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
 import java.awt.Font;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import javax.swing.DefaultButtonModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
@@ -58,7 +51,6 @@ public class InfoCurso extends JInternalFrame {
 	private String programaseleccionado; // *Next Release
 	private InfoEdicionCurso infoEdicionCursoInternalFrame;
 	
-	
 	public InfoCurso(IControladorConsultaCurso icon, InfoEdicionCurso infoEdicionCursoInternalFrame) {
 		this.icon=icon;
         setResizable(true);
@@ -78,7 +70,7 @@ public class InfoCurso extends JInternalFrame {
 		InstitutoComboBox = new JComboBox<String>();
 		InstitutoComboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JComboBox cb = (JComboBox)e.getSource();
+				JComboBox<?> cb = (JComboBox<?>)e.getSource();
 		        institutoseleccionado = (String)cb.getSelectedItem().toString();
 		        institutoButton.setEnabled(true);
 		        cursoLabel.setEnabled(false);
@@ -130,7 +122,7 @@ public class InfoCurso extends JInternalFrame {
 		cursoComboBox = new JComboBox<String>();
 		cursoComboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JComboBox cb = (JComboBox)e.getSource();
+				JComboBox<?> cb = (JComboBox<?>)e.getSource();
 		        cursoseleccionado = (String)cb.getSelectedItem().toString();
 		        cursoButton.setEnabled(true);
 		        scrollPane.setEnabled(false);
@@ -187,11 +179,11 @@ public class InfoCurso extends JInternalFrame {
 		programaButton.setBounds(223, 302, 99, 25);
 		getContentPane().add(programaButton);
 		
-		programaComboBox = new JComboBox();
+		programaComboBox = new JComboBox<String>();
 		programaComboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JComboBox cb = (JComboBox)e.getSource();
-		        programaseleccionado = (String)cb.getSelectedItem().toString();
+				JComboBox<?> cb = (JComboBox<?>)e.getSource();
+		        setProgramaseleccionado((String)cb.getSelectedItem().toString());
 		        programaButton.setEnabled(true);
 			}
 		});
@@ -211,10 +203,10 @@ public class InfoCurso extends JInternalFrame {
 		edicionLabel.setBounds(12, 269, 63, 20);
 		getContentPane().add(edicionLabel);
 		
-		edicionComboBox = new JComboBox();
+		edicionComboBox = new JComboBox<String>();
 		edicionComboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JComboBox cb = (JComboBox)e.getSource();
+				JComboBox<?> cb = (JComboBox<?>)e.getSource();
 		        edicionseleccionada = (String)cb.getSelectedItem().toString();
 		        edicionButton.setEnabled(true);
 			}
@@ -249,6 +241,22 @@ public class InfoCurso extends JInternalFrame {
 		
 	}
 	
+	public String getProgramaseleccionado() {
+		return programaseleccionado;
+	}
+
+	public void setProgramaseleccionado(String programaseleccionado) {
+		this.programaseleccionado = programaseleccionado;
+	}
+
+	public InfoEdicionCurso getInfoEdicionCursoInternalFrame() {
+		return infoEdicionCursoInternalFrame;
+	}
+
+	public void setInfoEdicionCursoInternalFrame(InfoEdicionCurso infoEdicionCursoInternalFrame) {
+		this.infoEdicionCursoInternalFrame = infoEdicionCursoInternalFrame;
+	}
+
 	public void cargarInstitutos() {
 		ArrayList<String> institutos = new ArrayList<String>();
 		cursoButton.setVisible(true);
@@ -357,12 +365,12 @@ public class InfoCurso extends JInternalFrame {
 		institutoseleccionado = "";
 		cursoseleccionado = "";
 		edicionseleccionada = "";
-		programaseleccionado = "";
+		setProgramaseleccionado("");
 				
 	}
 	
 	public void giveAccess(InfoEdicionCurso infoEdicionCursoInternalFrame) {
-		this.infoEdicionCursoInternalFrame = infoEdicionCursoInternalFrame;
+		this.setInfoEdicionCursoInternalFrame(infoEdicionCursoInternalFrame);
 	}
 
 }

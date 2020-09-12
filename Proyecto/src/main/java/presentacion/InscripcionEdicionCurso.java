@@ -50,20 +50,9 @@ public class InscripcionEdicionCurso extends JInternalFrame {
 		comboBoxIns = new JComboBox<String>();
 		comboBoxIns.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			
-				ArrayList<DtCursoBase> cursos = new ArrayList<>();
-				DefaultComboBoxModel<String> dml= new DefaultComboBoxModel<String>();
-				try {
-					cursos = icon.seleccionarInstituto(comboBoxIns.getSelectedItem().toString());
-				} catch (SinInstitutos | CursoNoExiste n) {
-					JOptionPane.showMessageDialog(null, n.getMessage(), "Inscripcion Edicion Curso", JOptionPane.ERROR_MESSAGE);
-				}
-				
-				for (int i = 0; i < cursos.size(); i++) {
-					dml.addElement(cursos.get(i).getNombre());
-				}
-				comboBoxCur.setModel(dml);
-				
+				DefaultComboBoxModel<String> cursoNombre = new DefaultComboBoxModel<String>();
+				comboBoxCur.setModel(cursoNombre);
+				cargarCursosComboBoxInstitutos(e);
 			}
 		});
 		comboBoxIns.setBounds(53, 48, 168, 20);
@@ -73,23 +62,9 @@ public class InscripcionEdicionCurso extends JInternalFrame {
 		comboBoxCur = new JComboBox<String>();
 		comboBoxCur.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				textFieldEd.setText("");
-				try {
-					
-					DtEdicionBase dteb = icon.seleccionarCurso(comboBoxCur.getSelectedItem().toString());
-					if (dteb == null) {
-						JOptionPane.showInternalConfirmDialog(null, "Este curso no tiene edicion vigente, seleccione otro", "Edicion vigente",
-					             JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE);
-					} else {
-						
-						textFieldEd.setText(dteb.getNombre());
-					}
-					
-				}catch(EdicionVigenteNoExiste ev) {
-					JOptionPane.showMessageDialog(null, ev.getMessage(), "Inscripcion Edicion Curso", JOptionPane.ERROR_MESSAGE);
-				}	
-			
+				//DefaultComboBoxModel<String> cursoNombre = new DefaultComboBoxModel<String>();
+				//comboBoxCur.setModel(cursoNombre);
+				cargarEdicionVigenteComboBoxCursos();
 			}
 		});
 		comboBoxCur.setBounds(53, 104, 168, 20);
@@ -156,6 +131,58 @@ public class InscripcionEdicionCurso extends JInternalFrame {
 		
 	}
 	
+	private void cargarCursosComboBoxInstitutos(ActionEvent e) {
+
+		String instituto = comboBoxIns.getSelectedItem().toString();
+		
+		ArrayList<DtCursoBase> cursos = new ArrayList<>();
+		
+		try {
+			cursos = icon.seleccionarInstituto(instituto);
+			
+		} catch (SinInstitutos | CursoNoExiste n) {
+			JOptionPane.showMessageDialog(this, n.getMessage(), "Inscripcion Edicion Curso", JOptionPane.ERROR_MESSAGE);
+		}
+	
+		String[] array = new String[cursos.size()];
+		int p = 0;
+		for (DtCursoBase c: cursos) {
+			array[p] = c.getNombre();
+			p++;
+		}
+		
+		//DefaultComboBoxModel<String> dml= new DefaultComboBoxModel<String>();
+		
+		//for (int i = 0; i < cursos.size(); i++) {
+			//dml.addElement(cursos.get(i).getNombre());
+		//}
+		
+		for (int i = 0; i < cursos.size(); i++) {
+			comboBoxCur.addItem(array[i]);
+		}
+		
+		//comboBoxCur.setEnabled(true);
+		//comboBoxCur.setModel(dml);
+		
+	}
+	
+	private void cargarEdicionVigenteComboBoxCursos() {
+		textFieldEd.setText("");
+		try {
+			
+			DtEdicionBase dteb = icon.seleccionarCurso(comboBoxCur.getSelectedItem().toString());
+			if (dteb == null) {
+				JOptionPane.showInternalConfirmDialog(null, "Este curso no tiene edicion vigente, seleccione otro", "Edicion vigente",
+			             JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE);
+			} else {
+				textFieldEd.setText(dteb.getNombre());
+			}
+			
+		}catch(EdicionVigenteNoExiste ev) {
+			JOptionPane.showMessageDialog(null, ev.getMessage(), "Inscripcion Edicion Curso", JOptionPane.ERROR_MESSAGE);
+		}	
+	}
+	
 	private void InscripcionEdicionCursoAceptarActionPerformed(ActionEvent e) {
 		
 		if (checkeo(textFieldEst.getText(),textFieldCorreo.getText(),textFieldEd.getText())) {
@@ -187,12 +214,16 @@ public class InscripcionEdicionCurso extends JInternalFrame {
 	private void limpiar() {
 		//comboBoxIns.removeAllItems();
 		//comboBoxCur.removeAllItems();
+		DefaultComboBoxModel<String> institutos = new DefaultComboBoxModel<String>();
+		comboBoxIns.setModel(institutos);
+		DefaultComboBoxModel<String> cursos = new DefaultComboBoxModel<String>();
+		comboBoxCur.setModel(cursos);
 		textFieldEd.setText("");
 		textFieldEst.setText("");
 		textFieldCorreo.setText("");
 	}
 	
-	public void inicializarComboBoxsInscripcionEdicion() {
+	public void inicializarComboBoxInstitutosInscripcionEdicion() {
 		
 		try {
 			ArrayList<DtInstituto> institutos = icon.listarInstitutos();

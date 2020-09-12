@@ -1,6 +1,5 @@
 package logica;
 
-import java.util.ArrayList;
 import datatypes.DtFecha;
 import datatypes.DtUsuario;
 
@@ -10,7 +9,6 @@ public class Usuario {
 	private String apellido;
 	private String correo;
 	private DtFecha fechaNac;
-	
 	
 	public Usuario(String nick, String nombre, String apellido, String correo, DtFecha fechaNac) {
 		super();

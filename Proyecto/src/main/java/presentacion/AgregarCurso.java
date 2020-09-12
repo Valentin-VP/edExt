@@ -1,26 +1,16 @@
 package presentacion;
 
-import java.awt.EventQueue;
-
-
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
 import java.awt.Font;
 import javax.swing.JTextField;
 
-import datatypes.DtCurso;
 import datatypes.DtCursoBase;
 import datatypes.DtFecha;
-import datatypes.DtTime;
-import interfaces.IControladorAltaUsuario;
 import interfaces.IControladorConsultaCurso;
-
-import javax.swing.JSeparator;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -31,21 +21,16 @@ import excepciones.InstitutoInexistente;
 import excepciones.InstitutoSinCursos;
 import excepciones.CursoRepetido;
 import javax.swing.JRadioButton;
-import javax.swing.JPanel;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
-import javax.swing.ListModel;
 import javax.swing.DefaultListModel;
 import java.awt.Component;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.event.ListSelectionEvent;
 
 public class AgregarCurso extends JInternalFrame {
 	
 	private static final long serialVersionUID = 1L;
 	
 	private IControladorAltaCurso icon;
-	private IControladorConsultaCurso iconaux;
 	private JTextField altaCursoInstitutotextField;
 	private JTextField altaCursoNombretextField;
 	private JTextField altaCursoDescripciontextField;

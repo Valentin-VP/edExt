@@ -1,7 +1,6 @@
 package interfaces;
 
-import java.util.*;
-
+import java.util.ArrayList;
 import datatypes.DtCursoBase;
 import datatypes.DtProgramaBase;
 

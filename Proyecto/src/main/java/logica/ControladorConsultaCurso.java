@@ -1,6 +1,6 @@
 package logica;
 
-import java.util.*;
+import java.util.ArrayList;
 
 import datatypes.DtCurso;
 import datatypes.DtCursoBase;

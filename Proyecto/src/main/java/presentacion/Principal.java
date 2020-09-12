@@ -170,7 +170,7 @@ public class Principal {
 		mntmNewMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				inscripcionEdicionCursoInternalFrame.setVisible(true);
-				inscripcionEdicionCursoInternalFrame.inicializarComboBoxsInscripcionEdicion();
+				inscripcionEdicionCursoInternalFrame.inicializarComboBoxInstitutosInscripcionEdicion();
 			}
 		});
 		mnNewMenu.add(mntmNewMenuItem);

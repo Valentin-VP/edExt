@@ -1,7 +1,5 @@
 package presentacion;
 
-
-
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
@@ -10,9 +8,7 @@ import interfaces.IControladorAltaEdicionCurso;
 import javax.swing.JComboBox;
 import java.awt.Font;
 import javax.swing.JRadioButton;
-import javax.swing.SwingConstants;
 import datatypes.DtFecha;
-import datatypes.DtUsuarioBase;
 import datatypes.DtCursoBase;
 import excepciones.CursoNoExiste;
 import excepciones.DocenteDeOtroInstituto;
@@ -21,7 +17,6 @@ import excepciones.EdicionRepetida;
 import excepciones.InstitutoInexistente;
 import excepciones.UsuarioNoDocente;
 import excepciones.UsuarioNoExiste;
-
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
@@ -29,8 +24,6 @@ import javax.swing.JOptionPane;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.Color;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class AgregarEdicionCurso extends JInternalFrame {
 	

@@ -1,6 +1,6 @@
 package interfaces;
 
-import java.util.*;
+import java.util.ArrayList;
 import datatypes.DtInstituto;
 import excepciones.InstitutoInexistente;
 import excepciones.InstitutoSinCursos;

@@ -1,9 +1,7 @@
 package interfaces;
 
 import java.util.ArrayList;
-
 import datatypes.DtFecha;
-//import logica.Instituto;
 import excepciones.UsuarioRepetido;
 import logica.Instituto;
 

@@ -3,28 +3,15 @@ package presentacion;
 import javax.swing.JPanel;
 
 import datatypes.DtEdicion;
-import datatypes.DtEdicionBase;
 import datatypes.DtFecha;
 import interfaces.IControladorConsultaEdicionCurso;
 
 import javax.swing.DefaultListModel;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.awt.event.ActionEvent;
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
-import javax.swing.border.BevelBorder;
-import javax.swing.UIManager;
-import javax.swing.table.DefaultTableModel;
-import java.awt.Color;
 import java.awt.Font;
-import javax.swing.border.MatteBorder;
-import javax.swing.border.LineBorder;
 import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.JList;
-
 
 public class InfoEdicionCurso2 extends JPanel {
 

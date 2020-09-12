@@ -1,10 +1,9 @@
 package interfaces;
 
-import logica.Edicion;
 import datatypes.DtCursoBase;
 import datatypes.DtEdicionBase;
 import datatypes.DtEdicion;
-import java.util.*;
+import java.util.ArrayList;
 import excepciones.InstitutoInexistente;
 import excepciones.CursoNoExiste;
 

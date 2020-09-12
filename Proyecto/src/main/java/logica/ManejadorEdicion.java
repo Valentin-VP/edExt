@@ -1,8 +1,8 @@
 package logica;
 
-import java.util.*;
+import java.util.List;
+import java.util.ArrayList;
 import datatypes.DtFecha;
-
 
 public class ManejadorEdicion {
 	private static ManejadorEdicion instancia = null;

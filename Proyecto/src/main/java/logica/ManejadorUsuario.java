@@ -1,6 +1,6 @@
 package logica;
 
-import java.util.*;
+import java.util.ArrayList;
 
 public class ManejadorUsuario {
 	private static ManejadorUsuario instancia = null;

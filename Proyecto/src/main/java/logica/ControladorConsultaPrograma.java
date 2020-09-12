@@ -10,9 +10,20 @@ public class ControladorConsultaPrograma implements interfaces.IControladorConsu
 	private String programa;
 	private String curso;
 	
-	
 	public ControladorConsultaPrograma() {
 		super();
+	}
+	public String getPrograma() {
+		return programa;
+	}
+	public void setPrograma(String programa) {
+		this.programa = programa;
+	}
+	public String getCurso() {
+		return curso;
+	}
+	public void setCurso(String curso) {
+		this.curso = curso;
 	}
 	@Override
 	public ArrayList<DtProgramaBase> listarProgramas() {

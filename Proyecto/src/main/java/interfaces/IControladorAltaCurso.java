@@ -1,11 +1,8 @@
 package interfaces;
 
-import java.util.*;
-import datatypes.DtTime;
+import java.util.ArrayList;
 import excepciones.CursoRepetido;
 import excepciones.InstitutoInexistente;
-import logica.Curso;
-import datatypes.DtCurso;
 import datatypes.DtCursoBase;
 import datatypes.DtFecha;
 

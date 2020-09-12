@@ -13,6 +13,22 @@ public class ControladorAgregarCursoPrograma implements interfaces.IControladorA
 		super();
 	}
 	
+	public String getPrograma() {
+		return programa;
+	}
+
+	public void setPrograma(String programa) {
+		this.programa = programa;
+	}
+
+	public String getCurso() {
+		return curso;
+	}
+
+	public void setCurso(String curso) {
+		this.curso = curso;
+	}
+
 	@Override
 	public ArrayList<DtCursoBase> listarCursos() {
 		/*instanciar manejadorCursos
@@ -48,11 +64,11 @@ public class ControladorAgregarCursoPrograma implements interfaces.IControladorA
 
 	@Override
 	public void seleccionarPrograma(String programa) {
-		this.programa = programa;
+		this.setPrograma(programa);
 	}
 	@Override
 	public void seleccionarCurso(String curso) {
-		this.curso = curso;
+		this.setCurso(curso);
 		//agregar un confirmar/cancelar???
 		//crear el link desde Prog a Curso.
 	}

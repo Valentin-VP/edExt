@@ -1,7 +1,6 @@
 package logica;
 
 import java.util.ArrayList;
-
 import datatypes.DtFecha;
 import datatypes.DtProgramaBase;
 
