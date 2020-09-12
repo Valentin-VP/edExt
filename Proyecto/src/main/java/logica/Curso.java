@@ -16,9 +16,10 @@ public class Curso {
 	private String url;
 	private ArrayList<Curso> previas = new ArrayList<Curso>();
 	private ArrayList<Edicion> ediciones = new ArrayList<Edicion>();
+	private Instituto instituto;
 	
 	public Curso(String nombre, String descripcion, String duracion, int cantHoras, Integer creditos, DtFecha fechaR,
-			String url, ArrayList<Curso> previas) {
+			String url, ArrayList<Curso> previas,Instituto instituto) {
 		super();
 		this.nombre = nombre;
 		this.descripcion = descripcion;
@@ -28,6 +29,7 @@ public class Curso {
 		this.fechaR = fechaR;
 		this.url = url;
 		this.previas = previas;
+		this.setInstituto(instituto);
 	}
 	
 	public Edicion findEdicion(String edicion) {
@@ -154,6 +156,14 @@ public class Curso {
 			return false;
 		}
 		return true;
+	}
+
+	public Instituto getInstituto() {
+		return instituto;
+	}
+
+	public void setInstituto(Instituto instituto) {
+		this.instituto = instituto;
 	}
 	
 }

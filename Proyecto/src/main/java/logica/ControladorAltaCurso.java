@@ -122,7 +122,7 @@ public class ControladorAltaCurso implements IControladorAltaCurso{
 				}
 			}
 		}
-		Curso curso = new Curso(getNombre(), getDescripcion(), getDuracion(), getCantHoras(), getCreditos(), getFechaR(), getUrl(), previascursos);
+		Curso curso = new Curso(getNombre(), getDescripcion(), getDuracion(), getCantHoras(), getCreditos(), getFechaR(), getUrl(), previascursos, mI.find(this.instituto));
 		mI.find(this.instituto).agregarCurso(curso);
 		cancelarAltaCurso();
 	}
