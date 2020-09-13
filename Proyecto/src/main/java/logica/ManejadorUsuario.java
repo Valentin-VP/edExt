@@ -10,7 +10,6 @@ import persistencia.Conexion;
 
 public class ManejadorUsuario {
 	private static ManejadorUsuario instancia = null;
-	private List<Usuario> usuarios = new ArrayList<>();
 	
 	private ManejadorUsuario() {
 		super();
@@ -28,7 +27,7 @@ public class ManejadorUsuario {
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
 		
-		Query query = em.createQuery("select s from Socio s");
+		Query query = em.createQuery("select u from Usuario u");
 		List<Usuario> listUsuario = (List<Usuario>) query.getResultList();
 		return listUsuario;
 	}

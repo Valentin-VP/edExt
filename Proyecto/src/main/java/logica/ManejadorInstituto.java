@@ -12,7 +12,6 @@ import persistencia.Conexion;
 
 public class ManejadorInstituto {
     private static ManejadorInstituto instancia;
-    private List<Instituto> institutos = new ArrayList<Instituto>();
 
     private ManejadorInstituto() {}
     
@@ -23,6 +22,7 @@ public class ManejadorInstituto {
     }
     
     public boolean existeInstituto(String nombre) {
+    	List<Instituto> institutos = getInstitutos();
     	if(institutos!=null) {
     		for(Instituto i: institutos) {
         		if(i.getNombre().equals(nombre)) {
@@ -34,31 +34,38 @@ public class ManejadorInstituto {
     }
     
     public Instituto find(String nombre) { 
-    	Instituto aretornar = null;
-    	for(Instituto i: institutos) {
-    		if(i.getNombre().equals(nombre)) {
-    			aretornar=i;
-    		}
-    	}
-    	return aretornar;
+    	Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		
+		Instituto instituto = em.find(Instituto.class, nombre);
+		return instituto;
     }
 
-    public void agregarInstituto(String ins) {
-        Instituto i = new Instituto(ins);
-        institutos.add(i);
+    public void agregarInstituto(Instituto i) {
+    	Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		em.getTransaction().begin();
+		
+		em.persist(i);
+		
+		em.getTransaction().commit();
     }
 
 
     public List<Instituto> getInstitutos() {
-        return institutos;
+        
+    	Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		
+		Query query = em.createQuery("select i from Instituto i");
+		List<Instituto> listInstitutos = (List<Instituto>) query.getResultList();
+		return listInstitutos;
     }
 
-    public void setInstitutos(List<Instituto> institutos) {
-        this.institutos = institutos;
-    }
     
     public ArrayList<DtInstituto> getDtInstitutos() {
         ArrayList<DtInstituto> dtins = new ArrayList<DtInstituto>();
+        List<Instituto> institutos = getInstitutos();
     	for(int i=0; i < institutos.size();i++) {
         	DtInstituto dti = new DtInstituto(institutos.get(i).getNombre());
     		dtins.add(dti);
