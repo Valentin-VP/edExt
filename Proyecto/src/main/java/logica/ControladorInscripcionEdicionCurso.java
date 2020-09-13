@@ -116,9 +116,9 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 		Instituto ins = mI.find(nomIns);
 		Curso c = ins.findCurso(nomCurso);
 		Edicion ed = c.findEdicion(nombreEd);
-		InscripcionEd ie=new InscripcionEd(this.fecha,ed);
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		Usuario u = mU.getUsuario(this.nick, this.correo);
+		InscripcionEd ie=new InscripcionEd(this.fecha,ed,(Estudiante) u);
 		if(u instanceof Estudiante) {
 			((Estudiante) u).agregarInscripcionEd(ie);
 		}
