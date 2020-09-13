@@ -26,6 +26,7 @@ public class Curso {
 	private Integer creditos;
 	private Date fechaR;
 	private String url;
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<Curso> previas = new ArrayList<Curso>();
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<Edicion> ediciones = new ArrayList<Edicion>();
