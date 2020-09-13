@@ -85,10 +85,11 @@ public class Principal {
 		frame.getContentPane().add(altaProgFormacionInternalFrame);
 		
 		agregarEdicionCursoInternalFrame = new AgregarEdicionCurso(fabrica.getIControladorAltaEdicionCurso());
-		agregarEdicionCursoInternalFrame.setLocation(188, 105);
+		agregarEdicionCursoInternalFrame.setLocation(188, 70);
 		frame.getContentPane().add(agregarEdicionCursoInternalFrame);
 		
 		infoEdicionCursoInternalFrame = new InfoEdicionCurso(fabrica.getIControladorConsultaEdicionCurso());
+		infoEdicionCursoInternalFrame.setLocation(670, 100);
 		altaProgFormacionInternalFrame.setLocation(188, 105);
 		frame.getContentPane().add(infoEdicionCursoInternalFrame);
 		
