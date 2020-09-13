@@ -13,6 +13,8 @@ import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import excepciones.UsuarioRepetido;
 import datatypes.DtFecha;
+
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JRadioButton;
 
@@ -184,10 +186,15 @@ public class AgregarUsuario extends JInternalFrame {
 		DocenteSi.setSelected(false);
 		DocenteSi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				DocenteSi.setSelected(true);
-				comboBoxInstitutos.setEnabled(true);
-				DocenteSi.setEnabled(false);
-				agregarEdicionCursoCargarComboBox(arg0);
+				if(DocenteSi.isSelected()) {
+					comboBoxInstitutos.setEnabled(true);
+					agregarEdicionCursoCargarComboBox(arg0);
+				}
+				else {
+					comboBoxInstitutos.setEnabled(false);
+					DefaultComboBoxModel<String> emptycombo = new DefaultComboBoxModel<String>();
+					comboBoxInstitutos.setModel(emptycombo);
+				}				
 			}
 		});
 		DocenteSi.setBounds(165, 343, 59, 23);
@@ -195,6 +202,7 @@ public class AgregarUsuario extends JInternalFrame {
 		
 		comboBoxInstitutos = new JComboBox<String>();
 		comboBoxInstitutos.setBounds(254, 342, 145, 24);
+		comboBoxInstitutos.setEnabled(false);
 		getContentPane().add(comboBoxInstitutos);
 		
 		JButton btnCancelar = new JButton("Cancelar");
@@ -202,7 +210,6 @@ public class AgregarUsuario extends JInternalFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				limpiar();
 				DocenteSi.setSelected(false);
-				comboBoxInstitutos.setEnabled(true);
 				setVisible(false);
 			}
 		});
