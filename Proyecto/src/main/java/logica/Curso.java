@@ -140,7 +140,7 @@ public class Curso {
 	public DtEdicionBase getEdicionVigente() {
 		LocalDate date = LocalDate.now();
 		DtEdicionBase dteb=new DtEdicionBase();
-		for(int i=0;i < ediciones.size();i++) {
+		for(int i=ediciones.size()-1;i >= 0;i--) {
 			if (fechaValidaInicio(ediciones.get(i).convertToDtFecha(ediciones.get(i).getFechaI()),date) && fechaValidaFin(ediciones.get(i).convertToDtFecha(ediciones.get(i).getFechaF()),date)) {
 			dteb.setNombre(ediciones.get(i).getNombre());
 			return dteb;

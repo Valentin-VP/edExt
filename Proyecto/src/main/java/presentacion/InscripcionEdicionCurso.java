@@ -62,9 +62,9 @@ public class InscripcionEdicionCurso extends JInternalFrame {
 		getContentPane().add(comboBoxIns);
 		
 		comboBoxCur = new JComboBox<String>();
-		comboBoxCur.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent arg0) {
+		comboBoxCur.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
 				cargarEdicionVigenteComboBoxCursos();
 			}
 		});
