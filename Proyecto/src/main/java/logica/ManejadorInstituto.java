@@ -73,4 +73,14 @@ public class ManejadorInstituto {
     	return dtins;
     }
 
+    
+    public void agregarCurso(Curso c) {
+    	Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		em.getTransaction().begin();
+		
+		em.persist(c);
+		
+		em.getTransaction().commit();
+    }
 }

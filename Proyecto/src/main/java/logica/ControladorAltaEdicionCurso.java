@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+
 import datatypes.DtEdicion;
 import excepciones.EdicionRepetida;
 import excepciones.CursoNoExiste;
@@ -14,6 +16,7 @@ import datatypes.DtUsuarioBase;
 import datatypes.DtCursoBase;
 import datatypes.DtFecha;
 import interfaces.IControladorAltaEdicionCurso;
+import persistencia.Conexion;
 import excepciones.InstitutoInexistente;
 import excepciones.UsuarioNoDocente;
 import excepciones.UsuarioNoExiste;
@@ -103,6 +106,7 @@ public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso
 				}
 				// Agregar edicion al curso
 				i.findCurso(curso).addEdicion(edicion);
+				mI.agregarCurso(i.findCurso(curso)); // <------------------------
 			}
 			else {
 				throw new EdicionRepetida("La edicion " + nombre + " ya se encuentra integrada al curso:" + i.findCurso(curso).getNombre());
@@ -113,8 +117,17 @@ public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso
 		}
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		for(String user: docentes) {
+			
 			if (mU.findUsuario(user) instanceof Docente) {
 				((Docente) mU.findUsuario(user)).addDictaEdicion(edicion);
+				
+				Conexion conexion = Conexion.getInstancia();	// <------------------------
+				EntityManager em = conexion.getEntityManager();	// <------------------------
+				em.getTransaction().begin();	// <------------------------
+				
+				em.persist(mU.findUsuario(user));	// <------------------------
+				
+				em.getTransaction().commit();	// <------------------------
 			}
 		}
 	}	

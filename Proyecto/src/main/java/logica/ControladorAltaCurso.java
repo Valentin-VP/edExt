@@ -1,12 +1,15 @@
 package logica;
 
 import interfaces.IControladorAltaCurso;
+import persistencia.Conexion;
 import excepciones.CursoRepetido;
 import excepciones.InstitutoInexistente;
 
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
+
+import javax.persistence.EntityManager;
 
 import datatypes.DtCurso;
 import datatypes.DtCursoBase;
@@ -134,6 +137,15 @@ public class ControladorAltaCurso implements IControladorAltaCurso{
 		
 		Curso curso = new Curso(getNombre(), getDescripcion(), getDuracion(), getCantHoras(), getCreditos(), fechadate, getUrl(), previascursos, mI.find(this.instituto));
 		mI.find(this.instituto).agregarCurso(curso);
+		
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		em.getTransaction().begin();
+		
+		em.persist(this.instituto);
+		
+		em.getTransaction().commit();
+		
 		cancelarAltaCurso();
 	}
 	@Override
