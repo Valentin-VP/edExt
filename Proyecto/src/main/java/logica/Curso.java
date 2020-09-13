@@ -3,8 +3,10 @@ package logica;
 import datatypes.DtFecha;
 import datatypes.DtEdicionBase;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -22,7 +24,7 @@ public class Curso {
 	private String duracion;
 	private int cantHoras;
 	private Integer creditos;
-	private DtFecha fechaR;
+	private Date fechaR;
 	private String url;
 	private List<Curso> previas = new ArrayList<Curso>();
 	@OneToMany(cascade = CascadeType.ALL)
@@ -30,7 +32,7 @@ public class Curso {
 	@ManyToOne
 	private	Instituto instituto;
 	
-	public Curso(String nombre, String descripcion, String duracion, int cantHoras, Integer creditos, DtFecha fechaR,
+	public Curso(String nombre, String descripcion, String duracion, int cantHoras, Integer creditos, Date fechaR,
 			String url, List<Curso> previas, Instituto instituto) {
 		super();
 		this.nombre = nombre;
@@ -97,11 +99,11 @@ public class Curso {
 		this.creditos = creditos;
 	}
 
-	public DtFecha getFechaR() {
+	public Date getFechaR() {
 		return fechaR;
 	}
 
-	public void setFechaR(DtFecha fechaR) {
+	public void setFechaR(Date fechaR) {
 		this.fechaR = fechaR;
 	}
 
@@ -135,7 +137,7 @@ public class Curso {
 		LocalDate date = LocalDate.now();
 		DtEdicionBase dteb=new DtEdicionBase();
 		for(int i=0;i < ediciones.size();i++) {
-			if (fechaValidaInicio(ediciones.get(i).getFechaI(),date) && fechaValidaFin(ediciones.get(i).getFechaF(),date)) {
+			if (fechaValidaInicio(ediciones.get(i).convertToDtFecha(ediciones.get(i).getFechaI()),date) && fechaValidaFin(ediciones.get(i).convertToDtFecha(ediciones.get(i).getFechaF()),date)) {
 			dteb.setNombre(ediciones.get(i).getNombre());
 			return dteb;
 			}
@@ -172,6 +174,19 @@ public class Curso {
 			return false;
 		}
 		return true;
+	}
+	
+	public DtFecha convertToDtFecha(Date fecha){
+		ArrayList<Integer> datos = new ArrayList<>();
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/M/yyyy");
+		String date = sdf.format(fecha); 
+		String valores [] = (date).split("/");
+		for(String s: valores) {
+			int temp = Integer.parseInt(s);
+			datos.add(temp);
+		}
+		DtFecha dtfecha = new DtFecha(datos.get(0),datos.get(1),datos.get(2));
+		return dtfecha;
 	}
 
 	public Instituto getInstituto() {

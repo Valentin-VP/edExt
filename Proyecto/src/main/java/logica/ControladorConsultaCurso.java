@@ -70,7 +70,7 @@ public class ControladorConsultaCurso implements IControladorConsultaCurso{
 		String duracion = mI.find(institutoCon).findCurso(curso).getDuracion();
 		int cantHoras = mI.find(institutoCon).findCurso(curso).getCantHoras();
 		int creditos = mI.find(institutoCon).findCurso(curso).getCreditos();
-		DtFecha fechaR = mI.find(institutoCon).findCurso(curso).getFechaR();
+		DtFecha fechaR = mI.find(institutoCon).findCurso(curso).convertToDtFecha(mI.find(institutoCon).findCurso(curso).getFechaR());
 		String url = mI.find(institutoCon).findCurso(curso).getUrl();
 		// Buscar ProgFormacion que incluyan a este curso y guardarlos para crear el DtCurso a retornar 
 		if(!mP.getProgramas().isEmpty()) {

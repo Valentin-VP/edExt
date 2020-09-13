@@ -1,6 +1,8 @@
 package logica;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import datatypes.DtEdicion;
@@ -82,10 +84,22 @@ public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso
 		}
 		if(i.existsCurso(curso)) {
 			if(i.findCurso(curso).findEdicion(nombre) == null) {
+				
+				Date fechaIdate = null;
+				Date fechaFdate = null;
+				Date fechaPubdate = null;
+				try {
+					fechaIdate = fechaI.DtFechaToDate();
+					fechaFdate = fechaF.DtFechaToDate();
+					fechaPubdate = fechaPub.DtFechaToDate();
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+
 				if (!tieneCupos) {
-					edicion = new Edicion(nombre, fechaI, fechaF, tieneCupos, 0, fechaPub);
+					edicion = new Edicion(nombre, fechaIdate, fechaFdate, tieneCupos, 0, fechaPubdate);
 				} else {
-					edicion = new Edicion(nombre, fechaI, fechaF, tieneCupos, cantCupos, fechaPub);
+					edicion = new Edicion(nombre, fechaIdate, fechaFdate, tieneCupos, cantCupos, fechaPubdate);
 				}
 				// Agregar edicion al curso
 				i.findCurso(curso).addEdicion(edicion);

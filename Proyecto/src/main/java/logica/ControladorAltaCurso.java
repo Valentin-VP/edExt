@@ -4,7 +4,9 @@ import interfaces.IControladorAltaCurso;
 import excepciones.CursoRepetido;
 import excepciones.InstitutoInexistente;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import datatypes.DtCurso;
 import datatypes.DtCursoBase;
@@ -122,7 +124,15 @@ public class ControladorAltaCurso implements IControladorAltaCurso{
 				}
 			}
 		}
-		Curso curso = new Curso(getNombre(), getDescripcion(), getDuracion(), getCantHoras(), getCreditos(), getFechaR(), getUrl(), previascursos, mI.find(this.instituto));
+		
+		Date fechadate = null;
+		try {
+			fechadate = getFechaR().DtFechaToDate();
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		Curso curso = new Curso(getNombre(), getDescripcion(), getDuracion(), getCantHoras(), getCreditos(), fechadate, getUrl(), previascursos, mI.find(this.instituto));
 		mI.find(this.instituto).agregarCurso(curso);
 		cancelarAltaCurso();
 	}

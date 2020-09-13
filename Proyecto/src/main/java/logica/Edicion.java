@@ -2,7 +2,9 @@ package logica;
 
 import datatypes.DtFecha;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -17,11 +19,11 @@ public class Edicion {
 	@Id
 	private String nombre;
 	
-	private DtFecha fechaI;
-	private DtFecha fechaF;
+	private Date fechaI;
+	private Date fechaF;
 	private boolean tieneCupos;
 	private Integer cupos;
-	private DtFecha fechaPub;
+	private Date fechaPub;
 	
 	@OneToMany(mappedBy = "edicion", cascade = CascadeType.ALL)
 	private List<InscripcionEd> inscripciones = new ArrayList<>();
@@ -29,7 +31,7 @@ public class Edicion {
 	public Edicion () {
 		super();
 	}
-	public Edicion(String nombre, DtFecha fechaI, DtFecha fechaF, boolean tieneCupos, Integer cupos, DtFecha fechaPub) {
+	public Edicion(String nombre, Date fechaI, Date fechaF, boolean tieneCupos, Integer cupos, Date fechaPub) {
 		super();
 		this.nombre = nombre;
 		this.fechaI = fechaI;
@@ -47,19 +49,19 @@ public class Edicion {
 		this.nombre = nombre;
 	}
 
-	public DtFecha getFechaI() {
+	public Date getFechaI() {
 		return fechaI;
 	}
 
-	public void setFechaI(DtFecha fechaI) {
+	public void setFechaI(Date fechaI) {
 		this.fechaI = fechaI;
 	}
 
-	public DtFecha getFechaF() {
+	public Date getFechaF() {
 		return fechaF;
 	}
 
-	public void setFechaF(DtFecha fechaF) {
+	public void setFechaF(Date fechaF) {
 		this.fechaF = fechaF;
 	}
 
@@ -71,11 +73,11 @@ public class Edicion {
 		this.cupos = cupos;
 	}
 
-	public DtFecha getFechaPub() {
+	public Date getFechaPub() {
 		return fechaPub;
 	}
 
-	public void setFechaPub(DtFecha fechaPub) {
+	public void setFechaPub(Date fechaPub) {
 		this.fechaPub = fechaPub;
 	}
 	
@@ -86,10 +88,29 @@ public class Edicion {
 		this.inscripciones = inscripciones;
 	}
 	public DtEdicion getDtEdicion() {
-		DtEdicion edicion = new DtEdicion(this.nombre, this.fechaI, this.fechaF, this.tieneCupos, this.cupos, this.fechaPub);
+		
+		DtFecha dtfechaI= convertToDtFecha(fechaI);
+		DtFecha dtfechaF= convertToDtFecha(fechaF);
+		DtFecha dtfechaPub = convertToDtFecha(fechaPub);
+		
+		DtEdicion edicion = new DtEdicion(this.nombre, dtfechaI, dtfechaF, this.tieneCupos, this.cupos, dtfechaPub);
 		return edicion;
 	}
 
+	public DtFecha convertToDtFecha(Date fecha){
+		ArrayList<Integer> datos = new ArrayList<>();
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/M/yyyy");
+		String date = sdf.format(fecha); 
+		String valores [] = (date).split("/");
+		for(String s: valores) {
+			int temp = Integer.parseInt(s);
+			datos.add(temp);
+		}
+		DtFecha dtfecha = new DtFecha(datos.get(0),datos.get(1),datos.get(2));
+		return dtfecha;
+	}
+	
+	
 	public boolean isTieneCupos() {
 		return tieneCupos;
 	}
