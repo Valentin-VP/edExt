@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import datatypes.DtFecha;
@@ -17,10 +18,18 @@ public class InscripcionEd {
 	
 	@Id
 	@ManyToOne
+	@JoinColumn(
+			insertable=false,
+			updatable=false
+	)
 	private Edicion edicion;
 	
 	@Id
 	@ManyToOne
+	@JoinColumn(
+			insertable=false,
+			updatable=false
+	)
 	private Estudiante nick;
 	
 	public InscripcionEd () {

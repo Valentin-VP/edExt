@@ -29,18 +29,11 @@ public class Curso {
 	private String url;
 	
 	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(
-			insertable=false,
-			updatable=false
-	)
 	private List<Curso> previas = new ArrayList<Curso>();
 	
 	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(
-			insertable=false,
-			updatable=false
-	)
 	private List<Edicion> ediciones = new ArrayList<Edicion>();
+	
 	@ManyToOne
 	private	Instituto instituto;
 	

@@ -124,6 +124,13 @@ public class ControladorAltaCurso implements IControladorAltaCurso{
 			for(DtCursoBase dtcb: getPrevias()) {
 				if(mI.find(this.instituto).existsCurso(dtcb.getNombre())) {
 					previascursos.add((mI.find(this.instituto).findCurso(dtcb.getNombre())));
+					Conexion conexion = Conexion.getInstancia();
+					EntityManager em = conexion.getEntityManager();
+					em.getTransaction().begin();
+					
+					em.persist(mI.find(this.instituto));
+					
+					em.getTransaction().commit();
 				}
 			}
 		}
