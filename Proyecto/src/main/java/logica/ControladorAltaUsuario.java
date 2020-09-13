@@ -32,16 +32,6 @@ public class ControladorAltaUsuario implements IControladorAltaUsuario {
 		this.instituto = mI.find(instituto);
 	}
 	
-	/*@Override
-	public void modificarAltaUsuario(String nuevoNick, String nuevoCorreo) throws UsuarioRepetido {
-		this.usuario.setNick(nuevoNick);
-		this.usuario.setCorreo(nuevoCorreo);
-		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
-		Usuario user = mU.getUsuario(nuevoNick, nuevoCorreo);
-		if (user != null) {
-			throw new UsuarioRepetido("El usuario " + nuevoNick + "con correo " + nuevoCorreo + " ya se encuentra registrado");
-		}
-	}*/
 	
 	@Override
 	public void cancelarAltaUsuario() {

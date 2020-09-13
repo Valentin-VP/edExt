@@ -122,15 +122,6 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 		if(u instanceof Estudiante) {
 			((Estudiante) u).agregarInscripcionEd(ie);
 		}
-		System.out.println(ins.getNombre());
-		System.out.println(c.getNombre());
-		System.out.println(ed.getNombre());
-		System.out.println(u.getNick());
-		System.out.println(u.getCorreo());
-		System.out.println(ie.getEdicion().getNombre());
-		System.out.println(ie.getFecha().getDia());
-		System.out.println(ie.getFecha().getMes());
-		System.out.println(ie.getFecha().getAnio());
 	}
 
 }

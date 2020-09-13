@@ -248,8 +248,6 @@ public class AgregarUsuario extends JInternalFrame {
 	}	
 
 	private boolean checkeo() {
-		//String nickname = this.textFieldNick.getText();
-		//String correo = this.textFieldCorreo.getText();
 		String nombre = this.textFieldNombre.getText();
 		String apellido = this.textFieldApellido.getText();
 		String dia = (String) this.diaNac.getSelectedItem();
@@ -273,7 +271,6 @@ public class AgregarUsuario extends JInternalFrame {
 		this.mesNac.setSelectedItem("1");
 		this.anioNac.setSelectedItem("1992");
 		this.comboBoxInstitutos.removeAllItems();
-		//this.comboBoxInstitutos.setEnabled(false);
 		this.DocenteSi.setEnabled(true);
 	}
 	

@@ -19,11 +19,7 @@ public interface IControladorAltaEdicionCurso {
 	
 	public ArrayList<DtUsuarioBase> getUsuarios();
 	
-	public void listarEdiciones();
-	
 	public void verificarUsuario(String nick, String correo, ArrayList<String> docentes) throws UsuarioNoExiste, UsuarioNoDocente, DocenteDeOtroInstituto, DocenteYaAgregado;
 
-	public void imprimirEdiciones();
-	
 	public boolean docenteEnArray(String nick, ArrayList<String> docentes);
 }

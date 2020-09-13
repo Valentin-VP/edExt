@@ -175,16 +175,5 @@ public class Principal {
 			}
 		});
 		mnNewMenu.add(mntmNewMenuItem);
-		
-		JMenu mnNewMenu_1 = new JMenu("Programa");
-		menuBar.add(mnNewMenu_1);
-		
-		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Crear");
-		mntmNewMenuItem_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				altaProgFormacionInternalFrame.setVisible(true);
-			}
-		});
-		mnNewMenu_1.add(mntmNewMenuItem_1);
 	}
 }

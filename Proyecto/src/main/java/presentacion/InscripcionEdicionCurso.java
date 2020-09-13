@@ -62,8 +62,6 @@ public class InscripcionEdicionCurso extends JInternalFrame {
 		comboBoxCur = new JComboBox<String>();
 		comboBoxCur.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//DefaultComboBoxModel<String> cursoNombre = new DefaultComboBoxModel<String>();
-				//comboBoxCur.setModel(cursoNombre);
 				cargarEdicionVigenteComboBoxCursos();
 			}
 		});
@@ -151,18 +149,9 @@ public class InscripcionEdicionCurso extends JInternalFrame {
 			p++;
 		}
 		
-		//DefaultComboBoxModel<String> dml= new DefaultComboBoxModel<String>();
-		
-		//for (int i = 0; i < cursos.size(); i++) {
-			//dml.addElement(cursos.get(i).getNombre());
-		//}
-		
 		for (int i = 0; i < cursos.size(); i++) {
 			comboBoxCur.addItem(array[i]);
 		}
-		
-		//comboBoxCur.setEnabled(true);
-		//comboBoxCur.setModel(dml);
 		
 	}
 	
@@ -212,8 +201,6 @@ public class InscripcionEdicionCurso extends JInternalFrame {
 	}
 	
 	private void limpiar() {
-		//comboBoxIns.removeAllItems();
-		//comboBoxCur.removeAllItems();
 		DefaultComboBoxModel<String> institutos = new DefaultComboBoxModel<String>();
 		comboBoxIns.setModel(institutos);
 		DefaultComboBoxModel<String> cursos = new DefaultComboBoxModel<String>();

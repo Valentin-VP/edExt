@@ -89,7 +89,6 @@ public class ControladorConsultaCurso implements IControladorConsultaCurso{
 		}
 		for(Curso previa: mI.find(institutoCon).findCurso(curso).getPrevias()) { 
 			  DtCursoBase dtprevia = new DtCursoBase(previa.getNombre());
-			  System.out.println(dtprevia.getNombre()); 
 			  dtprevias.add(dtprevia); 
 		} 
 		retorno = new DtCurso(descripcion,duracion,cantHoras,creditos,fechaR,url,nombre,dteb,dtprevias);

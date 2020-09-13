@@ -143,7 +143,6 @@ public class InfoCurso extends JInternalFrame {
 		cursoButton = new JButton("Seleccionar");
 		cursoButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//Habilitar lista, cargarInfoCurso, evaluar habilitacion de combos y labels ediciones y programas
 				scrollPane.setEnabled(true);
 				infoCursoTextArea.setEnabled(true);
 				scrollPane.setEnabled(false);
@@ -220,7 +219,6 @@ public class InfoCurso extends JInternalFrame {
 			public void actionPerformed(ActionEvent e) {
 				infoEdicionCursoInternalFrame.mostrarDos(institutoseleccionado, cursoseleccionado, edicionseleccionada);
 				limpiar();
-				//infoEdicionCursoInternalFrame.detallesEdicionCurso(edicionseleccionada); // <----- Llamada a mostrar EdicionCurso
 			}
 		});
 		edicionButton.setEnabled(false);
@@ -294,7 +292,6 @@ public class InfoCurso extends JInternalFrame {
 	}
 	
 	private void cargarInfoCurso(){
-		// cargarInfoCurso, evaluar habilitacion de combos y labels ediciones y programas
 		DtCurso dtcurso = icon.consultarCurso(cursoseleccionado);
 		String infoCursoTexto = "";
 		infoCursoTexto=infoCursoTexto+dtcurso.getNombre()+"\n";
@@ -314,7 +311,6 @@ public class InfoCurso extends JInternalFrame {
 		infoCursoTextArea.setText(infoCursoTexto);
 		infoCursoTextArea.setLineWrap(true);
 		infoCursoTextArea.setWrapStyleWord(true);
-		// Setear ComboBoxes Ediciones y Programas
 		ArrayList <String> programas = new ArrayList<String>();
 		if(!icon.getProgramas().isEmpty()) {
 			programaLabel.setEnabled(true);
@@ -343,7 +339,6 @@ public class InfoCurso extends JInternalFrame {
 	}
 	
 	private void limpiar() {
-		// No aplica para el institutoComboBox!
 		DefaultComboBoxModel<String> emptycombo = new DefaultComboBoxModel<String>();
 		cursoComboBox.setModel(emptycombo);
 		cursoComboBox.setEnabled(false);
@@ -356,8 +351,6 @@ public class InfoCurso extends JInternalFrame {
 		programaLabel.setEnabled(false);
 		institutoButton.setEnabled(false);
 		cursoButton.setEnabled(false);
-//		cursoButton.setVisible(false);
-//		edicionButton.setVisible(false);
 		edicionButton.setEnabled(false);
 		programaButton.setEnabled(false);
 		scrollPane.setEnabled(false);

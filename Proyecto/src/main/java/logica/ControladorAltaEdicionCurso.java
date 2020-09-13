@@ -17,8 +17,8 @@ import excepciones.UsuarioNoExiste;
 public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso {
 	private String instituto;
 	private String curso;
-	private boolean tieneCupos;//no lo uso
-	private Integer cupos;//no lo uso
+	private boolean tieneCupos;
+	private Integer cupos;
 	private DtEdicion dtEdi;
 	
 	public String getCurso() {
@@ -99,19 +99,10 @@ public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso
 		for(String user: docentes) {
 			if (mU.findUsuario(user) instanceof Docente) {
 				((Docente) mU.findUsuario(user)).addDictaEdicion(edicion);
-				System.out.println("es docente");
 			}
 		}
 	}	
-		/*
-		 * Curso c = new Curso(); c = i.findCurso(curso); Edicion edicion; edicion =
-		 * c.findEdicion(nombre); if(edicion != null) { throw new
-		 * EdicionRepetida("La edicion " + nombre +
-		 * " ya se encuentra integrada al curso:" + c.getNombre()); } if (!tieneCupos) {
-		 * edicion = new Edicion(nombre, fechaI, fechaF, tieneCupos, 0, fechaPub); }
-		 * else { edicion = new Edicion(nombre, fechaI, fechaF, tieneCupos, cantCupos,
-		 * fechaPub); } c.addEdicion(edicion);
-		 */
+
 	
 	@Override
 	public ArrayList<DtUsuarioBase> getUsuarios(){
@@ -124,19 +115,6 @@ public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso
 		return users;
 	}
 	
-	public void listarEdiciones() {
-		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
-		ArrayList<Instituto> institutos = mI.getInstitutos();
-		for(Instituto i: institutos) {
-			ArrayList<Curso> cursos = i.getCursos();
-			for(Curso c: cursos) {
-				ArrayList<Edicion> ediciones = c.getEdiciones();
-				for(Edicion e: ediciones) {
-					System.out.println(i.getNombre() + " " + c.getNombre() + " " + e.getNombre());
-				}
-			}
-		}
-	}
 	
 	public void verificarUsuario(String nick, String correo, ArrayList<String> docentes) throws UsuarioNoExiste, UsuarioNoDocente, DocenteDeOtroInstituto, DocenteYaAgregado {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
@@ -155,18 +133,7 @@ public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso
 		}else
 			throw new UsuarioNoDocente("El usuario " + nick + " no es un docente");
 	}
-	
-	@Override
-	public void imprimirEdiciones() {
-		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
-		for(Usuario u: mU.getUsuarios()) {
-			if (u instanceof Docente) {
-				for (Edicion e: ((Docente) u).getEdiciones()) {
-					System.out.println(e.getNombre());
-				}
-			}
-		}
-	}
+
 	
 	public boolean docenteEnArray(String nick, ArrayList<String> docentes) {
 		for(String d: docentes) {

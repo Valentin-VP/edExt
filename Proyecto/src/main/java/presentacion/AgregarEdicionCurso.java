@@ -413,7 +413,6 @@ public class AgregarEdicionCurso extends JInternalFrame {
 				btnRefresh.setEnabled(true);
 				nombreEdicion.setEditable(true);
 				textFieldInstituto.setEditable(true);
-				//limpiar();
 			}
 		});
 		btnAceptar.setBounds(296, 505, 117, 25);
@@ -466,8 +465,7 @@ public class AgregarEdicionCurso extends JInternalFrame {
 		comboBoxNombreCurso = new JComboBox<String>();
 		comboBoxNombreCurso.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//Curso = "";
-				Curso = (String) comboBoxNombreCurso.getSelectedItem()/*.toString()*/;
+				Curso = (String) comboBoxNombreCurso.getSelectedItem();
 			}
 		});
 		comboBoxNombreCurso.setBounds(161, 55, 192, 24);
@@ -523,7 +521,6 @@ public class AgregarEdicionCurso extends JInternalFrame {
 		this.cuposBool.setSelected(false);
 		this.cantCupos.setText("0");
 		this.cantCupos.setEditable(true);
-		//this.comboBoxNombreCurso.removeAllItems();
 		DefaultComboBoxModel<String> cursoNombre = new DefaultComboBoxModel<String>();
 		comboBoxNombreCurso.setModel(cursoNombre);
 		Curso = "";
@@ -569,14 +566,11 @@ public class AgregarEdicionCurso extends JInternalFrame {
 		if (Curso.isEmpty() || nombre.isEmpty() || docentes.isEmpty()) {
 		 	JOptionPane.showMessageDialog(this, "No puede haber campos vacios", "Agregar Edicion", JOptionPane.ERROR_MESSAGE);
 		} else {
-			System.out.println("cuendo entra a aceptar " + Curso);
 			try {
 				this.icon.altaEdicionCurso(Curso, nombre, fechaI, fechaF, docentes, tieneCupos, Integer.parseInt(cupos), fechaPub);
-				this.icon.imprimirEdiciones();
 				JOptionPane.showMessageDialog(this, "La edicion fue agregada con exito", "Agregar Edicion", JOptionPane.INFORMATION_MESSAGE);
 				setVisible(false);
 				limpiar();
-				this.icon.listarEdiciones();
 			} catch (EdicionRepetida | CursoNoExiste | UsuarioNoDocente | InstitutoInexistente a) {
 				JOptionPane.showMessageDialog(this, a.getLocalizedMessage(), "Agregar Edicion", JOptionPane.ERROR_MESSAGE);
 			}
