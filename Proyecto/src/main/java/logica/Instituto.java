@@ -2,8 +2,10 @@ package logica;
 
 import java.util.ArrayList;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import datatypes.DtCursoBase;
 
@@ -11,7 +13,7 @@ import datatypes.DtCursoBase;
 public class Instituto {
 	@Id
 	private String nombre;
-	
+	@OneToMany(mappedBy = "instituto",cascade = CascadeType.ALL)
 	private ArrayList<Curso> cursos = new ArrayList<Curso>();
 	
 	public Instituto() {
