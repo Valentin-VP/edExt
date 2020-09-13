@@ -36,7 +36,7 @@ public class ManejadorUsuario {
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
 		
-		Query query = em.createQuery("select s from Socio s");
+		Query query = em.createQuery("select u from Usuario u");
 		List<Usuario> listUsuario = (List<Usuario>) query.getResultList();
 		ArrayList<String> ret = new ArrayList<>();
 		for(Usuario u: listUsuario) {
