@@ -2,8 +2,11 @@ package logica;
 
 import java.util.ArrayList;
 
+import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 //import datatypes.DtEdicion;
 import datatypes.DtFecha;
@@ -11,8 +14,15 @@ import datatypes.DtFecha;
 @Entity
 @DiscriminatorValue("D")//nuevo
 public class Docente extends Usuario {
+	@OneToOne
 	private Instituto instituto;//visibilidad
+	
+	@OneToMany(cascade = CascadeType.ALL)
 	private ArrayList<Edicion> dicta = new ArrayList<>();//visibilidad
+	
+	public Docente () {
+		super();
+	}
 	
 	public Docente(String nick, String nombre, String apellido, String correo, DtFecha fechaNac, Instituto instituto) {
 		super(nick, nombre, apellido, correo, fechaNac);

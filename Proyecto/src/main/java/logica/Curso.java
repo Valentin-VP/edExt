@@ -6,8 +6,14 @@ import datatypes.DtEdicionBase;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class Curso {
+	@Id
 	private String nombre;
+	
 	private String descripcion;
 	private String duracion;
 	private int cantHoras;

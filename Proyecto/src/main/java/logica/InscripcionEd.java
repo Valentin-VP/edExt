@@ -1,12 +1,21 @@
 package logica;
 
-import datatypes.DtFecha;
+import javax.persistence.Entity;
+import javax.persistence.IdClass;
 
-public class InscripcionEd {
+import datatypes.DtFecha;
+import persistencia.InscripcionEdID;
+
+@Entity
+@IdClass(InscripcionEdID.class)
+public class InscripcionEd { //faltan los @Id
 	private DtFecha fecha;
 	private Edicion edicion;
 	private Estudiante estudiante;
 	
+	public InscripcionEd () {
+		super();
+	}
 	public InscripcionEd(DtFecha fecha, Edicion edicion, Estudiante estudiante) {
 		super();
 		this.fecha = fecha;
