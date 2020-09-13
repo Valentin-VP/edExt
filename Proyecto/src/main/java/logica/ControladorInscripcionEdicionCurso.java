@@ -1,6 +1,7 @@
 package logica;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import datatypes.DtCursoBase;
 import datatypes.DtEdicionBase;
@@ -52,7 +53,7 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 			throw new SinInstitutos("No hay institutos ingresados");
 		}
 		this.nomIns = ins.getNombre();
-		ArrayList <Curso> cursos = ins.getCursos();
+		List <Curso> cursos = ins.getCursos();
 		if (cursos.isEmpty()) {
 			throw new CursoNoExiste("El instituto no tiene cursos ingresados");
 		}

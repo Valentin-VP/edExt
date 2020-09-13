@@ -3,6 +3,8 @@ package presentacion;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import interfaces.IControladorAltaUsuario;
@@ -11,8 +13,11 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
+
+import excepciones.SinInstitutos;
 import excepciones.UsuarioRepetido;
 import datatypes.DtFecha;
+import datatypes.DtInstituto;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -275,15 +280,19 @@ public class AgregarUsuario extends JInternalFrame {
 	}
 	
 	private void agregarEdicionCursoCargarComboBox(ActionEvent arg0) {
-		ArrayList<Instituto> institutos = icon.getInstitutos();
-		String[] array = new String[institutos.size()];
-		int p = 0;
-		for (Instituto i: institutos) {
-			array[p] = i.getNombre();
-			p++;
-		}
-		for (int i = 0; i < institutos.size(); i++) {
-			comboBoxInstitutos.addItem(array[i]);
+		try {
+			List<DtInstituto> institutos = icon.listarInstitutos();
+			String[] array = new String[institutos.size()];
+			int p = 0;
+			for (DtInstituto i: institutos) {
+				array[p] = i.getNombre();
+				p++;
+			}
+			for (int i = 0; i < institutos.size(); i++) {
+				comboBoxInstitutos.addItem(array[i]);
+			}
+		}catch(SinInstitutos e){
+			JOptionPane.showMessageDialog(this, e.getMessage(), "Agregar Usuario", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 }

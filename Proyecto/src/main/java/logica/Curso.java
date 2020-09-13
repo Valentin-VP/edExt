@@ -5,6 +5,7 @@ import datatypes.DtEdicionBase;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -23,14 +24,14 @@ public class Curso {
 	private Integer creditos;
 	private DtFecha fechaR;
 	private String url;
-	private ArrayList<Curso> previas = new ArrayList<Curso>();
+	private List<Curso> previas = new ArrayList<Curso>();
 	@OneToMany(cascade = CascadeType.ALL)
-	private ArrayList<Edicion> ediciones = new ArrayList<Edicion>();
+	private List<Edicion> ediciones = new ArrayList<Edicion>();
 	@ManyToOne
 	private	Instituto instituto;
 	
 	public Curso(String nombre, String descripcion, String duracion, int cantHoras, Integer creditos, DtFecha fechaR,
-			String url, ArrayList<Curso> previas, Instituto instituto) {
+			String url, List<Curso> previas, Instituto instituto) {
 		super();
 		this.nombre = nombre;
 		this.descripcion = descripcion;
@@ -112,19 +113,23 @@ public class Curso {
 		this.url = url;
 	}
 
-	public ArrayList<Curso> getPrevias() {
+	public List<Curso> getPrevias() {
 		//Controlar en llamado si tiene elementos
 		return previas;
 	}
 
-	public void setPrevias(ArrayList<Curso> previas) {
+	public void setPrevias(List<Curso> previas) {
 		this.previas = previas;
 	}
 
-	public ArrayList<Edicion> getEdiciones() {
+	public List<Edicion> getEdiciones() {
 		return ediciones;
 	}
 	
+	public void setEdiciones(List<Edicion> ediciones) {
+		this.ediciones = ediciones;
+	}
+
 	// Para obtener la edicion vigente del curso -- Mauri
 	public DtEdicionBase getEdicionVigente() {
 		LocalDate date = LocalDate.now();

@@ -1,6 +1,8 @@
 package logica;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import datatypes.DtCursoBase;
 import datatypes.DtEdicion;
 import datatypes.DtEdicionBase;
@@ -27,7 +29,7 @@ public class ControladorConsultaEdicionCurso implements IControladorConsultaEdic
 	public ArrayList<DtCursoBase> seleccionarInstituto(String instituto) throws InstitutoInexistente{
 		this.instituto = instituto;
 			ArrayList<DtCursoBase> DtCursos = new ArrayList<DtCursoBase>();
-			ArrayList<Curso> cursos = new ArrayList<Curso>();
+			List<Curso> cursos = new ArrayList<Curso>();
 			ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 			Instituto i = mI.find(instituto);
 			if(i == null) {

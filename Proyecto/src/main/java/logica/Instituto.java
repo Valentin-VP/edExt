@@ -1,6 +1,7 @@
 package logica;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -14,7 +15,7 @@ public class Instituto {
 	@Id
 	private String nombre;
 	@OneToMany(mappedBy = "instituto",cascade = CascadeType.ALL)
-	private ArrayList<Curso> cursos = new ArrayList<Curso>();
+	private List<Curso> cursos = new ArrayList<Curso>();
 	
 	public Instituto() {
 		super();
@@ -33,7 +34,7 @@ public class Instituto {
 		this.nombre = nombre;
 	}
 
-	public ArrayList<Curso> getCursos() {
+	public List<Curso> getCursos() {
 		return cursos;
 	}
 	
@@ -46,7 +47,7 @@ public class Instituto {
 		return dtcursos;
 	}
 
-	public void setCursos(ArrayList<Curso> cursos) {
+	public void setCursos(List<Curso> cursos) {
 		this.cursos = cursos;
 	}
 	

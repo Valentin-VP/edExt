@@ -1,6 +1,8 @@
 package logica;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import datatypes.DtEdicion;
 import excepciones.EdicionRepetida;
 import excepciones.CursoNoExiste;
@@ -62,7 +64,7 @@ public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso
 			throw new InstitutoInexistente("El instituto " + instituto + " no esta en el sistema");
 		}
 		this.instituto = i.getNombre();
-		ArrayList<Curso> cursos = mI.find(instituto).getCursos();
+		List<Curso> cursos = mI.find(instituto).getCursos();
 		for(Curso c: cursos) {
 			DtCursoBase dtcb = new DtCursoBase (c.getNombre());
 			cursosinstituto.add(dtcb);

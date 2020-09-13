@@ -1,11 +1,13 @@
 package logica;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import datatypes.DtInstituto;
 
 public class ManejadorInstituto {
     private static ManejadorInstituto instancia;
-    private ArrayList<Instituto> institutos = new ArrayList<Instituto>();
+    private List<Instituto> institutos = new ArrayList<Instituto>();
 
     private ManejadorInstituto() {}
     
@@ -42,11 +44,11 @@ public class ManejadorInstituto {
     }
 
 
-    public ArrayList<Instituto> getInstitutos() {
+    public List<Instituto> getInstitutos() {
         return institutos;
     }
 
-    public void setInstitutos(ArrayList<Instituto> institutos) {
+    public void setInstitutos(List<Instituto> institutos) {
         this.institutos = institutos;
     }
     

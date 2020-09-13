@@ -1,10 +1,13 @@
  package logica;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import datatypes.DtFecha;
+import datatypes.DtInstituto;
 import datatypes.DtUsuario;
 import interfaces.IControladorAltaUsuario;
+import excepciones.SinInstitutos;
 import excepciones.UsuarioRepetido;
 
 public class ControladorAltaUsuario implements IControladorAltaUsuario {
@@ -74,8 +77,17 @@ public class ControladorAltaUsuario implements IControladorAltaUsuario {
 		this.instituto = instituto;
 	}
 	
-	public ArrayList<Instituto> getInstitutos() {
+	public List<Instituto> getInstitutos() {
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 		return mI.getInstitutos();
+	}
+	
+	@Override
+	public ArrayList<DtInstituto> listarInstitutos() throws SinInstitutos {
+		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
+		if (mI.getDtInstitutos().isEmpty()) {
+			throw new SinInstitutos("No hay institutos ingresados");
+		}
+		return mI.getDtInstitutos();
 	}
 }

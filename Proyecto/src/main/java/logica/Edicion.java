@@ -3,6 +3,7 @@ package logica;
 import datatypes.DtFecha;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -23,7 +24,7 @@ public class Edicion {
 	private DtFecha fechaPub;
 	
 	@OneToMany(mappedBy = "edicion", cascade = CascadeType.ALL)
-	private ArrayList<InscripcionEd> inscripciones = new ArrayList<>();
+	private List<InscripcionEd> inscripciones = new ArrayList<>();
 	
 	public Edicion () {
 		super();
@@ -78,10 +79,10 @@ public class Edicion {
 		this.fechaPub = fechaPub;
 	}
 	
-	public ArrayList<InscripcionEd> getInscripciones() {
+	public List<InscripcionEd> getInscripciones() {
 		return inscripciones;
 	}
-	public void setInscripciones(ArrayList<InscripcionEd> inscripciones) {
+	public void setInscripciones(List<InscripcionEd> inscripciones) {
 		this.inscripciones = inscripciones;
 	}
 	public DtEdicion getDtEdicion() {
