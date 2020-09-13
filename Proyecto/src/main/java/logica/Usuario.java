@@ -1,9 +1,5 @@
 package logica;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
@@ -21,9 +17,9 @@ public class Usuario {
 	private String correo;
 	private String nombre;
 	private String apellido;
-	private Date fechaNac;
+	private DtFecha fechaNac;
 	
-	public Usuario(String nick, String nombre, String apellido, String correo, Date fechaNac) {
+	public Usuario(String nick, String nombre, String apellido, String correo, DtFecha fechaNac) {
 		super();
 		this.nick = nick;
 		this.nombre = nombre;
@@ -68,26 +64,16 @@ public class Usuario {
 		this.correo = correo;
 	}
 
-	public Date getFechaNac() {
+	public DtFecha getFechaNac() {
 		return fechaNac;
 	}
 
-	public void setFechaNac(Date fechaNac) {
+	public void setFechaNac(DtFecha fechaNac) {
 		this.fechaNac = fechaNac;
 	}
 	
 	public DtUsuario getDtUsuario() {
-		ArrayList<Integer> datos = new ArrayList<>();
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/M/yyyy");
-		String date = sdf.format(fechaNac); 
-		String valores [] = (date).split("/");
-		for(String s: valores) {
-			int temp = Integer.parseInt(s);
-			datos.add(temp);
-		}
-		DtFecha fechaR = new DtFecha(datos.get(0),datos.get(1),datos.get(2));
-		
-		DtUsuario dtUsuario = new DtUsuario(this.nick, this.correo, this.nombre, this.apellido, fechaR);
+		DtUsuario dtUsuario = new DtUsuario(this.nick, this.correo, this.nombre, this.apellido, this.fechaNac);
 		return dtUsuario;
 	}
 	

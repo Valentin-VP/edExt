@@ -1,9 +1,5 @@
 package datatypes;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 public class DtFecha {
 	private Integer dia;
 	private Integer mes;
@@ -47,13 +43,6 @@ public class DtFecha {
 	@Override
 	public String toString() {
 		return ""+dia+"/"+mes+"/"+anio;
-	}
-	
-	public Date DtFechaToDate() throws ParseException {
-		String strdtf = this.toString();
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/M/yyyy");
-		Date date = sdf.parse(strdtf);
-		return date;
 	}
 	
 }

@@ -1,7 +1,6 @@
 package logica;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -21,7 +20,7 @@ public class Estudiante extends Usuario {
 		super();
 	}
 	
-	public Estudiante(String nick, String nombre, String apellido, String correo, Date fechaNac) {
+	public Estudiante(String nick, String nombre, String apellido, String correo, DtFecha fechaNac) {
 		super(nick, nombre, apellido, correo, fechaNac);
 	}
 	
