@@ -12,12 +12,13 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
 public class Curso {
-	@Id
+	@Id 
 	private String nombre;
 	
 	private String descripcion;
@@ -26,9 +27,19 @@ public class Curso {
 	private Integer creditos;
 	private Date fechaR;
 	private String url;
+	
 	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(
+			insertable=false,
+			updatable=false
+	)
 	private List<Curso> previas = new ArrayList<Curso>();
+	
 	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(
+			insertable=false,
+			updatable=false
+	)
 	private List<Edicion> ediciones = new ArrayList<Edicion>();
 	@ManyToOne
 	private	Instituto instituto;
