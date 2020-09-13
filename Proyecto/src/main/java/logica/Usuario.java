@@ -1,13 +1,22 @@
 package logica;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+
 import datatypes.DtFecha;
 import datatypes.DtUsuario;
 
+@Entity
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)//nuevo
 public class Usuario {
+	@Id
 	private String nick;
+	
+	private String correo;
 	private String nombre;
 	private String apellido;
-	private String correo;
 	private DtFecha fechaNac;
 	
 	public Usuario(String nick, String nombre, String apellido, String correo, DtFecha fechaNac) {

@@ -2,8 +2,13 @@ package logica;
 
 import java.util.ArrayList;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+
 import datatypes.DtFecha;
 
+@Entity
+@DiscriminatorValue("E")
 public class Estudiante extends Usuario {
 	ArrayList<InscripcionEd> inscripciones = new ArrayList<InscripcionEd>();
 	

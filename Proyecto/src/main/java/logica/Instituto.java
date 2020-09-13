@@ -2,10 +2,16 @@ package logica;
 
 import java.util.ArrayList;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 import datatypes.DtCursoBase;
 
+@Entity
 public class Instituto {
+	@Id
 	private String nombre;
+	
 	private ArrayList<Curso> cursos = new ArrayList<Curso>();
 	
 	public Instituto() {

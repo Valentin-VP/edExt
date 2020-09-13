@@ -1,16 +1,26 @@
 package logica;
 
 import datatypes.DtFecha;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 import datatypes.DtEdicion;
 
+@Entity
 public class Edicion {
+	@Id
 	private String nombre;
+	
 	private DtFecha fechaI;
 	private DtFecha fechaF;
 	private boolean tieneCupos;
 	private Integer cupos;
 	private DtFecha fechaPub;
 	
+	public Edicion () {
+		super();
+	}
 	public Edicion(String nombre, DtFecha fechaI, DtFecha fechaF, boolean tieneCupos, Integer cupos, DtFecha fechaPub) {
 		super();
 		this.nombre = nombre;
