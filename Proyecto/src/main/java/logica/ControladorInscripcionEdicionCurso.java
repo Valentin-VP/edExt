@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+
 import datatypes.DtCursoBase;
 import datatypes.DtEdicionBase;
 import datatypes.DtFecha;
@@ -16,6 +18,7 @@ import excepciones.SinInstitutos;
 import excepciones.UsuarioNoEstudiante;
 import excepciones.UsuarioNoExiste;
 import interfaces.IControladorInscripcionEdicionCurso;
+import persistencia.Conexion;
 
 public class ControladorInscripcionEdicionCurso implements IControladorInscripcionEdicionCurso{
 	private String nomIns;
@@ -131,6 +134,15 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 		InscripcionEd ie=new InscripcionEd(datefecha,ed,(Estudiante) u);
 		if(u instanceof Estudiante) {
 			((Estudiante) u).agregarInscripcionEd(ie);
+			
+			Conexion conexion = Conexion.getInstancia();
+			EntityManager em = conexion.getEntityManager();
+			em.getTransaction().begin();
+			
+			em.persist(u);
+			
+			em.getTransaction().commit();
+			
 		}
 	}
 
