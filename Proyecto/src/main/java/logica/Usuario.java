@@ -9,7 +9,7 @@ import datatypes.DtFecha;
 import datatypes.DtUsuario;
 
 @Entity
-@Inheritance(strategy=InheritanceType.SINGLE_TABLE)//nuevo
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 public class Usuario {
 	@Id
 	private String nick;

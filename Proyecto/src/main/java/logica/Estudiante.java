@@ -2,14 +2,17 @@ package logica;
 
 import java.util.ArrayList;
 
+import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 
 import datatypes.DtFecha;
 
 @Entity
 @DiscriminatorValue("E")
 public class Estudiante extends Usuario {
+	@OneToMany(mappedBy = "nick",cascade = CascadeType.ALL)
 	ArrayList<InscripcionEd> inscripciones = new ArrayList<InscripcionEd>();
 	
 	public Estudiante() {
