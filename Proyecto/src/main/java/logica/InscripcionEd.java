@@ -1,5 +1,7 @@
 package logica;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
@@ -11,7 +13,7 @@ import persistencia.InscripcionEdID;
 @Entity
 @IdClass(InscripcionEdID.class)
 public class InscripcionEd { 
-	private DtFecha fecha;
+	private Date fecha;
 	
 	@Id
 	@ManyToOne
@@ -24,16 +26,16 @@ public class InscripcionEd {
 	public InscripcionEd () {
 		super();
 	}
-	public InscripcionEd(DtFecha fecha, Edicion edicion, Estudiante nick) {
+	public InscripcionEd(Date fecha, Edicion edicion, Estudiante nick) {
 		super();
 		this.fecha = fecha;
 		this.edicion = edicion;
 		this.nick = nick;
 	}
-	public DtFecha getFecha() {
+	public Date getFecha() {
 		return fecha;
 	}
-	public void setFecha(DtFecha fecha) {
+	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
 	public Edicion getEdicion() {

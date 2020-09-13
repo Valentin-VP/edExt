@@ -1,6 +1,8 @@
 package logica;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import datatypes.DtCursoBase;
@@ -119,7 +121,14 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 		Edicion ed = c.findEdicion(nombreEd);
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		Usuario u = mU.findUsuario(this.nick);
-		InscripcionEd ie=new InscripcionEd(this.fecha,ed,(Estudiante) u);
+		Date datefecha = null;
+		try {
+			datefecha = this.fecha.DtFechaToDate();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		InscripcionEd ie=new InscripcionEd(datefecha,ed,(Estudiante) u);
 		if(u instanceof Estudiante) {
 			((Estudiante) u).agregarInscripcionEd(ie);
 		}
