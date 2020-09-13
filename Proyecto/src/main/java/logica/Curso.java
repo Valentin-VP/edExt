@@ -13,6 +13,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -28,7 +29,7 @@ public class Curso {
 	private Date fechaR;
 	private String url;
 	
-	@OneToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.ALL)
 	private List<Curso> previas = new ArrayList<Curso>();
 	
 	@OneToMany(cascade = CascadeType.ALL)
