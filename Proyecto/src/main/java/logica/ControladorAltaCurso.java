@@ -142,7 +142,7 @@ public class ControladorAltaCurso implements IControladorAltaCurso{
 		EntityManager em = conexion.getEntityManager();
 		em.getTransaction().begin();
 		
-		em.persist(this.instituto);
+		em.persist(mI.find(this.instituto));
 		
 		em.getTransaction().commit();
 		
