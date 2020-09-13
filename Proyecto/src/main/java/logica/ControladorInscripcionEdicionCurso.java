@@ -40,6 +40,14 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 		this.nomCurso = nomCurso;
 	}
 
+	public String getCorreo() {
+		return correo;
+	}
+
+	public void setCorreo(String correo) {
+		this.correo = correo;
+	}
+
 	@Override
 	public ArrayList<DtInstituto> listarInstitutos() throws SinInstitutos {
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
@@ -87,7 +95,7 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 	@Override
 	public boolean registrarInscripcionEd(String nick, String correo, String nomCurso, DtFecha fecha) throws InscripcionEdRepetido, UsuarioNoExiste, UsuarioNoEstudiante {
 		this.nick = nick;
-		this.correo = correo;
+		this.setCorreo(correo);
 		this.setNomCurso(nomCurso);
 		this.fecha = fecha;
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
@@ -111,7 +119,7 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 		this.nomIns=null;
 		this.setNomCurso(null);
 		this.nick=null;
-		this.correo=null;
+		this.setCorreo(null);
 		this.nombreEd=null;
 		this.fecha=null;
 	}

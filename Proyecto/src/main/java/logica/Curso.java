@@ -12,10 +12,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 @Entity
 public class Curso {
@@ -150,8 +148,6 @@ public class Curso {
 		}
 		return null;
 	}
-		
-	// if (ediciones.get(i).getFechaPub().getAnio().intValue() == 2000) {
 	
 	public void addEdicion(Edicion edi) {
 		this.ediciones.add(edi);
@@ -170,13 +166,10 @@ public class Curso {
 	
 	public boolean fechaValidaFin(DtFecha fecha,LocalDate date) {
 		if(fecha.getAnio().intValue() < date.getYear()) {
-			System.out.print("Un anio antes");
 			return false;
 		} else if(fecha.getAnio().intValue() == date.getYear() && fecha.getMes().intValue() < date.getMonthValue()) {
-			System.out.print("Un mes antes");
 			return false;
 		} else if(fecha.getAnio().intValue() == date.getYear() && fecha.getMes().intValue() == date.getMonthValue() && fecha.getDia().intValue() < date.getDayOfMonth()) {
-			System.out.print("Un dia antes");
 			return false;
 		}
 		return true;
