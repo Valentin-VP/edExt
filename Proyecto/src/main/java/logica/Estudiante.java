@@ -1,6 +1,7 @@
 package logica;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
@@ -13,7 +14,7 @@ import datatypes.DtFecha;
 @DiscriminatorValue("E")
 public class Estudiante extends Usuario {
 	@OneToMany(mappedBy = "nick",cascade = CascadeType.ALL)
-	ArrayList<InscripcionEd> inscripciones = new ArrayList<InscripcionEd>();
+	List<InscripcionEd> inscripciones = new ArrayList<InscripcionEd>();
 	
 	public Estudiante() {
 		super();

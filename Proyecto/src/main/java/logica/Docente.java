@@ -1,6 +1,7 @@
 package logica;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
@@ -18,7 +19,7 @@ public class Docente extends Usuario {
 	private Instituto instituto;//visibilidad
 	
 	@OneToMany(cascade = CascadeType.ALL)
-	private ArrayList<Edicion> dicta = new ArrayList<>();//visibilidad
+	private List<Edicion> dicta = new ArrayList<Edicion>();//visibilidad
 	
 	public Docente () {
 		super();
@@ -54,11 +55,11 @@ public class Docente extends Usuario {
 		this.instituto = instituto;
 	}
 
-	public ArrayList<Edicion> getEdiciones() {
+	public List<Edicion> getEdiciones() {
 		return dicta;
 	}
 
-	public void setEdiciones(ArrayList<Edicion> ediciones) {
+	public void setEdiciones(List<Edicion> ediciones) {
 		this.dicta = ediciones;
 	}
 	
