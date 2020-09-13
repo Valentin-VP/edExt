@@ -32,7 +32,7 @@ public class Curso {
 	@ManyToMany(cascade = CascadeType.ALL)
 	private List<Curso> previas = new ArrayList<Curso>();
 	
-	@OneToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.ALL)
 	private List<Edicion> ediciones = new ArrayList<Edicion>();
 	
 	@ManyToOne

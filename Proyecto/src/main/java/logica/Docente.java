@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -19,7 +20,7 @@ public class Docente extends Usuario {
 	@OneToOne
 	private Instituto instituto;//visibilidad
 	
-	@OneToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.ALL)
 	private List<Edicion> dicta = new ArrayList<Edicion>();//visibilidad
 	
 	public Docente () {
