@@ -19,7 +19,15 @@ public class ControladorAltaUsuario implements IControladorAltaUsuario {
 	public void altaUsuario(String nick, String correo, String nombre, String apellido, DtFecha fechaNac) throws UsuarioRepetido {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		Usuario user = null;
-		user = mU.getUsuario(nick, correo);
+		//user = mU.getUsuario(nick, correo);
+		user = mU.findUsuario(nick);
+		// Operacion que traiga todos los Usuarios de la BD y confirme que ninguno tenga el mismo correo
+		ArrayList<String> correosUsuarios = mU.getUsuariosCorreo();
+		for(String ucorreo: correosUsuarios) {
+			if(ucorreo.equals(correo)) {
+				throw new UsuarioRepetido("El correo " + correo + " ya se encuentra registrado");
+			}
+		}
 		if(!(user == null)) {
 			throw new UsuarioRepetido("El usuario " + nick + " ya se encuentra registrado");
 		}	

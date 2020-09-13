@@ -85,7 +85,7 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 		this.setNomCurso(nomCurso);
 		this.fecha = fecha;
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
-		Usuario u = mU.getUsuario(nick, correo);
+		Usuario u = mU.findUsuario(nick);
 		if (u == null) {
 			throw new UsuarioNoExiste("No existe el usuario ingresado");
 		}
@@ -117,7 +117,7 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 		Curso c = ins.findCurso(nomCurso);
 		Edicion ed = c.findEdicion(nombreEd);
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
-		Usuario u = mU.getUsuario(this.nick, this.correo);
+		Usuario u = mU.findUsuario(this.nick);
 		InscripcionEd ie=new InscripcionEd(this.fecha,ed,(Estudiante) u);
 		if(u instanceof Estudiante) {
 			((Estudiante) u).agregarInscripcionEd(ie);

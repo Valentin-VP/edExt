@@ -1,6 +1,12 @@
 package logica;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
+import persistencia.Conexion;
 
 public class ManejadorUsuario {
 	private static ManejadorUsuario instancia = null;
@@ -15,32 +21,51 @@ public class ManejadorUsuario {
 		return instancia;
 	}
 	public ArrayList<Usuario> getUsuarios() {
-		return usuarios;
-	}
-	public Usuario getUsuario(String nick, String correo) {
-		Usuario retorno = null;
-		if (!usuarios.isEmpty()){
-			for (Usuario u: usuarios) {
-				if ((u.getNick().toLowerCase().equals(nick.toLowerCase())) || (u.getCorreo().toLowerCase().equals(correo.toLowerCase()))) {
-					retorno = u;
-				}
-			}
-		}
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
 		
-		return retorno;
+		Query query = em.createQuery("select s from Socio s");
+		ArrayList<Usuario> listUsuario = (ArrayList<Usuario>) query.getResultList();
+		return listUsuario;
 	}
-	public void removerUsuario(Usuario usuario) {
-		//
+	
+	public ArrayList<String> getUsuariosCorreo() {
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		
+		Query query = em.createQuery("select s from Socio s");
+		List<Usuario> listUsuario = (List<Usuario>) query.getResultList();
+		ArrayList<String> ret = new ArrayList<>();
+		for(Usuario u: listUsuario) {
+			ret.add(u.getCorreo());
+		}
+		return ret;
 	}
+	/*
+	 * public Usuario getUsuario(String nick, String correo) { Usuario retorno =
+	 * null; if (!usuarios.isEmpty()){ for (Usuario u: usuarios) { if
+	 * ((u.getNick().toLowerCase().equals(nick.toLowerCase())) ||
+	 * (u.getCorreo().toLowerCase().equals(correo.toLowerCase()))) { retorno = u; }
+	 * } }
+	 * 
+	 * return retorno; }
+	 */
+
 	public void agregarUsuario(Usuario usuario) {
-		this.usuarios.add(usuario);
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		em.getTransaction().begin();
+		
+		em.persist(usuario);
+		
+		em.getTransaction().commit();
 	}
 	
 	public Usuario findUsuario(String nick) {
-		for(Usuario u: usuarios) {
-			if(u.getNick().equals(nick))
-				return u;
-		}
-		return null;
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		
+		Usuario usuario = em.find(Usuario.class, nick);
+		return usuario;
 	}
 }
