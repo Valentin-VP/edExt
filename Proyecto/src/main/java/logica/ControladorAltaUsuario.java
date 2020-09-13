@@ -1,6 +1,8 @@
  package logica;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import datatypes.DtFecha;
@@ -53,10 +55,17 @@ public class ControladorAltaUsuario implements IControladorAltaUsuario {
 	public void confirmarAltaUsuario(boolean esDocente) {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		Usuario user;
+		Date fechadate = null;
+		try {
+			fechadate = usuario.getFechaNac().DtFechaToDate();
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
 		if (esDocente) {
-			user = new Docente(usuario.getNick(), usuario.getNombre(), usuario.getApellido(),usuario.getCorreo(), usuario.getFechaNac(), this.instituto);
+			user = new Docente(usuario.getNick(), usuario.getNombre(), usuario.getApellido(),usuario.getCorreo(), fechadate, this.instituto);
 		} else {
-			user = new Estudiante(usuario.getNick(), usuario.getNombre(), usuario.getApellido(),usuario.getCorreo(), usuario.getFechaNac());
+			user = new Estudiante(usuario.getNick(), usuario.getNombre(), usuario.getApellido(),usuario.getCorreo(), fechadate);
 		}	
 		mU.agregarUsuario(user);
 	}
