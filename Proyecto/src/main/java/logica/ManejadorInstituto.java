@@ -5,6 +5,11 @@ import java.util.List;
 
 import datatypes.DtInstituto;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
+import persistencia.Conexion;
+
 public class ManejadorInstituto {
     private static ManejadorInstituto instancia;
     private List<Instituto> institutos = new ArrayList<Instituto>();
