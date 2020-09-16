@@ -1,6 +1,11 @@
 package logica;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import datatypes.DtCursoBase;
 import datatypes.DtEdicionBase;
@@ -13,6 +18,7 @@ import excepciones.SinInstitutos;
 import excepciones.UsuarioNoEstudiante;
 import excepciones.UsuarioNoExiste;
 import interfaces.IControladorInscripcionEdicionCurso;
+import persistencia.Conexion;
 
 public class ControladorInscripcionEdicionCurso implements IControladorInscripcionEdicionCurso{
 	private String nomIns;
@@ -34,6 +40,14 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 		this.nomCurso = nomCurso;
 	}
 
+	public String getCorreo() {
+		return correo;
+	}
+
+	public void setCorreo(String correo) {
+		this.correo = correo;
+	}
+
 	@Override
 	public ArrayList<DtInstituto> listarInstitutos() throws SinInstitutos {
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
@@ -52,7 +66,7 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 			throw new SinInstitutos("No hay institutos ingresados");
 		}
 		this.nomIns = ins.getNombre();
-		ArrayList <Curso> cursos = ins.getCursos();
+		List <Curso> cursos = ins.getCursos();
 		if (cursos.isEmpty()) {
 			throw new CursoNoExiste("El instituto no tiene cursos ingresados");
 		}
@@ -81,11 +95,11 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 	@Override
 	public boolean registrarInscripcionEd(String nick, String correo, String nomCurso, DtFecha fecha) throws InscripcionEdRepetido, UsuarioNoExiste, UsuarioNoEstudiante {
 		this.nick = nick;
-		this.correo = correo;
+		this.setCorreo(correo);
 		this.setNomCurso(nomCurso);
 		this.fecha = fecha;
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
-		Usuario u = mU.getUsuario(nick, correo);
+		Usuario u = mU.findUsuario(nick);
 		if (u == null) {
 			throw new UsuarioNoExiste("No existe el usuario ingresado");
 		}
@@ -105,7 +119,7 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 		this.nomIns=null;
 		this.setNomCurso(null);
 		this.nick=null;
-		this.correo=null;
+		this.setCorreo(null);
 		this.nombreEd=null;
 		this.fecha=null;
 	}
@@ -116,21 +130,28 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 		Instituto ins = mI.find(nomIns);
 		Curso c = ins.findCurso(nomCurso);
 		Edicion ed = c.findEdicion(nombreEd);
-		InscripcionEd ie=new InscripcionEd(this.fecha,ed);
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
-		Usuario u = mU.getUsuario(this.nick, this.correo);
+		Usuario u = mU.findUsuario(this.nick);
+		Date datefecha = null;
+		try {
+			datefecha = this.fecha.DtFechaToDate();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		InscripcionEd ie=new InscripcionEd(datefecha,ed,(Estudiante) u);
 		if(u instanceof Estudiante) {
 			((Estudiante) u).agregarInscripcionEd(ie);
+			
+			Conexion conexion = Conexion.getInstancia();
+			EntityManager em = conexion.getEntityManager();
+			em.getTransaction().begin();
+			
+			em.persist(u);
+			
+			em.getTransaction().commit();
+			
 		}
-		System.out.println(ins.getNombre());
-		System.out.println(c.getNombre());
-		System.out.println(ed.getNombre());
-		System.out.println(u.getNick());
-		System.out.println(u.getCorreo());
-		System.out.println(ie.getEdicion().getNombre());
-		System.out.println(ie.getFecha().getDia());
-		System.out.println(ie.getFecha().getMes());
-		System.out.println(ie.getFecha().getAnio());
 	}
 
 }

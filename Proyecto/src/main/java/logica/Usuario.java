@@ -1,16 +1,29 @@
 package logica;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+
 import datatypes.DtFecha;
 import datatypes.DtUsuario;
 
+@Entity
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 public class Usuario {
+	@Id
 	private String nick;
+	
+	private String correo;
 	private String nombre;
 	private String apellido;
-	private String correo;
-	private DtFecha fechaNac;
+	private Date  fechaNac;
 	
-	public Usuario(String nick, String nombre, String apellido, String correo, DtFecha fechaNac) {
+	public Usuario(String nick, String nombre, String apellido, String correo, Date  fechaNac) {
 		super();
 		this.nick = nick;
 		this.nombre = nombre;
@@ -55,16 +68,27 @@ public class Usuario {
 		this.correo = correo;
 	}
 
-	public DtFecha getFechaNac() {
+	public Date  getFechaNac() {
 		return fechaNac;
 	}
 
-	public void setFechaNac(DtFecha fechaNac) {
+	public void setFechaNac(Date  fechaNac) {
 		this.fechaNac = fechaNac;
 	}
 	
 	public DtUsuario getDtUsuario() {
-		DtUsuario dtUsuario = new DtUsuario(this.nick, this.correo, this.nombre, this.apellido, this.fechaNac);
+		ArrayList<Integer> datos = new ArrayList<>();
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/M/yyyy");
+		String date = sdf.format(fechaNac); 
+		String valores [] = (date).split("/");
+		for(String s: valores) {
+			int temp = Integer.parseInt(s);
+			datos.add(temp);
+		}
+		DtFecha fechaR = new DtFecha(datos.get(0),datos.get(1),datos.get(2));
+		
+		DtUsuario dtUsuario = new DtUsuario(this.nick, this.correo, this.nombre, this.apellido, fechaR);
+
 		return dtUsuario;
 	}
 	

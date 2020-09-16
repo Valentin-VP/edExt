@@ -25,6 +25,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class InscripcionEdicionCurso extends JInternalFrame {
 
@@ -61,13 +63,13 @@ public class InscripcionEdicionCurso extends JInternalFrame {
 		
 		comboBoxCur = new JComboBox<String>();
 		comboBoxCur.addActionListener(new ActionListener() {
+
 			public void actionPerformed(ActionEvent e) {
-				//DefaultComboBoxModel<String> cursoNombre = new DefaultComboBoxModel<String>();
-				//comboBoxCur.setModel(cursoNombre);
 				cargarEdicionVigenteComboBoxCursos();
 			}
 		});
 		comboBoxCur.setBounds(53, 104, 168, 20);
+		comboBoxCur.setEnabled(false);
 		getContentPane().add(comboBoxCur);
 		
 		JLabel lblNewLabel = new JLabel("Seleccione Instituto");
@@ -151,35 +153,28 @@ public class InscripcionEdicionCurso extends JInternalFrame {
 			p++;
 		}
 		
-		//DefaultComboBoxModel<String> dml= new DefaultComboBoxModel<String>();
-		
-		//for (int i = 0; i < cursos.size(); i++) {
-			//dml.addElement(cursos.get(i).getNombre());
-		//}
-		
 		for (int i = 0; i < cursos.size(); i++) {
 			comboBoxCur.addItem(array[i]);
 		}
-		
-		//comboBoxCur.setEnabled(true);
-		//comboBoxCur.setModel(dml);
+		comboBoxCur.setEnabled(true);
 		
 	}
 	
 	private void cargarEdicionVigenteComboBoxCursos() {
 		textFieldEd.setText("");
-		try {
-			
-			DtEdicionBase dteb = icon.seleccionarCurso(comboBoxCur.getSelectedItem().toString());
-			if (dteb == null) {
-				JOptionPane.showInternalConfirmDialog(null, "Este curso no tiene edicion vigente, seleccione otro", "Edicion vigente",
-			             JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE);
-			} else {
-				textFieldEd.setText(dteb.getNombre());
+		if (comboBoxCur.getSelectedItem() != null) {
+			try {
+				DtEdicionBase dteb = icon.seleccionarCurso(comboBoxCur.getSelectedItem().toString());
+				if (dteb == null) {
+					JOptionPane.showInternalConfirmDialog(null, "Este curso no tiene edicion vigente, seleccione otro", "Edicion vigente",
+				             JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE);
+				} else {
+					textFieldEd.setText(dteb.getNombre());
+				}
+				
+			}catch(EdicionVigenteNoExiste ev) {
+				JOptionPane.showMessageDialog(null, ev.getMessage(), "Inscripcion Edicion Curso", JOptionPane.ERROR_MESSAGE);
 			}
-			
-		}catch(EdicionVigenteNoExiste ev) {
-			JOptionPane.showMessageDialog(null, ev.getMessage(), "Inscripcion Edicion Curso", JOptionPane.ERROR_MESSAGE);
 		}	
 	}
 	
@@ -212,12 +207,11 @@ public class InscripcionEdicionCurso extends JInternalFrame {
 	}
 	
 	private void limpiar() {
-		//comboBoxIns.removeAllItems();
-		//comboBoxCur.removeAllItems();
 		DefaultComboBoxModel<String> institutos = new DefaultComboBoxModel<String>();
 		comboBoxIns.setModel(institutos);
 		DefaultComboBoxModel<String> cursos = new DefaultComboBoxModel<String>();
 		comboBoxCur.setModel(cursos);
+		comboBoxCur.setEnabled(false);
 		textFieldEd.setText("");
 		textFieldEst.setText("");
 		textFieldCorreo.setText("");

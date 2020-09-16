@@ -1,7 +1,11 @@
 package interfaces;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import datatypes.DtFecha;
+import datatypes.DtInstituto;
+import excepciones.SinInstitutos;
 import excepciones.UsuarioRepetido;
 import logica.Instituto;
 
@@ -16,6 +20,8 @@ public interface IControladorAltaUsuario {
 	
 	public void confirmarAltaUsuario(boolean esDocente);
 	
-	public ArrayList<Instituto> getInstitutos();
+	public List<Instituto> getInstitutos();
+	
+	public ArrayList<DtInstituto> listarInstitutos() throws SinInstitutos;
 	
 }

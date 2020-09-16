@@ -1,10 +1,15 @@
  package logica;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import datatypes.DtFecha;
+import datatypes.DtInstituto;
 import datatypes.DtUsuario;
 import interfaces.IControladorAltaUsuario;
+import excepciones.SinInstitutos;
 import excepciones.UsuarioRepetido;
 
 public class ControladorAltaUsuario implements IControladorAltaUsuario {
@@ -19,7 +24,15 @@ public class ControladorAltaUsuario implements IControladorAltaUsuario {
 	public void altaUsuario(String nick, String correo, String nombre, String apellido, DtFecha fechaNac) throws UsuarioRepetido {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		Usuario user = null;
-		user = mU.getUsuario(nick, correo);
+		//user = mU.getUsuario(nick, correo);
+		user = mU.findUsuario(nick);
+		// Operacion que traiga todos los Usuarios de la BD y confirme que ninguno tenga el mismo correo
+		ArrayList<String> correosUsuarios = mU.getUsuariosCorreo();
+		for(String ucorreo: correosUsuarios) {
+			if(ucorreo.equals(correo)) {
+				throw new UsuarioRepetido("El correo " + correo + " ya se encuentra registrado");
+			}
+		}
 		if(!(user == null)) {
 			throw new UsuarioRepetido("El usuario " + nick + " ya se encuentra registrado");
 		}	
@@ -32,16 +45,6 @@ public class ControladorAltaUsuario implements IControladorAltaUsuario {
 		this.instituto = mI.find(instituto);
 	}
 	
-	/*@Override
-	public void modificarAltaUsuario(String nuevoNick, String nuevoCorreo) throws UsuarioRepetido {
-		this.usuario.setNick(nuevoNick);
-		this.usuario.setCorreo(nuevoCorreo);
-		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
-		Usuario user = mU.getUsuario(nuevoNick, nuevoCorreo);
-		if (user != null) {
-			throw new UsuarioRepetido("El usuario " + nuevoNick + "con correo " + nuevoCorreo + " ya se encuentra registrado");
-		}
-	}*/
 	
 	@Override
 	public void cancelarAltaUsuario() {
@@ -52,10 +55,17 @@ public class ControladorAltaUsuario implements IControladorAltaUsuario {
 	public void confirmarAltaUsuario(boolean esDocente) {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		Usuario user;
+		Date fechadate = null;
+		try {
+			fechadate = usuario.getFechaNac().DtFechaToDate();
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
 		if (esDocente) {
-			user = new Docente(usuario.getNick(), usuario.getNombre(), usuario.getApellido(),usuario.getCorreo(), usuario.getFechaNac(), this.instituto);
+			user = new Docente(usuario.getNick(), usuario.getNombre(), usuario.getApellido(),usuario.getCorreo(), fechadate, this.instituto);
 		} else {
-			user = new Estudiante(usuario.getNick(), usuario.getNombre(), usuario.getApellido(),usuario.getCorreo(), usuario.getFechaNac());
+			user = new Estudiante(usuario.getNick(), usuario.getNombre(), usuario.getApellido(),usuario.getCorreo(), fechadate);
 		}	
 		mU.agregarUsuario(user);
 	}
@@ -76,8 +86,17 @@ public class ControladorAltaUsuario implements IControladorAltaUsuario {
 		this.instituto = instituto;
 	}
 	
-	public ArrayList<Instituto> getInstitutos() {
+	public List<Instituto> getInstitutos() {
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 		return mI.getInstitutos();
+	}
+	
+	@Override
+	public ArrayList<DtInstituto> listarInstitutos() throws SinInstitutos {
+		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
+		if (mI.getDtInstitutos().isEmpty()) {
+			throw new SinInstitutos("No hay institutos ingresados");
+		}
+		return mI.getDtInstitutos();
 	}
 }

@@ -137,6 +137,7 @@ public class InfoEdicionCurso extends JInternalFrame {
     	infoEdicionCurso2Panel.add(atras);
     	
     	cerrarDesdeInfoCursoButton = new JButton("Cerrar");
+    	cerrarDesdeInfoCursoButton.setVisible(false);
     	cerrarDesdeInfoCursoButton.addActionListener(new ActionListener() {
     		public void actionPerformed(ActionEvent arg0) {
     			cerrarDos();
