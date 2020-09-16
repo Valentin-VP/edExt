@@ -49,7 +49,7 @@ public class ControladorModificarDatosUsuario implements IControladorModificarDa
 	@Override
 	public DtUsuario seleccionarUsuario(String nick, String correo) {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
-		Usuario user = mU.getUsuario(nick, correo);
+		Usuario user = mU.findUsuario(nick);
 		return user.getDtUsuario();
 	}
 	@Override

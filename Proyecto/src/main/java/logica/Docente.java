@@ -1,19 +1,41 @@
 package logica;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
 //import datatypes.DtEdicion;
 import datatypes.DtFecha;
 
+@Entity
+@DiscriminatorValue("D")//nuevo
 public class Docente extends Usuario {
+	@ManyToOne
+	@JoinColumn
 	private Instituto instituto;//visibilidad
-	private ArrayList<Edicion> dicta = new ArrayList<>();//visibilidad
 	
-	public Docente(String nick, String nombre, String apellido, String correo, DtFecha fechaNac, Instituto instituto) {
+	@ManyToMany(cascade = CascadeType.ALL)
+	private List<Edicion> dicta = new ArrayList<Edicion>();//visibilidad
+	
+	public Docente () {
+		super();
+	}
+	
+	public Docente(String nick, String nombre, String apellido, String correo, Date fechaNac, Instituto instituto) {
 		super(nick, nombre, apellido, correo, fechaNac);
 		this.instituto = instituto;
 	}
 
-	public Docente(String nick, String nombre, String apellido, String correo, DtFecha fechaNac) {
+	public Docente(String nick, String nombre, String apellido, String correo, Date  fechaNac) {
 		super(nick, nombre, apellido, correo, fechaNac);
 	}
 	
@@ -38,11 +60,11 @@ public class Docente extends Usuario {
 		this.instituto = instituto;
 	}
 
-	public ArrayList<Edicion> getEdiciones() {
+	public List<Edicion> getEdiciones() {
 		return dicta;
 	}
 
-	public void setEdiciones(ArrayList<Edicion> ediciones) {
+	public void setEdiciones(List<Edicion> ediciones) {
 		this.dicta = ediciones;
 	}
 	

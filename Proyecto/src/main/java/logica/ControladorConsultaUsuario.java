@@ -14,7 +14,7 @@ public class ControladorConsultaUsuario implements IControladorConsultaUsuario {
 	
 	public void ElegirUsuario(String nick, String correo) {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
-		mU.getUsuario(nick, correo);
+		mU.findUsuario(nick);
 		//aca habria que ver que tipo de usuario es y depende de lo que elija el usuario el caso de uso con el que se procede
 	}
 }

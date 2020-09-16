@@ -158,10 +158,6 @@ public class AgregarCurso extends JInternalFrame {
 		altaCursoPreviasList = new JList<String>();
 		scrollPane.setViewportView(altaCursoPreviasList);
 		altaCursoPreviasList.setVisible(false);
-		// --Lista de Cursos Disponibles
-		
-		// aqui
-		
 		altaCursoAgregarPreviasButton = new JButton("Agregar");
 		altaCursoAgregarPreviasButton.setEnabled(false);
 		altaCursoAgregarPreviasButton.addActionListener(new ActionListener() {
@@ -171,7 +167,7 @@ public class AgregarCurso extends JInternalFrame {
 				      String previa = altaCursoPreviasList.getModel().getElementAt(selectedIx[i]).toString();
 				      if(!previasseleccionadas.contains(previa)) {
 				    	  previasseleccionadas.add(previa);
-				      } //Revisar luego si no quedan duplicados
+				      } 
 				      
 				    }
 				JOptionPane.showMessageDialog(getContentPane(), "Se han agregado las Previas asociadas", "Alta Curso", DISPOSE_ON_CLOSE);
@@ -287,7 +283,7 @@ public class AgregarCurso extends JInternalFrame {
 				JOptionPane.showMessageDialog(this, "Valor incorrecto en creditos", "Alta Curso", JOptionPane.ERROR_MESSAGE);
 				return false;
 			}
-			//int duracionint = Integer.parseInt(duracion);
+			
 			if(cantHoras == 0 || creditos == 0) {
 				JOptionPane.showMessageDialog(this, "No se permiten valores iguales a 0", "Alta Curso", 
 				JOptionPane.ERROR_MESSAGE);
@@ -318,7 +314,6 @@ public class AgregarCurso extends JInternalFrame {
 	}
 	
 	private void populatePreviasList(IControladorConsultaCurso iconaux) {
-		// ArrayList<String> cursosdisponibles = new ArrayList<String>();
 		ArrayList<DtCursoBase> dtcursosbase = new ArrayList<DtCursoBase>();
 		try {
 			String instituto = (String) this.altaCursoInstitutotextField.getText();

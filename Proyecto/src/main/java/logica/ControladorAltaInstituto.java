@@ -17,7 +17,8 @@ public class ControladorAltaInstituto implements IControladorAltaInstituto{
 		Instituto I = mI.find(nombre);
 		if (I != null)
 			throw new InstitutoRepetidoExeption("El instituto " + nombre +" ya esta registrado");
-		mI.agregarInstituto(nombre);
+		Instituto i = new Instituto(nombre);
+		mI.agregarInstituto(i);
 	}
 	
 }	

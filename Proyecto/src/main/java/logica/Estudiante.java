@@ -1,13 +1,27 @@
 package logica;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 
 import datatypes.DtFecha;
 
+@Entity
+@DiscriminatorValue("E")
 public class Estudiante extends Usuario {
-	ArrayList<InscripcionEd> inscripciones = new ArrayList<InscripcionEd>();
+	@OneToMany(mappedBy = "nick",cascade = CascadeType.ALL)
+	List<InscripcionEd> inscripciones = new ArrayList<InscripcionEd>();
 	
-	public Estudiante(String nick, String nombre, String apellido, String correo, DtFecha fechaNac) {
+	public Estudiante() {
+		super();
+	}
+	
+	public Estudiante(String nick, String nombre, String apellido, String correo, Date  fechaNac) {
 		super(nick, nombre, apellido, correo, fechaNac);
 	}
 	
