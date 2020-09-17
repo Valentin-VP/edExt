@@ -24,6 +24,8 @@ import javax.swing.JOptionPane;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.Color;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class AgregarEdicionCurso extends JInternalFrame {
 	
@@ -253,6 +255,14 @@ public class AgregarEdicionCurso extends JInternalFrame {
 		lblNombre.setBounds(35, 227, 70, 15);
 		
 		nombreEdicion = new JTextField();
+		nombreEdicion.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					AgregarEdicionCursoAceptarActionPerformed();
+				}
+			}
+		});
 		nombreEdicion.setBounds(143, 223, 270, 19);
 		nombreEdicion.setFont(new Font("Dialog", Font.PLAIN, 14));
 		nombreEdicion.setColumns(10);
@@ -408,7 +418,7 @@ public class AgregarEdicionCurso extends JInternalFrame {
 		JButton btnAceptar = new JButton("Aceptar");
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent a) {
-				AgregarEdicionCursoAceptarActionPerformed(a);
+				AgregarEdicionCursoAceptarActionPerformed();
 				comboBoxNombreCurso.setEnabled(true);
 				btnRefresh.setEnabled(true);
 				nombreEdicion.setEditable(true);
@@ -425,6 +435,14 @@ public class AgregarEdicionCurso extends JInternalFrame {
 		getContentPane().add(lblDocentes);
 		
 		nickDocente = new JTextField();
+		nickDocente.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					AgregarDocenteActionPerformed();	
+				}
+			}
+		});
 		nickDocente.setBounds(119, 419, 145, 19);
 		getContentPane().add(nickDocente);
 		nickDocente.setColumns(10);
@@ -432,7 +450,7 @@ public class AgregarEdicionCurso extends JInternalFrame {
 		JButton btnAgregar = new JButton("Agregar");
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ag) {
-				AgregarDocenteActionPerformed(ag);
+				AgregarDocenteActionPerformed();
 				nickDocente.setText("");
 				correoDocente.setText("");
 			}
@@ -441,6 +459,14 @@ public class AgregarEdicionCurso extends JInternalFrame {
 		getContentPane().add(btnAgregar);
 		
 		correoDocente = new JTextField();
+		correoDocente.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					AgregarDocenteActionPerformed();	
+				}
+			}
+		});
 		correoDocente.setColumns(10);
 		correoDocente.setBounds(119, 462, 145, 19);
 		getContentPane().add(correoDocente);
@@ -454,6 +480,16 @@ public class AgregarEdicionCurso extends JInternalFrame {
 		getContentPane().add(lblCorreo);
 		
 		textFieldInstituto = new JTextField();
+		textFieldInstituto.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					DefaultComboBoxModel<String> cursoNombre = new DefaultComboBoxModel<String>();
+					comboBoxNombreCurso.setModel(cursoNombre);
+					AgregarEdicionCursoRefreshActionPerformed();
+				}
+			}
+		});
 		textFieldInstituto.setBounds(122, 12, 193, 19);
 		getContentPane().add(textFieldInstituto);
 		textFieldInstituto.setColumns(10);
@@ -476,7 +512,7 @@ public class AgregarEdicionCurso extends JInternalFrame {
 			public void actionPerformed(ActionEvent r) {
 				DefaultComboBoxModel<String> cursoNombre = new DefaultComboBoxModel<String>();
 				comboBoxNombreCurso.setModel(cursoNombre);
-				AgregarEdicionCursoRefreshActionPerformed(r);
+				AgregarEdicionCursoRefreshActionPerformed();
 			}
 		});
 		btnRefresh.setBounds(357, 9, 117, 25);
@@ -484,7 +520,7 @@ public class AgregarEdicionCurso extends JInternalFrame {
 				
 	}
 	
-	private void AgregarEdicionCursoRefreshActionPerformed(ActionEvent agr) {
+	private void AgregarEdicionCursoRefreshActionPerformed() {
 		String instituto = (String) this.textFieldInstituto.getText();
 		try {
 			cursos = icon.seleccionarInstituto(instituto);
@@ -527,7 +563,7 @@ public class AgregarEdicionCurso extends JInternalFrame {
 		docentes.clear();
 	}
 	
-	protected void AgregarDocenteActionPerformed(ActionEvent e) {
+	protected void AgregarDocenteActionPerformed() {
 		nick = this.nickDocente.getText();
 		correo = this.correoDocente.getText();
 		if (nick.isEmpty() || correo.isEmpty()) {
@@ -547,9 +583,9 @@ public class AgregarEdicionCurso extends JInternalFrame {
 		textFieldInstituto.setEditable(false);
 	}
 	
-	protected void AgregarEdicionCursoAceptarActionPerformed(ActionEvent e) {
+	protected void AgregarEdicionCursoAceptarActionPerformed() {
 		String nombre = this.nombreEdicion.getText();
-		String cupos = this.cantCupos.getText();
+		int cupos = Integer.parseInt(this.cantCupos.getText());
 		boolean tieneCupos = this.cuposBool.isSelected();
 		String diaI =  this.fiDia.getSelectedItem().toString();
 		String mesI = this.fiMes.getSelectedItem().toString();
@@ -559,7 +595,7 @@ public class AgregarEdicionCurso extends JInternalFrame {
 		String anioF = this.ffAnio.getSelectedItem().toString();
 		String diaP = this.fpDia.getSelectedItem().toString();
 		String mesP = this.fpMes.getSelectedItem().toString();
-		String anioP = this.fpAnio.getSelectedItem().toString();
+		String anioP = this.fpAnio.getSelectedItem().toString(); 
 		DtFecha fechaI = new DtFecha(Integer.parseInt(diaI), Integer.parseInt(mesI), Integer.parseInt(anioI));
 		DtFecha fechaF = new DtFecha(Integer.parseInt(diaF), Integer.parseInt(mesF), Integer.parseInt(anioF));
 		DtFecha fechaPub = new DtFecha(Integer.parseInt(diaP), Integer.parseInt(mesP), Integer.parseInt(anioP));
@@ -567,7 +603,7 @@ public class AgregarEdicionCurso extends JInternalFrame {
 		 	JOptionPane.showMessageDialog(this, "No puede haber campos vacios", "Agregar Edicion", JOptionPane.ERROR_MESSAGE);
 		} else {
 			try {
-				this.icon.altaEdicionCurso(Curso, nombre, fechaI, fechaF, docentes, tieneCupos, Integer.parseInt(cupos), fechaPub);
+				this.icon.altaEdicionCurso(Curso, nombre, fechaI, fechaF, docentes, tieneCupos, cupos, fechaPub);
 				JOptionPane.showMessageDialog(this, "La edicion fue agregada con exito", "Agregar Edicion", JOptionPane.INFORMATION_MESSAGE);
 				setVisible(false);
 				limpiar();

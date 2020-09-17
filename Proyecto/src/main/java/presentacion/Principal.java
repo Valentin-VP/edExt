@@ -71,9 +71,6 @@ public class Principal {
 		
 		//Dimension desktopSize = frame.getMaximumSize(); esto y lo de abajo es para dejar el internal frame en el medio
 		//Dimension jInternalFrameSize;
-	
-		
-		
 		
 		Fabrica fabrica = Fabrica.getInstancia();
 		
@@ -143,12 +140,10 @@ public class Principal {
             }
         };
 
-
         panel_Imagen.setBorder(new EmptyBorder(5,5,5,5));
         panel_Imagen.setLayout(new BorderLayout(0,0));
 		panel_Imagen.setBounds(0, 0, 1262, 647);
 		frame.getContentPane().add(panel_Imagen);
-
 		
 	}
 
@@ -229,5 +224,16 @@ public class Principal {
 			}
 		});
 		mnNewMenu.add(mntmNewMenuItem);
+		
+		JMenu mnNewMenu_1 = new JMenu("Programa");
+		menuBar.add(mnNewMenu_1);
+		
+		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Crear");
+		mntmNewMenuItem_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				altaProgFormacionInternalFrame.setVisible(true);
+			}
+		});
+		mnNewMenu_1.add(mntmNewMenuItem_1);
 	}
 }

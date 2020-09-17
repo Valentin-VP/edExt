@@ -19,6 +19,8 @@ import datatypes.DtCursoBase;
 import datatypes.DtEdicionBase;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class InfoEdicionCurso extends JInternalFrame {
 	private InfoEdicionCurso2 infoEdicionCurso2Panel;
@@ -50,7 +52,7 @@ public class InfoEdicionCurso extends JInternalFrame {
 		infoEdicionCurso2Panel.setBounds(0, 0, 493, 524);
 		this.getContentPane().add(infoEdicionCurso2Panel);
 		infoEdicionCurso2Panel.setVisible(false);
-		
+
 		getContentPane().setEnabled(false);
 		this.icon = icon;
 		setBounds(100, 100, 493, 524);
@@ -64,6 +66,15 @@ public class InfoEdicionCurso extends JInternalFrame {
         getContentPane().add(nombInsti);
         
         nombreInstituto = new JTextField();
+        nombreInstituto.addKeyListener(new KeyAdapter() {
+        	@Override
+        	public void keyPressed(KeyEvent e) {
+        		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+        			limpiarListas();
+            		cargarCursos();
+				}
+        	}
+        });
         nombreInstituto.setBounds(157, 25, 180, 22);
         getContentPane().add(nombreInstituto);
         nombreInstituto.setColumns(10);
@@ -72,7 +83,7 @@ public class InfoEdicionCurso extends JInternalFrame {
         btnNewButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent arg0) { 
         		limpiarListas();
-        		cargarCursos(arg0);
+        		cargarCursos();
         	}
         });
         btnNewButton.setBounds(267, 69, 89, 23);
@@ -148,7 +159,7 @@ public class InfoEdicionCurso extends JInternalFrame {
         
 	}
 	
-	protected void cargarCursos(ActionEvent e) {
+	protected void cargarCursos() {
 		if(nombreInstituto.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(this, "No puede haber campos vacios", "Instituto Vacio", JOptionPane.ERROR_MESSAGE);
 		}else {

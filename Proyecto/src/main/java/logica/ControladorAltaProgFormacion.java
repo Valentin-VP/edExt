@@ -1,5 +1,7 @@
 package logica;
 
+import java.time.LocalDate;
+
 import datatypes.DtFecha;
 import excepciones.ProgramaRepetido;
 import interfaces.IControladorAltaProgFormacion;
@@ -9,14 +11,14 @@ public class ControladorAltaProgFormacion implements IControladorAltaProgFormaci
 	private String descripcion;
 	private DtFecha fechaI;
 	private DtFecha fechaF;
-	private DtFecha fechaA;
+	private LocalDate fechaA;
 	
 	public ControladorAltaProgFormacion() {
 		super();
 	}
 
 	@Override
-	public boolean ingresarProgFormacion(String nom, String des, DtFecha fechaI, DtFecha fechaF, DtFecha fechaA) throws ProgramaRepetido{
+	public boolean ingresarProgFormacion(String nom, String des, DtFecha fechaI, DtFecha fechaF, LocalDate fechaA) throws ProgramaRepetido{
 		// TODO Auto-generated method stub
 		this.nombre=nom;
 		this.descripcion=des;
@@ -30,8 +32,8 @@ public class ControladorAltaProgFormacion implements IControladorAltaProgFormaci
 		return mPF.exists(nom);
 	}
 	
-	@Override
-	public void modificarProgFormacion(String nom, String des, DtFecha fechaI, DtFecha fechaF, DtFecha fechaA) {
+	/*@Override
+	public void modificarProgFormacion(String nom, String des, DtFecha fechaI, DtFecha fechaF, LocalDate fechaA) {
 		// TODO Auto-generated method stub
 		this.nombre=nom;
 		this.descripcion=des;
@@ -39,6 +41,7 @@ public class ControladorAltaProgFormacion implements IControladorAltaProgFormaci
 		this.fechaF=fechaF;
 		this.fechaA=fechaA;
 	}
+	*/
 	
 	@Override
 	public void cancelar() {
@@ -48,7 +51,9 @@ public class ControladorAltaProgFormacion implements IControladorAltaProgFormaci
 	@Override
 	public void confirmar() {
 		// TODO Auto-generated method stub
-		ProgFormacion pf = new ProgFormacion(this.nombre, this.descripcion, this.fechaI, this.fechaF, this.fechaA);
+		LocalDate fechaI = LocalDate.of(this.fechaI.getAnio(), this.fechaI.getMes(), this.fechaI.getDia());
+		LocalDate fechaF = LocalDate.of(this.fechaF.getAnio(), this.fechaF.getMes(), this.fechaF.getDia());
+		ProgFormacion pf = new ProgFormacion(this.nombre, this.descripcion, fechaI, fechaF, this.fechaA);
 		ManejadorProgFormacion mPF = ManejadorProgFormacion.getInstancia();
 		mPF.agregarProgFormacion(pf);
 	}

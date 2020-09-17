@@ -1,10 +1,11 @@
 package logica;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ManejadorProgFormacion {
 	private static ManejadorProgFormacion instancia;
-	private ArrayList<ProgFormacion> programas = new ArrayList<ProgFormacion>();
+	private List<ProgFormacion> programas = new ArrayList<ProgFormacion>();
 	
 	public static ManejadorProgFormacion getInstancia() {
 		if(instancia == null)
@@ -37,11 +38,11 @@ public class ManejadorProgFormacion {
 		return retorno;
 	}
 
-	public ArrayList<ProgFormacion> getProgramas() {
+	public List<ProgFormacion> getProgramas() {
 		return programas;
 	}
 
-	public void setProgramas(ArrayList<ProgFormacion> programas) {
+	public void setProgramas(List<ProgFormacion> programas) {
 		this.programas = programas;
 	}
 

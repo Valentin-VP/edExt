@@ -23,8 +23,11 @@ import excepciones.CursoRepetido;
 import javax.swing.JRadioButton;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import java.awt.Component;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class AgregarCurso extends JInternalFrame {
 	
@@ -64,6 +67,14 @@ public class AgregarCurso extends JInternalFrame {
 		getContentPane().add(altaCursoInstitutoLabel);
 		
 		altaCursoInstitutotextField = new JTextField();
+		altaCursoInstitutotextField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					altaCursoAceptarActionPerformed();
+				}
+			}
+		});
 		altaCursoInstitutotextField.setBounds(110, 16, 203, 22);
 		getContentPane().add(altaCursoInstitutotextField);
 		altaCursoInstitutotextField.setColumns(10);
@@ -74,6 +85,14 @@ public class AgregarCurso extends JInternalFrame {
 		getContentPane().add(altaCursoCustoLabel);
 		
 		altaCursoNombretextField = new JTextField();
+		altaCursoNombretextField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					altaCursoAceptarActionPerformed();
+				}
+			}
+		});
 		altaCursoNombretextField.setColumns(10);
 		altaCursoNombretextField.setBounds(110, 57, 203, 22);
 		getContentPane().add(altaCursoNombretextField);
@@ -84,6 +103,14 @@ public class AgregarCurso extends JInternalFrame {
 		getContentPane().add(altaCursoDescripcionLabel);
 		
 		altaCursoDescripciontextField = new JTextField();
+		altaCursoDescripciontextField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					altaCursoAceptarActionPerformed();
+				}
+			}
+		});
 		altaCursoDescripciontextField.setColumns(10);
 		altaCursoDescripciontextField.setBounds(110, 98, 203, 22);
 		getContentPane().add(altaCursoDescripciontextField);
@@ -94,6 +121,14 @@ public class AgregarCurso extends JInternalFrame {
 		getContentPane().add(altaCursoDuracionLabel);
 		
 		altaCursoDuraciontextField = new JTextField();
+		altaCursoDuraciontextField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					altaCursoAceptarActionPerformed();
+				}
+			}
+		});
 		altaCursoDuraciontextField.setColumns(10);
 		altaCursoDuraciontextField.setBounds(110, 139, 203, 22);
 		getContentPane().add(altaCursoDuraciontextField);
@@ -104,6 +139,14 @@ public class AgregarCurso extends JInternalFrame {
 		getContentPane().add(altaCursoCantHorasLabel);
 		
 		altaCursoCantHorastextField = new JTextField();
+		altaCursoCantHorastextField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					altaCursoAceptarActionPerformed();
+				}
+			}
+		});
 		altaCursoCantHorastextField.setColumns(10);
 		altaCursoCantHorastextField.setBounds(110, 180, 203, 22);
 		getContentPane().add(altaCursoCantHorastextField);
@@ -114,6 +157,14 @@ public class AgregarCurso extends JInternalFrame {
 		getContentPane().add(altaCursoCreditosLabel);
 		
 		altaCursoCreditostextField = new JTextField();
+		altaCursoCreditostextField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					altaCursoAceptarActionPerformed();
+				}
+			}
+		});
 		altaCursoCreditostextField.setColumns(10);
 		altaCursoCreditostextField.setBounds(110, 221, 203, 22);
 		getContentPane().add(altaCursoCreditostextField);
@@ -135,7 +186,7 @@ public class AgregarCurso extends JInternalFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				// altaCurso
-				altaCursoAceptarActionPerformed(arg0);
+				altaCursoAceptarActionPerformed();
 			}
 		});
 		btnNewButton.setBounds(216, 316, 97, 25);
@@ -147,6 +198,14 @@ public class AgregarCurso extends JInternalFrame {
 		getContentPane().add(altaCursoUrlLabel);
 		
 		altaCursoUrltextField = new JTextField();
+		altaCursoUrltextField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					altaCursoAceptarActionPerformed();
+				}
+			}
+		});
 		altaCursoUrltextField.setColumns(10);
 		altaCursoUrltextField.setBounds(110, 262, 203, 22);
 		getContentPane().add(altaCursoUrltextField);
@@ -222,7 +281,7 @@ public class AgregarCurso extends JInternalFrame {
 
 	}
 
-	protected void altaCursoAceptarActionPerformed(ActionEvent arg0) {
+	protected void altaCursoAceptarActionPerformed() {
 		String instituto = this.altaCursoInstitutotextField.getText();
 		String nombre = this.altaCursoNombretextField.getText();
 		String descripcion = this.altaCursoDescripciontextField.getText();
@@ -284,8 +343,8 @@ public class AgregarCurso extends JInternalFrame {
 				return false;
 			}
 			
-			if(cantHoras == 0 || creditos == 0) {
-				JOptionPane.showMessageDialog(this, "No se permiten valores iguales a 0", "Alta Curso", 
+			if(cantHoras < 1 || creditos < 1) {
+				JOptionPane.showMessageDialog(this, "No se permiten valores menores a 1", "Alta Curso", 
 				JOptionPane.ERROR_MESSAGE);
 				return false;
 			}

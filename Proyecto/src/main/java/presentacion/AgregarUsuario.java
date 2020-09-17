@@ -22,6 +22,8 @@ import datatypes.DtInstituto;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JRadioButton;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class AgregarUsuario extends JInternalFrame {
 	
@@ -55,6 +57,14 @@ public class AgregarUsuario extends JInternalFrame {
 		getContentPane().add(NickUsuario);
 		
 		textFieldNick = new JTextField();
+		textFieldNick.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					agregarUsuarioAceptarActionPerformed();
+				}
+			}
+		});
 		textFieldNick.setBounds(170, 31, 144, 19);
 		getContentPane().add(textFieldNick);
 		textFieldNick.setColumns(10);
@@ -64,6 +74,14 @@ public class AgregarUsuario extends JInternalFrame {
 		getContentPane().add(CorreoUsuario);
 		
 		textFieldCorreo = new JTextField();
+		textFieldCorreo.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					agregarUsuarioAceptarActionPerformed();
+				}
+			}
+		});
 		textFieldCorreo.setBounds(170, 85, 144, 19);
 		getContentPane().add(textFieldCorreo);
 		textFieldCorreo.setColumns(10);
@@ -73,6 +91,14 @@ public class AgregarUsuario extends JInternalFrame {
 		getContentPane().add(NombreUsuario);
 		
 		textFieldNombre = new JTextField();
+		textFieldNombre.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					agregarUsuarioAceptarActionPerformed();
+				}
+			}
+		});
 		textFieldNombre.setColumns(10);
 		textFieldNombre.setBounds(170, 148, 144, 19);
 		getContentPane().add(textFieldNombre);
@@ -82,6 +108,14 @@ public class AgregarUsuario extends JInternalFrame {
 		getContentPane().add(ApellidoUsuario);
 		
 		textFieldApellido = new JTextField();
+		textFieldApellido.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					agregarUsuarioAceptarActionPerformed();
+				}
+			}
+		});
 		textFieldApellido.setColumns(10);
 		textFieldApellido.setBounds(170, 209, 144, 19);
 		getContentPane().add(textFieldApellido);
@@ -174,7 +208,7 @@ public class AgregarUsuario extends JInternalFrame {
 		JButton btnAceptar = new JButton("Aceptar");
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				agregarUsuarioAceptarActionPerformed(arg0);
+				agregarUsuarioAceptarActionPerformed();
 				setVisible(false);
 				limpiar();
 			}
@@ -223,8 +257,7 @@ public class AgregarUsuario extends JInternalFrame {
 
 	}
 	
-	
-	protected void agregarUsuarioAceptarActionPerformed(ActionEvent arg0) {
+	protected void agregarUsuarioAceptarActionPerformed() {
 		String nickname = this.textFieldNick.getText();
 		String correo = this.textFieldCorreo.getText();
 		String nombre = this.textFieldNombre.getText();

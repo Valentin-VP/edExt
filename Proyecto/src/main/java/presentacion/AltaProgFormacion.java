@@ -13,6 +13,8 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class AltaProgFormacion extends JInternalFrame {
 
@@ -44,11 +46,27 @@ public class AltaProgFormacion extends JInternalFrame {
 		getContentPane().add(lblNombre);
 		
 		textFieldNom = new JTextField();
+		textFieldNom.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					altaProgFormacionAceptarActionPerformed();
+				}
+			}
+		});
 		textFieldNom.setBounds(136, 39, 142, 20);
 		getContentPane().add(textFieldNom);
 		textFieldNom.setColumns(10);
 		
 		textFieldDes = new JTextField();
+		textFieldDes.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					altaProgFormacionAceptarActionPerformed();
+				}
+			}
+		});
 		textFieldDes.setBounds(136, 88, 142, 20);
 		getContentPane().add(textFieldDes);
 		textFieldDes.setColumns(10);
@@ -208,8 +226,7 @@ public class AltaProgFormacion extends JInternalFrame {
 		JButton btnNewButton = new JButton("Aceptar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				altaProgFormacionAceptarActionPerformed(e);
-				setVisible(false);
+				altaProgFormacionAceptarActionPerformed();
 				limpiar();
 			}
 		});
@@ -229,7 +246,7 @@ public class AltaProgFormacion extends JInternalFrame {
 
 	}
 	
-	private void altaProgFormacionAceptarActionPerformed(ActionEvent e) {
+	private void altaProgFormacionAceptarActionPerformed() {
 		
 		String diaI = (String) comboBoxDiaI.getSelectedItem();
 		String mesI = (String) comboBoxMesI.getSelectedItem();
@@ -238,17 +255,16 @@ public class AltaProgFormacion extends JInternalFrame {
 		String mesF = (String) comboBoxMesF.getSelectedItem();
 		String anioF = (String) comboBoxAnioF.getSelectedItem();
 		
-		LocalDate date = LocalDate.now();
 		if (checkeo(textFieldNom.getText(),textFieldDes.getText(),diaI,mesI,anioI,diaF,mesF,anioF)) {
 			DtFecha fechaI = new DtFecha(Integer.parseInt(diaI),Integer.parseInt(mesI),Integer.parseInt(anioI));
 			DtFecha fechaF = new DtFecha(Integer.parseInt(diaF),Integer.parseInt(mesF),Integer.parseInt(anioF));
-			DtFecha fechaA = new DtFecha((Integer)date.getDayOfMonth(),(Integer)date.getMonthValue(),(Integer)date.getYear());
+			LocalDate fechaA = LocalDate.now();
 			try {
 				icon.ingresarProgFormacion(textFieldNom.getText(), textFieldDes.getText(), fechaI, fechaF, fechaA);
 				icon.confirmar();
 				JOptionPane.showMessageDialog(this, "El Programa se ha creado con exito", "Crear Programa",
 						JOptionPane.INFORMATION_MESSAGE);
-				limpiar();
+				setVisible(false);
 			}catch(ProgramaRepetido pr) {
 				JOptionPane.showMessageDialog(this, pr.getMessage(), "Crear Programa", JOptionPane.ERROR_MESSAGE);
 			}

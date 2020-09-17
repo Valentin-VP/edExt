@@ -10,6 +10,8 @@ import javax.swing.JFrame;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class AgregarInstituto extends JInternalFrame {
 	private JTextField nombreInstituto;
@@ -38,6 +40,14 @@ public class AgregarInstituto extends JInternalFrame {
 		getContentPane().add(lblNewLabel);
 		
 		nombreInstituto = new JTextField();
+		nombreInstituto.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					agregarInstitutoAceptarAP();
+				}
+			}
+		});
 		nombreInstituto.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		nombreInstituto.setBounds(117, 27, 174, 25);
 		getContentPane().add(nombreInstituto);
@@ -46,7 +56,7 @@ public class AgregarInstituto extends JInternalFrame {
 		JButton btnNewButton = new JButton("Aceptar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				agregarInstitutoAceptarAP(e);
+				agregarInstitutoAceptarAP();
 			}
 		});
 		btnNewButton.setBounds(174, 84, 106, 34);
@@ -64,7 +74,7 @@ public class AgregarInstituto extends JInternalFrame {
 
 	}
 
-	private void agregarInstitutoAceptarAP(ActionEvent e) {
+	private void agregarInstitutoAceptarAP() {
 		if(nombreInstituto.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(this, "No puede haber campos vacios", "Nombre Vacio", JOptionPane.ERROR_MESSAGE);
 		}else {
