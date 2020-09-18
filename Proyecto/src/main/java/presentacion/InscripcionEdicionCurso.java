@@ -25,8 +25,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class InscripcionEdicionCurso extends JInternalFrame {
 
@@ -63,7 +63,6 @@ public class InscripcionEdicionCurso extends JInternalFrame {
 		
 		comboBoxCur = new JComboBox<String>();
 		comboBoxCur.addActionListener(new ActionListener() {
-
 			public void actionPerformed(ActionEvent e) {
 				cargarEdicionVigenteComboBoxCursos();
 			}
@@ -85,11 +84,27 @@ public class InscripcionEdicionCurso extends JInternalFrame {
 		getContentPane().add(lblNewLabel_1_1);
 		
 		textFieldEst = new JTextField();
+		textFieldEst.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					InscripcionEdicionCursoAceptarActionPerformed();
+				}
+			}
+		});
 		textFieldEst.setBounds(53, 196, 168, 20);
 		getContentPane().add(textFieldEst);
 		textFieldEst.setColumns(10);
 		
 		textFieldCorreo = new JTextField();
+		textFieldCorreo.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					InscripcionEdicionCursoAceptarActionPerformed();
+				}
+			}
+		});
 		textFieldCorreo.setColumns(10);
 		textFieldCorreo.setBounds(53, 252, 168, 20);
 		getContentPane().add(textFieldCorreo);
@@ -98,7 +113,7 @@ public class InscripcionEdicionCurso extends JInternalFrame {
 		btnNewButton.setBounds(173, 301, 89, 23);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				InscripcionEdicionCursoAceptarActionPerformed(e);
+				InscripcionEdicionCursoAceptarActionPerformed();
 				setVisible(false);
 				icon.limpiar();
 				limpiar();
@@ -178,7 +193,7 @@ public class InscripcionEdicionCurso extends JInternalFrame {
 		}	
 	}
 	
-	private void InscripcionEdicionCursoAceptarActionPerformed(ActionEvent e) {
+	private void InscripcionEdicionCursoAceptarActionPerformed() {
 		
 		if (checkeo(textFieldEst.getText(),textFieldCorreo.getText(),textFieldEd.getText())) {
 			LocalDate date = LocalDate.now();

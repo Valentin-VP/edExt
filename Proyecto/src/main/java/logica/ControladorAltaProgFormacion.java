@@ -19,7 +19,6 @@ public class ControladorAltaProgFormacion implements IControladorAltaProgFormaci
 
 	@Override
 	public boolean ingresarProgFormacion(String nom, String des, DtFecha fechaI, DtFecha fechaF, LocalDate fechaA) throws ProgramaRepetido{
-		// TODO Auto-generated method stub
 		this.nombre=nom;
 		this.descripcion=des;
 		this.fechaI=fechaI;
@@ -34,7 +33,6 @@ public class ControladorAltaProgFormacion implements IControladorAltaProgFormaci
 	
 	/*@Override
 	public void modificarProgFormacion(String nom, String des, DtFecha fechaI, DtFecha fechaF, LocalDate fechaA) {
-		// TODO Auto-generated method stub
 		this.nombre=nom;
 		this.descripcion=des;
 		this.fechaI=fechaI;
@@ -45,12 +43,15 @@ public class ControladorAltaProgFormacion implements IControladorAltaProgFormaci
 	
 	@Override
 	public void cancelar() {
-		// TODO Auto-generated method stub
+		this.nombre="";
+		this.descripcion="";
+		this.fechaI=null;
+		this.fechaF=null;
+		this.fechaA=null;
 	}
 	
 	@Override
 	public void confirmar() {
-		// TODO Auto-generated method stub
 		LocalDate fechaI = LocalDate.of(this.fechaI.getAnio(), this.fechaI.getMes(), this.fechaI.getDia());
 		LocalDate fechaF = LocalDate.of(this.fechaF.getAnio(), this.fechaF.getMes(), this.fechaF.getDia());
 		ProgFormacion pf = new ProgFormacion(this.nombre, this.descripcion, fechaI, fechaF, this.fechaA);

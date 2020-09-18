@@ -136,7 +136,6 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 		try {
 			datefecha = this.fecha.DtFechaToDate();
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		InscripcionEd ie=new InscripcionEd(datefecha,ed,(Estudiante) u);

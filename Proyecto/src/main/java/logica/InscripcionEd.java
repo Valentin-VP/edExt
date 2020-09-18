@@ -8,7 +8,6 @@ import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import datatypes.DtFecha;
 import persistencia.InscripcionEdID;
 
 @Entity

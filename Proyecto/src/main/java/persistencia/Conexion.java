@@ -4,20 +4,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import interfaces.*;
-import logica.ControladorConsultaCurso;
-import logica.ControladorAgregarCursoPrograma;
-import logica.ControladorAltaCurso;
-import logica.ControladorAltaEdicionCurso;
-import logica.ControladorAltaInstituto;
-import logica.ControladorAltaProgFormacion;
-import logica.ControladorAltaUsuario;
-import logica.ControladorConsultaEdicionCurso;
-import logica.ControladorConsultaPrograma;
-import logica.ControladorConsultaUsuario;
-import logica.ControladorInscripcionEdicionCurso;
-import logica.ControladorModificarDatosUsuario;
-
 public class Conexion {
 	private static Conexion instancia = null;
 	private static EntityManagerFactory emf;
@@ -35,12 +21,12 @@ public class Conexion {
 	}
 	
 	public EntityManager getEntityManager() {
-		return this.em;
+		return em;
 	}
 	
 	public void close() {
-		this.em.close();
-		this.emf.close();
+		em.close();
+		emf.close();
 	}
 
 

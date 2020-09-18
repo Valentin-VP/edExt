@@ -28,6 +28,7 @@ public class ManejadorUsuario {
 		EntityManager em = conexion.getEntityManager();
 		
 		Query query = em.createQuery("select u from Usuario u");
+		@SuppressWarnings("unchecked")
 		List<Usuario> listUsuario = (List<Usuario>) query.getResultList();
 		return listUsuario;
 	}
@@ -37,6 +38,7 @@ public class ManejadorUsuario {
 		EntityManager em = conexion.getEntityManager();
 		
 		Query query = em.createQuery("select u from Usuario u");
+		@SuppressWarnings("unchecked")
 		List<Usuario> listUsuario = (List<Usuario>) query.getResultList();
 		ArrayList<String> ret = new ArrayList<>();
 		for(Usuario u: listUsuario) {

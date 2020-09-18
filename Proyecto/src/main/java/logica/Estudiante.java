@@ -9,8 +9,6 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
-import datatypes.DtFecha;
-
 @Entity
 @DiscriminatorValue("E")
 public class Estudiante extends Usuario {

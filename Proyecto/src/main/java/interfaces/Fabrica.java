@@ -14,7 +14,6 @@ public class Fabrica {
 
 	private Fabrica() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	
 	public static Fabrica getInstancia() {

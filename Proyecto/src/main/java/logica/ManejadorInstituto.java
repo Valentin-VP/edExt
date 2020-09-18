@@ -58,6 +58,7 @@ public class ManejadorInstituto {
 		EntityManager em = conexion.getEntityManager();
 		
 		Query query = em.createQuery("select i from Instituto i");
+		@SuppressWarnings("unchecked")
 		List<Instituto> listInstitutos = (List<Instituto>) query.getResultList();
 		return listInstitutos;
     }

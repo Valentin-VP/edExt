@@ -23,7 +23,6 @@ import excepciones.CursoRepetido;
 import javax.swing.JRadioButton;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import java.awt.Component;
 import java.awt.event.KeyAdapter;
