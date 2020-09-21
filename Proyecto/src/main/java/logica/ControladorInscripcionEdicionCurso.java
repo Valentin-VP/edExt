@@ -11,6 +11,7 @@ import datatypes.DtCursoBase;
 import datatypes.DtEdicionBase;
 import datatypes.DtFecha;
 import datatypes.DtInstituto;
+import datatypes.EstadoInscripcion;
 import excepciones.CursoNoExiste;
 import excepciones.EdicionVigenteNoExiste;
 import excepciones.InscripcionEdRepetido;
@@ -129,12 +130,13 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		Usuario u = mU.findUsuario(this.nick);
 		Date datefecha = null;
+		EstadoInscripcion estado = EstadoInscripcion.Inscripto;
 		try {
 			datefecha = this.fecha.DtFechaToDate();
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		InscripcionEd ie=new InscripcionEd(datefecha,ed,(Estudiante) u);
+		InscripcionEd ie=new InscripcionEd(datefecha,estado,ed,(Estudiante) u);
 		if(u instanceof Estudiante) {
 			((Estudiante) u).agregarInscripcionEd(ie);
 			
