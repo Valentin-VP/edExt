@@ -37,6 +37,8 @@ public class AgregarUsuario extends JInternalFrame {
 	private JComboBox<String> anioNac;
 	private JComboBox<String> comboBoxInstitutos;
 	private JRadioButton DocenteSi;
+	private JTextField textFieldPass;
+	private JTextField textFieldRepeatPass;
 	
 	public AgregarUsuario(IControladorAltaUsuario icon) {
 		this.icon = icon;
@@ -47,7 +49,7 @@ public class AgregarUsuario extends JInternalFrame {
         setClosable(true);
         setTitle("Alta de Usuario");
  
-		setBounds(100, 100, 511, 549);
+		setBounds(100, 100, 511, 640);
 		getContentPane().setLayout(null);
 		
 		JLabel NickUsuario = new JLabel("Nick");
@@ -85,7 +87,7 @@ public class AgregarUsuario extends JInternalFrame {
 		textFieldCorreo.setColumns(10);
 		
 		JLabel NombreUsuario = new JLabel("Nombre");
-		NombreUsuario.setBounds(58, 150, 70, 15);
+		NombreUsuario.setBounds(58, 301, 70, 15);
 		getContentPane().add(NombreUsuario);
 		
 		textFieldNombre = new JTextField();
@@ -98,11 +100,11 @@ public class AgregarUsuario extends JInternalFrame {
 			}
 		});
 		textFieldNombre.setColumns(10);
-		textFieldNombre.setBounds(170, 148, 144, 19);
+		textFieldNombre.setBounds(170, 299, 144, 19);
 		getContentPane().add(textFieldNombre);
 		
 		JLabel ApellidoUsuario = new JLabel("Apellido");
-		ApellidoUsuario.setBounds(58, 211, 70, 15);
+		ApellidoUsuario.setBounds(58, 362, 70, 15);
 		getContentPane().add(ApellidoUsuario);
 		
 		textFieldApellido = new JTextField();
@@ -115,15 +117,15 @@ public class AgregarUsuario extends JInternalFrame {
 			}
 		});
 		textFieldApellido.setColumns(10);
-		textFieldApellido.setBounds(170, 209, 144, 19);
+		textFieldApellido.setBounds(170, 360, 144, 19);
 		getContentPane().add(textFieldApellido);
 		
 		JLabel lblFechanac = new JLabel("FechaNac.");
-		lblFechanac.setBounds(58, 288, 82, 15);
+		lblFechanac.setBounds(58, 439, 82, 15);
 		getContentPane().add(lblFechanac);
 		
 		diaNac = new JComboBox<String>();
-		diaNac.setBounds(170, 283, 54, 24);
+		diaNac.setBounds(170, 430, 54, 24);
 		diaNac.addItem("1");
 		diaNac.addItem("2");
 		diaNac.addItem("3");
@@ -159,7 +161,7 @@ public class AgregarUsuario extends JInternalFrame {
 		getContentPane().add(diaNac);
 		
 		mesNac = new JComboBox<String>();
-		mesNac.setBounds(254, 283, 54, 24);
+		mesNac.setBounds(254, 430, 54, 24);
 		mesNac.addItem("1");
 		mesNac.addItem("2");
 		mesNac.addItem("3");
@@ -176,7 +178,7 @@ public class AgregarUsuario extends JInternalFrame {
 		getContentPane().add(mesNac);
 		
 		anioNac = new JComboBox<String>();
-		anioNac.setBounds(339, 283, 60, 24);
+		anioNac.setBounds(339, 430, 60, 24);
 		anioNac.addItem("1992");
 		anioNac.addItem("1993");
 		anioNac.addItem("1994");
@@ -192,15 +194,15 @@ public class AgregarUsuario extends JInternalFrame {
 		getContentPane().add(anioNac);
 		
 		JLabel lblDia = new JLabel("dia");
-		lblDia.setBounds(170, 256, 44, 15);
+		lblDia.setBounds(170, 403, 44, 15);
 		getContentPane().add(lblDia);
 		
 		JLabel lblMes = new JLabel("mes");
-		lblMes.setBounds(254, 256, 44, 15);
+		lblMes.setBounds(254, 403, 44, 15);
 		getContentPane().add(lblMes);
 		
 		JLabel lblAnio = new JLabel("anio");
-		lblAnio.setBounds(339, 256, 44, 15);
+		lblAnio.setBounds(339, 403, 44, 15);
 		getContentPane().add(lblAnio);
 		
 		JButton btnAceptar = new JButton("Aceptar");
@@ -211,11 +213,11 @@ public class AgregarUsuario extends JInternalFrame {
 				limpiar();
 			}
 		});
-		btnAceptar.setBounds(301, 408, 117, 25);
+		btnAceptar.setBounds(305, 556, 117, 25);
 		getContentPane().add(btnAceptar);
 		
 		JLabel lblDocente = new JLabel("Docente");
-		lblDocente.setBounds(58, 347, 70, 15);
+		lblDocente.setBounds(58, 511, 70, 15);
 		getContentPane().add(lblDocente);
 		
 		
@@ -225,7 +227,7 @@ public class AgregarUsuario extends JInternalFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				if(DocenteSi.isSelected()) {
 					comboBoxInstitutos.setEnabled(true);
-					agregarEdicionCursoCargarComboBox(arg0);
+					agregarUsuarioCargarComboBox(arg0);
 				}
 				else {
 					comboBoxInstitutos.setEnabled(false);
@@ -234,11 +236,11 @@ public class AgregarUsuario extends JInternalFrame {
 				}				
 			}
 		});
-		DocenteSi.setBounds(165, 343, 59, 23);
+		DocenteSi.setBounds(165, 503, 59, 23);
 		getContentPane().add(DocenteSi);
 		
 		comboBoxInstitutos = new JComboBox<String>();
-		comboBoxInstitutos.setBounds(254, 342, 145, 24);
+		comboBoxInstitutos.setBounds(254, 502, 145, 24);
 		comboBoxInstitutos.setEnabled(false);
 		getContentPane().add(comboBoxInstitutos);
 		
@@ -250,8 +252,26 @@ public class AgregarUsuario extends JInternalFrame {
 				setVisible(false);
 			}
 		});
-		btnCancelar.setBounds(60, 408, 117, 25);
+		btnCancelar.setBounds(58, 556, 117, 25);
 		getContentPane().add(btnCancelar);
+		
+		JLabel PassUsuario = new JLabel("Password");
+		PassUsuario.setBounds(58, 159, 70, 15);
+		getContentPane().add(PassUsuario);
+		
+		JLabel RepeatPass = new JLabel("Confirmar");
+		RepeatPass.setBounds(58, 220, 70, 15);
+		getContentPane().add(RepeatPass);
+		
+		textFieldPass = new JTextField();
+		textFieldPass.setColumns(10);
+		textFieldPass.setBounds(170, 157, 144, 19);
+		getContentPane().add(textFieldPass);
+		
+		textFieldRepeatPass = new JTextField();
+		textFieldRepeatPass.setColumns(10);
+		textFieldRepeatPass.setBounds(170, 218, 144, 19);
+		getContentPane().add(textFieldRepeatPass);
 
 	}
 	
@@ -260,6 +280,7 @@ public class AgregarUsuario extends JInternalFrame {
 		String correo = this.textFieldCorreo.getText();
 		String nombre = this.textFieldNombre.getText();
 		String apellido = this.textFieldApellido.getText();
+		String pass = this.textFieldPass.getText();
 		String instituto = (String) this.comboBoxInstitutos.getSelectedItem();
 	    String dia = (String) this.diaNac.getSelectedItem();
 		String mes = (String) this.mesNac.getSelectedItem();
@@ -268,11 +289,11 @@ public class AgregarUsuario extends JInternalFrame {
 		if (checkeo()) {
 			try {
 				if (DocenteSi.isSelected()) {
-					this.icon.altaUsuario(nickname, correo, nombre, apellido, fechaNac);
+					this.icon.altaUsuario(nickname, correo, nombre, apellido, fechaNac, pass);
 					this.icon.seleccionarInstituto(instituto);
 					this.icon.confirmarAltaUsuario(DocenteSi.isSelected());
 				} else {
-					this.icon.altaUsuario(nickname, correo, nombre, apellido, fechaNac);
+					this.icon.altaUsuario(nickname, correo, nombre, apellido, fechaNac, pass);
 					this.icon.confirmarAltaUsuario(DocenteSi.isSelected());
 				}
 				JOptionPane.showMessageDialog(this, "El Usuario se ha agregado con exito", "Agregar Usuario",
@@ -286,13 +307,20 @@ public class AgregarUsuario extends JInternalFrame {
 	private boolean checkeo() {
 		String nombre = this.textFieldNombre.getText();
 		String apellido = this.textFieldApellido.getText();
+		String pass = this.textFieldPass.getText();
+		String confirmPass = this.textFieldRepeatPass.getText();
 		String dia = (String) this.diaNac.getSelectedItem();
 		String mes = (String) this.mesNac.getSelectedItem();
 		String anio = (String) this.anioNac.getSelectedItem();
-		if(nombre.isEmpty() || apellido.isEmpty() || dia.equals("") || mes.equals("") || anio.equals("")) {
+		if(nombre.isEmpty() || apellido.isEmpty() || dia.equals("") || mes.equals("") || anio.equals("") || pass.isEmpty() || confirmPass.isEmpty()) {
 			JOptionPane.showMessageDialog(this, "No puede haber campos vacios", "Agregar Usuario", 
 			JOptionPane.ERROR_MESSAGE);
 			return false;
+		}
+		if (!(pass.equals(confirmPass))) {//chequeo pass
+			JOptionPane.showMessageDialog(this, "Confirmacion de contrasenia fallida", "Agregar Usuario", 
+					JOptionPane.ERROR_MESSAGE);
+					return false;
 		}
 		return true;
 	}
@@ -302,6 +330,8 @@ public class AgregarUsuario extends JInternalFrame {
 		this.textFieldCorreo.setText("");
 		this.textFieldNombre.setText("");
 		this.textFieldApellido.setText("");
+		this.textFieldPass.setText("");
+		this.textFieldRepeatPass.setText("");
 		this.DocenteSi.setSelected(false);
 		this.diaNac.setSelectedItem("1");
 		this.mesNac.setSelectedItem("1");
@@ -310,7 +340,7 @@ public class AgregarUsuario extends JInternalFrame {
 		this.DocenteSi.setEnabled(true);
 	}
 	
-	private void agregarEdicionCursoCargarComboBox(ActionEvent arg0) {
+	private void agregarUsuarioCargarComboBox(ActionEvent arg0) {
 		try {
 			List<DtInstituto> institutos = icon.listarInstitutos();
 			String[] array = new String[institutos.size()];

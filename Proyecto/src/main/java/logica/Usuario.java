@@ -22,15 +22,28 @@ public class Usuario {
 	private String nombre;
 	private String apellido;
 	private Date  fechaNac;
+	private String password;
 	
-	public Usuario(String nick, String nombre, String apellido, String correo, Date  fechaNac) {
+	public Usuario(String nick, String nombre, String apellido, String correo, Date  fechaNac, String password) {
 		super();
 		this.nick = nick;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.correo = correo;
 		this.fechaNac = fechaNac;
+		this.password = password;
 	}
+	
+	
+	public String getPassword() {
+		return password;
+	}
+
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 
 	public Usuario() {
 		super();
@@ -87,7 +100,7 @@ public class Usuario {
 		}
 		DtFecha fechaR = new DtFecha(datos.get(0),datos.get(1),datos.get(2));
 		
-		DtUsuario dtUsuario = new DtUsuario(this.nick, this.correo, this.nombre, this.apellido, fechaR);
+		DtUsuario dtUsuario = new DtUsuario(this.nick, this.correo, this.nombre, this.apellido, fechaR, this.password);
 
 		return dtUsuario;
 	}

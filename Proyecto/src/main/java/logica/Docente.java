@@ -25,13 +25,13 @@ public class Docente extends Usuario {
 		super();
 	}
 	
-	public Docente(String nick, String nombre, String apellido, String correo, Date fechaNac, Instituto instituto) {
-		super(nick, nombre, apellido, correo, fechaNac);
+	public Docente(String nick, String nombre, String apellido, String correo, Date fechaNac, Instituto instituto, String password) {
+		super(nick, nombre, apellido, correo, fechaNac, password);
 		this.instituto = instituto;
 	}
 
-	public Docente(String nick, String nombre, String apellido, String correo, Date  fechaNac) {
-		super(nick, nombre, apellido, correo, fechaNac);
+	public Docente(String nick, String nombre, String apellido, String correo, Date  fechaNac, String password) {
+		super(nick, nombre, apellido, correo, fechaNac, password);
 	}
 	
 	public boolean find(Edicion edicion) {

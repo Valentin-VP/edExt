@@ -10,7 +10,7 @@ import excepciones.UsuarioRepetido;
 import logica.Instituto;
 
 public interface IControladorAltaUsuario {
-	public void altaUsuario(String nick, String correo, String nombre, String apellido, DtFecha fechaNac) throws UsuarioRepetido; 
+	public void altaUsuario(String nick, String correo, String nombre, String apellido, DtFecha fechaNac, String password) throws UsuarioRepetido; 
 	
 	public void seleccionarInstituto(String instituto);
 	

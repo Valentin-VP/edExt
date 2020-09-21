@@ -19,8 +19,8 @@ public class Estudiante extends Usuario {
 		super();
 	}
 	
-	public Estudiante(String nick, String nombre, String apellido, String correo, Date  fechaNac) {
-		super(nick, nombre, apellido, correo, fechaNac);
+	public Estudiante(String nick, String nombre, String apellido, String correo, Date  fechaNac, String password) {
+		super(nick, nombre, apellido, correo, fechaNac, password);
 	}
 	
 	public void agregarInscripcionEd(InscripcionEd i) {

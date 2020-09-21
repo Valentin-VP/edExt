@@ -21,7 +21,7 @@ public class ControladorAltaUsuario implements IControladorAltaUsuario {
 	}
 	
 	@Override
-	public void altaUsuario(String nick, String correo, String nombre, String apellido, DtFecha fechaNac) throws UsuarioRepetido {
+	public void altaUsuario(String nick, String correo, String nombre, String apellido, DtFecha fechaNac, String password) throws UsuarioRepetido {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		Usuario user = null;
 		//user = mU.getUsuario(nick, correo);
@@ -36,7 +36,7 @@ public class ControladorAltaUsuario implements IControladorAltaUsuario {
 		if(!(user == null)) {
 			throw new UsuarioRepetido("El usuario " + nick + " ya se encuentra registrado");
 		}	
-		this.usuario = new DtUsuario(nick, correo, nombre, apellido, fechaNac);
+		this.usuario = new DtUsuario(nick, correo, nombre, apellido, fechaNac, password);
 	}
 	
 	@Override
@@ -63,9 +63,9 @@ public class ControladorAltaUsuario implements IControladorAltaUsuario {
 		}
 
 		if (esDocente) {
-			user = new Docente(usuario.getNick(), usuario.getNombre(), usuario.getApellido(),usuario.getCorreo(), fechadate, this.instituto);
+			user = new Docente(usuario.getNick(), usuario.getNombre(), usuario.getApellido(),usuario.getCorreo(), fechadate, this.instituto, usuario.getPassword());
 		} else {
-			user = new Estudiante(usuario.getNick(), usuario.getNombre(), usuario.getApellido(),usuario.getCorreo(), fechadate);
+			user = new Estudiante(usuario.getNick(), usuario.getNombre(), usuario.getApellido(),usuario.getCorreo(), fechadate, usuario.getPassword());
 		}	
 		mU.agregarUsuario(user);
 	}
