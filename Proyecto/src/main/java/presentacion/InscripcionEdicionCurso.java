@@ -115,7 +115,6 @@ public class InscripcionEdicionCurso extends JInternalFrame {
 			public void actionPerformed(ActionEvent e) {
 				InscripcionEdicionCursoAceptarActionPerformed();
 				setVisible(false);
-				icon.limpiar();
 				limpiar();
 			}
 		});
@@ -126,7 +125,6 @@ public class InscripcionEdicionCurso extends JInternalFrame {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				icon.limpiar();
 				limpiar();
 			}
 		});
@@ -157,7 +155,7 @@ public class InscripcionEdicionCurso extends JInternalFrame {
 		try {
 			cursos = icon.seleccionarInstituto(instituto);
 			
-		} catch (SinInstitutos | CursoNoExiste n) {
+		} catch (CursoNoExiste n) {
 			JOptionPane.showMessageDialog(this, n.getMessage(), "Inscripcion Edicion Curso", JOptionPane.ERROR_MESSAGE);
 		}
 	
@@ -222,6 +220,7 @@ public class InscripcionEdicionCurso extends JInternalFrame {
 	}
 	
 	private void limpiar() {
+		icon.cancelar();
 		DefaultComboBoxModel<String> institutos = new DefaultComboBoxModel<String>();
 		comboBoxIns.setModel(institutos);
 		DefaultComboBoxModel<String> cursos = new DefaultComboBoxModel<String>();

@@ -15,6 +15,7 @@ import java.time.LocalDate;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import javax.swing.JSpinner;
 
 public class AltaProgFormacion extends JInternalFrame {
 
@@ -243,6 +244,10 @@ public class AltaProgFormacion extends JInternalFrame {
 		});
 		btnNewButton_1.setBounds(55, 248, 89, 23);
 		getContentPane().add(btnNewButton_1);
+		
+		JSpinner spinner = new JSpinner();
+		spinner.setBounds(315, 236, 29, 20);
+		getContentPane().add(spinner);
 
 	}
 	
@@ -303,5 +308,4 @@ public class AltaProgFormacion extends JInternalFrame {
 		comboBoxMesF.setSelectedIndex(0);
 		comboBoxAnioF.setSelectedIndex(0);
 	}
-	
 }

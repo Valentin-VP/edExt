@@ -58,13 +58,10 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 	}
 
 	@Override
-	public ArrayList<DtCursoBase> seleccionarInstituto(String nomIns) throws CursoNoExiste, SinInstitutos{
+	public ArrayList<DtCursoBase> seleccionarInstituto(String nomIns) throws CursoNoExiste {
 		ArrayList <DtCursoBase> cursosinstituto = new ArrayList<DtCursoBase>();
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 		Instituto ins = mI.find(nomIns);
-		if (ins == null) {
-			throw new SinInstitutos("No hay institutos ingresados");
-		}
 		this.nomIns = ins.getNombre();
 		List <Curso> cursos = ins.getCursos();
 		if (cursos.isEmpty()) {
@@ -93,7 +90,7 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 	}
 
 	@Override
-	public boolean registrarInscripcionEd(String nick, String correo, String nomCurso, DtFecha fecha) throws InscripcionEdRepetido, UsuarioNoExiste, UsuarioNoEstudiante {
+	public void registrarInscripcionEd(String nick, String correo, String nomCurso, DtFecha fecha) throws InscripcionEdRepetido, UsuarioNoExiste, UsuarioNoEstudiante {
 		this.nick = nick;
 		this.setCorreo(correo);
 		this.setNomCurso(nomCurso);
@@ -111,11 +108,10 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 		} else {
 			throw new UsuarioNoEstudiante("El usuario ingresado es un docente");
 		}
-		return false;
 	}
 
 	@Override
-	public void limpiar() {
+	public void cancelar() {
 		this.nomIns=null;
 		this.setNomCurso(null);
 		this.nick=null;

@@ -18,7 +18,7 @@ public class ControladorAltaProgFormacion implements IControladorAltaProgFormaci
 	}
 
 	@Override
-	public boolean ingresarProgFormacion(String nom, String des, DtFecha fechaI, DtFecha fechaF, LocalDate fechaA) throws ProgramaRepetido{
+	public void ingresarProgFormacion(String nom, String des, DtFecha fechaI, DtFecha fechaF, LocalDate fechaA) throws ProgramaRepetido{
 		this.nombre=nom;
 		this.descripcion=des;
 		this.fechaI=fechaI;
@@ -28,18 +28,7 @@ public class ControladorAltaProgFormacion implements IControladorAltaProgFormaci
 		if (mPF.exists(nom) == true) {
 			throw new ProgramaRepetido("El programa " + nom + " ya se encuentra registrado");
 		}
-		return mPF.exists(nom);
 	}
-	
-	/*@Override
-	public void modificarProgFormacion(String nom, String des, DtFecha fechaI, DtFecha fechaF, LocalDate fechaA) {
-		this.nombre=nom;
-		this.descripcion=des;
-		this.fechaI=fechaI;
-		this.fechaF=fechaF;
-		this.fechaA=fechaA;
-	}
-	*/
 	
 	@Override
 	public void cancelar() {
@@ -54,6 +43,14 @@ public class ControladorAltaProgFormacion implements IControladorAltaProgFormaci
 	public void confirmar() {
 		LocalDate fechaI = LocalDate.of(this.fechaI.getAnio(), this.fechaI.getMes(), this.fechaI.getDia());
 		LocalDate fechaF = LocalDate.of(this.fechaF.getAnio(), this.fechaF.getMes(), this.fechaF.getDia());
+		//LocalDate pruebaFecha = LocalDate.parse("2018-10-30");
+		//LocalTime time = LocalTime.now();
+		//LocalTime time2 = LocalTime.parse("11:00:59.759");
+		//LocalTime time3 = LocalTime.of(11, 00, 59);
+		//time.getHour();
+		//LocalDateTime dateTime = LocalDateTime.now();
+		//LocalDateTime dateTime2 = LocalDateTime.of(2018, 10, 10, 11, 25);
+		//LocalDateTime dateTime3 = LocalDateTime.parse("2018-10-10T11:25");
 		ProgFormacion pf = new ProgFormacion(this.nombre, this.descripcion, fechaI, fechaF, this.fechaA);
 		ManejadorProgFormacion mPF = ManejadorProgFormacion.getInstancia();
 		mPF.agregarProgFormacion(pf);
