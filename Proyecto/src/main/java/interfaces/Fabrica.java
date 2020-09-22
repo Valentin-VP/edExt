@@ -1,4 +1,5 @@
 package interfaces;
+import logica.ControladorAltaCategoria;
 import logica.ControladorAltaCurso;
 import logica.ControladorAltaEdicionCurso;
 import logica.ControladorAltaInstituto;
@@ -57,5 +58,9 @@ public class Fabrica {
 	
 	public IControladorAltaProgFormacion getIControladorAltaProgFormacion() {
 		return new ControladorAltaProgFormacion();
+	}
+	
+	public IControladorAltaCategoria getIControladorAltaCategoria() {
+		return new ControladorAltaCategoria();
 	}
 }
