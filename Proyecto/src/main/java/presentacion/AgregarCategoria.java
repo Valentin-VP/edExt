@@ -82,9 +82,7 @@ private JTextField nombreCategoria;
 			JOptionPane.showMessageDialog(this, "No puede haber campos vacios", "Nombre Vacio", JOptionPane.ERROR_MESSAGE);
 		}else {
 			try {
-				System.out.println("bandera");
 				this.icon.darAltaCategoria(nombreCategoria.getText());
-				System.out.println("bandera");
 				JOptionPane.showMessageDialog(this, "La Categoria fue ingresado con exito", "Categoria Creado", JOptionPane.INFORMATION_MESSAGE);
 				nombreCategoria.setText("");
 				setVisible(false);

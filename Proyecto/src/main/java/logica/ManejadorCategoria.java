@@ -1,11 +1,12 @@
 package logica;
 
 import java.util.List;
+import java.util.ArrayList;
 
 public class ManejadorCategoria {
 	 private static ManejadorCategoria instancia;
 	 
-	 private List<Categoria> categorias;
+	 private List<Categoria> categorias = new ArrayList<>();
 
 	 private ManejadorCategoria() {}
 	    
@@ -16,7 +17,7 @@ public class ManejadorCategoria {
 	    }
 	    
 	    public Categoria find(String nombre) {
-	    	if(categorias != null) {
+	    	if(this.categorias != null) {
 	    		for(Categoria c: categorias) {
 	        		if(c.getNombre().equals(nombre)) {
 	        			return c;
