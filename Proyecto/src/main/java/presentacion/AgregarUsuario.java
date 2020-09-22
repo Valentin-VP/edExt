@@ -22,6 +22,7 @@ import javax.swing.JButton;
 import javax.swing.JRadioButton;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.security.NoSuchAlgorithmException;
 
 public class AgregarUsuario extends JInternalFrame {
 	
@@ -275,7 +276,7 @@ public class AgregarUsuario extends JInternalFrame {
 
 	}
 	
-	protected void agregarUsuarioAceptarActionPerformed() {
+	protected void agregarUsuarioAceptarActionPerformed() throws NoSuchAlgorithmException {
 		String nickname = this.textFieldNick.getText();
 		String correo = this.textFieldCorreo.getText();
 		String nombre = this.textFieldNombre.getText();
