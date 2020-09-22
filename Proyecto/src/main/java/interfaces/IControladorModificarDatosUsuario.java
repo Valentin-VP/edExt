@@ -10,10 +10,17 @@ public interface IControladorModificarDatosUsuario {
 	
 	public DtUsuario seleccionarUsuario(String nick, String correo);
 	
-	public void editarNombre(String nuevoNombre);
+	public void modificarDatosUsuario(String nick, String correo, String nombre, String apellido, DtFecha fechaNac, String password);
 	
-	public void editarApellido(String nuevoApellido);
+	public void limpiar();
 	
-	public void editarFNac(DtFecha nuevaFecha);
+	//public void confirmar();
+	
+	///Eliminarlas???
+	//public void editarNombre(String nuevoNombre);
+	
+	//public void editarApellido(String nuevoApellido);
+	
+	//public void editarFNac(DtFecha nuevaFecha);
 
 }
