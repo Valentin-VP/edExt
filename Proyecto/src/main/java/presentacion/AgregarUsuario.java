@@ -62,7 +62,12 @@ public class AgregarUsuario extends JInternalFrame {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					agregarUsuarioAceptarActionPerformed();
+					try {
+						agregarUsuarioAceptarActionPerformed();
+					} catch (NoSuchAlgorithmException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
 			}
 		});
@@ -79,7 +84,12 @@ public class AgregarUsuario extends JInternalFrame {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					agregarUsuarioAceptarActionPerformed();
+					try {
+						agregarUsuarioAceptarActionPerformed();
+					} catch (NoSuchAlgorithmException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
 			}
 		});
@@ -96,7 +106,12 @@ public class AgregarUsuario extends JInternalFrame {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					agregarUsuarioAceptarActionPerformed();
+					try {
+						agregarUsuarioAceptarActionPerformed();
+					} catch (NoSuchAlgorithmException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
 			}
 		});
@@ -113,7 +128,12 @@ public class AgregarUsuario extends JInternalFrame {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					agregarUsuarioAceptarActionPerformed();
+					try {
+						agregarUsuarioAceptarActionPerformed();
+					} catch (NoSuchAlgorithmException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
 			}
 		});
@@ -209,7 +229,12 @@ public class AgregarUsuario extends JInternalFrame {
 		JButton btnAceptar = new JButton("Aceptar");
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				agregarUsuarioAceptarActionPerformed();
+				try {
+					agregarUsuarioAceptarActionPerformed();
+				} catch (NoSuchAlgorithmException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				setVisible(false);
 				limpiar();
 			}
