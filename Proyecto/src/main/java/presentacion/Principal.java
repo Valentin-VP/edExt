@@ -52,6 +52,7 @@ public class Principal {
 	private AltaProgFormacion altaProgFormacionInternalFrame;
 	private InfoEdicionCurso infoEdicionCursoInternalFrame;
 	private InfoCurso infoCursoInternalFrame;
+	private AgregarCategoria agregarCategoriaInternalFrame;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -128,6 +129,14 @@ public class Principal {
 		infoCursoInternalFrame.setLocation(188, 105);
 		frame.getContentPane().add(infoCursoInternalFrame);
 		
+		agregarCategoriaInternalFrame = new AgregarCategoria(fabrica.getIControladorAltaCategoria());
+		agregarCategoriaInternalFrame.setClosable(false);
+		agregarCategoriaInternalFrame.setResizable(false);
+		agregarCategoriaInternalFrame.setIconifiable(false);
+		agregarCategoriaInternalFrame.setMaximizable(false);
+		agregarCategoriaInternalFrame.setBounds(255, 23, 335, 171);
+		frame.getContentPane().add(agregarCategoriaInternalFrame);
+		
 		JPanel panel_Imagen = new JPanel();
 		
 		panel_Imagen = new JPanel () {
@@ -191,6 +200,14 @@ public class Principal {
 		});
 		mnAltas.add(mntmEdicion);
 		mnAltas.add(mntmUsuario);
+		
+		JMenuItem mntmCategoria = new JMenuItem("Categoria");
+		mntmCategoria.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				agregarCategoriaInternalFrame.setVisible(true);
+			}
+		});
+		mnAltas.add(mntmCategoria);
 		
 		JMenu mnInformacin = new JMenu("Informaci\u00F3n");
 		menuBar.add(mnInformacin);
