@@ -1,5 +1,6 @@
 package interfaces;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public interface IControladorAltaUsuario {
 	
 	public void cancelarAltaUsuario();
 	
-	public void confirmarAltaUsuario(boolean esDocente);
+	public void confirmarAltaUsuario(boolean esDocente) throws NoSuchAlgorithmException;
 	
 	public List<Instituto> getInstitutos();
 	

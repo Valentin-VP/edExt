@@ -1,5 +1,8 @@
  package logica;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,7 +16,7 @@ import excepciones.SinInstitutos;
 import excepciones.UsuarioRepetido;
 
 public class ControladorAltaUsuario implements IControladorAltaUsuario {
-	private DtUsuario usuario;
+	private DtUsuario usuario;//aca queda guardada la contrasenia sin codificar
 	private Instituto instituto;
 	
 	public ControladorAltaUsuario() {
@@ -51,8 +54,24 @@ public class ControladorAltaUsuario implements IControladorAltaUsuario {
 		
 	}
 	
+	public String codificarPass(String contrasenia) throws NoSuchAlgorithmException {//version beta del codificado, todavia no se si hacer una funcion que decodifique o guardar la version sin codificar en algun lado
+		MessageDigest md = null;
+		byte[] mb;
+	        try {
+	            md = MessageDigest.getInstance("SHA-512");
+	            mb = md.digest(contrasenia.getBytes());
+	        } catch  (NoSuchAlgorithmException e) {
+	        	return null;
+	        }
+	        StringBuffer sb = new StringBuffer();
+	        for(byte b: mb) {
+	        	sb.append(String.format("%02x", b));
+	        }
+	        return sb.toString();
+	}
+	
 	@Override
-	public void confirmarAltaUsuario(boolean esDocente) {
+	public void confirmarAltaUsuario(boolean esDocente) throws NoSuchAlgorithmException {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		Usuario user;
 		Date fechadate = null;
@@ -61,11 +80,17 @@ public class ControladorAltaUsuario implements IControladorAltaUsuario {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
+		String laPass = new String();//creo que no hace falta constrolar que laPass sea vacia
+		try {
+			laPass = codificarPass(this.usuario.getPassword());
+		} catch (NoSuchAlgorithmException e){
+			throw new NoSuchAlgorithmException("no se pudo codificar la contrasenia");
+		}
 
-		if (esDocente) {
-			user = new Docente(usuario.getNick(), usuario.getNombre(), usuario.getApellido(),usuario.getCorreo(), fechadate, this.instituto, usuario.getPassword());
+		if (esDocente) {	
+			user = new Docente(usuario.getNick(), usuario.getNombre(), usuario.getApellido(),usuario.getCorreo(), fechadate, this.instituto, /*usuario.getPassword()*/ laPass);
 		} else {
-			user = new Estudiante(usuario.getNick(), usuario.getNombre(), usuario.getApellido(),usuario.getCorreo(), fechadate, usuario.getPassword());
+			user = new Estudiante(usuario.getNick(), usuario.getNombre(), usuario.getApellido(),usuario.getCorreo(), fechadate, /*usuario.getPassword()*/ laPass);
 		}	
 		mU.agregarUsuario(user);
 	}
