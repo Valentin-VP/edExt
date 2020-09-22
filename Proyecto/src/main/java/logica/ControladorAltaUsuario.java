@@ -26,6 +26,7 @@ public class ControladorAltaUsuario implements IControladorAltaUsuario {
 	@Override
 	public void altaUsuario(String nick, String correo, String nombre, String apellido, DtFecha fechaNac, String password) throws UsuarioRepetido {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		this.usuario.setPassword(password);
 		Usuario user = null;
 		//user = mU.getUsuario(nick, correo);
 		user = mU.findUsuario(nick);
@@ -56,12 +57,12 @@ public class ControladorAltaUsuario implements IControladorAltaUsuario {
 	
 	public String codificarPass(String contrasenia) throws NoSuchAlgorithmException {//version beta del codificado, todavia no se si hacer una funcion que decodifique o guardar la version sin codificar en algun lado
 		MessageDigest md = null;
-		byte[] mb;
+		byte[] mb = null;
 	        try {
 	            md = MessageDigest.getInstance("SHA-512");
 	            mb = md.digest(contrasenia.getBytes());
 	        } catch  (NoSuchAlgorithmException e) {
-	        	return null;
+				e.printStackTrace();
 	        }
 	        StringBuffer sb = new StringBuffer();
 	        for(byte b: mb) {
@@ -80,11 +81,11 @@ public class ControladorAltaUsuario implements IControladorAltaUsuario {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		String laPass = new String();//creo que no hace falta constrolar que laPass sea vacia
+		String laPass = new String();
 		try {
 			laPass = codificarPass(this.usuario.getPassword());
 		} catch (NoSuchAlgorithmException e){
-			throw new NoSuchAlgorithmException("no se pudo codificar la contrasenia");
+			e.printStackTrace();
 		}
 
 		if (esDocente) {	

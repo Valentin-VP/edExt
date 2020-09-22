@@ -58,19 +58,18 @@ public class AgregarUsuario extends JInternalFrame {
 		getContentPane().add(NickUsuario);
 		
 		textFieldNick = new JTextField();
-		textFieldNick.addKeyListener(new KeyAdapter() {
+		/*textFieldNick.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					try {
 						agregarUsuarioAceptarActionPerformed();
 					} catch (NoSuchAlgorithmException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 				}
 			}
-		});
+		});*/
 		textFieldNick.setBounds(170, 31, 144, 19);
 		getContentPane().add(textFieldNick);
 		textFieldNick.setColumns(10);
@@ -80,19 +79,18 @@ public class AgregarUsuario extends JInternalFrame {
 		getContentPane().add(CorreoUsuario);
 		
 		textFieldCorreo = new JTextField();
-		textFieldCorreo.addKeyListener(new KeyAdapter() {
+		/*textFieldCorreo.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					try {
 						agregarUsuarioAceptarActionPerformed();
 					} catch (NoSuchAlgorithmException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 				}
 			}
-		});
+		});*/
 		textFieldCorreo.setBounds(170, 85, 144, 19);
 		getContentPane().add(textFieldCorreo);
 		textFieldCorreo.setColumns(10);
@@ -102,19 +100,18 @@ public class AgregarUsuario extends JInternalFrame {
 		getContentPane().add(NombreUsuario);
 		
 		textFieldNombre = new JTextField();
-		textFieldNombre.addKeyListener(new KeyAdapter() {
+		/*textFieldNombre.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					try {
 						agregarUsuarioAceptarActionPerformed();
 					} catch (NoSuchAlgorithmException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 				}
 			}
-		});
+		});*/
 		textFieldNombre.setColumns(10);
 		textFieldNombre.setBounds(170, 299, 144, 19);
 		getContentPane().add(textFieldNombre);
@@ -124,19 +121,18 @@ public class AgregarUsuario extends JInternalFrame {
 		getContentPane().add(ApellidoUsuario);
 		
 		textFieldApellido = new JTextField();
-		textFieldApellido.addKeyListener(new KeyAdapter() {
+		/*textFieldApellido.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					try {
 						agregarUsuarioAceptarActionPerformed();
 					} catch (NoSuchAlgorithmException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 				}
 			}
-		});
+		});*/
 		textFieldApellido.setColumns(10);
 		textFieldApellido.setBounds(170, 360, 144, 19);
 		getContentPane().add(textFieldApellido);
@@ -232,7 +228,6 @@ public class AgregarUsuario extends JInternalFrame {
 				try {
 					agregarUsuarioAceptarActionPerformed();
 				} catch (NoSuchAlgorithmException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				setVisible(false);
