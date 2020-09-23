@@ -16,7 +16,7 @@ import excepciones.SinInstitutos;
 import excepciones.UsuarioRepetido;
 
 public class ControladorAltaUsuario implements IControladorAltaUsuario {
-	private DtUsuario usuario;//aca queda guardada la contrasenia sin codificar
+	private DtUsuario usuario = new DtUsuario();
 	private Instituto instituto;
 	
 	public ControladorAltaUsuario() {
