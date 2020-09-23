@@ -55,7 +55,7 @@ public class ControladorAltaUsuario implements IControladorAltaUsuario {
 		
 	}
 	
-	public String codificarPass(String contrasenia) throws NoSuchAlgorithmException {//version beta del codificado, todavia no se si hacer una funcion que decodifique o guardar la version sin codificar en algun lado
+	public String codificarPass(String contrasenia) throws NoSuchAlgorithmException {
 		MessageDigest md = null;
 		byte[] mb = null;
 	        try {
