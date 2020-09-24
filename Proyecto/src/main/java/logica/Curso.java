@@ -36,6 +36,9 @@ public class Curso {
 	@ManyToOne
 	private	Instituto instituto;
 	
+	@ManyToMany(cascade = CascadeType.ALL)
+	private List<Categoria> categorias = new ArrayList<Categoria>();//nuevo
+	
 	public Curso(String nombre, String descripcion, String duracion, int cantHoras, Integer creditos, Date fechaR,
 			String url, List<Curso> previas, Instituto instituto) {
 		super();
