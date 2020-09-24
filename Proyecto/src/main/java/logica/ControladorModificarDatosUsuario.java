@@ -10,6 +10,7 @@ import datatypes.DtFecha;
 import datatypes.DtUsuario;
 import datatypes.DtUsuarioBase;
 import excepciones.SinUsuarios;
+import excepciones.UsuarioNoExiste;
 import interfaces.IControladorModificarDatosUsuario;
 
 public class ControladorModificarDatosUsuario implements IControladorModificarDatosUsuario {
@@ -59,9 +60,12 @@ public class ControladorModificarDatosUsuario implements IControladorModificarDa
 		return usuarios;
 	}
 	@Override
-	public DtUsuario seleccionarUsuario(String nick, String correo) {
+	public DtUsuario seleccionarUsuario(String nick, String correo) throws UsuarioNoExiste{
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
-		Usuario user = mU.findUsuario(nick);
+		Usuario user = mU.findUsuario(nick);;
+		if (user == null) {
+			throw new UsuarioNoExiste("No existe el usuario seleccionado");
+		}
 		this.usuario = user;
 		return user.getDtUsuario();
 	}

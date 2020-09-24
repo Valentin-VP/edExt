@@ -8,12 +8,18 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import datatypes.DtFecha;
+import datatypes.DtUsuario;
+import datatypes.DtUsuarioBase;
+import excepciones.SinUsuarios;
+import excepciones.UsuarioNoExiste;
 import interfaces.IControladorModificarDatosUsuario;
 
 import javax.swing.JPasswordField;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JSpinner;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
 public class ModificarDatosUsuario extends JInternalFrame {
@@ -46,6 +52,11 @@ public class ModificarDatosUsuario extends JInternalFrame {
 		getContentPane().setLayout(null);
 		
 		comboBoxUsuario = new JComboBox<String>();
+		comboBoxUsuario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cargarUsuarioComboBoxUsuario();
+			}
+		});
 		comboBoxUsuario.setBounds(31, 36, 175, 20);
 		getContentPane().add(comboBoxUsuario);
 		
@@ -59,7 +70,7 @@ public class ModificarDatosUsuario extends JInternalFrame {
 		textFieldCorreo.setColumns(10);
 		
 		JLabel lblNewLabel_1 = new JLabel("Correo nuevo");
-		lblNewLabel_1.setBounds(31, 67, 96, 14);
+		lblNewLabel_1.setBounds(31, 67, 142, 14);
 		getContentPane().add(lblNewLabel_1);
 		
 		textFieldNombre = new JTextField();
@@ -77,15 +88,15 @@ public class ModificarDatosUsuario extends JInternalFrame {
 		getContentPane().add(passwordField);
 		
 		lblNewLabel_2 = new JLabel("Nombre nuevo");
-		lblNewLabel_2.setBounds(31, 123, 75, 14);
+		lblNewLabel_2.setBounds(31, 123, 142, 14);
 		getContentPane().add(lblNewLabel_2);
 		
 		lblNewLabel_3 = new JLabel("Apellido nuevo");
-		lblNewLabel_3.setBounds(31, 179, 75, 14);
+		lblNewLabel_3.setBounds(31, 179, 142, 14);
 		getContentPane().add(lblNewLabel_3);
 		
 		lblNewLabel_4 = new JLabel("Contrasenia nueva");
-		lblNewLabel_4.setBounds(31, 235, 96, 14);
+		lblNewLabel_4.setBounds(31, 235, 142, 14);
 		getContentPane().add(lblNewLabel_4);
 		
 		btnNewButton = new JButton("Aceptar");
@@ -210,18 +221,39 @@ public class ModificarDatosUsuario extends JInternalFrame {
 	}
 	
 	public void inicializarComboBoxUsuariosModificarDatos() {
-	/*	
 		try {
-			ArrayList<DtInstituto> institutos = icon.listarInstitutos();
+			ArrayList<DtUsuarioBase> usuarios = icon.mostrarUsuarios();
 			DefaultComboBoxModel<String> dml= new DefaultComboBoxModel<String>();
-			for (int i = 0; i < institutos.size(); i++) {
-			  dml.addElement(institutos.get(i).getNombre());
+			for (int i = 0; i < usuarios.size(); i++) {
+			  dml.addElement(usuarios.get(i).getNick());
 			}
-			comboBoxIns.setModel(dml);
+			comboBoxUsuario.setModel(dml);
 			
-		} catch (SinInstitutos in) {
-			JOptionPane.showMessageDialog(this, in.getMessage(), "Inscripcion Edicion Curso", JOptionPane.ERROR_MESSAGE);
-		}*/
+		} catch (SinUsuarios e) {
+			JOptionPane.showMessageDialog(this, e.getMessage(), "Modificar datos usuario", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+	
+	private void cargarUsuarioComboBoxUsuario() {
+
+		String nick = comboBoxUsuario.getSelectedItem().toString();
+		
+		DtUsuario dtu = new DtUsuario();
+		
+		try {
+			dtu = icon.seleccionarUsuario(nick, "");
+			textFieldCorreo.setText(dtu.getCorreo());
+			textFieldNombre.setText(dtu.getNombre());
+			textFieldApellido.setText(dtu.getApellido());
+			passwordField.setText("");
+			comboBoxDia.setSelectedItem(dtu.getFechaNac().getDia().toString());
+			comboBoxMes.setSelectedItem(dtu.getFechaNac().getMes().toString());
+			spinnerAnio.setValue(dtu.getFechaNac().getAnio());
+			
+		} catch (UsuarioNoExiste n) {
+			JOptionPane.showMessageDialog(this, n.getMessage(), "Inscripcion Edicion Curso", JOptionPane.ERROR_MESSAGE);
+		}
+		
 	}
 	
 }
