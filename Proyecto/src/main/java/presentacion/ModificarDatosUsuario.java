@@ -22,6 +22,9 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.time.LocalDate;
 
 public class ModificarDatosUsuario extends JInternalFrame {
 	private static final long serialVersionUID = 1L;
@@ -32,6 +35,7 @@ public class ModificarDatosUsuario extends JInternalFrame {
 	private JTextField textFieldNombre;
 	private JTextField textFieldApellido;
 	private JPasswordField passwordField;
+	private JPasswordField correctPasswordField;
 	private JComboBox<String> comboBoxDia;
 	private JComboBox<String> comboBoxMes;
 	private JSpinner spinnerAnio;
@@ -40,7 +44,6 @@ public class ModificarDatosUsuario extends JInternalFrame {
 	private JLabel lblNewLabel_4;
 	private JButton btnNewButton;
 	private JButton btnNewButton_1;
-	private JPasswordField correctPasswordField;
 	private DtUsuario usuario;
 	
 	public ModificarDatosUsuario(IControladorModificarDatosUsuario icon) {
@@ -51,7 +54,7 @@ public class ModificarDatosUsuario extends JInternalFrame {
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setClosable(true);
         setTitle("Modificar datos de usuario");
-        setBounds(100, 100, 390, 479);
+        setBounds(100, 100, 354, 479);
 		getContentPane().setLayout(null);
 		
 		comboBoxUsuario = new JComboBox<String>();
@@ -64,10 +67,18 @@ public class ModificarDatosUsuario extends JInternalFrame {
 		getContentPane().add(comboBoxUsuario);
 		
 		JLabel lblNewLabel = new JLabel("Seleccione el usuario");
-		lblNewLabel.setBounds(31, 11, 115, 14);
+		lblNewLabel.setBounds(31, 11, 175, 14);
 		getContentPane().add(lblNewLabel);
 		
 		textFieldCorreo = new JTextField();
+		textFieldCorreo.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					modificarDatosUsuarioAceptarActionPerformed();
+				}
+			}
+		});
 		textFieldCorreo.setBounds(31, 92, 175, 20);
 		getContentPane().add(textFieldCorreo);
 		textFieldCorreo.setColumns(10);
@@ -77,16 +88,40 @@ public class ModificarDatosUsuario extends JInternalFrame {
 		getContentPane().add(lblNewLabel_1);
 		
 		textFieldNombre = new JTextField();
+		textFieldNombre.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					modificarDatosUsuarioAceptarActionPerformed();
+				}
+			}
+		});
 		textFieldNombre.setBounds(31, 148, 175, 20);
 		getContentPane().add(textFieldNombre);
 		textFieldNombre.setColumns(10);
 		
 		textFieldApellido = new JTextField();
+		textFieldApellido.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					modificarDatosUsuarioAceptarActionPerformed();
+				}
+			}
+		});
 		textFieldApellido.setBounds(31, 204, 175, 20);
 		getContentPane().add(textFieldApellido);
 		textFieldApellido.setColumns(10);
 		
 		passwordField = new JPasswordField();
+		passwordField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					modificarDatosUsuarioAceptarActionPerformed();
+				}
+			}
+		});
 		passwordField.setBounds(31, 260, 175, 20);
 		getContentPane().add(passwordField);
 		
@@ -109,7 +144,7 @@ public class ModificarDatosUsuario extends JInternalFrame {
 				limpiar();
 			}
 		});
-		btnNewButton.setBounds(227, 415, 89, 23);
+		btnNewButton.setBounds(191, 415, 89, 23);
 		getContentPane().add(btnNewButton);
 		
 		btnNewButton_1 = new JButton("Cancelar");
@@ -120,7 +155,7 @@ public class ModificarDatosUsuario extends JInternalFrame {
 				limpiar();
 			}
 		});
-		btnNewButton_1.setBounds(69, 415, 89, 23);
+		btnNewButton_1.setBounds(59, 415, 89, 23);
 		getContentPane().add(btnNewButton_1);
 		
 		comboBoxDia = new JComboBox<String>();
@@ -186,10 +221,18 @@ public class ModificarDatosUsuario extends JInternalFrame {
 		getContentPane().add(lblNewLabel_5);
 		
 		JLabel lblNewLabel_6 = new JLabel("Confirmacion contrasenia");
-		lblNewLabel_6.setBounds(31, 282, 142, 14);
+		lblNewLabel_6.setBounds(31, 282, 175, 14);
 		getContentPane().add(lblNewLabel_6);
 		
 		correctPasswordField = new JPasswordField();
+		correctPasswordField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					modificarDatosUsuarioAceptarActionPerformed();
+				}
+			}
+		});
 		correctPasswordField.setBounds(31, 307, 175, 20);
 		getContentPane().add(correctPasswordField);
 
@@ -210,16 +253,17 @@ public class ModificarDatosUsuario extends JInternalFrame {
 		} else {
 			JOptionPane.showMessageDialog(this, "Seleccione un usuario, por favor", "Modificar datos usuario",
 					JOptionPane.INFORMATION_MESSAGE);
-		}
-			
+		}		
 	}
 	
 	private boolean checkeo(String correo, String nombre, String apellido, String dia, String mes, Integer anio, char[] passwd, char[] cpasswd) {
+		LocalDate date = LocalDate.now();
+		int aniomax = (date.getYear() - 12);
 		if (correo.isEmpty() || nombre.isEmpty() || apellido.isEmpty()) {
 			JOptionPane.showMessageDialog(this, "No puede haber campos vacios", "Modificar datos usuario", 
 			JOptionPane.ERROR_MESSAGE);
-			return false;	
-		} else if (anio.intValue() < 1900 || anio.intValue() > 2008) {
+			return false;
+		} else if (anio.intValue() < 1900 || anio.intValue() > aniomax) {
 			JOptionPane.showMessageDialog(this, "No es un anio valido", "Modificar datos usuario", 
 			JOptionPane.ERROR_MESSAGE);
 			return false;
@@ -227,24 +271,17 @@ public class ModificarDatosUsuario extends JInternalFrame {
 			JOptionPane.showMessageDialog(this, "Las contrasenias no coinciden", "Modificar datos usuario", 
 			JOptionPane.ERROR_MESSAGE);
 			return false;
-		} else {
-			String stranio = anio.toString();
-			try {
-				@SuppressWarnings("unused")
-				int year = Integer.parseInt(stranio);
-			}catch(NumberFormatException e) {
-				JOptionPane.showMessageDialog(this, "Valor incorrecto en anio", "Modificar datos usuario", JOptionPane.ERROR_MESSAGE);
-				return false;
-			}
 		}
 		return true;
 	}
 	
 	private void limpiar() {
+		this.usuario = null;
 		textFieldCorreo.setText("");
 		textFieldNombre.setText("");
 		textFieldApellido.setText("");
 		passwordField.setText("");
+		correctPasswordField.setText("");
 		comboBoxDia.setSelectedIndex(0);
 		comboBoxMes.setSelectedIndex(0);
 		spinnerAnio.setValue(1990);
@@ -278,6 +315,7 @@ public class ModificarDatosUsuario extends JInternalFrame {
 			textFieldNombre.setText(dtu.getNombre());
 			textFieldApellido.setText(dtu.getApellido());
 			passwordField.setText("");
+			correctPasswordField.setText("");
 			comboBoxDia.setSelectedItem(dtu.getFechaNac().getDia().toString());
 			comboBoxMes.setSelectedItem(dtu.getFechaNac().getMes().toString());
 			spinnerAnio.setValue(dtu.getFechaNac().getAnio());
