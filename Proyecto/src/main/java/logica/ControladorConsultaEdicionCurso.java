@@ -8,6 +8,7 @@ import datatypes.DtEdicion;
 import datatypes.DtEdicionBase;
 import datatypes.DtFecha;
 import interfaces.IControladorConsultaEdicionCurso;
+import excepciones.CategoriaInexistente;
 import excepciones.CursoNoExiste;
 import excepciones.InstitutoInexistente;
 
@@ -15,16 +16,18 @@ public class ControladorConsultaEdicionCurso implements IControladorConsultaEdic
 	private String edicion;
 	private String instituto;
 	private String curso;
+	private String categoria;
 	
 	
 	public ControladorConsultaEdicionCurso() {
 		super();
 	}
-	public ControladorConsultaEdicionCurso(String edicion, String instituto, String curso) {
+	public ControladorConsultaEdicionCurso(String edicion, String instituto, String curso, String categoria) {
 		super();
 		this.edicion = edicion;
 		this.instituto = instituto;
 		this.curso = curso;
+		this.setCategoria(categoria);
 	}
 	@Override
 	public ArrayList<DtCursoBase> seleccionarInstituto(String instituto) throws InstitutoInexistente{
@@ -45,18 +48,52 @@ public class ControladorConsultaEdicionCurso implements IControladorConsultaEdic
 	}
 	
 	@Override
-	public ArrayList<DtEdicionBase> seleccionarCurso(String curso) throws CursoNoExiste{
+	public ArrayList<DtCursoBase> seleccionarCategoria(String categoria) throws CategoriaInexistente{
+		this.categoria = categoria;
+			ArrayList<DtCursoBase> DtCursos = new ArrayList<DtCursoBase>();
+			List<Curso> cursos = new ArrayList<Curso>();
+			ManejadorCategoria mC = ManejadorCategoria.getInstancia();
+			Categoria c = mC.find(categoria);
+			if(c == null) {
+				throw new CategoriaInexistente("Categoria Inexistente");
+			}
+			cursos = c.getCursos();
+			for(Curso curso: cursos) {
+				DtCursoBase curs = new DtCursoBase(curso.getNombre(), curso.getInstituto().getNombre());
+				DtCursos.add(curs);
+			}
+			return DtCursos;
+	}
+	
+	@Override
+	public ArrayList<DtEdicionBase> seleccionarCurso(String curso, boolean conCategoria) throws CursoNoExiste{
 		this.curso = curso;
 		ArrayList<DtEdicionBase> ediciones = new ArrayList<>();
-		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
-		curso = mI.find(this.instituto).findCurso(curso).getNombre();
-		if(curso.isEmpty()) {
-			throw new CursoNoExiste("No existe el curso seleccionado");
-		}
-		for(Edicion e: mI.find(this.instituto).findCurso(curso).getEdiciones()) {
-			DtEdicionBase edic = new DtEdicionBase(e.getNombre());
-			ediciones.add(edic);
-		}
+		if(!conCategoria) {
+			ManejadorInstituto mI = ManejadorInstituto.getInstancia();
+			curso = mI.find(this.instituto).findCurso(curso).getNombre();
+			
+			if(curso.isEmpty()) {
+				throw new CursoNoExiste("No existe el curso seleccionado");
+			}
+			
+			for(Edicion e: mI.find(this.instituto).findCurso(curso).getEdiciones()) {
+				DtEdicionBase edic = new DtEdicionBase(e.getNombre());
+				ediciones.add(edic);
+			}
+		}else {
+			ManejadorCategoria mC = ManejadorCategoria.getInstancia();
+			curso = mC.find(this.categoria).findCurso(curso, mC.find(this.categoria).getInstitutoCurso(curso)).getNombre();
+			
+			if(curso.isEmpty()) {
+				throw new CursoNoExiste("No existe el curso seleccionado");
+			}
+			
+			for (Edicion e: mC.find(this.categoria).findCurso(curso, mC.find(this.categoria).getInstitutoCurso(curso)).getEdiciones()) {
+				DtEdicionBase edic = new DtEdicionBase(e.getNombre());
+				ediciones.add(edic);
+			}
+		}	
 		return ediciones;
 	}
 	
@@ -119,6 +156,12 @@ public class ControladorConsultaEdicionCurso implements IControladorConsultaEdic
 			}
 		}
 		return docentes;
+	}
+	public String getCategoria() {
+		return categoria;
+	}
+	public void setCategoria(String categoria) {
+		this.categoria = categoria;
 	}
 	
 }
