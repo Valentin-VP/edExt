@@ -27,4 +27,28 @@ public class Categoria {
 	public void addCurso(Curso c) {
 		cursos.add(c);
 	}
+	
+	public List<Curso> getCursos() {
+		return cursos;
+	}
+	
+	public String getInstitutoCurso(String curso) {
+		String retorno = new String();
+		for(Curso c: cursos) {
+			if(c.getNombre().equals(curso)) {
+				retorno = c.getInstituto().getNombre();
+			}
+		}
+		return retorno;
+	}
+	
+	public Curso findCurso(String curso, String instituto) {
+		Curso retorno = new Curso();
+		for(Curso c:cursos) {
+			if(c.getNombre().equals(curso) && (c.getInstituto().getNombre().equals(instituto))) {
+				retorno = c;
+			}
+		}
+		return retorno;
+	}
 }

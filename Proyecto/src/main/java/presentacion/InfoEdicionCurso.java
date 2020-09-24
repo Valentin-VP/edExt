@@ -19,8 +19,8 @@ import datatypes.DtCursoBase;
 import datatypes.DtEdicionBase;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+//import java.awt.event.KeyAdapter;
+//import java.awt.event.KeyEvent;
 
 public class InfoEdicionCurso extends JInternalFrame {
 	private InfoEdicionCurso2 infoEdicionCurso2Panel;
@@ -41,6 +41,9 @@ public class InfoEdicionCurso extends JInternalFrame {
     private IControladorConsultaEdicionCurso icon;
 	private JButton atras;
 	private JButton cerrarDesdeInfoCursoButton;
+	private JButton btnCategoria;
+	
+	boolean conCategoria = false;
     
     public InfoEdicionCurso2 getInfoEdicionCurso2() {
     	return this.infoEdicionCurso2Panel;
@@ -60,12 +63,7 @@ public class InfoEdicionCurso extends JInternalFrame {
         setTitle("Informacion Edicion de un Curso");
         getContentPane().setLayout(null);
         
-        JLabel nombInsti = new JLabel("Instituto");
-        nombInsti.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        nombInsti.setBounds(90, 23, 69, 22);
-        getContentPane().add(nombInsti);
-        
-        nombreInstituto = new JTextField();
+        /*nombreInstituto = new JTextField();
         nombreInstituto.addKeyListener(new KeyAdapter() {
         	@Override
         	public void keyPressed(KeyEvent e) {
@@ -75,18 +73,18 @@ public class InfoEdicionCurso extends JInternalFrame {
 				}
         	}
         });
-        nombreInstituto.setBounds(157, 25, 180, 22);
+        nombreInstituto.setBounds(72, 13, 180, 22);
         getContentPane().add(nombreInstituto);
-        nombreInstituto.setColumns(10);
+        nombreInstituto.setColumns(10);*/
         
-        btnNewButton = new JButton("Aceptar");
+        btnNewButton = new JButton("Instituto");
         btnNewButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent arg0) { 
         		limpiarListas();
         		cargarCursos();
         	}
         });
-        btnNewButton.setBounds(267, 69, 89, 23);
+        btnNewButton.setBounds(312, 12, 118, 23);
         getContentPane().add(btnNewButton);
         
         cancelar = new JButton("Cancelar");
@@ -97,7 +95,7 @@ public class InfoEdicionCurso extends JInternalFrame {
         		limpiarListas();
         	}
         });
-        cancelar.setBounds(112, 69, 89, 23);
+        cancelar.setBounds(97, 62, 118, 23);
         getContentPane().add(cancelar);
         
         JLabel lblNewLabel = new JLabel("Cursos");
@@ -116,7 +114,7 @@ public class InfoEdicionCurso extends JInternalFrame {
         	public void mouseClicked(MouseEvent me1) {
         		nombreEdiciones.clear();
         		listEdiciones.setModel(nombreEdiciones);
-				cargarEdicionCurso(me1, listCursos.getSelectedValue().toString());
+				cargarEdicionCurso(me1, listCursos.getSelectedValue().toString(), conCategoria);
         	}
         });
         listCursos.setBounds(35, 164, 180, 319);
@@ -156,6 +154,17 @@ public class InfoEdicionCurso extends JInternalFrame {
     	});
     	cerrarDesdeInfoCursoButton.setBounds(370, 455, 97, 25);
     	infoEdicionCurso2Panel.add(cerrarDesdeInfoCursoButton);
+    	
+    	btnCategoria = new JButton("Categoria");
+    	btnCategoria.addActionListener(new ActionListener() {
+    		public void actionPerformed(ActionEvent arg0) {
+    			limpiarListas();
+    			conCategoria = true;
+    			cargarCursos();
+    		}
+    	});
+    	btnCategoria.setBounds(312, 61, 117, 25);
+    	getContentPane().add(btnCategoria);
         
 	}
 	
@@ -165,7 +174,7 @@ public class InfoEdicionCurso extends JInternalFrame {
 		}else {
 			ArrayList<DtCursoBase> DtCursoBase = new ArrayList<DtCursoBase>();
 			try {
-				DtCursoBase = icon.seleccionarInstituto(nombreInstituto.getText());
+				DtCursoBase = icon.seleccionarInstituto(nombreInstituto.getText());	
 				for(DtCursoBase dc: DtCursoBase) {
 					nombreCursos.addElement(dc.getNombre());
 				}
@@ -179,10 +188,29 @@ public class InfoEdicionCurso extends JInternalFrame {
 		}
 	}
 	
-	protected void cargarEdicionCurso(MouseEvent me1, String curso) {
+	protected void cargarCursosCategoria() {//nuevo
+		if(nombreInstituto.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(this, "No puede haber campos vacios", "Instituto Vacio", JOptionPane.ERROR_MESSAGE);
+		}else {
+			ArrayList<DtCursoBase> DtCursoBase = new ArrayList<DtCursoBase>();
+			try {
+				DtCursoBase = icon.seleccionarCategoria(nombreInstituto.getText());
+				for(DtCursoBase dc: DtCursoBase) {
+					nombreCursos.addElement(dc.getNombre() + " - " + dc.getInstituto());
+				}
+				 listCursos.setModel(nombreCursos);
+				 listCursos.setEnabled(true);
+				 listCursos.setVisible(true);
+			}catch(Exception e) {
+				JOptionPane.showMessageDialog(this, e.getLocalizedMessage() , "Curso", JOptionPane.ERROR_MESSAGE);
+			}
+		}
+	}
+	
+	protected void cargarEdicionCurso(MouseEvent me1, String curso, boolean conCategoria) {
 		try {
 			ArrayList<DtEdicionBase> dtEdicionBase = new ArrayList<>();
-			dtEdicionBase = icon.seleccionarCurso(curso);
+			dtEdicionBase = icon.seleccionarCurso(curso, conCategoria);
 			for(DtEdicionBase de: dtEdicionBase) {
 				nombreEdiciones.addElement(de.getNombre());
 			}
