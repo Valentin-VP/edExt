@@ -143,7 +143,7 @@ public class Principal {
 		modificarDatosUsuarioInternalFrame.setResizable(false);
 		modificarDatosUsuarioInternalFrame.setIconifiable(false);
 		modificarDatosUsuarioInternalFrame.setMaximizable(false);
-		modificarDatosUsuarioInternalFrame.setBounds(100, 100, 390, 432);
+		modificarDatosUsuarioInternalFrame.setBounds(100, 100, 390, 479);
 		frame.getContentPane().add(modificarDatosUsuarioInternalFrame);
 		
 		JPanel panel_Imagen = new JPanel();

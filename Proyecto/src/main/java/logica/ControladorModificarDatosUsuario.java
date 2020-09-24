@@ -22,30 +22,6 @@ public class ControladorModificarDatosUsuario implements IControladorModificarDa
 	String password;
 	Usuario usuario;
 	
-	public String getNick() {
-		return nick;
-	}
-	public void setUsuario(String nick) {
-		this.nick = nick;
-	}
-	public String getNombre() {
-		return nombre;
-	}
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-	public String getApellido() {
-		return apellido;
-	}
-	public void setApellido(String apellido) {
-		this.apellido = apellido;
-	}
-	public DtFecha getFechaNac() {
-		return fechaNac;
-	}
-	public void setFechaNac(DtFecha fechaNac) {
-		this.fechaNac = fechaNac;
-	}	
 	@Override
 	public ArrayList<DtUsuarioBase> mostrarUsuarios() throws SinUsuarios {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
@@ -84,12 +60,13 @@ public class ControladorModificarDatosUsuario implements IControladorModificarDa
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-
 		usuario.setCorreo(correo);
 		usuario.setNombre(nombre);
 		usuario.setApellido(apellido);
 		usuario.setFechaNac(fecha);
-		usuario.setPassword(encriptar(passwd));
+		if (!passwd.equals("")) {
+			usuario.setPassword(encriptar(passwd));	
+		}
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		mU.actualizarUsuario(usuario);
 	}
