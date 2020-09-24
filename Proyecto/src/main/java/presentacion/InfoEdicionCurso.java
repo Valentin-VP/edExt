@@ -63,8 +63,8 @@ public class InfoEdicionCurso extends JInternalFrame {
         setTitle("Informacion Edicion de un Curso");
         getContentPane().setLayout(null);
         
-        /*nombreInstituto = new JTextField();
-        nombreInstituto.addKeyListener(new KeyAdapter() {
+        nombreInstituto = new JTextField();
+        /*nombreInstituto.addKeyListener(new KeyAdapter() {
         	@Override
         	public void keyPressed(KeyEvent e) {
         		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -72,10 +72,10 @@ public class InfoEdicionCurso extends JInternalFrame {
             		cargarCursos();
 				}
         	}
-        });
+        });*/
         nombreInstituto.setBounds(72, 13, 180, 22);
         getContentPane().add(nombreInstituto);
-        nombreInstituto.setColumns(10);*/
+        nombreInstituto.setColumns(10);
         
         btnNewButton = new JButton("Instituto");
         btnNewButton.addActionListener(new ActionListener() {
