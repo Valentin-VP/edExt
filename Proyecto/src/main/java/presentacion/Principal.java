@@ -53,6 +53,7 @@ public class Principal {
 	private InfoEdicionCurso infoEdicionCursoInternalFrame;
 	private InfoCurso infoCursoInternalFrame;
 	private AgregarCategoria agregarCategoriaInternalFrame;
+	private ModificarDatosUsuario modificarDatosUsuarioInternalFrame;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -137,6 +138,14 @@ public class Principal {
 		agregarCategoriaInternalFrame.setBounds(255, 23, 335, 171);
 		frame.getContentPane().add(agregarCategoriaInternalFrame);
 		
+		modificarDatosUsuarioInternalFrame = new ModificarDatosUsuario(fabrica.getIControladorModificarDatosUsuario());
+		modificarDatosUsuarioInternalFrame.setClosable(false);
+		modificarDatosUsuarioInternalFrame.setResizable(false);
+		modificarDatosUsuarioInternalFrame.setIconifiable(false);
+		modificarDatosUsuarioInternalFrame.setMaximizable(false);
+		modificarDatosUsuarioInternalFrame.setBounds(100, 100, 390, 432);
+		frame.getContentPane().add(modificarDatosUsuarioInternalFrame);
+		
 		JPanel panel_Imagen = new JPanel();
 		
 		panel_Imagen = new JPanel () {
@@ -209,7 +218,19 @@ public class Principal {
 		});
 		mnAltas.add(mntmCategoria);
 		
-		JMenu mnInformacin = new JMenu("Informaci\u00F3n");
+		JMenu mnNewMenu_2 = new JMenu("Modificar");
+		menuBar.add(mnNewMenu_2);
+		
+		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Usuario");
+		mntmNewMenuItem_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				modificarDatosUsuarioInternalFrame.setVisible(true);
+				modificarDatosUsuarioInternalFrame.inicializarComboBoxUsuariosModificarDatos();
+			}
+		});
+		mnNewMenu_2.add(mntmNewMenuItem_2);
+		
+		JMenu mnInformacin = new JMenu("Informacion");
 		menuBar.add(mnInformacin);
 		
 		JMenuItem mntmInfoCurso = new JMenuItem("Curso");

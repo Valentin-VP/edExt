@@ -14,7 +14,6 @@ import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import javax.swing.JSpinner;
 import java.awt.event.ActionListener;
-import java.time.LocalDate;
 import java.awt.event.ActionEvent;
 
 public class ModificarDatosUsuario extends JInternalFrame {
@@ -103,6 +102,7 @@ public class ModificarDatosUsuario extends JInternalFrame {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				icon.limpiar();
+				setVisible(false);
 				limpiar();
 			}
 		});
@@ -111,10 +111,55 @@ public class ModificarDatosUsuario extends JInternalFrame {
 		
 		comboBoxDia = new JComboBox<String>();
 		comboBoxDia.setBounds(31, 323, 75, 20);
+		comboBoxDia.addItem("1");
+		comboBoxDia.addItem("2");
+		comboBoxDia.addItem("3");
+		comboBoxDia.addItem("4");
+		comboBoxDia.addItem("5");
+		comboBoxDia.addItem("6");
+		comboBoxDia.addItem("7");
+		comboBoxDia.addItem("8");
+		comboBoxDia.addItem("9");
+		comboBoxDia.addItem("10");
+		comboBoxDia.addItem("11");
+		comboBoxDia.addItem("12");
+		comboBoxDia.addItem("13");
+		comboBoxDia.addItem("14");
+		comboBoxDia.addItem("15");
+		comboBoxDia.addItem("16");
+		comboBoxDia.addItem("17");
+		comboBoxDia.addItem("18");
+		comboBoxDia.addItem("19");
+		comboBoxDia.addItem("20");
+		comboBoxDia.addItem("21");
+		comboBoxDia.addItem("22");
+		comboBoxDia.addItem("23");
+		comboBoxDia.addItem("24");
+		comboBoxDia.addItem("25");
+		comboBoxDia.addItem("26");
+		comboBoxDia.addItem("27");
+		comboBoxDia.addItem("28");
+		comboBoxDia.addItem("29");
+		comboBoxDia.addItem("30");
+		comboBoxDia.addItem("31");
+		comboBoxDia.setSelectedItem("1");
 		getContentPane().add(comboBoxDia);
 		
 		comboBoxMes = new JComboBox<String>();
 		comboBoxMes.setBounds(145, 323, 68, 20);
+		comboBoxMes.addItem("1");
+		comboBoxMes.addItem("2");
+		comboBoxMes.addItem("3");
+		comboBoxMes.addItem("4");
+		comboBoxMes.addItem("5");
+		comboBoxMes.addItem("6");
+		comboBoxMes.addItem("7");
+		comboBoxMes.addItem("8");
+		comboBoxMes.addItem("9");
+		comboBoxMes.addItem("10");
+		comboBoxMes.addItem("11");
+		comboBoxMes.addItem("12");
+		comboBoxMes.setSelectedItem("1");
 		getContentPane().add(comboBoxMes);
 		
 		spinnerAnio = new JSpinner();
@@ -132,16 +177,17 @@ public class ModificarDatosUsuario extends JInternalFrame {
 		String dia = (String) comboBoxDia.getSelectedItem();
 		String mes = (String) comboBoxMes.getSelectedItem();
 		Integer anio = (Integer) spinnerAnio.getValue();
-		if (checkeo(nick, textFieldCorreo.getText(), textFieldNombre.getText(), textFieldApellido.getText(), dia, mes, anio, passwordField.getPassword())) {
+		if (checkeo(textFieldCorreo.getText(), textFieldNombre.getText(), textFieldApellido.getText(), dia, mes, anio, passwordField.getPassword())) {
 			DtFecha fecha = new DtFecha(Integer.parseInt(dia),Integer.parseInt(mes),anio);
 			icon.modificarDatosUsuario(nick, textFieldCorreo.getText(), textFieldNombre.getText(), textFieldApellido.getText(), fecha, passwordField.getPassword());
 			icon.limpiar();
+			setVisible(false);
 		}
 	}
 	
-	private boolean checkeo(String nick, String correo, String nombre, String apellido, String dia, String mes, Integer anio, char[] password) {
+	private boolean checkeo(String correo, String nombre, String apellido, String dia, String mes, Integer anio, char[] password) {
 		String passwd = new String(password);
-		if (nick.isEmpty() || correo.isEmpty() || nombre.isEmpty() || apellido.isEmpty() || passwd.isEmpty()) {
+		if (correo.isEmpty() || nombre.isEmpty() || apellido.isEmpty() || passwd.isEmpty()) {
 			JOptionPane.showMessageDialog(this, "No puede haber campos vacios", "Modificar datos usuario", 
 			JOptionPane.ERROR_MESSAGE);
 			return false;	
@@ -161,6 +207,21 @@ public class ModificarDatosUsuario extends JInternalFrame {
 		comboBoxDia.setSelectedIndex(0);
 		comboBoxMes.setSelectedIndex(0);
 		spinnerAnio.setValue(2020);
+	}
+	
+	public void inicializarComboBoxUsuariosModificarDatos() {
+	/*	
+		try {
+			ArrayList<DtInstituto> institutos = icon.listarInstitutos();
+			DefaultComboBoxModel<String> dml= new DefaultComboBoxModel<String>();
+			for (int i = 0; i < institutos.size(); i++) {
+			  dml.addElement(institutos.get(i).getNombre());
+			}
+			comboBoxIns.setModel(dml);
+			
+		} catch (SinInstitutos in) {
+			JOptionPane.showMessageDialog(this, in.getMessage(), "Inscripcion Edicion Curso", JOptionPane.ERROR_MESSAGE);
+		}*/
 	}
 	
 }
