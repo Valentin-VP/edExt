@@ -3,11 +3,14 @@ package logica;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.ManyToMany;
 
 import datatypes.DtFecha;
 import datatypes.DtUsuario;
@@ -17,6 +20,9 @@ import datatypes.DtUsuario;
 public class Usuario {
 	@Id
 	private String nick;
+	
+	@ManyToMany(cascade = CascadeType.ALL)
+	private List<Usuario> previas = new ArrayList<Usuario>();
 	
 	private String correo;
 	private String nombre;
