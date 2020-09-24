@@ -3,24 +3,17 @@ package interfaces;
 import datatypes.DtFecha;
 import datatypes.DtUsuario;
 import datatypes.DtUsuarioBase;
+import excepciones.SinUsuarios;
+
 import java.util.ArrayList;
 
 public interface IControladorModificarDatosUsuario {
-	public ArrayList<DtUsuarioBase> mostrarUsuarios();
+	public ArrayList<DtUsuarioBase> mostrarUsuarios() throws SinUsuarios;
 	
 	public DtUsuario seleccionarUsuario(String nick, String correo);
 	
-	public void modificarDatosUsuario(String nick, String correo, String nombre, String apellido, DtFecha fechaNac, String password);
+	public void modificarDatosUsuario(String nick, String correo, String nombre, String apellido, DtFecha fechaNac, char[] password);
 	
 	public void limpiar();
-	
-	//public void confirmar();
-	
-	///Eliminarlas???
-	//public void editarNombre(String nuevoNombre);
-	
-	//public void editarApellido(String nuevoApellido);
-	
-	//public void editarFNac(DtFecha nuevaFecha);
 
 }

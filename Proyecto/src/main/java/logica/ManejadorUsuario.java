@@ -15,13 +15,11 @@ public class ManejadorUsuario {
 		super();
 	}
 	
-	
 	public static ManejadorUsuario getInstancia() {
 		if(instancia == null)
 			instancia = new ManejadorUsuario();
 		return instancia;
 	}
-	
 	
 	public List<Usuario> getUsuarios() {
 		Conexion conexion = Conexion.getInstancia();
@@ -72,5 +70,15 @@ public class ManejadorUsuario {
 		
 		Usuario usuario = em.find(Usuario.class, nick);
 		return usuario;
+	}
+	
+	public void actualizarUsuario(Usuario usuario) {
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		em.getTransaction().begin();
+		
+		em.merge(usuario);
+		
+		em.getTransaction().commit();
 	}
 }

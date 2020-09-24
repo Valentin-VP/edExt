@@ -2,11 +2,14 @@ package logica;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import datatypes.DtFecha;
 import datatypes.DtUsuario;
 import datatypes.DtUsuarioBase;
+import excepciones.SinUsuarios;
 import interfaces.IControladorModificarDatosUsuario;
 
 public class ControladorModificarDatosUsuario implements IControladorModificarDatosUsuario {
@@ -16,6 +19,7 @@ public class ControladorModificarDatosUsuario implements IControladorModificarDa
 	String apellido;
 	DtFecha fechaNac;
 	String password;
+	Usuario usuario;
 	
 	public String getNick() {
 		return nick;
@@ -42,12 +46,15 @@ public class ControladorModificarDatosUsuario implements IControladorModificarDa
 		this.fechaNac = fechaNac;
 	}	
 	@Override
-	public ArrayList<DtUsuarioBase> mostrarUsuarios() {
+	public ArrayList<DtUsuarioBase> mostrarUsuarios() throws SinUsuarios {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		ArrayList<DtUsuarioBase> usuarios = new ArrayList<DtUsuarioBase>();
+		if (mU.getUsuarios().isEmpty()) {
+			throw new SinUsuarios("No hay usuarios ingresados");
+		}
 		for (Usuario u: mU.getUsuarios()) {
-			DtUsuarioBase dtUsuarioBase = new DtUsuarioBase(u.getNick(), u.getCorreo());
-			usuarios.add(dtUsuarioBase);
+			DtUsuarioBase dtU = new DtUsuarioBase(u.getNick(),u.getCorreo());
+			usuarios.add(dtU);
 		}
 		return usuarios;
 	}
@@ -55,40 +62,48 @@ public class ControladorModificarDatosUsuario implements IControladorModificarDa
 	public DtUsuario seleccionarUsuario(String nick, String correo) {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		Usuario user = mU.findUsuario(nick);
+		this.usuario = user;
 		return user.getDtUsuario();
 	}
 	@Override
-	public void modificarDatosUsuario(String nick, String correo, String nombre, String apellido, DtFecha fechaNac, String password) {
-		
+	public void modificarDatosUsuario(String nick, String correo, String nombre, String apellido, DtFecha fechaNac, char[] password) {
+		String passwd = new String(password);
+		this.nick = nick;
+		this.correo = correo;
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.fechaNac = fechaNac;
+		this.password = encriptar(passwd);
+		Date fecha = null;
+		try {
+			fecha = fechaNac.DtFechaToDate();
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
+		usuario.setCorreo(correo);
+		usuario.setNombre(nombre);
+		usuario.setApellido(apellido);
+		usuario.setFechaNac(fecha);
+		usuario.setPassword(encriptar(passwd));
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		mU.actualizarUsuario(usuario);
 	}
 	@Override
 	public void limpiar() {
-		
-	}
-	/*@Override
-	public void editarNombre(String nuevoNombre) {
-		this.setNombre(nuevoNombre);//??
-	}
-	@Override
-	public void editarApellido(String nuevoApellido) {
-		this.setApellido(nuevoApellido);//??
-	}
-	@Override
-	public void editarFNac(DtFecha nuevaFecha) {
-		this.setFechaNac(nuevaFecha);//??
-	}
-	*/
-	
-	public static void main(String[] args) {
-		String password = "The quick brown fox jumps over the lazy dog";
-
-		System.out.print(sha256(password));
+		this.nick = "";
+		this.correo = "";
+		this.nombre = "";
+		this.apellido = "";
+		this.fechaNac = null;
+		this.password = "";
+		this.usuario = null;
 	}
 	
-	// encriptar a SHA-256 o SHA3-156
-	public static String sha256(String base) {
+	// encriptar a SHA-256, SHA-512 o SHA3-256
+	public static String encriptar(String base) {
 	    try{
-	        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+	        MessageDigest digest = MessageDigest.getInstance("SHA-512");
 	        //byte[] hash = digest.digest(base.getBytes("UTF-8"));
 	        byte[] hash = digest.digest(base.getBytes(StandardCharsets.UTF_8));
 	        StringBuffer hexString = new StringBuffer();
@@ -104,7 +119,5 @@ public class ControladorModificarDatosUsuario implements IControladorModificarDa
 	       throw new RuntimeException(ex);
 	    }
 	}
-	
-	// encriptar a AES
-	
+
 }
