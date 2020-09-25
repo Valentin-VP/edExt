@@ -27,6 +27,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class InscripcionEdicionCurso extends JInternalFrame {
 
@@ -50,11 +52,19 @@ public class InscripcionEdicionCurso extends JInternalFrame {
 		setBounds(100, 100, 343, 384);
 		
 		comboBoxIns = new JComboBox<String>();
-		comboBoxIns.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		comboBoxIns.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
 				DefaultComboBoxModel<String> cursoNombre = new DefaultComboBoxModel<String>();
 				comboBoxCur.setModel(cursoNombre);
-				cargarCursosComboBoxInstitutos(e);
+				cargarCursosComboBoxInstitutos();
+			}
+		});
+		comboBoxIns.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//DefaultComboBoxModel<String> cursoNombre = new DefaultComboBoxModel<String>();
+				//comboBoxCur.setModel(cursoNombre);
+				//cargarCursosComboBoxInstitutos();
 			}
 		});
 		comboBoxIns.setBounds(53, 48, 168, 20);
@@ -62,9 +72,15 @@ public class InscripcionEdicionCurso extends JInternalFrame {
 		getContentPane().add(comboBoxIns);
 		
 		comboBoxCur = new JComboBox<String>();
+		comboBoxCur.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				cargarEdicionVigenteComboBoxCursos();
+			}
+		});
 		comboBoxCur.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cargarEdicionVigenteComboBoxCursos();
+				//cargarEdicionVigenteComboBoxCursos();
 			}
 		});
 		comboBoxCur.setBounds(53, 104, 168, 20);
@@ -72,15 +88,15 @@ public class InscripcionEdicionCurso extends JInternalFrame {
 		getContentPane().add(comboBoxCur);
 		
 		JLabel lblNewLabel = new JLabel("Seleccione Instituto");
-		lblNewLabel.setBounds(53, 23, 99, 14);
+		lblNewLabel.setBounds(53, 23, 150, 14);
 		getContentPane().add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("Seleccione Curso");
-		lblNewLabel_1.setBounds(53, 79, 99, 14);
+		lblNewLabel_1.setBounds(53, 79, 150, 14);
 		getContentPane().add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_1_1 = new JLabel("Nick del Estudiante");
-		lblNewLabel_1_1.setBounds(53, 181, 119, 14);
+		lblNewLabel_1_1.setBounds(53, 181, 150, 14);
 		getContentPane().add(lblNewLabel_1_1);
 		
 		textFieldEst = new JTextField();
@@ -131,7 +147,7 @@ public class InscripcionEdicionCurso extends JInternalFrame {
 		getContentPane().add(btnNewButton_1);
 		
 		JLabel lblNewLabel_1_1_1 = new JLabel("Correo del estudiante");
-		lblNewLabel_1_1_1.setBounds(53, 227, 119, 14);
+		lblNewLabel_1_1_1.setBounds(53, 227, 150, 14);
 		getContentPane().add(lblNewLabel_1_1_1);
 		
 		textFieldEd = new JTextField();
@@ -141,12 +157,12 @@ public class InscripcionEdicionCurso extends JInternalFrame {
 		textFieldEd.setEditable(false);
 		
 		JLabel lblNewLabel_1_2 = new JLabel("Edicion vigente");
-		lblNewLabel_1_2.setBounds(53, 135, 99, 14);
+		lblNewLabel_1_2.setBounds(53, 135, 150, 14);
 		getContentPane().add(lblNewLabel_1_2);
 		
 	}
 	
-	private void cargarCursosComboBoxInstitutos(ActionEvent e) {
+	private void cargarCursosComboBoxInstitutos() {
 
 		String instituto = comboBoxIns.getSelectedItem().toString();
 		
