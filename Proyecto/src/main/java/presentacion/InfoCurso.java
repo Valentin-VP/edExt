@@ -307,6 +307,10 @@ public class InfoCurso extends JInternalFrame {
 				infoCursoTexto=infoCursoTexto+dtcb.getNombre()+"\n";
 			}
 		}
+		infoCursoTexto=infoCursoTexto+"Pertenece a las siguientes Categorias:\n";
+		for(String strcat: dtcurso.getCategorias()) {
+			infoCursoTexto=infoCursoTexto+strcat+"\n";
+		}
 		infoCursoTextArea.setEnabled(true);
 		infoCursoTextArea.setText(infoCursoTexto);
 		infoCursoTextArea.setLineWrap(true);

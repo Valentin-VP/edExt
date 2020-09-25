@@ -19,6 +19,7 @@ import java.awt.event.ActionEvent;
 import interfaces.IControladorAltaCurso;
 import excepciones.InstitutoInexistente;
 import excepciones.InstitutoSinCursos;
+import excepciones.SinCategorias;
 import excepciones.CursoRepetido;
 import javax.swing.JRadioButton;
 import javax.swing.JList;
@@ -43,10 +44,15 @@ public class AgregarCurso extends JInternalFrame {
 	private JRadioButton altaCursoPreviasButtonNo;
 	private JRadioButton altaCursoPreviasButtonSi;
 	public JList<String> altaCursoPreviasList;
+	public JList<String> altaCursoCategoriasList;
 	public DefaultListModel<String> previasmodel;
+	public DefaultListModel<String> categoriasmodel;
 	public JButton altaCursoAgregarPreviasButton;
 	public JButton altaCursoLimpiarPreviasButton;
 	private ArrayList<String> previasseleccionadas = new ArrayList<String>();
+	private ArrayList<String> categoriasseleccionadas = new ArrayList<String>();
+	private JButton agregarCategoriasButton;
+	private JButton limpiarCategoriasButton;
 
 
 	public AgregarCurso(IControladorAltaCurso icon, IControladorConsultaCurso iconaux) {
@@ -57,7 +63,7 @@ public class AgregarCurso extends JInternalFrame {
         setMaximizable(true);
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setClosable(true);
-		setBounds(100, 100, 561, 449);
+		setBounds(100, 100, 687, 410);
 		getContentPane().setLayout(null);
 		
 		JLabel altaCursoInstitutoLabel = new JLabel("Instituto");
@@ -178,7 +184,7 @@ public class AgregarCurso extends JInternalFrame {
 				icon.cancelarAltaCurso();
 			}
 		});
-		altaCursoCancelarButton.setBounds(12, 316, 97, 25);
+		altaCursoCancelarButton.setBounds(22, 326, 97, 25);
 		getContentPane().add(altaCursoCancelarButton);
 		
 		JButton btnNewButton = new JButton("Aceptar");
@@ -188,7 +194,7 @@ public class AgregarCurso extends JInternalFrame {
 				altaCursoAceptarActionPerformed();
 			}
 		});
-		btnNewButton.setBounds(216, 316, 97, 25);
+		btnNewButton.setBounds(216, 326, 97, 25);
 		getContentPane().add(btnNewButton);
 		
 		JLabel altaCursoUrlLabel = new JLabel("URL");
@@ -209,12 +215,12 @@ public class AgregarCurso extends JInternalFrame {
 		altaCursoUrltextField.setBounds(110, 262, 203, 22);
 		getContentPane().add(altaCursoUrltextField);
 		
-		JScrollPane scrollPane = new JScrollPane((Component) null);
-		scrollPane.setBounds(325, 54, 208, 229);
-		getContentPane().add(scrollPane);
+		JScrollPane scrollPanePrevias = new JScrollPane((Component) null);
+		scrollPanePrevias.setBounds(325, 54, 159, 229);
+		getContentPane().add(scrollPanePrevias);
 		
 		altaCursoPreviasList = new JList<String>();
-		scrollPane.setViewportView(altaCursoPreviasList);
+		scrollPanePrevias.setViewportView(altaCursoPreviasList);
 		altaCursoPreviasList.setVisible(false);
 		altaCursoAgregarPreviasButton = new JButton("Agregar");
 		altaCursoAgregarPreviasButton.setEnabled(false);
@@ -231,10 +237,10 @@ public class AgregarCurso extends JInternalFrame {
 				JOptionPane.showMessageDialog(getContentPane(), "Se han agregado las Previas asociadas", "Alta Curso", DISPOSE_ON_CLOSE);
 			}
 		});
-		altaCursoAgregarPreviasButton.setBounds(436, 299, 97, 25);
+		altaCursoAgregarPreviasButton.setBounds(398, 299, 86, 25);
 		getContentPane().add(altaCursoAgregarPreviasButton);
 		
-		altaCursoLimpiarPreviasButton = new JButton("Limpiar");
+		altaCursoLimpiarPreviasButton = new JButton("Borrar");
 		altaCursoLimpiarPreviasButton.setEnabled(false);
 		altaCursoLimpiarPreviasButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -244,12 +250,12 @@ public class AgregarCurso extends JInternalFrame {
 				JOptionPane.showMessageDialog(getContentPane(), "Se han eliminado las Previas asociadas", "Alta Curso", DISPOSE_ON_CLOSE);
 			}
 		});
-		altaCursoLimpiarPreviasButton.setBounds(325, 299, 97, 25);
+		altaCursoLimpiarPreviasButton.setBounds(325, 299, 75, 25);
 		getContentPane().add(altaCursoLimpiarPreviasButton);
 		
-		JLabel altaCursotienePreviasLabel = new JLabel("Tiene Previas");
+		JLabel altaCursotienePreviasLabel = new JLabel("Previas");
 		altaCursotienePreviasLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		altaCursotienePreviasLabel.setBounds(325, 13, 107, 28);
+		altaCursotienePreviasLabel.setBounds(325, 13, 58, 28);
 		getContentPane().add(altaCursotienePreviasLabel);
 		
 		altaCursoPreviasButtonNo = new JRadioButton("No");
@@ -264,7 +270,7 @@ public class AgregarCurso extends JInternalFrame {
 			}
 		});
 		altaCursoPreviasButtonNo.setSelected(true);
-		altaCursoPreviasButtonNo.setBounds(431, 16, 43, 25);
+		altaCursoPreviasButtonNo.setBounds(394, 16, 43, 25);
 		getContentPane().add(altaCursoPreviasButtonNo);
 		
 		altaCursoPreviasButtonSi = new JRadioButton("Si");
@@ -275,8 +281,61 @@ public class AgregarCurso extends JInternalFrame {
 				populatePreviasList(iconaux);			}
 		});
 		altaCursoPreviasButtonSi.setSelected(false);
-		altaCursoPreviasButtonSi.setBounds(478, 16, 43, 25);
+		altaCursoPreviasButtonSi.setBounds(441, 16, 43, 25);
 		getContentPane().add(altaCursoPreviasButtonSi);
+		
+		JScrollPane scrollPaneCategorias = new JScrollPane((Component) null);
+		scrollPaneCategorias.setBounds(496, 54, 159, 229);
+		getContentPane().add(scrollPaneCategorias);
+		
+		altaCursoCategoriasList = new JList<String>();
+		scrollPaneCategorias.setViewportView(altaCursoCategoriasList);
+		
+		JLabel lblCategorias = new JLabel("Categorias");
+		lblCategorias.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblCategorias.setBounds(492, 13, 86, 28);
+		getContentPane().add(lblCategorias);
+		
+		limpiarCategoriasButton = new JButton("Borrar");
+		limpiarCategoriasButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//limpiar categorias
+				icon.cleanCategorias();
+				altaCursoCategoriasList.clearSelection();
+				JOptionPane.showMessageDialog(getContentPane(), "Se han eliminado las Categorias seleccionadas", "Alta Curso", DISPOSE_ON_CLOSE);
+			}
+		});
+		limpiarCategoriasButton.setEnabled(false);
+		limpiarCategoriasButton.setBounds(496, 299, 75, 25);
+		getContentPane().add(limpiarCategoriasButton);
+		
+		agregarCategoriasButton = new JButton("Agregar");
+		agregarCategoriasButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int[] selectedIx = altaCursoCategoriasList.getSelectedIndices();
+				for (int i = 0; i < selectedIx.length; i++) {
+				      String categoria = altaCursoCategoriasList.getModel().getElementAt(selectedIx[i]).toString();
+				      if(!categoriasseleccionadas.contains(categoria)) {
+				    	  categoriasseleccionadas.add(categoria);
+				      } 
+				      
+				    }
+				JOptionPane.showMessageDialog(getContentPane(), "Se han agregado las Categorias seleccionadas", "Alta Curso", DISPOSE_ON_CLOSE);
+			}
+		});
+		agregarCategoriasButton.setEnabled(false);
+		agregarCategoriasButton.setBounds(569, 299, 86, 25);
+		getContentPane().add(agregarCategoriasButton);
+		
+		JButton cargarButton = new JButton("Cargar");
+		cargarButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//populate categories
+				populateCategoriasList();
+			}
+		});
+		cargarButton.setBounds(569, 16, 86, 25);
+		getContentPane().add(cargarButton);
 
 	}
 
@@ -309,6 +368,12 @@ public class AgregarCurso extends JInternalFrame {
 						this.icon.agregarPrevia(previa);
 					}
 				}
+				if(categoriasseleccionadas!=null) {
+					for(String categoria: categoriasseleccionadas) {
+						this.icon.agregarCategoria(categoria);
+					}
+				}
+				
 				this.icon.confirmarAltaCurso();
 				JOptionPane.showMessageDialog(this, "El curso fue ingresado con exito", "Alta Curso", JOptionPane.INFORMATION_MESSAGE);
 				altaCursoPreviasButtonNo.setSelected(true);
@@ -352,6 +417,12 @@ public class AgregarCurso extends JInternalFrame {
 					JOptionPane.showMessageDialog(this, "Debe seleccionar alguna Previa", "Alta Curso", JOptionPane.ERROR_MESSAGE);
 					return false;
 				}
+				else {
+					if (categoriasseleccionadas.isEmpty()) {
+						JOptionPane.showMessageDialog(this, "Debe seleccionar alguna Categoria", "Alta Curso", JOptionPane.ERROR_MESSAGE);
+						return false;
+					}
+				}
 			}
 		}
 		return true;
@@ -366,9 +437,15 @@ public class AgregarCurso extends JInternalFrame {
 		this.altaCursoCreditostextField.setText("");
 		this.altaCursoUrltextField.setText("");
 		previasmodel = new DefaultListModel<String>();
+		categoriasmodel = new DefaultListModel<String>();
 		this.altaCursoPreviasList.setModel(previasmodel);
+		this.altaCursoCategoriasList.setModel(categoriasmodel);
 		altaCursoAgregarPreviasButton.setEnabled(false);
 		altaCursoLimpiarPreviasButton.setEnabled(false);
+		agregarCategoriasButton.setEnabled(false);
+		limpiarCategoriasButton.setEnabled(false);
+		previasseleccionadas = new ArrayList<String>();
+		categoriasseleccionadas = new ArrayList<String>();
 	}
 	
 	private void populatePreviasList(IControladorConsultaCurso iconaux) {
@@ -393,6 +470,26 @@ public class AgregarCurso extends JInternalFrame {
 			previasmodel = new DefaultListModel<String>();
 			this.altaCursoPreviasList.setModel(previasmodel);
 			JOptionPane.showMessageDialog(this, ex.getMessage(), "Alta Curso", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+	
+	public void populateCategoriasList() { //Llamado con boton y desde menu en principal. Se deberia poder sacar el boton, probar
+		ArrayList<String> strcategories = new ArrayList<String>();
+		try {
+			strcategories = icon.listarCategorias();
+			categoriasmodel = new DefaultListModel<String>();
+			for (String cat: strcategories) {
+				categoriasmodel.addElement(cat);
+			}
+			altaCursoCategoriasList.setModel(categoriasmodel);
+			agregarCategoriasButton.setEnabled(true);
+			limpiarCategoriasButton.setEnabled(true);
+		}catch(SinCategorias ex) {
+			categoriasmodel = new DefaultListModel<String>();
+			this.altaCursoCategoriasList.setModel(categoriasmodel);
+			JOptionPane.showMessageDialog(getContentPane(), ex.getMessage(), "Alta Curso", DISPOSE_ON_CLOSE);
+			setVisible(false);
+			limpiar();
 		}
 	}
 }

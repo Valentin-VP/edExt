@@ -40,7 +40,7 @@ public class Curso {
 	private List<Categoria> categorias = new ArrayList<Categoria>();//nuevo
 	
 	public Curso(String nombre, String descripcion, String duracion, int cantHoras, Integer creditos, Date fechaR,
-			String url, List<Curso> previas, Instituto instituto) {
+			String url, List<Curso> previas, Instituto instituto, List<Categoria> categorias) {
 		super();
 		this.nombre = nombre;
 		this.descripcion = descripcion;
@@ -50,7 +50,8 @@ public class Curso {
 		this.fechaR = fechaR;
 		this.url = url;
 		this.previas = previas;
-		this.setInstituto(instituto);
+		this.instituto = instituto;
+		this.categorias = categorias;
 	}
 	
 	public Edicion findEdicion(String edicion) {
@@ -197,6 +198,14 @@ public class Curso {
 
 	public void setInstituto(Instituto instituto) {
 		this.instituto = instituto;
+	}
+
+	public List<Categoria> getCategorias() {
+		return categorias;
+	}
+
+	public void setCategorias(List<Categoria> categorias) {
+		this.categorias = categorias;
 	}
 	
 }

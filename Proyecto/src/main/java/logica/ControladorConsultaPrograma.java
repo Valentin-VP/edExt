@@ -108,7 +108,14 @@ public class ControladorConsultaPrograma implements interfaces.IControladorConsu
 		else {
 			for(Curso c: mPF.getProgFormacion(programaFormacion).getCursos()) {	
 				//Esto no esta bien, al DtCurso le faltaria el Institut y la Categoria, al mismo tiempo tiene datos de sobra pero whatever
-				DtCurso dtc = new DtCurso(c.getDescripcion(), c.getDuracion(), c.getCantHoras(), c.getCreditos(), new DtFecha(), c.getUrl(), c.getNombre(), new ArrayList<DtEdicionBase>(), new ArrayList<DtCursoBase>());
+				// Nico, se agregan categorias e instituto. By: jedik-no
+				String ins = c.getInstituto().getNombre();
+				ArrayList<String> categories = new ArrayList <String>();
+				for(Categoria cat: c.getCategorias()) {
+					String strcat = cat.getNombre();
+					categories.add(strcat);
+				}
+				DtCurso dtc = new DtCurso(c.getDescripcion(), c.getDuracion(), c.getCantHoras(), c.getCreditos(), new DtFecha(), c.getUrl(), c.getNombre(), new ArrayList<DtEdicionBase>(), new ArrayList<DtCursoBase>(),ins,categories);
 
 				cursosprograma.add(dtc);
 			}

@@ -1,12 +1,15 @@
 package logica;
 
 import java.util.List;
-import java.util.ArrayList;
+
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
+import persistencia.Conexion;
+
 
 public class ManejadorCategoria {
 	 private static ManejadorCategoria instancia;
-	 
-	 private List<Categoria> categorias = new ArrayList<>();
 
 	 private ManejadorCategoria() {}
 	    
@@ -17,18 +20,32 @@ public class ManejadorCategoria {
 	    }
 	    
 	    public Categoria find(String nombre) {
-	    	if(this.categorias != null) {
-	    		for(Categoria c: categorias) {
-	        		if(c.getNombre().equals(nombre)) {
-	        			return c;
-	        		}
-	        	}
-	    	}
-	    	return null;
+	    	Conexion conexion = Conexion.getInstancia();
+			EntityManager em = conexion.getEntityManager();
+			
+			Categoria categoria = em.find(Categoria.class, nombre);
+			return categoria;
 	    }
 	    
-	    public void agregarCategoria(Categoria C) {
-	    	categorias.add(C);
+	    public void agregarCategoria(Categoria c) {
+	    	Conexion conexion = Conexion.getInstancia();
+			EntityManager em = conexion.getEntityManager();
+			em.getTransaction().begin();
+			
+			em.persist(c);
+			
+			em.getTransaction().commit();
 	    }
+
 	    
+	    public List<Categoria> getCategorias() {
+	        
+	    	Conexion conexion = Conexion.getInstancia();
+			EntityManager em = conexion.getEntityManager();
+			
+			Query query = em.createQuery("select c from Categoria c");
+			@SuppressWarnings("unchecked")
+			List<Categoria> listCategorias = (List<Categoria>) query.getResultList();
+			return listCategorias;
+	    }
 }

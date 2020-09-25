@@ -11,12 +11,14 @@ public class DtCurso extends DtCursoBase {
 	private String url;
 	private ArrayList<DtEdicionBase> ediciones = new ArrayList<DtEdicionBase>();
 	private ArrayList<DtCursoBase> previas = new ArrayList<DtCursoBase>();
+	private String instituto;
+	private ArrayList <String> categorias;
 	
 	public DtCurso() {
 		super();
 	}
 
-	public DtCurso(String descripcion, String duracion, int cantHoras, Integer creditos, DtFecha fechaR, String url, String nombre, ArrayList<DtEdicionBase> ediciones, ArrayList<DtCursoBase> previas) {
+	public DtCurso(String descripcion, String duracion, int cantHoras, Integer creditos, DtFecha fechaR, String url, String nombre, ArrayList<DtEdicionBase> ediciones, ArrayList<DtCursoBase> previas, String instituto, ArrayList <String> categorias) {
 		super(nombre);
 		this.descripcion = descripcion;
 		this.duracion = duracion;
@@ -26,6 +28,8 @@ public class DtCurso extends DtCursoBase {
 		this.url = url;
 		this.ediciones = ediciones;
 		this.previas = previas;
+		this.instituto = instituto;
+		this.categorias = categorias;
 	}
 	
 	public String getDescripcion() {
@@ -90,6 +94,22 @@ public class DtCurso extends DtCursoBase {
 
 	public void setPrevias(ArrayList<DtCursoBase> previas) {
 		this.previas = previas;
+	}
+
+	public String getInstituto() {
+		return instituto;
+	}
+
+	public void setInstituto(String instituto) {
+		this.instituto = instituto;
+	}
+
+	public ArrayList<String> getCategorias() {
+		return categorias;
+	}
+
+	public void setCategorias(ArrayList<String> categorias) {
+		this.categorias = categorias;
 	}
 
 	

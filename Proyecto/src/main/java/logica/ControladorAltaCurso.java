@@ -4,6 +4,7 @@ import interfaces.IControladorAltaCurso;
 import persistencia.Conexion;
 import excepciones.CursoRepetido;
 import excepciones.InstitutoInexistente;
+import excepciones.SinCategorias;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -26,13 +27,14 @@ public class ControladorAltaCurso implements IControladorAltaCurso{
 	private DtFecha fechaR;
 	private String url;
 	private ArrayList<DtCursoBase> previas = new ArrayList<DtCursoBase>();
+	private ArrayList<Categoria> categorias = new ArrayList<Categoria>();
 	
 	public ControladorAltaCurso() {
 		super();
 	}
 	
 	public ControladorAltaCurso(DtCurso curso, String instituto, String nombre, String descripcion, String duracion,
-			int cantHoras, int creditos, DtFecha fechaR) {
+			int cantHoras, int creditos, DtFecha fechaR, ArrayList<Categoria> categorias) {
 		super();
 		this.curso = curso;
 		this.instituto = instituto;
@@ -42,6 +44,7 @@ public class ControladorAltaCurso implements IControladorAltaCurso{
 		this.cantHoras = cantHoras;
 		this.creditos = creditos;
 		this.fechaR = fechaR;
+		this.categorias = categorias;
 	}
 	public DtCurso getCurso() {
 		return curso;
@@ -108,11 +111,30 @@ public class ControladorAltaCurso implements IControladorAltaCurso{
 		this.url = url;
 	}
 	
+	public ArrayList<Categoria> getCategorias() {
+		return categorias;
+	}
+
+	public void setCategorias(ArrayList<Categoria> categorias) {
+		this.categorias = categorias;
+	}
+	
+	public void cleanCategorias() {
+		this.categorias = new ArrayList<Categoria>();
+	}
+
 	public void agregarPrevia(String previa) {
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 		if(mI.find(this.instituto).existsCurso(previa)) {
 			DtCursoBase dtcb = new DtCursoBase(mI.find(this.instituto).findCurso(previa).getNombre());
 			previas.add(dtcb);
+		}
+	}
+	
+	public void agregarCategoria(String categoria) {
+		ManejadorCategoria mC = ManejadorCategoria.getInstancia();
+		if(mC.find(categoria)!=null) {
+			categorias.add(mC.find(categoria));
 		}
 	}
 	
@@ -142,7 +164,7 @@ public class ControladorAltaCurso implements IControladorAltaCurso{
 			e.printStackTrace();
 		}
 		
-		Curso curso = new Curso(getNombre(), getDescripcion(), getDuracion(), getCantHoras(), getCreditos(), fechadate, getUrl(), previascursos, mI.find(this.instituto));
+		Curso curso = new Curso(getNombre(), getDescripcion(), getDuracion(), getCantHoras(), getCreditos(), fechadate, getUrl(), previascursos, mI.find(this.instituto), categorias);
 		mI.find(this.instituto).agregarCurso(curso);
 		
 		Conexion conexion = Conexion.getInstancia();
@@ -168,6 +190,7 @@ public class ControladorAltaCurso implements IControladorAltaCurso{
 		this.fechaR = null;
 		this.url = null;
 		this.previas = new ArrayList<DtCursoBase>();
+		this.categorias = new ArrayList<Categoria>();
 	}
 	
 	
@@ -190,5 +213,21 @@ public class ControladorAltaCurso implements IControladorAltaCurso{
 		setFechaR(fechaR);
 		
 	} 
+	
+	public ArrayList<String> listarCategorias() throws SinCategorias{
+		ManejadorCategoria mC = ManejadorCategoria.getInstancia();
+		ArrayList<String> strcategorias = new ArrayList<String>();
+		if(!mC.getCategorias().isEmpty()) {	
+			for(Categoria c:mC.getCategorias()) {
+				String strcat = c.getNombre();
+				strcategorias.add(strcat);
+			}
+		}
+		else {
+			throw new SinCategorias("No se han registrado Categorias en el Sistema");
+		}
+		
+		return strcategorias;
+	}
 	
 }

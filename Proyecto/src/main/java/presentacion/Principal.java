@@ -190,6 +190,7 @@ public class Principal {
 		mntmCurso.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent AECurso) {
 				agregarCursoInternalFrame.setVisible(true);
+				agregarCursoInternalFrame.populateCategoriasList();
 			}
 		});
 		mnAltas.add(mntmCurso);

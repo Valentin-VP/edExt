@@ -72,6 +72,7 @@ public class ControladorConsultaCurso implements IControladorConsultaCurso{
 		int creditos = mI.find(institutoCon).findCurso(curso).getCreditos();
 		DtFecha fechaR = mI.find(institutoCon).findCurso(curso).convertToDtFecha(mI.find(institutoCon).findCurso(curso).getFechaR());
 		String url = mI.find(institutoCon).findCurso(curso).getUrl();
+		String instituto = mI.find(institutoCon).findCurso(curso).getInstituto().getNombre();
 		// Buscar ProgFormacion que incluyan a este curso y guardarlos para crear el DtCurso a retornar 
 		if(!mP.getProgramas().isEmpty()) {
 			for(ProgFormacion pf: mP.getProgramas()) {
@@ -90,8 +91,13 @@ public class ControladorConsultaCurso implements IControladorConsultaCurso{
 		for(Curso previa: mI.find(institutoCon).findCurso(curso).getPrevias()) { 
 			  DtCursoBase dtprevia = new DtCursoBase(previa.getNombre());
 			  dtprevias.add(dtprevia); 
-		} 
-		retorno = new DtCurso(descripcion,duracion,cantHoras,creditos,fechaR,url,nombre,dteb,dtprevias);
+		}
+		ArrayList<String> categories = new ArrayList <String>();
+		for(Categoria cat: mI.find(institutoCon).findCurso(curso).getCategorias()) {
+			String strcat = cat.getNombre();
+			categories.add(strcat);
+		}
+		retorno = new DtCurso(descripcion,duracion,cantHoras,creditos,fechaR,url,nombre,dteb,dtprevias,instituto,categories);
 		return retorno;
 	 }
 
