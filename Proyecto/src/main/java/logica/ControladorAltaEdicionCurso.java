@@ -61,7 +61,7 @@ public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso
 	}
 
 	@Override
-	public ArrayList<DtCursoBase> seleccionarInstituto(String instituto) throws InstitutoInexistente {
+	public ArrayList<DtCursoBase> seleccionarInstituto(String instituto) throws InstitutoInexistente {//mod
 		ArrayList <DtCursoBase> cursosinstituto = new ArrayList <DtCursoBase>();
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 		Instituto i = mI.find(instituto);
@@ -69,7 +69,8 @@ public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso
 			throw new InstitutoInexistente("El instituto " + instituto + " no esta en el sistema");
 		}
 		this.instituto = i.getNombre();
-		List<Curso> cursos = mI.find(instituto).getCursos();
+		ManejadorCurso mC = ManejadorCurso.getInstancia();
+		List<Curso> cursos = mC.getCursos();
 		for(Curso c: cursos) {
 			DtCursoBase dtcb = new DtCursoBase (c.getNombre());
 			cursosinstituto.add(dtcb);
@@ -77,7 +78,7 @@ public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso
 		return cursosinstituto;
 	}
 	
-	@Override
+	@Override//mod, verificar con vale
 	public void altaEdicionCurso(String curso, String nombre, DtFecha fechaI, DtFecha fechaF, ArrayList<String> docentes, boolean tieneCupos, Integer cantCupos, DtFecha fechaPub) throws EdicionRepetida, CursoNoExiste, InstitutoInexistente, UsuarioNoDocente {
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 		Instituto i = mI.find(this.instituto);
@@ -85,8 +86,10 @@ public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso
 		if (i.equals(null)) {
 			throw new InstitutoInexistente("El instituto " + instituto + " no esta en el sistema");
 		}
-		if(i.existsCurso(curso)) {
-			if(i.findCurso(curso).findEdicion(nombre) == null) {
+		ManejadorCurso mC = ManejadorCurso.getInstancia();
+		if(mC.existeCurso(curso)) {
+			ManejadorEdicion mE = ManejadorEdicion.getInstancia();
+			if(mE.find(nombre) == null) {
 				
 				Date fechaIdate = null;
 				Date fechaFdate = null;
@@ -105,8 +108,9 @@ public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso
 					edicion = new Edicion(nombre, fechaIdate, fechaFdate, tieneCupos, cantCupos, fechaPubdate);
 				}
 				// Agregar edicion al curso
-				i.findCurso(curso).addEdicion(edicion);
-				mI.agregarCurso(i.findCurso(curso)); // <------------------------
+				mE.agregarEdicion(edicion);
+				mC.find(curso).addEdicion(edicion);//agrego a la coleccion de ediciones de el curso
+				i.agregarCurso(i.findCurso(curso));// necesario??... el curso no existe en la base de datos ya??
 			}
 			else {
 				throw new EdicionRepetida("La edicion " + nombre + " ya se encuentra integrada al curso:" + i.findCurso(curso).getNombre());
@@ -121,13 +125,13 @@ public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso
 			if (mU.findUsuario(user) instanceof Docente) {
 				((Docente) mU.findUsuario(user)).addDictaEdicion(edicion);
 				
-				Conexion conexion = Conexion.getInstancia();	// <------------------------
-				EntityManager em = conexion.getEntityManager();	// <------------------------
-				em.getTransaction().begin();	// <------------------------
+				Conexion conexion = Conexion.getInstancia();	
+				EntityManager em = conexion.getEntityManager();	
+				em.getTransaction().begin();	
 				
-				em.persist(mU.findUsuario(user));	// <------------------------
+				em.persist(mU.findUsuario(user));	
 				
-				em.getTransaction().commit();	// <------------------------
+				em.getTransaction().commit();	
 			}
 		}
 	}	

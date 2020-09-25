@@ -75,7 +75,7 @@ public class ManejadorInstituto {
     }
 
     
-    public void agregarCurso(Curso c) {//esta funcion hay que sacarla de aca, ya esta en ManejadorCurso
+    /*public void agregarCurso(Curso c) {//esta funcion hay que sacarla de aca, ya esta en ManejadorCurso
     	Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
 		em.getTransaction().begin();
@@ -83,5 +83,5 @@ public class ManejadorInstituto {
 		em.persist(c);
 		
 		em.getTransaction().commit();
-    }
+    }*/
 }
