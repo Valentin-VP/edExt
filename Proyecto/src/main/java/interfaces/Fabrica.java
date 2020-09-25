@@ -6,6 +6,7 @@ import logica.ControladorAltaInstituto;
 import logica.ControladorAltaProgFormacion;
 import logica.ControladorAltaUsuario;
 import logica.ControladorConsultaEdicionCurso;
+import logica.ControladorConsultaPrograma;
 import logica.ControladorInscripcionEdicionCurso;
 import logica.ControladorModificarDatosUsuario;
 import logica.ControladorConsultaCurso;
@@ -62,5 +63,9 @@ public class Fabrica {
 	
 	public IControladorAltaCategoria getIControladorAltaCategoria() {
 		return new ControladorAltaCategoria();
+	}
+	
+	public IControladorConsultaPrograma getIControladorConsultaPrograma() {
+		return new ControladorConsultaPrograma();
 	}
 }

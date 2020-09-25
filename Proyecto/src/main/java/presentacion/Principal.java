@@ -54,6 +54,7 @@ public class Principal {
 	private InfoCurso infoCursoInternalFrame;
 	private AgregarCategoria agregarCategoriaInternalFrame;
 	private ModificarDatosUsuario modificarDatosUsuarioInternalFrame;
+	private ConsultaPrograma consultaProgramaInternalFrame;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -145,6 +146,10 @@ public class Principal {
 		modificarDatosUsuarioInternalFrame.setMaximizable(false);
 		modificarDatosUsuarioInternalFrame.setBounds(100, 100, 390, 479);
 		frame.getContentPane().add(modificarDatosUsuarioInternalFrame);
+		
+		consultaProgramaInternalFrame = new ConsultaPrograma(fabrica.getIControladorConsultaPrograma());
+		consultaProgramaInternalFrame.setResizable(false);
+		frame.getContentPane().add(consultaProgramaInternalFrame);		
 		
 		JPanel panel_Imagen = new JPanel();
 		
@@ -274,5 +279,14 @@ public class Principal {
 			}
 		});
 		mnNewMenu_1.add(mntmNewMenuItem_1);
+		
+		JMenuItem mntmNewMenuItem_7 = new JMenuItem("Consulta");
+		mntmNewMenuItem_7.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				consultaProgramaInternalFrame.setVisible(true);
+				consultaProgramaInternalFrame.cargarProgs();
+			}
+		});
+		mnNewMenu_1.add(mntmNewMenuItem_7);
 	}
 }

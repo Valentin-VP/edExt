@@ -1,6 +1,7 @@
 package logica;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import datatypes.DtFecha;
@@ -12,7 +13,7 @@ public class ProgFormacion {
 	private LocalDate fechaI;
 	private LocalDate fechaF;
 	private LocalDate fechaAlta;
-	private List<Curso> cursos;
+	private List<Curso> cursos = new ArrayList<Curso>();
 	public ProgFormacion(String nombre, String desc, LocalDate fechaI, LocalDate fechaF, LocalDate fechaAlta) {
 		super();
 		this.nombre = nombre;

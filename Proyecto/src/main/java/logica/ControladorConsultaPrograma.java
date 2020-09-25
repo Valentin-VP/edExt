@@ -13,6 +13,7 @@ import datatypes.DtPrograma;
 import datatypes.DtProgramaBase;
 import excepciones.InstitutoInexistente;
 import excepciones.InstitutoSinCursos;
+import excepciones.ProgramaInexistente;
 import excepciones.ProgramaSinCursos;
 import excepciones.SinInstitutos;
 import excepciones.SinProgramas;
@@ -63,12 +64,15 @@ public class ControladorConsultaPrograma implements interfaces.IControladorConsu
 		 */
 	}
 	@Override
-	public DtPrograma seleccionarPrograma(String nombre) throws ProgramaSinCursos {
+	public DtPrograma seleccionarPrograma(String nombre) throws ProgramaSinCursos, ProgramaInexistente {
 		//busca un objeto programa con ese nombre en el manejadorPrograma.
 		//construye el DtPrograma incluyendo todos los nombres de los cursos que este contiene
 		//se necesita algo en la clase ProgFormacion (un getCursos) que devuelva los objetos Curso asociados a el
 		//tambien getDtCursoBase en Curso.
 		ManejadorProgFormacion mPF = ManejadorProgFormacion.getInstancia();
+		if (!mPF.exists(nombre)) {
+			throw new ProgramaInexistente("No existe ese programa.");
+		}
 		DtPrograma retorno;
 		ArrayList <DtCursoBase> cursosprograma = new ArrayList <DtCursoBase>();
 		String name = mPF.getProgFormacion(nombre).getNombre();
@@ -86,10 +90,7 @@ public class ControladorConsultaPrograma implements interfaces.IControladorConsu
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		if(mPF.getProgFormacion(nombre).getCursos().isEmpty()) {
-			throw new ProgramaSinCursos("El Programa de Formacion seleccionado no posee cursos aun");
-		}
-		else {
+		if(!mPF.getProgFormacion(nombre).getCursos().isEmpty()) {
 			for(Curso c: mPF.getProgFormacion(nombre).getCursos()) {
 				DtCursoBase dtcb = new DtCursoBase(c.getNombre());
 				cursosprograma.add(dtcb);
@@ -99,9 +100,12 @@ public class ControladorConsultaPrograma implements interfaces.IControladorConsu
 		return retorno;
 	}
 	@Override
-	public ArrayList<DtCurso> listarCursosPrograma(String programaFormacion) throws ProgramaSinCursos {
+	public ArrayList<DtCurso> listarCursosPrograma(String programaFormacion) throws ProgramaSinCursos, ProgramaInexistente {
 		ArrayList <DtCurso> cursosprograma = new ArrayList <DtCurso>();
 		ManejadorProgFormacion mPF = ManejadorProgFormacion.getInstancia();
+		if (!mPF.exists(programaFormacion)) {
+			throw new ProgramaInexistente("No existe ese programa.");
+		}
 		if(mPF.getProgFormacion(programaFormacion).getCursos().isEmpty()) {
 			throw new ProgramaSinCursos("El Programa de Formacion seleccionado no posee cursos aun");
 		}
