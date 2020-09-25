@@ -61,7 +61,7 @@ public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso
 	}
 
 	@Override
-	public ArrayList<DtCursoBase> seleccionarInstituto(String instituto) throws InstitutoInexistente {//mod
+	public List<DtCursoBase> seleccionarInstituto(String instituto) throws InstitutoInexistente {//mod
 		ArrayList <DtCursoBase> cursosinstituto = new ArrayList <DtCursoBase>();
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 		Instituto i = mI.find(instituto);
@@ -69,8 +69,7 @@ public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso
 			throw new InstitutoInexistente("El instituto " + instituto + " no esta en el sistema");
 		}
 		this.instituto = i.getNombre();
-		ManejadorCurso mC = ManejadorCurso.getInstancia();
-		List<Curso> cursos = mC.getCursos();
+		List<Curso> cursos = i.getCursos();
 		for(Curso c: cursos) {
 			DtCursoBase dtcb = new DtCursoBase (c.getNombre());
 			cursosinstituto.add(dtcb);

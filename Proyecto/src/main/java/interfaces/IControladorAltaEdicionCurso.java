@@ -1,6 +1,8 @@
 package interfaces;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import datatypes.DtCursoBase;
 import datatypes.DtFecha;
 import excepciones.EdicionRepetida;
@@ -13,7 +15,7 @@ import excepciones.DocenteDeOtroInstituto;
 import excepciones.DocenteYaAgregado;
 
 public interface IControladorAltaEdicionCurso {
-	public ArrayList<DtCursoBase> seleccionarInstituto(String instituto) throws InstitutoInexistente;
+	public List<DtCursoBase> seleccionarInstituto(String instituto) throws InstitutoInexistente;
 	
 	public void altaEdicionCurso(String curso, String nombre, DtFecha fechaI, DtFecha fechaF, ArrayList<String> docentes, boolean tieneCupos, Integer cupos, DtFecha fechaPub) throws EdicionRepetida, CursoNoExiste, InstitutoInexistente, UsuarioNoDocente;
 	

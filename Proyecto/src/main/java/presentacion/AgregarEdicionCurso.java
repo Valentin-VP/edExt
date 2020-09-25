@@ -19,6 +19,7 @@ import excepciones.UsuarioNoDocente;
 import excepciones.UsuarioNoExiste;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 import javax.swing.DefaultComboBoxModel;
@@ -54,7 +55,7 @@ public class AgregarEdicionCurso extends JInternalFrame {
 	String correo;
 	String Curso;
 	
-	ArrayList<DtCursoBase> cursos = new ArrayList<>();
+	List<DtCursoBase> cursos = new ArrayList<>();
 	ArrayList<String> docentes = new ArrayList<>();
 	
 	public AgregarEdicionCurso(IControladorAltaEdicionCurso icon) {
