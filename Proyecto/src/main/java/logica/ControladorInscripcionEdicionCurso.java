@@ -64,23 +64,26 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 		Instituto ins = mI.find(nomIns);
 		this.nomIns = ins.getNombre();
-		List <Curso> cursos = ins.getCursos();
-		if (cursos.isEmpty()) {
+		ManejadorCurso mC = ManejadorCurso.getInstancia();
+		List <Curso> cursos = mC.getCursos();
+		for(int i=0;i < cursos.size();i++) {
+			if (cursos.get(i).getInstituto().getNombre().equals(this.nomIns)) {
+				DtCursoBase dtcb = new DtCursoBase (cursos.get(i).getNombre());
+				cursosinstituto.add(dtcb);
+			}
+		}
+		if (cursosinstituto.isEmpty()) {
 			throw new CursoNoExiste("El instituto no tiene cursos ingresados");
 		}
-		for(int i=0;i < cursos.size();i++) {
-			DtCursoBase dtcb = new DtCursoBase (cursos.get(i).getNombre());
-			cursosinstituto.add(dtcb);
-		}
 		return cursosinstituto;
-		
 	}
 
 	@Override
 	public DtEdicionBase seleccionarCurso(String nomCurso) throws EdicionVigenteNoExiste{
-		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
-		Instituto ins = mI.find(this.nomIns);
-		Curso c = ins.findCurso(nomCurso);
+		//ManejadorInstituto mI = ManejadorInstituto.getInstancia();
+		//Instituto ins = mI.find(this.nomIns);
+		ManejadorCurso mC = ManejadorCurso.getInstancia();
+		Curso c = mC.find(nomCurso);//ins.findCurso(nomCurso);
 		this.setNomCurso(c.getNombre());
 		DtEdicionBase dteb = c.getEdicionVigente();
 		if (dteb == null) {
@@ -123,10 +126,12 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 
 	@Override
 	public void confirmar() {
-		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
-		Instituto ins = mI.find(nomIns);
-		Curso c = ins.findCurso(nomCurso);
-		Edicion ed = c.findEdicion(nombreEd);
+		//ManejadorInstituto mI = ManejadorInstituto.getInstancia();
+		//Instituto ins = mI.find(nomIns);
+		//ManejadorCurso mC = ManejadorCurso.getInstancia();
+		//Curso c = mC.find(nomCurso);//ins.findCurso(nomCurso);
+		ManejadorEdicion mE = ManejadorEdicion.getInstancia();
+		Edicion ed = mE.find(nombreEd);//c.findEdicion(nombreEd);
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		Usuario u = mU.findUsuario(this.nick);
 		Date datefecha = null;

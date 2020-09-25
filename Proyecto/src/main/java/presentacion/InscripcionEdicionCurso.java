@@ -60,13 +60,13 @@ public class InscripcionEdicionCurso extends JInternalFrame {
 				cargarCursosComboBoxInstitutos();
 			}
 		});
-		comboBoxIns.addActionListener(new ActionListener() {
+		/*comboBoxIns.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//DefaultComboBoxModel<String> cursoNombre = new DefaultComboBoxModel<String>();
-				//comboBoxCur.setModel(cursoNombre);
-				//cargarCursosComboBoxInstitutos();
+				DefaultComboBoxModel<String> cursoNombre = new DefaultComboBoxModel<String>();
+				comboBoxCur.setModel(cursoNombre);
+				cargarCursosComboBoxInstitutos();
 			}
-		});
+		});*/
 		comboBoxIns.setBounds(53, 48, 168, 20);
 		getContentPane().setLayout(null);
 		getContentPane().add(comboBoxIns);
@@ -78,11 +78,11 @@ public class InscripcionEdicionCurso extends JInternalFrame {
 				cargarEdicionVigenteComboBoxCursos();
 			}
 		});
-		comboBoxCur.addActionListener(new ActionListener() {
+		/*comboBoxCur.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//cargarEdicionVigenteComboBoxCursos();
+				cargarEdicionVigenteComboBoxCursos();
 			}
-		});
+		});*/
 		comboBoxCur.setBounds(53, 104, 168, 20);
 		comboBoxCur.setEnabled(false);
 		getContentPane().add(comboBoxCur);
