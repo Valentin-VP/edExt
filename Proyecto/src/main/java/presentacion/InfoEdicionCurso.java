@@ -160,7 +160,7 @@ public class InfoEdicionCurso extends JInternalFrame {
     		public void actionPerformed(ActionEvent arg0) {
     			limpiarListas();
     			conCategoria = true;
-    			cargarCursos();
+    			cargarCursosCategoria();
     		}
     	});
     	btnCategoria.setBounds(312, 61, 117, 25);

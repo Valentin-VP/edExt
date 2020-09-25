@@ -75,7 +75,7 @@ public class ManejadorInstituto {
     }
 
     
-    public void agregarCurso(Curso c) {
+    public void agregarCurso(Curso c) {//esta funcion hay que sacarla de aca, ya esta en ManejadorCurso
     	Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
 		em.getTransaction().begin();

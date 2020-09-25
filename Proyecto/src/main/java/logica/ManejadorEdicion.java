@@ -42,7 +42,7 @@ public class ManejadorEdicion {
 		return edicion;
     }
 
-    public void agregarInstituto(Edicion e) {
+    public void agregarEdicion(Edicion e) {
     	Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
 		em.getTransaction().begin();
