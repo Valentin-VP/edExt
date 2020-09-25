@@ -57,8 +57,8 @@ public class ProgFormacion {
 	public List<Curso> getCursos() {
 		return cursos;
 	}
-	public void setCursos(List<Curso> cursos) {
-		this.cursos = cursos;
+	public void addCursos(Curso cursos) {
+		this.cursos.add(cursos);
 	}
 	public DtProgramaBase getDtProgBase() {
 		DtProgramaBase dtpb = new DtProgramaBase(this.nombre);

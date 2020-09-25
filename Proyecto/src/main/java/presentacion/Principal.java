@@ -96,7 +96,7 @@ public class Principal {
 		agregarCursoInternalFrame.setResizable(false);
 		agregarCursoInternalFrame.setMaximizable(false);
 		agregarCursoInternalFrame.setIconifiable(false);
-		agregarCursoInternalFrame.setLocation(651, 117);
+		agregarCursoInternalFrame.setLocation(550, 117);
 		frame.getContentPane().add(agregarCursoInternalFrame);
 		
 		inscripcionEdicionCursoInternalFrame = new InscripcionEdicionCurso(fabrica.getIControladorInscripcionEdicionCurso());

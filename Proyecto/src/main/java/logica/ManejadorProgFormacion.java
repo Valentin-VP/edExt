@@ -58,5 +58,14 @@ public class ManejadorProgFormacion {
 	public void setProgramas(List<ProgFormacion> programas) {
 		this.programas = programas;
 	}
+	
+	public ProgFormacion find(String nombre) {
+		for(ProgFormacion pf: this.programas) {
+			if(pf.getNombre().equals(nombre)) {
+				return pf;
+			}
+		}
+		return null;
+	}
 
 }
