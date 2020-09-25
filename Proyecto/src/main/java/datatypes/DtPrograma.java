@@ -8,7 +8,7 @@ public class DtPrograma extends DtProgramaBase{
 	private Date fechaI;
 	private Date fechaF;
 	private Date fechaAlta;
-	private ArrayList<DtCursoBase> cursos;
+	private ArrayList<DtCursoBase> cursos = new ArrayList<DtCursoBase>();
 	public DtPrograma(String nombre, String desc, Date fechaI, Date fechaF, Date fechaAlta,
 			ArrayList<DtCursoBase> cursos) {
 		super(nombre);
@@ -32,6 +32,9 @@ public class DtPrograma extends DtProgramaBase{
 	}
 	public ArrayList<DtCursoBase> getCursos() {
 		return cursos;
+	}
+	public void setCursos(ArrayList<DtCursoBase> cursos) {
+		this.cursos = cursos;
 	}
 
 }
