@@ -58,7 +58,7 @@ public class ManejadorCurso {
     	Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
 		
-		Query query = em.createQuery("select * from Curso c");
+		Query query = em.createQuery("select c from Curso c");
 		@SuppressWarnings("unchecked")
 		List<Curso> listCursos = (List<Curso>) query.getResultList();
 		return listCursos;
