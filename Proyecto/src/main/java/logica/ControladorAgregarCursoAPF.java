@@ -27,11 +27,9 @@ public class ControladorAgregarCursoAPF implements IControladorAgregarCursoAPF {
 	
 	public List<DtCursoBase> getDtCurso() throws AgregarCursoAPFException {
 		List<DtCursoBase> cursos = new ArrayList<>();
-		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
-		for(Instituto i: mI.getInstitutos()) {
-			for(Curso c: i.getCursos()) {
-				cursos.add(new DtCursoBase(c.getNombre()));
-			}
+		ManejadorCurso mC = ManejadorCurso.getInstancia();
+		for(Curso c: mC.getCursos()) {
+			cursos.add(new DtCursoBase(c.getNombre()));
 		}
 		if(cursos.size()>0) {
 			return cursos;
@@ -39,11 +37,11 @@ public class ControladorAgregarCursoAPF implements IControladorAgregarCursoAPF {
 		throw new AgregarCursoAPFException("No existen cursos registrados");
 	}
 	
-	public void agregarCurso(String prog, String instituto, String curso) {
+	public void agregarCurso(String prog, String curso) {
 		ManejadorProgFormacion mP = ManejadorProgFormacion.getInstancia();
 		ProgFormacion p = mP.find(prog);
-		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
-		Curso c = mI.find(instituto).findCurso(curso);
+		ManejadorCurso mC = ManejadorCurso.getInstancia();
+		Curso c = mC.find(curso);
 		p.addCursos(c);
 	}
 }

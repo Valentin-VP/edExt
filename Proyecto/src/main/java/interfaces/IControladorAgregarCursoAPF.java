@@ -12,5 +12,5 @@ public interface IControladorAgregarCursoAPF {
 	
 	public List<DtCursoBase> getDtCurso() throws AgregarCursoAPFException;
 	
-	public void agregarCurso(String prog, String instituto, String curso);
+	public void agregarCurso(String prog, String curso);
 }
