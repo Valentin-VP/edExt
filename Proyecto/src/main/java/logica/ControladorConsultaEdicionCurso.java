@@ -127,12 +127,15 @@ public class ControladorConsultaEdicionCurso implements IControladorConsultaEdic
 		this.curso = curso;
 	}
 	
-	public DtEdicion getDtEdicion(String instituto, String curso, String edicion) {
-		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
-		Instituto i= mI.find(instituto);
-		Curso c = i.findCurso(curso);
-		Edicion e = c.findEdicion(edicion);
-		return e.getDtEdicion();
+	@Override
+	public DtEdicion getDtEdicion(String edicion) {
+		ManejadorEdicion mE = ManejadorEdicion.getInstancia();
+		Edicion e = mE.find(edicion);
+		DtFecha dtfechaI = e.convertToDtFecha(e.getFechaI());
+		DtFecha dtfechaF = e.convertToDtFecha(e.getFechaF());
+		DtFecha dtfechaPub = e.convertToDtFecha(e.getFechaPub());
+		DtEdicion dte = new DtEdicion(e.getNombre(), dtfechaI, dtfechaF, e.isTieneCupos(), e.getCupos(), dtfechaPub);
+		return dte;
 	}
 	@Override
 	public ArrayList<String> getDocentes(String edicion) {

@@ -38,14 +38,14 @@ public class InfoEdicionCurso extends JInternalFrame {
 	JButton btnNewButton;
 	JButton cancelar;
 	
+	boolean esInstituto;
+	
 	private static final long serialVersionUID = 1L;
 
     private IControladorConsultaEdicionCurso icon;
 	private JButton atras;
 	private JButton cerrarDesdeInfoCursoButton;
 	private JButton btnCategoria;
-	
-	boolean conCategoria = false;
     
     public InfoEdicionCurso2 getInfoEdicionCurso2() {
     	return this.infoEdicionCurso2Panel;
@@ -84,6 +84,7 @@ public class InfoEdicionCurso extends JInternalFrame {
         	public void actionPerformed(ActionEvent arg0) { 
         		limpiarListas();
         		cargarCursos();
+        		esInstituto = true;
         	}
         });
         btnNewButton.setBounds(312, 12, 118, 23);
@@ -130,7 +131,7 @@ public class InfoEdicionCurso extends JInternalFrame {
         		atras.setEnabled(true);
         		atras.setVisible(true);
         		ocultar();
-        		infoEdicionCurso2Panel.mostrarDatos(icon.getInstituto(), icon.getCurso(), icon.getEdicion());
+        		infoEdicionCurso2Panel.mostrarDatos(icon.getEdicion());
         	}
         });
         listEdiciones.setBounds(267, 164, 180, 319);
@@ -162,6 +163,7 @@ public class InfoEdicionCurso extends JInternalFrame {
     		public void actionPerformed(ActionEvent arg0) {
     			limpiarListas();
     			cargarCursosCategoria();
+    			esInstituto = false;
     		}
     	});
     	btnCategoria.setBounds(312, 61, 117, 25);
@@ -252,10 +254,10 @@ public class InfoEdicionCurso extends JInternalFrame {
 		listEdiciones.setVisible(true);
 	}
 	
-	public void mostrarDos(String institutoseleccionado, String cursoseleccionado, String edicionseleccionada) {
+	public void mostrarDos(String edicionseleccionada) {
 		ocultar();
 		setVisible(true);
-		infoEdicionCurso2Panel.mostrarDatos(institutoseleccionado, cursoseleccionado, edicionseleccionada);
+		infoEdicionCurso2Panel.mostrarDatos(edicionseleccionada);
 		cerrarDesdeInfoCursoButton.setVisible(true);
 		atras.setVisible(false);
 		atras.setEnabled(false);

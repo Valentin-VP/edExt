@@ -96,8 +96,8 @@ public class InfoEdicionCurso2 extends JPanel {
 		
 	}
 	
-	public void mostrarDatos(String instituto, String curso, String edicion) {
-		DtEdicion dtE = icon.getDtEdicion(instituto, curso, edicion);
+	public void mostrarDatos(String edicion) {
+		DtEdicion dtE = icon.getDtEdicion(edicion);
 		DtFecha fi = dtE.getFechaI();
 		DtFecha ff = dtE.getFechaF();
 		DtFecha fp = dtE.getFechaPub();

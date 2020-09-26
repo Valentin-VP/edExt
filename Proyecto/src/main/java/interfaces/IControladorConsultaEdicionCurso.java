@@ -26,7 +26,7 @@ public interface IControladorConsultaEdicionCurso {
 	
 	public String getCurso();
 	
-	public DtEdicion getDtEdicion(String instituto, String curso, String edicion);
+	public DtEdicion getDtEdicion(String edicion);
 
 	public ArrayList<String> getDocentes(String edicion);
 	
