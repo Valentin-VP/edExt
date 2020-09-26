@@ -2,6 +2,7 @@ package interfaces;
 
 import datatypes.DtCursoBase;
 import datatypes.DtEdicionBase;
+import datatypes.DtInstituto;
 import datatypes.DtEdicion;
 import java.util.ArrayList;
 import excepciones.InstitutoInexistente;
@@ -28,5 +29,7 @@ public interface IControladorConsultaEdicionCurso {
 	public DtEdicion getDtEdicion(String instituto, String curso, String edicion);
 
 	public ArrayList<String> getDocentes(String edicion);
+	
+	public ArrayList<DtInstituto> getInstitutosConCurso(String curso);
 
 }

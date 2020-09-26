@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import datatypes.DtCursoBase;
+import datatypes.DtInstituto;
 
 @Entity
 public class Instituto {
@@ -73,5 +74,10 @@ public class Instituto {
 			}
 		}
 		return retorno;
+	}
+	
+	public DtInstituto getDtInstituto(Instituto ins) {
+		DtInstituto i = new DtInstituto(ins.getNombre());
+		return i;
 	}
 }

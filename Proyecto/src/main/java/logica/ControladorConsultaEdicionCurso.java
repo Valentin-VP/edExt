@@ -7,6 +7,7 @@ import datatypes.DtCursoBase;
 import datatypes.DtEdicion;
 import datatypes.DtEdicionBase;
 import datatypes.DtFecha;
+import datatypes.DtInstituto;
 import interfaces.IControladorConsultaEdicionCurso;
 import excepciones.CategoriaInexistente;
 import excepciones.CursoNoExiste;
@@ -153,6 +154,18 @@ public class ControladorConsultaEdicionCurso implements IControladorConsultaEdic
 	}
 	public void setCategoria(String categoria) {
 		this.categoria = categoria;
+	}
+	
+	@Override
+	public ArrayList<DtInstituto> getInstitutosConCurso(String curso){
+		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
+		ArrayList<DtInstituto> ins = new ArrayList<DtInstituto>();
+		for(Instituto i: mI.getInstitutos()) {
+			if(i.existsCurso(curso)) {
+				ins.add(i.getDtInstituto(i));
+			}
+		}
+		return ins;
 	}
 	
 }
