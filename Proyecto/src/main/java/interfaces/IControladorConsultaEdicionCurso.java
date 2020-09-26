@@ -13,7 +13,7 @@ public interface IControladorConsultaEdicionCurso {
 	
 	public ArrayList<DtCursoBase> seleccionarCategoria(String categoria) throws CategoriaInexistente;
 	
-	public ArrayList<DtEdicionBase> seleccionarCurso(String curso, boolean conCategoria) throws CursoNoExiste;
+	public ArrayList<DtEdicionBase> seleccionarCurso(String curso) throws CursoNoExiste;
 	
 	public DtEdicion seleccionarEdicion(String edicion);
 	

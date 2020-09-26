@@ -114,7 +114,7 @@ public class InfoEdicionCurso extends JInternalFrame {
         	public void mouseClicked(MouseEvent me1) {
         		nombreEdiciones.clear();
         		listEdiciones.setModel(nombreEdiciones);
-				cargarEdicionCurso(me1, listCursos.getSelectedValue().toString(), conCategoria);
+				cargarEdicionCurso(me1, listCursos.getSelectedValue().toString());
         	}
         });
         listCursos.setBounds(35, 164, 180, 319);
@@ -159,7 +159,6 @@ public class InfoEdicionCurso extends JInternalFrame {
     	btnCategoria.addActionListener(new ActionListener() {
     		public void actionPerformed(ActionEvent arg0) {
     			limpiarListas();
-    			conCategoria = true;
     			cargarCursosCategoria();
     		}
     	});
@@ -207,10 +206,10 @@ public class InfoEdicionCurso extends JInternalFrame {
 		}
 	}
 	
-	protected void cargarEdicionCurso(MouseEvent me1, String curso, boolean conCategoria) {
+	protected void cargarEdicionCurso(MouseEvent me1, String curso) {
 		try {
 			ArrayList<DtEdicionBase> dtEdicionBase = new ArrayList<>();
-			dtEdicionBase = icon.seleccionarCurso(curso, conCategoria);
+			dtEdicionBase = icon.seleccionarCurso(curso);
 			for(DtEdicionBase de: dtEdicionBase) {
 				nombreEdiciones.addElement(de.getNombre());
 			}

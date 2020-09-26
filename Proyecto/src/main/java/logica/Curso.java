@@ -14,6 +14,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Curso {
@@ -36,8 +37,8 @@ public class Curso {
 	@ManyToOne
 	private	Instituto instituto;
 	
-	@ManyToMany(cascade = CascadeType.ALL)
-	private List<Categoria> categorias = new ArrayList<Categoria>();//nuevo
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<Categoria> categorias = new ArrayList<Categoria>();
 	
 	public Curso(String nombre, String descripcion, String duracion, int cantHoras, Integer creditos, Date fechaR,
 			String url, List<Curso> previas, Instituto instituto, List<Categoria> categorias) {

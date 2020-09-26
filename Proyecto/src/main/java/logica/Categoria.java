@@ -6,14 +6,11 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 
 @Entity
 public class Categoria {
 	@Id
 	private String nombre;
-	@ManyToMany(mappedBy = "categorias")
-	private List<Curso> cursos = new ArrayList<>();
 	
 	public Categoria() {
 		super();
@@ -29,33 +26,5 @@ public class Categoria {
 	
 	public String getNombre() {
 		return this.nombre;
-	}
-	
-	public void addCurso(Curso c) {
-		cursos.add(c);
-	}
-	
-	public List<Curso> getCursos() {
-		return cursos;
-	}
-	
-	public String getInstitutoCurso(String curso) {
-		String retorno = new String();
-		for(Curso c: cursos) {
-			if(c.getNombre().equals(curso)) {
-				retorno = c.getInstituto().getNombre();
-			}
-		}
-		return retorno;
-	}
-	
-	public Curso findCurso(String curso, String instituto) {
-		Curso retorno = new Curso();
-		for(Curso c:cursos) {
-			if(c.getNombre().equals(curso) && (c.getInstituto().getNombre().equals(instituto))) {
-				retorno = c;
-			}
-		}
-		return retorno;
 	}
 }
