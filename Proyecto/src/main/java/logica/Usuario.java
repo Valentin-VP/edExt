@@ -22,7 +22,7 @@ public class Usuario {
 	private String nick;
 	
 	@ManyToMany(cascade = CascadeType.ALL)
-	private List<Usuario> previas = new ArrayList<Usuario>();
+	private List<Usuario> sigue = new ArrayList<Usuario>();
 	
 	private String correo;
 	private String nombre;
@@ -39,17 +39,14 @@ public class Usuario {
 		this.fechaNac = fechaNac;
 		this.password = password;
 	}
-	
-	
+		
 	public String getPassword() {
 		return password;
 	}
 
-
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
 
 	public Usuario() {
 		super();
