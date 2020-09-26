@@ -22,14 +22,13 @@ public class Usuario {
 	private String nick;
 	
 	@ManyToMany(cascade = CascadeType.ALL)
-	private List<Usuario> sigue = new ArrayList<Usuario>();
+	private List<Usuario> seguidos = new ArrayList<Usuario>();
 	
 	private String correo;
 	private String nombre;
 	private String apellido;
 	private Date  fechaNac;
 	private String password;
-	private List<String> seguidores = new ArrayList<>();
 	
 	public Usuario(String nick, String nombre, String apellido, String correo, Date  fechaNac, String password) {
 		super();
@@ -93,6 +92,22 @@ public class Usuario {
 		this.fechaNac = fechaNac;
 	}
 	
+	public List<Usuario> getSigue() {
+		return seguidos;
+	}
+
+	public void setSigue(List<Usuario> sigue) {
+		this.seguidos = sigue;
+	}
+	
+	public void addSeguido(Usuario seguido) {
+		this.seguidos.add(seguido);
+	}
+	
+	public void removeSeguido(Usuario seguido) {
+		this.seguidos.remove(seguido);
+	}
+
 	public DtUsuario getDtUsuario() {
 		ArrayList<Integer> datos = new ArrayList<>();
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/M/yyyy");
@@ -109,12 +124,4 @@ public class Usuario {
 		return dtUsuario;
 	}
 	
-	public void addSeguidor(String seguidor) {
-		this.seguidores.add(seguidor);
-		
-	}
-	
-	public void removeSeguidor(String seguidor) {
-		this.seguidores.remove(seguidor);
-	}
 }
