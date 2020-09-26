@@ -244,6 +244,7 @@ public class InfoEdicionCurso extends JInternalFrame {
 		cancelar.setVisible(false);
 		listCursos.setVisible(false);
 		listEdiciones.setVisible(false);
+		btnCategoria.setVisible(false);
 	}
 	
 	void desOcultar() {
@@ -252,6 +253,7 @@ public class InfoEdicionCurso extends JInternalFrame {
 		cancelar.setVisible(true);
 		listCursos.setVisible(true);
 		listEdiciones.setVisible(true);
+		btnCategoria.setVisible(false);
 	}
 	
 	public void mostrarDos(String edicionseleccionada) {
