@@ -64,13 +64,9 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 		Instituto ins = mI.find(nomIns);
 		this.nomIns = ins.getNombre();
-		ManejadorCurso mC = ManejadorCurso.getInstancia();
-		List <Curso> cursos = mC.getCursos();
-		for(int i=0;i < cursos.size();i++) {
-			if (cursos.get(i).getInstituto().getNombre().equals(this.nomIns)) {
-				DtCursoBase dtcb = new DtCursoBase (cursos.get(i).getNombre());
-				cursosinstituto.add(dtcb);
-			}
+		for(Curso c: ins.getCursos()) {
+			DtCursoBase dtcb = new DtCursoBase(c.getNombre());
+			cursosinstituto.add(dtcb);
 		}
 		if (cursosinstituto.isEmpty()) {
 			throw new CursoNoExiste("El instituto no tiene cursos ingresados");

@@ -14,7 +14,7 @@ import datatypes.DtCursoBase;
 public class Instituto {
 	@Id
 	private String nombre;
-	@OneToMany(mappedBy = "instituto",cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<Curso> cursos = new ArrayList<Curso>();
 	
 	public Instituto() {

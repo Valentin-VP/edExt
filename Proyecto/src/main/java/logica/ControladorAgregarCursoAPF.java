@@ -30,7 +30,7 @@ public class ControladorAgregarCursoAPF implements IControladorAgregarCursoAPF {
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 		for(Instituto i: mI.getInstitutos()) {
 			for(Curso c: i.getCursos()) {
-				cursos.add(new DtCursoBase(c.getNombre(), i.getNombre()));
+				cursos.add(new DtCursoBase(c.getNombre()));
 			}
 		}
 		if(cursos.size()>0) {

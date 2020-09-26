@@ -234,7 +234,7 @@ public class AgregarCurso extends JInternalFrame {
 				      } 
 				      
 				    }
-				JOptionPane.showMessageDialog(getContentPane(), "Se han agregado las Previas asociadas", "Alta Curso", DISPOSE_ON_CLOSE);
+				JOptionPane.showMessageDialog(getContentPane(), "Se han agregado las Previas asociadas", "Alta Curso", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 		altaCursoAgregarPreviasButton.setBounds(398, 299, 86, 25);
@@ -247,7 +247,7 @@ public class AgregarCurso extends JInternalFrame {
 				ArrayList<DtCursoBase> previas = new ArrayList<DtCursoBase>();
 				icon.setPrevias(previas); // Setea las previas en null
 				altaCursoPreviasList.clearSelection();
-				JOptionPane.showMessageDialog(getContentPane(), "Se han eliminado las Previas asociadas", "Alta Curso", DISPOSE_ON_CLOSE);
+				JOptionPane.showMessageDialog(getContentPane(), "Se han eliminado las Previas asociadas", "Alta Curso", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 		altaCursoLimpiarPreviasButton.setBounds(325, 299, 75, 25);
@@ -302,7 +302,7 @@ public class AgregarCurso extends JInternalFrame {
 				//limpiar categorias
 				icon.cleanCategorias();
 				altaCursoCategoriasList.clearSelection();
-				JOptionPane.showMessageDialog(getContentPane(), "Se han eliminado las Categorias seleccionadas", "Alta Curso", DISPOSE_ON_CLOSE);
+				JOptionPane.showMessageDialog(getContentPane(), "Se han eliminado las Categorias seleccionadas", "Alta Curso", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 		limpiarCategoriasButton.setEnabled(false);
@@ -320,7 +320,7 @@ public class AgregarCurso extends JInternalFrame {
 				      } 
 				      
 				    }
-				JOptionPane.showMessageDialog(getContentPane(), "Se han agregado las Categorias seleccionadas", "Alta Curso", DISPOSE_ON_CLOSE);
+				JOptionPane.showMessageDialog(getContentPane(), "Se han agregado las Categorias seleccionadas", "Alta Curso", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 		agregarCategoriasButton.setEnabled(false);

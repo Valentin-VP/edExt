@@ -34,14 +34,11 @@ public class Curso {
 	@ManyToMany(cascade = CascadeType.ALL)
 	private List<Edicion> ediciones = new ArrayList<Edicion>();
 	
-	@ManyToOne
-	private	Instituto instituto;
-	
-	@OneToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.ALL)
 	private List<Categoria> categorias = new ArrayList<Categoria>();
 	
 	public Curso(String nombre, String descripcion, String duracion, int cantHoras, Integer creditos, Date fechaR,
-			String url, List<Curso> previas, Instituto instituto, List<Categoria> categorias) {
+			String url, List<Curso> previas, List<Categoria> categorias) {
 		super();
 		this.nombre = nombre;
 		this.descripcion = descripcion;
@@ -51,7 +48,6 @@ public class Curso {
 		this.fechaR = fechaR;
 		this.url = url;
 		this.previas = previas;
-		this.instituto = instituto;
 		this.categorias = categorias;
 	}
 	
@@ -193,13 +189,6 @@ public class Curso {
 		return dtfecha;
 	}
 
-	public Instituto getInstituto() {
-		return instituto;
-	}
-
-	public void setInstituto(Instituto instituto) {
-		this.instituto = instituto;
-	}
 
 	public List<Categoria> getCategorias() {
 		return categorias;

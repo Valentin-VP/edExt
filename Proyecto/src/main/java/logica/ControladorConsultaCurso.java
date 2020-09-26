@@ -8,8 +8,11 @@ import datatypes.DtEdicionBase;
 import datatypes.DtFecha;
 import datatypes.DtInstituto;
 import datatypes.DtProgramaBase;
+import excepciones.CategoriaInexistente;
+import excepciones.CategoriaSinCursos;
 import excepciones.InstitutoInexistente;
 import excepciones.InstitutoSinCursos;
+import excepciones.SinCategorias;
 import excepciones.SinInstitutos;
 import interfaces.IControladorConsultaCurso;
 
@@ -72,7 +75,6 @@ public class ControladorConsultaCurso implements IControladorConsultaCurso{
 		int creditos = mI.find(institutoCon).findCurso(curso).getCreditos();
 		DtFecha fechaR = mI.find(institutoCon).findCurso(curso).convertToDtFecha(mI.find(institutoCon).findCurso(curso).getFechaR());
 		String url = mI.find(institutoCon).findCurso(curso).getUrl();
-		String instituto = mI.find(institutoCon).findCurso(curso).getInstituto().getNombre();
 		// Buscar ProgFormacion que incluyan a este curso y guardarlos para crear el DtCurso a retornar 
 		if(!mP.getProgramas().isEmpty()) {
 			for(ProgFormacion pf: mP.getProgramas()) {
@@ -97,7 +99,7 @@ public class ControladorConsultaCurso implements IControladorConsultaCurso{
 			String strcat = cat.getNombre();
 			categories.add(strcat);
 		}
-		retorno = new DtCurso(descripcion,duracion,cantHoras,creditos,fechaR,url,nombre,dteb,dtprevias,instituto,categories);
+		retorno = new DtCurso(descripcion,duracion,cantHoras,creditos,fechaR,url,nombre,dteb,dtprevias,categories);
 		return retorno;
 	 }
 
@@ -113,6 +115,44 @@ public class ControladorConsultaCurso implements IControladorConsultaCurso{
 			dtinstitutos.add(dti);
 		}
 		return dtinstitutos;
+	}
+
+	@Override
+	public ArrayList<String> listarCategorias() throws SinCategorias {
+		ManejadorCategoria mC = ManejadorCategoria.getInstancia();
+		ArrayList<String> categorias = new ArrayList <String>();
+		if(mC.getCategorias().isEmpty()) {
+			throw new SinCategorias("No se han ingresado categorias aun");
+		}
+		for (Categoria cat: mC.getCategorias()) {
+			String strcat = cat.getNombre();
+			categorias.add(strcat);
+		}
+		return categorias;
+	}
+
+	@Override
+	public ArrayList<DtCursoBase> listarCursosCategoria(String categoria) throws CategoriaInexistente, CategoriaSinCursos {
+		ArrayList <DtCursoBase> cursoscategoria = new ArrayList <DtCursoBase>();
+		ManejadorCategoria mCa = ManejadorCategoria.getInstancia();
+		ManejadorCurso mCu = ManejadorCurso.getInstancia();
+		if(mCa.find(categoria)==null) {
+			throw new CategoriaInexistente("No existe la Categoría seleccionada");
+		}
+		for(Curso cu: mCu.getCursos()) {
+			for(Categoria cat: cu.getCategorias()) {
+				if(cat.getNombre().equals(categoria)) {
+					DtCursoBase curso = new DtCursoBase (cu.getNombre());
+					cursoscategoria.add(curso);
+					System.out.println("Curso encontrado: "+curso);
+				}
+			}
+		}
+		if(cursoscategoria.isEmpty()) {
+			System.out.println("Deberia generar excepcion: ");
+			throw new CategoriaSinCursos("No existen Cursos para la Categoría seleccionada");
+		}
+		return cursoscategoria;
 	}
 	
 }	

@@ -141,6 +141,7 @@ public class ControladorAltaCurso implements IControladorAltaCurso{
 	@Override
 	public void confirmarAltaCurso() {
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
+		ManejadorCurso mC = ManejadorCurso.getInstancia();
 		ArrayList<Curso> previascursos = new ArrayList <Curso>();
 		if(!getPrevias().isEmpty()) {
 			for(DtCursoBase dtcb: getPrevias()) {
@@ -164,8 +165,9 @@ public class ControladorAltaCurso implements IControladorAltaCurso{
 			e.printStackTrace();
 		}
 		
-		Curso curso = new Curso(getNombre(), getDescripcion(), getDuracion(), getCantHoras(), getCreditos(), fechadate, getUrl(), previascursos, mI.find(this.instituto), categorias);
+		Curso curso = new Curso(getNombre(), getDescripcion(), getDuracion(), getCantHoras(), getCreditos(), fechadate, getUrl(), previascursos,  categorias);
 		mI.find(this.instituto).agregarCurso(curso);
+		mC.agregarCurso(curso);
 		
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
@@ -197,11 +199,13 @@ public class ControladorAltaCurso implements IControladorAltaCurso{
 	@Override
 	public void altaCurso(String instituto, String nombre, String descripcion, String duracion, int cantHoras, int creditos, String url, DtFecha fechaR) throws CursoRepetido, InstitutoInexistente {
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
+		ManejadorCurso mC = ManejadorCurso.getInstancia();
 		if(!mI.existeInstituto(instituto)) {
 			throw new InstitutoInexistente("No existe el Instituto seleccionado.");
 		}
-		if(mI.find(instituto).existsCurso(nombre)) {
-			throw new CursoRepetido("Ya existe un Curso con ese nombre en el Instituto seleccionado.");
+		//
+		if(mC.existeCurso(nombre)) {
+			throw new CursoRepetido("Ya existe un Curso con ese nombre la plataforma.");
 		}
 		setInstituto(instituto);
 		setNombre(nombre);

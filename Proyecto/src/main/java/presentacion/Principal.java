@@ -244,6 +244,7 @@ public class Principal {
 			public void actionPerformed(ActionEvent arg0) {
 				infoCursoInternalFrame.setVisible(true);
 				infoCursoInternalFrame.cargarInstitutos();
+				infoCursoInternalFrame.cargarCategorias();
 			}
 		});
 		mnInformacin.add(mntmInfoCurso);

@@ -18,8 +18,11 @@ import datatypes.DtCursoBase;
 import datatypes.DtEdicionBase;
 import datatypes.DtInstituto;
 import datatypes.DtProgramaBase;
+import excepciones.CategoriaInexistente;
+import excepciones.CategoriaSinCursos;
 import excepciones.InstitutoInexistente;
 import excepciones.InstitutoSinCursos;
+import excepciones.SinCategorias;
 import excepciones.SinInstitutos;
 
 import java.awt.event.ActionListener;
@@ -33,6 +36,8 @@ public class InfoCurso extends JInternalFrame {
 	private IControladorConsultaCurso icon;
 	private JComboBox<String> InstitutoComboBox;
 	private JButton institutoButton;
+	private JComboBox<String> CategoriaComboBox;
+	private JButton categoriaButton;
 	private JLabel cursoLabel;
 	private JComboBox<String> cursoComboBox;
 	private JButton cursoButton;
@@ -46,10 +51,13 @@ public class InfoCurso extends JInternalFrame {
 	private JButton edicionButton;
 	private JButton cerrarButton;
 	private String institutoseleccionado;
+	private String categoriaseleccionada;
 	private String cursoseleccionado;
 	private String edicionseleccionada;
 	private String programaseleccionado; // *Next Release
 	private InfoEdicionCurso infoEdicionCursoInternalFrame;
+	private boolean institutoButtonSelected = false;
+	private boolean categoriaButtonSelected = false;
 	
 	public InfoCurso(IControladorConsultaCurso icon, InfoEdicionCurso infoEdicionCursoInternalFrame) {
 		this.icon=icon;
@@ -84,6 +92,7 @@ public class InfoCurso extends JInternalFrame {
 				edicionLabel.setEnabled(false);
 				edicionButton.setEnabled(false);
 				edicionComboBox.setEnabled(false);
+				categoriaButtonSelected = false;
 			}
 		});
 		InstitutoComboBox.setBounds(90, 13, 121, 22);
@@ -105,6 +114,7 @@ public class InfoCurso extends JInternalFrame {
 				edicionLabel.setEnabled(false);
 				edicionButton.setEnabled(false);
 				edicionComboBox.setEnabled(false);
+				institutoButtonSelected = true;
 				cargarCursos();
 			}
 		});
@@ -116,7 +126,7 @@ public class InfoCurso extends JInternalFrame {
 		cursoLabel = new JLabel("Curso");
 		cursoLabel.setEnabled(false);
 		cursoLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		cursoLabel.setBounds(12, 47, 63, 20);
+		cursoLabel.setBounds(12, 74, 63, 20);
 		getContentPane().add(cursoLabel);
 		
 		cursoComboBox = new JComboBox<String>();
@@ -137,7 +147,7 @@ public class InfoCurso extends JInternalFrame {
 			}
 		});
 		cursoComboBox.setEnabled(false);
-		cursoComboBox.setBounds(90, 47, 121, 22);
+		cursoComboBox.setBounds(90, 74, 121, 22);
 		getContentPane().add(cursoComboBox);
 		
 		cursoButton = new JButton("Seleccionar");
@@ -160,11 +170,11 @@ public class InfoCurso extends JInternalFrame {
 		});
 		cursoButton.setEnabled(false);
 		cursoButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		cursoButton.setBounds(223, 46, 99, 25);
+		cursoButton.setBounds(223, 73, 99, 25);
 		getContentPane().add(cursoButton);
 		
 		scrollPane = new JScrollPane((Component) null);
-		scrollPane.setBounds(12, 80, 310, 175);
+		scrollPane.setBounds(12, 107, 310, 175);
 		scrollPane.setEnabled(false);
 		getContentPane().add(scrollPane);
 		
@@ -175,7 +185,7 @@ public class InfoCurso extends JInternalFrame {
 		programaButton = new JButton("Seleccionar");
 		programaButton.setEnabled(false);
 		programaButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		programaButton.setBounds(223, 302, 99, 25);
+		programaButton.setBounds(223, 329, 99, 25);
 		getContentPane().add(programaButton);
 		
 		programaComboBox = new JComboBox<String>();
@@ -187,19 +197,19 @@ public class InfoCurso extends JInternalFrame {
 			}
 		});
 		programaComboBox.setEnabled(false);
-		programaComboBox.setBounds(90, 303, 121, 22);
+		programaComboBox.setBounds(90, 330, 121, 22);
 		getContentPane().add(programaComboBox);
 		
 		programaLabel = new JLabel("Programa");
 		programaLabel.setEnabled(false);
 		programaLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		programaLabel.setBounds(12, 303, 75, 20);
+		programaLabel.setBounds(12, 330, 75, 20);
 		getContentPane().add(programaLabel);
 		
 		edicionLabel = new JLabel("Edicion");
 		edicionLabel.setEnabled(false);
 		edicionLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		edicionLabel.setBounds(12, 269, 63, 20);
+		edicionLabel.setBounds(12, 296, 63, 20);
 		getContentPane().add(edicionLabel);
 		
 		edicionComboBox = new JComboBox<String>();
@@ -211,7 +221,7 @@ public class InfoCurso extends JInternalFrame {
 			}
 		});
 		edicionComboBox.setEnabled(false);
-		edicionComboBox.setBounds(90, 269, 121, 22);
+		edicionComboBox.setBounds(90, 296, 121, 22);
 		getContentPane().add(edicionComboBox);
 		
 		edicionButton = new JButton("Seleccionar");
@@ -223,7 +233,7 @@ public class InfoCurso extends JInternalFrame {
 		});
 		edicionButton.setEnabled(false);
 		edicionButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		edicionButton.setBounds(223, 268, 99, 25);
+		edicionButton.setBounds(223, 295, 99, 25);
 		getContentPane().add(edicionButton);
 		
 		cerrarButton = new JButton("Cerrar");
@@ -235,6 +245,59 @@ public class InfoCurso extends JInternalFrame {
 		});
 		cerrarButton.setBounds(225, 367, 97, 25);
 		getContentPane().add(cerrarButton);
+		
+		JLabel lblCategoria = new JLabel("Categoria");
+		lblCategoria.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblCategoria.setBounds(11, 43, 76, 20);
+		getContentPane().add(lblCategoria);
+		
+		CategoriaComboBox = new JComboBox<String>();
+		CategoriaComboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JComboBox<?> cb = (JComboBox<?>)e.getSource();
+		        categoriaseleccionada = (String)cb.getSelectedItem().toString();
+		        categoriaButton.setEnabled(true);
+		        cursoLabel.setEnabled(false);
+		        cursoComboBox.setEnabled(false);
+		        scrollPane.setEnabled(false);
+		        infoCursoTextArea.setEnabled(false);
+		        infoCursoTextArea.setText("");
+				programaLabel.setEnabled(false);
+				programaButton.setEnabled(false);
+				programaComboBox.setEnabled(false);
+				edicionLabel.setEnabled(false);
+				edicionButton.setEnabled(false);
+				edicionComboBox.setEnabled(false);
+				institutoButtonSelected = false;
+			}
+		});
+		CategoriaComboBox.setBounds(89, 43, 121, 22);
+		getContentPane().add(CategoriaComboBox);
+		
+		categoriaButton = new JButton("Seleccionar");
+		categoriaButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DefaultComboBoxModel<String> cursocombo = new DefaultComboBoxModel<String>();
+				cursoComboBox.setModel(cursocombo);	
+				cursoLabel.setEnabled(true);
+				cursoComboBox.setEnabled(true);
+				scrollPane.setEnabled(false);
+				infoCursoTextArea.setEnabled(false);
+				infoCursoTextArea.setText("");
+				programaLabel.setEnabled(false);
+				programaButton.setEnabled(false);
+				programaComboBox.setEnabled(false);
+				edicionLabel.setEnabled(false);
+				edicionButton.setEnabled(false);
+				edicionComboBox.setEnabled(false);
+				categoriaButtonSelected = true;
+				cargarCursos();
+			}
+		});
+		categoriaButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		categoriaButton.setEnabled(false);
+		categoriaButton.setBounds(222, 42, 99, 25);
+		getContentPane().add(categoriaButton);
 
 		
 	}
@@ -275,19 +338,44 @@ public class InfoCurso extends JInternalFrame {
 
 	}
 	
+	public void cargarCategorias() {
+		ArrayList<String> categorias = new ArrayList<String>();
+		try {
+			for(String cat: icon.listarCategorias()) {
+				categorias.add(cat);
+			}
+			String [] listcategorias = categorias.toArray(new String[categorias.size()]);
+			DefaultComboBoxModel<String> categoriacombo = new DefaultComboBoxModel<String>(listcategorias);
+			CategoriaComboBox.setModel(categoriacombo);
+		}catch(SinCategorias e) {
+			JOptionPane.showMessageDialog(getContentPane(), e.getMessage(), "Consulta Curso", DISPOSE_ON_CLOSE);
+			setVisible(false);
+		}
+	}
+	
 	private void cargarCursos() {
 		ArrayList<String> cursos = new ArrayList<String>();
-		try {
-			for(DtCursoBase dtc: icon.listarCursosInstituto(institutoseleccionado)) {
-				String item = dtc.getNombre();
-				cursos.add(item);
+			try {
+				if(institutoButtonSelected && !categoriaButtonSelected) {
+					for(DtCursoBase dtc: icon.listarCursosInstituto(institutoseleccionado)) {
+						String item = dtc.getNombre();
+						cursos.add(item);
+					}
+				}
+				else {
+					if(!institutoButtonSelected && categoriaButtonSelected){
+						for(DtCursoBase dtc: icon.listarCursosCategoria(categoriaseleccionada)) {
+							String item = dtc.getNombre();
+							cursos.add(item);
+						}
+					}
+				}
+				String [] strcursos = cursos.toArray(new String[cursos.size()]);
+				DefaultComboBoxModel<String> cursocombo = new DefaultComboBoxModel<String>(strcursos);
+				cursoComboBox.setModel(cursocombo);	
+			}catch(InstitutoInexistente | InstitutoSinCursos | CategoriaInexistente | CategoriaSinCursos e) {
+				JOptionPane.showMessageDialog(getContentPane(), e.getMessage(), "Consulta Curso", DISPOSE_ON_CLOSE);
 			}
-			String [] strcursos = cursos.toArray(new String[cursos.size()]);
-			DefaultComboBoxModel<String> cursocombo = new DefaultComboBoxModel<String>(strcursos);
-			cursoComboBox.setModel(cursocombo);	
-		}catch(InstitutoInexistente | InstitutoSinCursos e) {
-			JOptionPane.showMessageDialog(getContentPane(), e.getMessage(), "Consulta Curso", DISPOSE_ON_CLOSE);
-		}
 		
 	}
 	
@@ -354,6 +442,7 @@ public class InfoCurso extends JInternalFrame {
 		programaComboBox.setEnabled(false);
 		programaLabel.setEnabled(false);
 		institutoButton.setEnabled(false);
+		categoriaButton.setEnabled(false);
 		cursoButton.setEnabled(false);
 		edicionButton.setEnabled(false);
 		programaButton.setEnabled(false);
@@ -362,6 +451,9 @@ public class InfoCurso extends JInternalFrame {
 		institutoseleccionado = "";
 		cursoseleccionado = "";
 		edicionseleccionada = "";
+		categoriaseleccionada=" ";
+		institutoButtonSelected = false;
+		categoriaButtonSelected = false;
 		setProgramaseleccionado("");
 				
 	}
@@ -369,5 +461,4 @@ public class InfoCurso extends JInternalFrame {
 	public void giveAccess(InfoEdicionCurso infoEdicionCursoInternalFrame) {
 		this.setInfoEdicionCursoInternalFrame(infoEdicionCursoInternalFrame);
 	}
-
 }

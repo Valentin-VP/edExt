@@ -62,7 +62,7 @@ public class ControladorConsultaEdicionCurso implements IControladorConsultaEdic
 			for(Curso curso: cursos) {
 				for(Categoria cat: curso.getCategorias()) {
 					if(cat.equals(c)) {
-						DtCursoBase curs = new DtCursoBase(curso.getNombre(), curso.getInstituto().getNombre());
+						DtCursoBase curs = new DtCursoBase(curso.getNombre());
 						DtCursos.add(curs);
 					}
 				}
