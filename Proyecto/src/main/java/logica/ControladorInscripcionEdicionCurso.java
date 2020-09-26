@@ -3,7 +3,6 @@ package logica;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.EntityManager;
 
@@ -31,6 +30,14 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 	
 	public ControladorInscripcionEdicionCurso() {
 		super();
+	}
+
+	public String getNomIns() {
+		return nomIns;
+	}
+
+	public void setNomIns(String nomIns) {
+		this.nomIns = nomIns;
 	}
 
 	public String getNomCurso() {
@@ -63,7 +70,7 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 		ArrayList <DtCursoBase> cursosinstituto = new ArrayList<DtCursoBase>();
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 		Instituto ins = mI.find(nomIns);
-		this.nomIns = ins.getNombre();
+		this.setNomIns(ins.getNombre());
 		for(Curso c: ins.getCursos()) {
 			DtCursoBase dtcb = new DtCursoBase(c.getNombre());
 			cursosinstituto.add(dtcb);
@@ -100,6 +107,9 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 		if (u == null) {
 			throw new UsuarioNoExiste("No existe el usuario ingresado");
 		}
+		if (!u.getCorreo().equals(correo)) {
+			throw new UsuarioNoExiste("No existe un usuario con el nick y correo ingresados");
+		}
 		if(u instanceof Estudiante) {
 			boolean existeInscripcion = ((Estudiante) u).existeInscripcion(this.nombreEd);
 			if (existeInscripcion) {
@@ -112,7 +122,7 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 
 	@Override
 	public void cancelar() {
-		this.nomIns=null;
+		this.setNomIns(null);
 		this.setNomCurso(null);
 		this.nick=null;
 		this.setCorreo(null);
