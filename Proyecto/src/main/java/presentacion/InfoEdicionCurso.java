@@ -17,6 +17,8 @@ import java.util.ArrayList;
 
 import datatypes.DtCursoBase;
 import datatypes.DtEdicionBase;
+import datatypes.DtInstituto;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 //import java.awt.event.KeyAdapter;
@@ -191,11 +193,15 @@ public class InfoEdicionCurso extends JInternalFrame {
 		if(nombreInstituto.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(this, "No puede haber campos vacios", "Instituto Vacio", JOptionPane.ERROR_MESSAGE);
 		}else {
-			ArrayList<DtCursoBase> DtCursoBase = new ArrayList<DtCursoBase>();
+			ArrayList<DtCursoBase> DtCursosBase = new ArrayList<DtCursoBase>();
 			try {
-				DtCursoBase = icon.seleccionarCategoria(nombreInstituto.getText());
-				for(DtCursoBase dc: DtCursoBase) {
-					nombreCursos.addElement(dc.getNombre() + " - " + dc.getInstituto());
+				DtCursosBase = icon.seleccionarCategoria(nombreInstituto.getText());
+				for(DtCursoBase dc: DtCursosBase) {
+					ArrayList <DtInstituto> institutosdeesecurso = icon.getInstitutosConCurso(dc.getNombre());
+					for(DtInstituto ins: institutosdeesecurso) {
+						nombreCursos.addElement(dc.getNombre() + " - " + ins.getNombre());
+					}
+					
 				}
 				 listCursos.setModel(nombreCursos);
 				 listCursos.setEnabled(true);
