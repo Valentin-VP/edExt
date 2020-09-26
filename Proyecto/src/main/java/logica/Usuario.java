@@ -29,6 +29,7 @@ public class Usuario {
 	private String apellido;
 	private Date  fechaNac;
 	private String password;
+	private List<String> seguidores = new ArrayList<>();
 	
 	public Usuario(String nick, String nombre, String apellido, String correo, Date  fechaNac, String password) {
 		super();
@@ -108,4 +109,12 @@ public class Usuario {
 		return dtUsuario;
 	}
 	
+	public void addSeguidor(String seguidor) {
+		this.seguidores.add(seguidor);
+		
+	}
+	
+	public void removeSeguidor(String seguidor) {
+		this.seguidores.remove(seguidor);
+	}
 }
