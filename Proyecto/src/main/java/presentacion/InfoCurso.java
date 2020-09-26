@@ -227,7 +227,7 @@ public class InfoCurso extends JInternalFrame {
 		edicionButton = new JButton("Seleccionar");
 		edicionButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				infoEdicionCursoInternalFrame.mostrarDos(institutoseleccionado, cursoseleccionado, edicionseleccionada, esInstituto);
+				infoEdicionCursoInternalFrame.mostrarDos(edicionseleccionada);
 				limpiar();
 			}
 		});

@@ -109,7 +109,14 @@ public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso
 				// Agregar edicion al curso
 				mE.agregarEdicion(edicion);
 				mC.find(curso).addEdicion(edicion);//agrego a la coleccion de ediciones de el curso
-				i.agregarCurso(i.findCurso(curso));// necesario??... el curso no existe en la base de datos ya??
+				Conexion conexion = Conexion.getInstancia();
+				EntityManager em = conexion.getEntityManager();
+				em.getTransaction().begin();
+				
+				em.persist(mC.find(curso));
+				
+				em.getTransaction().commit();
+				//i.agregarCurso(i.findCurso(curso));// necesario??... el curso no existe en la base de datos ya??
 			}
 			else {
 				throw new EdicionRepetida("La edicion " + nombre + " ya se encuentra integrada al curso:" + i.findCurso(curso).getNombre());
