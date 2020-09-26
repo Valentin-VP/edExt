@@ -8,10 +8,12 @@
 		<class>logica.Estudiante</class>
 		<class>logica.Docente</class>
 		<class>logica.InscripcionEd</class>
+		<class>logica.InscripcionPF</class>
 		<class>logica.Categoria</class>
+		<class>logica.ProgFormacion</class>
 		<properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
-            <property name="hibernate.hbm2ddl.auto" value="update" />
+            <property name="hibernate.hbm2ddl.auto" value="create" />
             <property name="hibernate.connection.username" value="postgres"/>
             <property name="hibernate.connection.password" value="admin123"/>
             <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/edext"/>

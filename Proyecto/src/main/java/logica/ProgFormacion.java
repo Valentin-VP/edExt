@@ -1,19 +1,36 @@
 package logica;
 
 import java.time.LocalDate;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
 import datatypes.DtFecha;
 import datatypes.DtProgramaBase;
-
+@Entity
 public class ProgFormacion {
+	@Id
 	private String nombre;
 	private String desc;
 	private LocalDate fechaI;
 	private LocalDate fechaF;
 	private LocalDate fechaAlta;
+	
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<Curso> cursos = new ArrayList<Curso>();
+	
+	@OneToMany(mappedBy = "programa", cascade = CascadeType.ALL)
+	private List<InscripcionPF> inscripciones = new ArrayList <InscripcionPF>();
+	
+	
+	public ProgFormacion() {
+		super();
+	}
 	public ProgFormacion(String nombre, String desc, LocalDate fechaI, LocalDate fechaF, LocalDate fechaAlta) {
 		super();
 		this.nombre = nombre;

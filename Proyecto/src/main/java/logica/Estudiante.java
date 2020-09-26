@@ -13,7 +13,9 @@ import javax.persistence.OneToMany;
 @DiscriminatorValue("E")
 public class Estudiante extends Usuario {
 	@OneToMany(mappedBy = "nick",cascade = CascadeType.ALL)
-	List<InscripcionEd> inscripciones = new ArrayList<InscripcionEd>();
+	private List<InscripcionEd> inscripcionesed = new ArrayList<InscripcionEd>();
+	@OneToMany(mappedBy = "nick",cascade = CascadeType.ALL)
+	private List<InscripcionPF> inscripcionespf = new ArrayList<InscripcionPF>();
 	
 	public Estudiante() {
 		super();
@@ -24,18 +26,35 @@ public class Estudiante extends Usuario {
 	}
 	
 	public void agregarInscripcionEd(InscripcionEd i) {
-		inscripciones.add(i);
+		inscripcionesed.add(i);
 	}
 	
 	public boolean existeInscripcion(String nomEd) {
-		if (!inscripciones.isEmpty()) {
-			for (int i=0;i < inscripciones.size();i++) {
-				if (inscripciones.get(i).getEdicion().getNombre().equals(nomEd)) {
+		if (!inscripcionesed.isEmpty()) {
+			for (int i=0;i < inscripcionesed.size();i++) {
+				if (inscripcionesed.get(i).getEdicion().getNombre().equals(nomEd)) {
 					return true;
 				}
 			}
 		}
 	    return false;
 	}
+	
+	public void agregarInscripcionPF(InscripcionPF i) {
+		inscripcionespf.add(i);
+	}
+	
+	public boolean existeInscripcionPF(String nomEd) {
+		if (!inscripcionespf.isEmpty()) {
+			for (int i=0;i < inscripcionespf.size();i++) {
+				if (inscripcionespf.get(i).getPrograma().getNombre().equals(nomEd)) {
+					return true;
+				}
+			}
+		}
+	    return false;
+	}
+	
+	
 
 }

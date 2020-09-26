@@ -144,12 +144,10 @@ public class ControladorConsultaCurso implements IControladorConsultaCurso{
 				if(cat.getNombre().equals(categoria)) {
 					DtCursoBase curso = new DtCursoBase (cu.getNombre());
 					cursoscategoria.add(curso);
-					System.out.println("Curso encontrado: "+curso);
 				}
 			}
 		}
 		if(cursoscategoria.isEmpty()) {
-			System.out.println("Deberia generar excepcion: ");
 			throw new CategoriaSinCursos("No existen Cursos para la Categoría seleccionada");
 		}
 		return cursoscategoria;
