@@ -31,7 +31,6 @@ public class ModificarDatosUsuario extends JInternalFrame {
 
 	IControladorModificarDatosUsuario icon;
 	private JComboBox<String> comboBoxUsuario;
-	private JTextField textFieldCorreo;
 	private JTextField textFieldNombre;
 	private JTextField textFieldApellido;
 	private JPasswordField passwordField;
@@ -54,7 +53,7 @@ public class ModificarDatosUsuario extends JInternalFrame {
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setClosable(true);
         setTitle("Modificar datos de usuario");
-        setBounds(100, 100, 354, 479);
+        setBounds(100, 100, 367, 439);
 		getContentPane().setLayout(null);
 		
 		comboBoxUsuario = new JComboBox<String>();
@@ -70,23 +69,6 @@ public class ModificarDatosUsuario extends JInternalFrame {
 		lblNewLabel.setBounds(31, 11, 175, 14);
 		getContentPane().add(lblNewLabel);
 		
-		textFieldCorreo = new JTextField();
-		textFieldCorreo.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent e) {
-				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					modificarDatosUsuarioAceptarActionPerformed();
-				}
-			}
-		});
-		textFieldCorreo.setBounds(31, 92, 175, 20);
-		getContentPane().add(textFieldCorreo);
-		textFieldCorreo.setColumns(10);
-		
-		JLabel lblNewLabel_1 = new JLabel("Correo nuevo");
-		lblNewLabel_1.setBounds(31, 67, 142, 14);
-		getContentPane().add(lblNewLabel_1);
-		
 		textFieldNombre = new JTextField();
 		textFieldNombre.addKeyListener(new KeyAdapter() {
 			@Override
@@ -96,7 +78,7 @@ public class ModificarDatosUsuario extends JInternalFrame {
 				}
 			}
 		});
-		textFieldNombre.setBounds(31, 148, 175, 20);
+		textFieldNombre.setBounds(31, 92, 175, 20);
 		getContentPane().add(textFieldNombre);
 		textFieldNombre.setColumns(10);
 		
@@ -109,7 +91,7 @@ public class ModificarDatosUsuario extends JInternalFrame {
 				}
 			}
 		});
-		textFieldApellido.setBounds(31, 204, 175, 20);
+		textFieldApellido.setBounds(31, 148, 175, 20);
 		getContentPane().add(textFieldApellido);
 		textFieldApellido.setColumns(10);
 		
@@ -122,19 +104,19 @@ public class ModificarDatosUsuario extends JInternalFrame {
 				}
 			}
 		});
-		passwordField.setBounds(31, 260, 175, 20);
+		passwordField.setBounds(31, 204, 175, 20);
 		getContentPane().add(passwordField);
 		
 		lblNewLabel_2 = new JLabel("Nombre nuevo");
-		lblNewLabel_2.setBounds(31, 123, 142, 14);
+		lblNewLabel_2.setBounds(31, 67, 142, 14);
 		getContentPane().add(lblNewLabel_2);
 		
 		lblNewLabel_3 = new JLabel("Apellido nuevo");
-		lblNewLabel_3.setBounds(31, 179, 142, 14);
+		lblNewLabel_3.setBounds(31, 123, 142, 14);
 		getContentPane().add(lblNewLabel_3);
 		
 		lblNewLabel_4 = new JLabel("Contrasenia nueva");
-		lblNewLabel_4.setBounds(31, 235, 142, 14);
+		lblNewLabel_4.setBounds(31, 179, 142, 14);
 		getContentPane().add(lblNewLabel_4);
 		
 		btnNewButton = new JButton("Aceptar");
@@ -144,7 +126,7 @@ public class ModificarDatosUsuario extends JInternalFrame {
 				limpiar();
 			}
 		});
-		btnNewButton.setBounds(191, 415, 89, 23);
+		btnNewButton.setBounds(187, 368, 89, 23);
 		getContentPane().add(btnNewButton);
 		
 		btnNewButton_1 = new JButton("Cancelar");
@@ -155,11 +137,11 @@ public class ModificarDatosUsuario extends JInternalFrame {
 				limpiar();
 			}
 		});
-		btnNewButton_1.setBounds(59, 415, 89, 23);
+		btnNewButton_1.setBounds(59, 368, 89, 23);
 		getContentPane().add(btnNewButton_1);
 		
 		comboBoxDia = new JComboBox<String>();
-		comboBoxDia.setBounds(31, 363, 75, 20);
+		comboBoxDia.setBounds(31, 316, 75, 20);
 		comboBoxDia.addItem("1");
 		comboBoxDia.addItem("2");
 		comboBoxDia.addItem("3");
@@ -195,7 +177,7 @@ public class ModificarDatosUsuario extends JInternalFrame {
 		getContentPane().add(comboBoxDia);
 		
 		comboBoxMes = new JComboBox<String>();
-		comboBoxMes.setBounds(138, 363, 68, 20);
+		comboBoxMes.setBounds(131, 316, 68, 20);
 		comboBoxMes.addItem("1");
 		comboBoxMes.addItem("2");
 		comboBoxMes.addItem("3");
@@ -212,16 +194,16 @@ public class ModificarDatosUsuario extends JInternalFrame {
 		getContentPane().add(comboBoxMes);
 		
 		spinnerAnio = new JSpinner();
-		spinnerAnio.setBounds(237, 363, 68, 20);
+		spinnerAnio.setBounds(225, 316, 68, 20);
 		spinnerAnio.setValue(1990);
 		getContentPane().add(spinnerAnio);
 		
 		JLabel lblNewLabel_5 = new JLabel("Fecha de nacimiento");
-		lblNewLabel_5.setBounds(31, 338, 142, 14);
+		lblNewLabel_5.setBounds(31, 291, 142, 14);
 		getContentPane().add(lblNewLabel_5);
 		
 		JLabel lblNewLabel_6 = new JLabel("Confirmacion contrasenia");
-		lblNewLabel_6.setBounds(31, 282, 175, 14);
+		lblNewLabel_6.setBounds(31, 235, 175, 14);
 		getContentPane().add(lblNewLabel_6);
 		
 		correctPasswordField = new JPasswordField();
@@ -233,20 +215,20 @@ public class ModificarDatosUsuario extends JInternalFrame {
 				}
 			}
 		});
-		correctPasswordField.setBounds(31, 307, 175, 20);
+		correctPasswordField.setBounds(31, 260, 175, 20);
 		getContentPane().add(correctPasswordField);
-
 	}
 	
 	private void modificarDatosUsuarioAceptarActionPerformed() {
 		if (this.usuario != null) {
 			String nick = (String) comboBoxUsuario.getSelectedItem();
+			String correo = "";//(String) comboBoxCorreo.getSelectedItem();
 			String dia = (String) comboBoxDia.getSelectedItem();
 			String mes = (String) comboBoxMes.getSelectedItem();
 			Integer anio = (Integer) spinnerAnio.getValue();
-			if (checkeo(textFieldCorreo.getText(), textFieldNombre.getText(), textFieldApellido.getText(), dia, mes, anio, passwordField.getPassword(), correctPasswordField.getPassword())) {
+			if (checkeo(textFieldNombre.getText(), textFieldApellido.getText(), dia, mes, anio, passwordField.getPassword(), correctPasswordField.getPassword())) {
 				DtFecha fecha = new DtFecha(Integer.parseInt(dia),Integer.parseInt(mes),anio);
-				icon.modificarDatosUsuario(nick, textFieldCorreo.getText(), textFieldNombre.getText(), textFieldApellido.getText(), fecha, passwordField.getPassword());
+				icon.modificarDatosUsuario(nick, correo, textFieldNombre.getText(), textFieldApellido.getText(), fecha, passwordField.getPassword());
 				JOptionPane.showMessageDialog(this, "Se modifico al usuario con exito", "Modificar datos usuario",
 						JOptionPane.INFORMATION_MESSAGE);
 			}
@@ -256,10 +238,10 @@ public class ModificarDatosUsuario extends JInternalFrame {
 		}		
 	}
 	
-	private boolean checkeo(String correo, String nombre, String apellido, String dia, String mes, Integer anio, char[] passwd, char[] cpasswd) {
+	private boolean checkeo(String nombre, String apellido, String dia, String mes, Integer anio, char[] passwd, char[] cpasswd) {
 		LocalDate date = LocalDate.now();
 		int aniomax = (date.getYear() - 12);
-		if (correo.isEmpty() || nombre.isEmpty() || apellido.isEmpty()) {
+		if (nombre.isEmpty() || apellido.isEmpty()) {
 			JOptionPane.showMessageDialog(this, "No puede haber campos vacios", "Modificar datos usuario", 
 			JOptionPane.ERROR_MESSAGE);
 			return false;
@@ -277,7 +259,6 @@ public class ModificarDatosUsuario extends JInternalFrame {
 	
 	private void limpiar() {
 		this.usuario = null;
-		textFieldCorreo.setText("");
 		textFieldNombre.setText("");
 		textFieldApellido.setText("");
 		passwordField.setText("");
@@ -295,7 +276,6 @@ public class ModificarDatosUsuario extends JInternalFrame {
 			  dml.addElement(usuarios.get(i).getNick());
 			}
 			comboBoxUsuario.setModel(dml);
-			comboBoxUsuario.setSelectedItem("");
 			
 		} catch (SinUsuarios e) {
 			JOptionPane.showMessageDialog(this, e.getMessage(), "Modificar datos usuario", JOptionPane.ERROR_MESSAGE);
@@ -305,13 +285,13 @@ public class ModificarDatosUsuario extends JInternalFrame {
 	private void cargarUsuarioComboBoxUsuario() {
 
 		String nick = comboBoxUsuario.getSelectedItem().toString();
+		String correo = "";//comboBoxCorreo.getSelectedItem().toString();
 		
 		DtUsuario dtu = null;
 		
 		try {
-			dtu = icon.seleccionarUsuario(nick, "");
+			dtu = icon.seleccionarUsuario(nick, correo);
 			this.usuario = dtu;
-			textFieldCorreo.setText(dtu.getCorreo());
 			textFieldNombre.setText(dtu.getNombre());
 			textFieldApellido.setText(dtu.getApellido());
 			passwordField.setText("");

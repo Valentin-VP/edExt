@@ -14,12 +14,6 @@ import excepciones.UsuarioNoExiste;
 import interfaces.IControladorModificarDatosUsuario;
 
 public class ControladorModificarDatosUsuario implements IControladorModificarDatosUsuario {
-	String nick;
-	String correo;
-	String nombre;
-	String apellido;
-	DtFecha fechaNac;
-	String password;
 	Usuario usuario;
 	
 	@Override
@@ -38,7 +32,12 @@ public class ControladorModificarDatosUsuario implements IControladorModificarDa
 	@Override
 	public DtUsuario seleccionarUsuario(String nick, String correo) throws UsuarioNoExiste{
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
-		Usuario user = mU.findUsuario(nick);;
+		Usuario user = null;
+		if (!nick.isEmpty()) {
+			user = mU.findUsuario(nick);
+		} /*else if (!correo.isEmpty()) {
+			user = mU.findUsuarioCorreo(correo);
+		}*/
 		if (user == null) {
 			throw new UsuarioNoExiste("No existe el usuario seleccionado");
 		}
@@ -48,19 +47,12 @@ public class ControladorModificarDatosUsuario implements IControladorModificarDa
 	@Override
 	public void modificarDatosUsuario(String nick, String correo, String nombre, String apellido, DtFecha fechaNac, char[] password) {
 		String passwd = new String(password);
-		this.nick = nick;
-		this.correo = correo;
-		this.nombre = nombre;
-		this.apellido = apellido;
-		this.fechaNac = fechaNac;
-		this.password = encriptar(passwd);
 		Date fecha = null;
 		try {
 			fecha = fechaNac.DtFechaToDate();
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		usuario.setCorreo(correo);
 		usuario.setNombre(nombre);
 		usuario.setApellido(apellido);
 		usuario.setFechaNac(fecha);
@@ -72,12 +64,6 @@ public class ControladorModificarDatosUsuario implements IControladorModificarDa
 	}
 	@Override
 	public void limpiar() {
-		this.nick = "";
-		this.correo = "";
-		this.nombre = "";
-		this.apellido = "";
-		this.fechaNac = null;
-		this.password = "";
 		this.usuario = null;
 	}
 	

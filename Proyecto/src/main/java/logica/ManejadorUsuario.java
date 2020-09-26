@@ -72,6 +72,14 @@ public class ManejadorUsuario {
 		return usuario;
 	}
 	
+	public Usuario findUsuarioCorreo(String correo) {
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		
+		Usuario usuario = em.find(Usuario.class, correo);
+		return usuario;
+	}
+	
 	public void actualizarUsuario(Usuario usuario) {
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
