@@ -2,7 +2,6 @@ package interfaces;
 
 import java.util.ArrayList;
 import datatypes.DtCurso;
-import datatypes.DtCursoBase;
 import datatypes.DtPrograma;
 import datatypes.DtProgramaBase;
 import excepciones.ProgramaInexistente;

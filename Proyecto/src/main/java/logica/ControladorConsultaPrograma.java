@@ -8,14 +8,10 @@ import datatypes.DtCurso;
 import datatypes.DtCursoBase;
 import datatypes.DtEdicionBase;
 import datatypes.DtFecha;
-import datatypes.DtInstituto;
 import datatypes.DtPrograma;
 import datatypes.DtProgramaBase;
-import excepciones.InstitutoInexistente;
-import excepciones.InstitutoSinCursos;
 import excepciones.ProgramaInexistente;
 import excepciones.ProgramaSinCursos;
-import excepciones.SinInstitutos;
 import excepciones.SinProgramas;
 
 public class ControladorConsultaPrograma implements interfaces.IControladorConsultaPrograma{
@@ -70,16 +66,16 @@ public class ControladorConsultaPrograma implements interfaces.IControladorConsu
 		//se necesita algo en la clase ProgFormacion (un getCursos) que devuelva los objetos Curso asociados a el
 		//tambien getDtCursoBase en Curso.
 		ManejadorProgFormacion mPF = ManejadorProgFormacion.getInstancia();
-		if (!mPF.exists(nombre)) {
+		if (!mPF.existePrograma(nombre)) {
 			throw new ProgramaInexistente("No existe ese programa.");
 		}
 		DtPrograma retorno;
 		ArrayList <DtCursoBase> cursosprograma = new ArrayList <DtCursoBase>();
-		String name = mPF.getProgFormacion(nombre).getNombre();
-		String desc= mPF.getProgFormacion(nombre).getDesc();
-		DtFecha fechaIni= mPF.getProgFormacion(nombre).getFechaI();
-		DtFecha fechaFin= mPF.getProgFormacion(nombre).getFechaF();
-		DtFecha fechaAlta= mPF.getProgFormacion(nombre).getFechaAlta();
+		String name = mPF.find(nombre).getNombre();
+		String desc= mPF.find(nombre).getDesc();
+		DtFecha fechaIni= mPF.find(nombre).getFechaI();
+		DtFecha fechaFin= mPF.find(nombre).getFechaF();
+		DtFecha fechaAlta= mPF.find(nombre).getFechaAlta();
 		Date fI = new Date();
 		Date fF = new Date();
 		Date fA = new Date();
@@ -90,8 +86,8 @@ public class ControladorConsultaPrograma implements interfaces.IControladorConsu
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		if(!mPF.getProgFormacion(nombre).getCursos().isEmpty()) {
-			for(Curso c: mPF.getProgFormacion(nombre).getCursos()) {
+		if(!mPF.find(nombre).getCursos().isEmpty()) {
+			for(Curso c: mPF.find(nombre).getCursos()) {
 				DtCursoBase dtcb = new DtCursoBase(c.getNombre());
 				cursosprograma.add(dtcb);
 			}
@@ -103,14 +99,14 @@ public class ControladorConsultaPrograma implements interfaces.IControladorConsu
 	public ArrayList<DtCurso> listarCursosPrograma(String programaFormacion) throws ProgramaSinCursos, ProgramaInexistente {
 		ArrayList <DtCurso> cursosprograma = new ArrayList <DtCurso>();
 		ManejadorProgFormacion mPF = ManejadorProgFormacion.getInstancia();
-		if (!mPF.exists(programaFormacion)) {
+		if (!mPF.existePrograma(programaFormacion)) {
 			throw new ProgramaInexistente("No existe ese programa.");
 		}
-		if(mPF.getProgFormacion(programaFormacion).getCursos().isEmpty()) {
+		if(mPF.find(programaFormacion).getCursos().isEmpty()) {
 			throw new ProgramaSinCursos("El Programa de Formacion seleccionado no posee cursos aun");
 		}
 		else {
-			for(Curso c: mPF.getProgFormacion(programaFormacion).getCursos()) {	
+			for(Curso c: mPF.find(programaFormacion).getCursos()) {	
 				//Esto no esta bien, al DtCurso le faltaria el Institut y la Categoria, al mismo tiempo tiene datos de sobra pero whatever
 				// Nico, se agregan categorias e instituto. By: jedik-no
 				ArrayList<String> categories = new ArrayList <String>();

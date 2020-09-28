@@ -20,8 +20,6 @@ import datatypes.DtInstituto;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JRadioButton;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.security.NoSuchAlgorithmException;
 
 public class AgregarUsuario extends JInternalFrame {

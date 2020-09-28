@@ -1,6 +1,6 @@
 package logica;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -8,22 +8,12 @@ import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import persistencia.InscripcionEdID;
 import persistencia.InscripcionPFID;
 
 @Entity
 @IdClass(InscripcionPFID.class)
 public class InscripcionPF {
-	
-	private Date fecha;
-	
-	@Id
-	@ManyToOne
-	@JoinColumn(
-			insertable=false,
-			updatable=false
-	)
-	private Estudiante nick;
+	private LocalDate fecha;
 	
 	@Id
 	@ManyToOne
@@ -33,31 +23,39 @@ public class InscripcionPF {
 	)
 	private ProgFormacion programa;
 	
+	@Id
+	@ManyToOne
+	@JoinColumn(
+			insertable=false,
+			updatable=false
+	)
+	private Estudiante estudiante;
+	
 	public InscripcionPF() {
 		super();
 	}
 
-	public InscripcionPF(Date fecha, Estudiante nick, ProgFormacion programa) {
+	public InscripcionPF(LocalDate fecha, Estudiante estudiante, ProgFormacion programa) {
 		super();
 		this.fecha = fecha;
-		this.nick = nick;
+		this.estudiante = estudiante;
 		this.programa = programa;
 	}
 
-	public Date getFecha() {
+	public LocalDate getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(Date fecha) {
+	public void setFecha(LocalDate fecha) {
 		this.fecha = fecha;
 	}
 
 	public Estudiante getEstudiante() {
-		return nick;
+		return estudiante;
 	}
 
 	public void setEstudiante(Estudiante estudiante) {
-		this.nick = estudiante;
+		this.estudiante = estudiante;
 	}
 
 	public ProgFormacion getPrograma() {
@@ -67,8 +65,5 @@ public class InscripcionPF {
 	public void setPrograma(ProgFormacion programa) {
 		this.programa = programa;
 	}
-	
-	
-	
 	
 }

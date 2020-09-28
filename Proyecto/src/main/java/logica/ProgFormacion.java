@@ -16,7 +16,7 @@ import datatypes.DtProgramaBase;
 public class ProgFormacion {
 	@Id
 	private String nombre;
-	private String desc;
+	private String descripcion;
 	private LocalDate fechaI;
 	private LocalDate fechaF;
 	private LocalDate fechaAlta;
@@ -27,14 +27,13 @@ public class ProgFormacion {
 	@OneToMany(mappedBy = "programa", cascade = CascadeType.ALL)
 	private List<InscripcionPF> inscripciones = new ArrayList <InscripcionPF>();
 	
-	
 	public ProgFormacion() {
 		super();
 	}
-	public ProgFormacion(String nombre, String desc, LocalDate fechaI, LocalDate fechaF, LocalDate fechaAlta) {
+	public ProgFormacion(String nombre, String descripcion, LocalDate fechaI, LocalDate fechaF, LocalDate fechaAlta) {
 		super();
 		this.nombre = nombre;
-		this.desc = desc;
+		this.descripcion = descripcion;
 		this.fechaI = fechaI;
 		this.fechaF = fechaF;
 		this.fechaAlta = fechaAlta;
@@ -46,10 +45,10 @@ public class ProgFormacion {
 		this.nombre = nombre;
 	}
 	public String getDesc() {
-		return desc;
+		return descripcion;
 	}
-	public void setDesc(String desc) {
-		this.desc = desc;
+	public void setDesc(String descripcion) {
+		this.descripcion = descripcion;
 	}
 	public DtFecha getFechaI() {
 		DtFecha fechaI = new DtFecha(this.fechaI.getDayOfMonth(),this.fechaI.getMonthValue(),this.fechaI.getYear());

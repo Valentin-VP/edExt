@@ -14,7 +14,7 @@ import javax.persistence.OneToMany;
 public class Estudiante extends Usuario {
 	@OneToMany(mappedBy = "nick",cascade = CascadeType.ALL)
 	private List<InscripcionEd> inscripcionesed = new ArrayList<InscripcionEd>();
-	@OneToMany(mappedBy = "nick",cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "estudiante",cascade = CascadeType.ALL)
 	private List<InscripcionPF> inscripcionespf = new ArrayList<InscripcionPF>();
 	
 	public Estudiante() {

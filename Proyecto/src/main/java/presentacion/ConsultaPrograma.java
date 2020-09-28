@@ -1,7 +1,5 @@
 package presentacion;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
@@ -9,12 +7,8 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 
 import datatypes.DtCurso;
-import datatypes.DtCursoBase;
-import datatypes.DtEdicionBase;
 import datatypes.DtPrograma;
 import datatypes.DtProgramaBase;
-import excepciones.InstitutoInexistente;
-import excepciones.InstitutoSinCursos;
 import excepciones.ProgramaInexistente;
 import excepciones.ProgramaSinCursos;
 import excepciones.SinProgramas;
@@ -30,9 +24,6 @@ import java.awt.event.ActionEvent;
 
 public class ConsultaPrograma extends JInternalFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private IControladorConsultaPrograma icon;
 	
@@ -43,6 +34,7 @@ public class ConsultaPrograma extends JInternalFrame {
 	private JButton btnAceptar;
 	private JTextArea taPrograma;
 	
+	@SuppressWarnings("unused")
 	private String cursoseleccionado = "";
 	private String progseleccionado = "";
 	
@@ -51,9 +43,6 @@ public class ConsultaPrograma extends JInternalFrame {
 	private ArrayList<String> programas = new ArrayList<String>();
 	private ArrayList<String> cursos = new ArrayList<String>();
 	
-	/**
-	 * Create the frame.
-	 */
 	public ConsultaPrograma(IControladorConsultaPrograma icon)  {
 		this.icon=icon;
 		setResizable(true);
@@ -243,7 +232,6 @@ public class ConsultaPrograma extends JInternalFrame {
 		cargarInfoProg();
 	}
 	
-	
 	public void cerrar() {
 		this.setVisible(false);
 		if (externo)
@@ -264,7 +252,6 @@ public class ConsultaPrograma extends JInternalFrame {
 		taPrograma.setText("");
 		progseleccionado = "";
 		cursoseleccionado = "";
-		
 		
 	}
 }

@@ -25,7 +25,7 @@ public class ControladorAltaProgFormacion implements IControladorAltaProgFormaci
 		this.fechaF=fechaF;
 		this.fechaA=fechaA;
 		ManejadorProgFormacion mPF = ManejadorProgFormacion.getInstancia();
-		if (mPF.exists(nom) == true) {
+		if (mPF.existePrograma(nom) == true) {
 			throw new ProgramaRepetido("El programa " + nom + " ya se encuentra registrado");
 		}
 	}

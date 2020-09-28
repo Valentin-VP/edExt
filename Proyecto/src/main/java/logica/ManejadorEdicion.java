@@ -1,13 +1,10 @@
 package logica;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import datatypes.DtEdicion;
-import datatypes.DtEdicionBase;
 import persistencia.Conexion;
 
 public class ManejadorEdicion {
