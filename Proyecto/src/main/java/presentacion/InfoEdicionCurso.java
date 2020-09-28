@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import datatypes.DtCursoBase;
 import datatypes.DtEdicionBase;
 import datatypes.DtInstituto;
+import excepciones.CursoNoExiste;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -117,7 +118,7 @@ public class InfoEdicionCurso extends JInternalFrame {
         	public void mouseClicked(MouseEvent me1) {
         		nombreEdiciones.clear();
         		listEdiciones.setModel(nombreEdiciones);
-				cargarEdicionCurso(me1, listCursos.getSelectedValue().toString());
+				cargarEdicionCurso(me1, icon.getNombreCurso(listCursos.getSelectedValue().toString()));
         	}
         });
         listCursos.setBounds(35, 164, 180, 319);
@@ -201,7 +202,7 @@ public class InfoEdicionCurso extends JInternalFrame {
 				for(DtCursoBase dc: DtCursosBase) {
 					ArrayList <DtInstituto> institutosdeesecurso = icon.getInstitutosConCurso(dc.getNombre());
 					for(DtInstituto ins: institutosdeesecurso) {
-						nombreCursos.addElement(dc.getNombre() + " - " + ins.getNombre());
+						nombreCursos.addElement(dc.getNombre() + "-" + ins.getNombre());
 					}
 					
 				}
@@ -225,7 +226,7 @@ public class InfoEdicionCurso extends JInternalFrame {
 			listEdiciones.setModel(nombreEdiciones);
 			listEdiciones.setEnabled(true);
 			listEdiciones.setVisible(true);
-		}catch(Exception e) {
+		}catch(CursoNoExiste e) {
 			JOptionPane.showMessageDialog(this, e.getLocalizedMessage() , "Edicion", JOptionPane.ERROR_MESSAGE);
 		}
 	}
@@ -253,7 +254,7 @@ public class InfoEdicionCurso extends JInternalFrame {
 		cancelar.setVisible(true);
 		listCursos.setVisible(true);
 		listEdiciones.setVisible(true);
-		btnCategoria.setVisible(false);
+		btnCategoria.setVisible(true);
 	}
 	
 	public void mostrarDos(String edicionseleccionada) {

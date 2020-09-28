@@ -31,5 +31,7 @@ public interface IControladorConsultaEdicionCurso {
 	public ArrayList<String> getDocentes(String edicion);
 	
 	public ArrayList<DtInstituto> getInstitutosConCurso(String curso);
+	
+	public String getNombreCurso(String CursoInstituto);
 
 }
