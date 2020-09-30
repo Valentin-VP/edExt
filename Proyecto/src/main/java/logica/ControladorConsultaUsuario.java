@@ -23,4 +23,14 @@ public class ControladorConsultaUsuario implements IControladorConsultaUsuario {
 		mU.findUsuario(nick);
 		//aca habria que ver que tipo de usuario es y depende de lo que elija el usuario el caso de uso con el que se procede
 	}
+	
+	public List<Usuario> obtenerSeguidores(String nick) {
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		return mU.findUsuario(nick).getSiguen();
+	}
+	
+	public List<Usuario> obtenerSeguidos(String nick) {
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		return mU.findUsuario(nick).getSigue();
+	}
 }

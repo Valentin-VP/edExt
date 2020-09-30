@@ -111,6 +111,14 @@ public class Usuario {
 		this.seguidos.remove(seguido);
 	}
 	
+	public List<Usuario> getSiguen() {
+		return seguidores;
+	}
+	
+	public void setSiguen(List<Usuario> seguidores) {
+		this.seguidores = seguidores;
+	}
+	
 	public void addSeguidor(Usuario seguidor) {
 		this.seguidores.add(seguidor);
 	}
