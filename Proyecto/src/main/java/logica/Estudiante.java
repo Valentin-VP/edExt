@@ -55,6 +55,8 @@ public class Estudiante extends Usuario {
 	    return false;
 	}
 	
-	
+	public List<InscripcionEd> getInscripcionesEd(){
+		return this.inscripcionesed;
+	}
 
 }
