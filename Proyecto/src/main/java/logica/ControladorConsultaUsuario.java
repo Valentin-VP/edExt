@@ -1,15 +1,21 @@
 package logica;
 
 import logica.ManejadorUsuario;
+
+import java.util.ArrayList;
+
+import java.util.List;
+
+import excepciones.UsuarioNoExiste;
 import interfaces.IControladorConsultaUsuario;
 
 @SuppressWarnings("unused")
 public class ControladorConsultaUsuario implements IControladorConsultaUsuario {
 	private Usuario user;
 	
-	public void listarUsuarios() {
+	public List<Usuario> listarUsuarios() {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
-		mU.getUsuarios();//aca tengo la lista de usuarios a listar
+		return mU.getUsuarios();//aca tengo la lista de usuarios a listar
 	}
 	
 	public void ElegirUsuario(String nick, String correo) {

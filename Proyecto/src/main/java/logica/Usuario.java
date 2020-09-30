@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 import datatypes.DtFecha;
 import datatypes.DtUsuario;
@@ -23,6 +24,8 @@ public class Usuario {
 	
 	@ManyToMany(cascade = CascadeType.ALL)
 	private List<Usuario> seguidos = new ArrayList<Usuario>();
+	@ManyToMany(cascade = CascadeType.ALL)
+	private List<Usuario> seguidores = new ArrayList<Usuario>();
 	
 	private String correo;
 	private String nombre;
@@ -106,6 +109,14 @@ public class Usuario {
 	
 	public void removeSeguido(Usuario seguido) {
 		this.seguidos.remove(seguido);
+	}
+	
+	public void addSeguidor(Usuario seguidor) {
+		this.seguidores.add(seguidor);
+	}
+	
+	public void removeSeguidor(Usuario seguidor) {
+		this.seguidores.remove(seguidor);
 	}
 
 	public DtUsuario getDtUsuario() {
