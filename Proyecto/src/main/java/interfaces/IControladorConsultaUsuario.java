@@ -1,24 +1,25 @@
 package interfaces;
 
+import java.text.ParseException;
 import java.util.List;
 
+import datatypes.DtEdicion;
+import datatypes.DtPrograma;
+import datatypes.DtUsuario;
 import excepciones.UsuarioNoExiste;
 import logica.Usuario;
 
 public interface IControladorConsultaUsuario {
 	public List<Usuario> listarUsuarios();
 	
-	public void ElegirUsuario(String nick, String correo);
+	public DtUsuario ElegirUsuario(String nick, String correo);
 
-	public List<Usuario> obtenerSeguidores(String nick);
+	public List<Usuario> obtenerSeguidores();
 	
-    public List<Usuario> obtenerSeguidos(String nick);
+    public List<Usuario> obtenerSeguidos();
 	
-	//operacion si es docente
+    public List<DtEdicion> infoEdiciones(boolean esDocente);
 	
-	//operacion si es estudiante --> yona
-	
-	//operacion perfil de docente
-	
-	//operacion perfil de estudiante
+	public List<DtPrograma> infoProgramas() throws ParseException;
+
 }

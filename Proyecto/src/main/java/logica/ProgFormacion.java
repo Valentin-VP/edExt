@@ -1,8 +1,11 @@
 package logica;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -10,7 +13,9 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import datatypes.DtCursoBase;
 import datatypes.DtFecha;
+import datatypes.DtPrograma;
 import datatypes.DtProgramaBase;
 @Entity
 public class ProgFormacion {
@@ -74,11 +79,26 @@ public class ProgFormacion {
 	public List<Curso> getCursos() {
 		return cursos;
 	}
+	public List<DtCursoBase> getCursosBase() {
+		List<DtCursoBase> dtcb = new ArrayList<DtCursoBase>();
+		for(Curso c: this.cursos) {
+			DtCursoBase cb = new DtCursoBase(c.getNombre());
+			dtcb.add(cb);
+		}
+		return dtcb;
+	}
 	public void addCursos(Curso cursos) {
 		this.cursos.add(cursos);
 	}
 	public DtProgramaBase getDtProgBase() {
 		DtProgramaBase dtpb = new DtProgramaBase(this.nombre);
 		return dtpb;
+	}
+	public DtPrograma getDtPrograma() throws ParseException {
+		Date fechaI = this.getFechaI().DtFechaToDate();
+		Date fechaF = this.getFechaF().DtFechaToDate();
+		Date fechaAlta = this.getFechaAlta().DtFechaToDate();
+		DtPrograma dtp = new DtPrograma(this.nombre, this.descripcion, fechaI, fechaF, fechaAlta, this.getCursosBase());
+		return dtp;
 	}
 }

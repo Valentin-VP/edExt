@@ -2,10 +2,14 @@ package logica;
 
 import logica.ManejadorUsuario;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import java.util.List;
 
+import datatypes.DtEdicion;
+import datatypes.DtPrograma;
+import datatypes.DtUsuario;
 import excepciones.UsuarioNoExiste;
 import interfaces.IControladorConsultaUsuario;
 
@@ -13,24 +17,54 @@ import interfaces.IControladorConsultaUsuario;
 public class ControladorConsultaUsuario implements IControladorConsultaUsuario {
 	private Usuario user;
 	
+	@Override
 	public List<Usuario> listarUsuarios() {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
-		return mU.getUsuarios();//aca tengo la lista de usuarios a listar
+		return mU.getUsuarios();
 	}
 	
-	public void ElegirUsuario(String nick, String correo) {
+	@Override
+	public DtUsuario ElegirUsuario(String nick, String correo) {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
-		mU.findUsuario(nick);
-		//aca habria que ver que tipo de usuario es y depende de lo que elija el usuario el caso de uso con el que se procede
+		return mU.findUsuario(nick).getDtUsuario();
 	}
 	
-	public List<Usuario> obtenerSeguidores(String nick) {
-		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
-		return mU.findUsuario(nick).getSiguen();
+	@Override
+	public List<Usuario> obtenerSeguidores() {
+		return this.user.getSiguen();
 	}
 	
-	public List<Usuario> obtenerSeguidos(String nick) {
-		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
-		return mU.findUsuario(nick).getSigue();
+	@Override
+	public List<Usuario> obtenerSeguidos() {
+		return this.user.getSigue();
+	}
+	
+	@Override
+	public List<DtEdicion> infoEdiciones(boolean esDocente) {
+		List<DtEdicion> ediciones = new ArrayList<DtEdicion>();
+		if(esDocente) {
+			for(Edicion e:((Docente) user).getEdiciones()) {
+				DtEdicion edi = e.getDtEdicion();
+				ediciones.add(edi);
+			}
+		} else {
+			for(InscripcionEd ied:((Estudiante) user).getInscripcionesEd()) {
+				if(ied.getEstado().equals("Inscripto") || ied.getEstado().equals("Aceptada")) {
+					DtEdicion edi = ied.getEdicion().getDtEdicion();
+					ediciones.add(edi);
+				}	
+			}
+		}	
+		return ediciones;
+	}
+	
+	@Override
+	public List<DtPrograma> infoProgramas() throws ParseException {
+		List<DtPrograma> programas = new ArrayList<DtPrograma>();
+		for(InscripcionPF ipf: ((Estudiante) user).getInscripcionesPf()) {
+			DtPrograma prog = ipf.getPrograma().getDtPrograma();
+			programas.add(prog);
+		}
+		return programas;
 	}
 }
