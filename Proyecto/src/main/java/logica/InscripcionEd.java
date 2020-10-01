@@ -1,5 +1,7 @@
 package logica;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -10,6 +12,7 @@ import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import datatypes.DtFecha;
 import datatypes.EstadoInscripcion;
 import persistencia.InscripcionEdID;
 
@@ -71,4 +74,16 @@ public class InscripcionEd {
 		this.nick = nick;
 	}
 	
+	public DtFecha getDtFecha() {
+		ArrayList<Integer> datos = new ArrayList<>();
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/M/yyyy");
+		String date = sdf.format(this.fecha); 
+		String valores [] = (date).split("/");
+		for(String s: valores) {
+			int temp = Integer.parseInt(s);
+			datos.add(temp);
+		}
+		DtFecha dtfecha = new DtFecha(datos.get(0),datos.get(1),datos.get(2));
+		return dtfecha;
+	}
 }

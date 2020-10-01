@@ -1,9 +1,17 @@
 package logica;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import datatypes.DtCursoBase;
 import datatypes.DtEdicionBase;
+import datatypes.DtInstituto;
+import datatypes.DtUsuarioBase;
+import datatypes.EstadoInscripcion;
+import datatypes.DtCursoBase;
+import datatypes.DtEdicion;
+import datatypes.DtEdicionCompleta;
+import datatypes.DtFecha;
+import datatypes.DtInscripcionEd;
 import excepciones.EdicionVigenteNoExiste;
 import excepciones.InstitutoInexistente;
 import excepciones.InstitutoSinCursos;
@@ -18,9 +26,13 @@ public class ControladorSeleccionarEstudiantesParaUnaEdicionDeCurso implements I
 	cursos asociados al mismo. OK
 	
 	El docente elige uno y el sistema muestra los
-	datos básicos de la edición vigente de curso asociado, si existe. El sistema
+	datos básicos de la edición vigente de curso asociado, si existe. OK
+	
+	El sistema
 	muestra todas las inscripciones de estudiantes a la edición de curso
-	seleccionada, así como el estado de cada una. Las inscripciones pueden ser
+	seleccionada, así como el estado de cada una. OK 
+	
+	Las inscripciones pueden ser
 	ordenadas como se indica en el Requerimiento Especial 7.5 Ranking
 	inscriptos a Edición de Curso. 
 	
@@ -30,10 +42,10 @@ public class ControladorSeleccionarEstudiantesParaUnaEdicionDeCurso implements I
 	Finalmente, el sistema registra la selección de estudiantes realizada para la
 	edición del curso.*/
 	
-	private String institutoCon;
+	private DtInstituto instituto;
 	private ArrayList<DtCursoBase> cursos = new ArrayList<DtCursoBase>();
-	private String curso;
-	private String edicion;
+	private DtCursoBase curso;
+	private DtEdicionCompleta edicion;
 	
 	public ArrayList<DtCursoBase> getCursos() {
 		return cursos;
@@ -59,21 +71,43 @@ public class ControladorSeleccionarEstudiantesParaUnaEdicionDeCurso implements I
 				cursosinstituto.add(dtcb);
 			}
 		}
-		institutoCon = instituto;
+		this.instituto = new DtInstituto (instituto);
 		setCursos(cursosinstituto);
 		return getCursos();		
 	}
 	
-	public DtEdicionBase seleccionarCurso(String nomCurso) throws EdicionVigenteNoExiste{
+	public DtEdicionCompleta seleccionarCurso(String curso) throws EdicionVigenteNoExiste{
 		ManejadorCurso mC = ManejadorCurso.getInstancia();
-		Curso c = mC.find(nomCurso);
-		this.curso = c.getNombre();
+		Curso c = mC.find(curso);
+		this.curso = new DtCursoBase(c.getNombre());
 		DtEdicionBase dteb = c.getEdicionVigente();
 		if (dteb == null) {
 			throw new EdicionVigenteNoExiste("No existe una edicion vigente para el curso seleccionado");
 		}
-		this.edicion = dteb.getNombre();
-		return dteb;
+		List <DtInscripcionEd> dtinscripciones = new ArrayList <DtInscripcionEd>();
+		for(Edicion ed: c.getEdiciones()) {
+			if (ed.getNombre()==dteb.getNombre()) {
+				dtinscripciones = getDtInscripciones(ed.getInscripciones());
+				DtFecha dtfi = ed.convertToDtFecha(ed.getFechaI());
+				DtFecha dtff = ed.convertToDtFecha(ed.getFechaF());
+				DtFecha dtfp = ed.convertToDtFecha(ed.getFechaPub());
+				this.edicion = new DtEdicionCompleta (ed.getNombre(),dtfi,dtff,ed.isTieneCupos(),ed.getCupos(),dtfp,dtinscripciones);
+			}
+		}
+
+		return edicion;
+	}
+	
+	private List <DtInscripcionEd> getDtInscripciones(List <InscripcionEd> inscripciones) {
+		List <DtInscripcionEd> dtinscripcionesed = new ArrayList<DtInscripcionEd>(); 
+		for(InscripcionEd inscripcioned: inscripciones) {
+			DtFecha dtfecha = inscripcioned.getDtFecha();
+			DtEdicionBase dteb = new DtEdicionBase (inscripcioned.getEdicion().getNombre());
+			DtUsuarioBase dtub = new DtUsuarioBase (inscripcioned.getEstudiante().getNick(),inscripcioned.getEstudiante().getCorreo());
+			DtInscripcionEd dtied = new DtInscripcionEd (dtfecha,inscripcioned.getEstado(),dteb,dtub);
+			dtinscripcionesed.add(dtied);
+		}
+		return dtinscripcionesed;
 	}
 	
 }
