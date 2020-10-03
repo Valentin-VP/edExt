@@ -1,7 +1,21 @@
 package logica;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Dictionary;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import java.util.LinkedHashMap;
+ 
+import static java.util.stream.Collectors.*;
+import static java.util.Map.Entry.*;
 
 import datatypes.DtEdicionBase;
 import datatypes.DtInstituto;
@@ -34,18 +48,19 @@ public class ControladorSeleccionarEstudiantesParaUnaEdicionDeCurso implements I
 	
 	Las inscripciones pueden ser
 	ordenadas como se indica en el Requerimiento Especial 7.5 Ranking
-	inscriptos a Edición de Curso. 
+	inscriptos a Edición de Curso. OK
 	
 	El docente puede seleccionar el estado
-	“Aceptada” o “Rechazada” para cada inscripción a la edición del curso.
+	“Aceptada” o “Rechazada” para cada inscripción a la edición del curso. OK
 	
 	Finalmente, el sistema registra la selección de estudiantes realizada para la
-	edición del curso.*/
+	edición del curso. OK*/
 	
-	private DtInstituto instituto;
 	private ArrayList<DtCursoBase> cursos = new ArrayList<DtCursoBase>();
-	private DtCursoBase curso;
-	private DtEdicionCompleta edicion;
+	private Edicion edicion;
+	private DtEdicionCompleta edicioncompleta;
+	private Curso c;
+	private List<DtInscripcionEd> dtinscripcionesed;
 	
 	public ArrayList<DtCursoBase> getCursos() {
 		return cursos;
@@ -57,6 +72,7 @@ public class ControladorSeleccionarEstudiantesParaUnaEdicionDeCurso implements I
 
 	@Override
 	public ArrayList<DtCursoBase> listarCursosInstituto(String instituto) throws InstitutoInexistente, InstitutoSinCursos{
+		limpiar();
 		ArrayList <DtCursoBase> cursosinstituto = new ArrayList <DtCursoBase>();
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 		if(!mI.existeInstituto(instituto)) {
@@ -71,15 +87,13 @@ public class ControladorSeleccionarEstudiantesParaUnaEdicionDeCurso implements I
 				cursosinstituto.add(dtcb);
 			}
 		}
-		this.instituto = new DtInstituto (instituto);
 		setCursos(cursosinstituto);
 		return getCursos();		
 	}
 	
 	public DtEdicionCompleta seleccionarCurso(String curso) throws EdicionVigenteNoExiste{
 		ManejadorCurso mC = ManejadorCurso.getInstancia();
-		Curso c = mC.find(curso);
-		this.curso = new DtCursoBase(c.getNombre());
+		this.c = mC.find(curso);
 		DtEdicionBase dteb = c.getEdicionVigente();
 		if (dteb == null) {
 			throw new EdicionVigenteNoExiste("No existe una edicion vigente para el curso seleccionado");
@@ -87,19 +101,19 @@ public class ControladorSeleccionarEstudiantesParaUnaEdicionDeCurso implements I
 		List <DtInscripcionEd> dtinscripciones = new ArrayList <DtInscripcionEd>();
 		for(Edicion ed: c.getEdiciones()) {
 			if (ed.getNombre()==dteb.getNombre()) {
+				edicion = ed;
 				dtinscripciones = getDtInscripciones(ed.getInscripciones());
 				DtFecha dtfi = ed.convertToDtFecha(ed.getFechaI());
 				DtFecha dtff = ed.convertToDtFecha(ed.getFechaF());
 				DtFecha dtfp = ed.convertToDtFecha(ed.getFechaPub());
-				this.edicion = new DtEdicionCompleta (ed.getNombre(),dtfi,dtff,ed.isTieneCupos(),ed.getCupos(),dtfp,dtinscripciones);
+				this.edicioncompleta = new DtEdicionCompleta (ed.getNombre(),dtfi,dtff,ed.isTieneCupos(),ed.getCupos(),dtfp,dtinscripciones);
 			}
 		}
 
-		return edicion;
+		return edicioncompleta;
 	}
 	
 	private List <DtInscripcionEd> getDtInscripciones(List <InscripcionEd> inscripciones) {
-		List <DtInscripcionEd> dtinscripcionesed = new ArrayList<DtInscripcionEd>(); 
 		for(InscripcionEd inscripcioned: inscripciones) {
 			DtFecha dtfecha = inscripcioned.getDtFecha();
 			DtEdicionBase dteb = new DtEdicionBase (inscripcioned.getEdicion().getNombre());
@@ -107,7 +121,99 @@ public class ControladorSeleccionarEstudiantesParaUnaEdicionDeCurso implements I
 			DtInscripcionEd dtied = new DtInscripcionEd (dtfecha,inscripcioned.getEstado(),dteb,dtub);
 			dtinscripcionesed.add(dtied);
 		}
-		return dtinscripcionesed;
+		return this.dtinscripcionesed;
 	}
 	
+	Comparator<InscripcionEd> ordenarPorFecha = new Comparator<InscripcionEd>() {
+		public int compare(InscripcionEd ins1, InscripcionEd ins2) {
+			return Long.valueOf(ins1.getFecha().getTime()).compareTo(ins2.getFecha().getTime());
+	    }
+	};
+	
+	
+	
+	public List<DtInscripcionEd> ordenarInscripciones(String ordenarpor){
+		if(ordenarpor == "fecha") {
+			Collections.sort(this.edicion.getInscripciones(), ordenarPorFecha);
+		}
+		else if(ordenarpor == "prioridad") {
+			//obtener lista de nicks de estudiantes con contadores en 0
+			HashMap<String, Integer> estudiantes = new HashMap<String, Integer>();
+			for(InscripcionEd ins: this.edicion.getInscripciones()) {
+				estudiantes.put(ins.getEstudiante().getNick(),0);
+			}
+			//para cada uno, contar inscripciones previas rechazadas (IPR) a una edicion ya finalizada del mismo curso
+			for(Edicion ed: c.getEdiciones()) {
+				if(!ed.getNombre().equals(c.getEdicionVigente().getNombre())) { // Me aseguro que no se considere la edicion vigente
+					for(InscripcionEd anterior: ed.getInscripciones()) { // Para cada inscripcion
+						if (estudiantes.containsKey(anterior.getEstudiante().getNick()) 
+								&& anterior.getEstado().compareTo(EstadoInscripcion.Rechazada)==0) { // (si ese estudiante esta en la lista y su inscripcion fue rechazada)
+							String nick = anterior.getEstudiante().getNick(); // obtengo su estudiante relacionado
+							estudiantes.put(nick, estudiantes.get(nick)+1); // y aumento el contador 
+						}
+					}
+				}
+			}
+			//calcular prioridad de cada estudiante con prioridad = 0,5 * IPR
+			Map<String, Float> estudiantesprioridad = new HashMap<String, Float>();
+			Iterator<Entry<String, Integer>> it = estudiantes.entrySet().iterator();
+		    while (it.hasNext()) {
+		        Map.Entry pair = (Map.Entry)it.next();
+		        float prioridad = (float) ((int) pair.getValue() * 0.5);
+		        estudiantesprioridad.put((String) pair.getKey(),prioridad);
+		        it.remove(); // avoids a ConcurrentModificationException
+		    }
+		    // ordenar los estudiantes
+		    Map<String, Float> estudiantesordenados = estudiantesprioridad.entrySet().stream().sorted(comparingByValue()).collect(
+		                toMap(e -> e.getKey(), e -> e.getValue(), (e1, e2) -> e2,
+		                    LinkedHashMap::new));
+		    // Una vez ordenados, iterar sobre estudiantesordenados y por cada uno, buscar la inscripcion y agregarla a la lista de retorno
+		    List<DtInscripcionEd> dtinscripcionesed2 = null;
+		    Iterator<Entry<String, Float>> it2 = estudiantesordenados.entrySet().iterator();
+		    while (it2.hasNext()) {
+		    	Map.Entry pair = (Map.Entry)it2.next();
+		    	for (DtInscripcionEd dtie: this.dtinscripcionesed) {
+		    		if(dtie.getEstudiante().getNick().equals(pair.getKey())) {
+		    			dtinscripcionesed2.add(dtie);
+		    		}
+		    	}
+		    }
+		    this.dtinscripcionesed = dtinscripcionesed2;
+		}
+		return dtinscripcionesed;
+	}
+
+	
+	
+	public void cambiarEstadoInscripcion(String nick, String estado) {
+		EstadoInscripcion estadoins = null;
+		switch(estado) {
+		case "Aceptada": 
+			estadoins = EstadoInscripcion.Aceptada;
+			break;
+		case "Rechazada": 
+			estadoins = EstadoInscripcion.Rechazada;
+			break;
+		}
+		 
+		for(InscripcionEd ins: this.edicion.getInscripciones()) {
+			if(ins.getEstudiante().getNick().equals(nick)) {
+				ins.setEstado(estadoins);
+			}
+		}
+	}
+	
+	public void confirmarSeleccion() {
+		ManejadorEdicion mE = ManejadorEdicion.getInstancia();
+		mE.agregarEdicion(this.edicion);
+		limpiar();
+	}
+	
+	public void limpiar() {
+		this.cursos = new ArrayList<DtCursoBase>();
+		this.edicion = new Edicion();
+		this.edicioncompleta= new DtEdicionCompleta();
+		this.c = new Curso();
+		this.dtinscripcionesed = new ArrayList<DtInscripcionEd>() ;
+	}
 }
