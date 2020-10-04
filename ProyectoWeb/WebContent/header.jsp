@@ -4,8 +4,10 @@ crossorigin="anonymous">
 
 <%
 	String tipoUser = "visitante";
-	if (request.getAttribute("tipo")!= null){
-		tipoUser = (String) request.getParameter("tipo");
+	String nickname = "";
+	if (request.getAttribute("tipo") != null){
+		tipoUser = (String) request.getAttribute("tipo");
+		nickname = (String) request.getAttribute("nick");
 	}
 	if(!tipoUser.equals("visitante")) { %> <!-- NavBar Estudiante/Docente -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -46,7 +48,7 @@ crossorigin="anonymous">
         <a class="nav-link" href="CerrarSesion" id="IniciarButton" role="button">Cerrar Sesion</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="ConsultaUsuario" id="RegistrarseButton" role="button">Mi Perfil</a>
+        <a class="nav-link" href="ConsultaUsuario" id="RegistrarseButton" role="button">Mi Perfil<%= " - " + nickname %></a>
       </li>
     </ul>
     <form class="form-inline my-2 my-lg-0">

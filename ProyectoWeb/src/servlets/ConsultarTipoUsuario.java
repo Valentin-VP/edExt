@@ -40,13 +40,17 @@ public class ConsultarTipoUsuario extends HttpServlet {
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		}
-		String tipo = new String();
+		String tipo = "ironman";
+		String nickname = "visitante";
 		if(icon.existeUsuario(nick)) {
 			tipo = icon.identificarUsuario(nick, codificada);
+			if(tipo != null)
+				nickname = icon.obtenerNick();
 		}
 		RequestDispatcher rd;
 		request.setAttribute("tipo", tipo);
-		rd = request.getRequestDispatcher("/header.jsp");
+		request.setAttribute("nick", nickname);
+		rd = request.getRequestDispatcher("/index.jsp");
 		rd.forward(request, response);
 	}
 
