@@ -14,11 +14,11 @@
   <div class="form-row">
     <div class="col-md-6 mb-3">
       <label for="nick">Nickname/Correo</label>
-      <input type="text" class="form-control" id="nick-correo" value="Elver" required>
+      <input type="text" name="nick-correo" class="form-control" id="nick-correo" value="Elver" required>
     </div>
     <div class="col-md-6 mb-3">
       <label for="pass">Contrasenia</label>
-      <input type="password" class="form-control" id="pass" required>
+      <input type="password" name="pass" class="form-control" id="pass" required>
     </div>
   </div>
   <button class="btn btn-primary" type="submit">Submit form</button>

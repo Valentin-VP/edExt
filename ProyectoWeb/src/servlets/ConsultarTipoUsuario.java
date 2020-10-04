@@ -29,7 +29,7 @@ public class ConsultarTipoUsuario extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String nick = request.getParameter("nick");
+		String nick = request.getParameter("nick-correo");
 		String pass = request.getParameter("pass");
 		Fabrica fabrica = Fabrica.getInstancia();
 		IControladorSesion icon = fabrica.getIControladorSesion();
