@@ -1,4 +1,5 @@
 package interfaces;
+import logica.ControladorAgregarCursoAPF;
 import logica.ControladorAltaCategoria;
 import logica.ControladorAltaCurso;
 import logica.ControladorAltaEdicionCurso;
@@ -8,7 +9,12 @@ import logica.ControladorAltaUsuario;
 import logica.ControladorConsultaEdicionCurso;
 import logica.ControladorConsultaPrograma;
 import logica.ControladorInscripcionEdicionCurso;
+import logica.ControladorListarAceptadosAUnaEdicionDeCurso;
+import logica.ControladorListarResultadosInscripcionesEdiciones;
 import logica.ControladorModificarDatosUsuario;
+import logica.ControladorSeguirUsuario;
+import logica.ControladorSeleccionarEstudiantesParaUnaEdicionDeCurso;
+import logica.ControladorSesion;
 import logica.ControladorConsultaCurso;
 
 public class Fabrica {
@@ -68,4 +74,29 @@ public class Fabrica {
 	public IControladorConsultaPrograma getIControladorConsultaPrograma() {
 		return new ControladorConsultaPrograma();
 	}
+	
+	public IControladorSesion getIControladorSesion() {
+		return new ControladorSesion();
+	}
+	
+	public IControladorListarAceptadosAUnaEdicionDeCurso getIControladorListarAceptadosAUnaEdicionDeCurso() {
+		return new ControladorListarAceptadosAUnaEdicionDeCurso();
+	}
+	
+	public IControladorSeleccionarEstudiantesParaUnaEdicionDeCurso getIControladorSeleccionarEstudiantesParaUnaEdicionDeCurso() {
+		return new ControladorSeleccionarEstudiantesParaUnaEdicionDeCurso();
+	}
+	
+	public IControladorListarResultadosInscripcionesEdiciones getIControladorListarResultadosInscripcionesEdiciones() {
+		return new ControladorListarResultadosInscripcionesEdiciones();
+	}
+	
+	public IControladorAgregarCursoAPF getIControladorAgregarCursoAPF() {
+		return new ControladorAgregarCursoAPF();
+	}
+	
+	public IControladorSeguirUsuario getIControladorSeguirUsuario() {
+		return new ControladorSeguirUsuario();
+	}
+	
 }
