@@ -3,9 +3,10 @@ package logica;
 import interfaces.IControladorSesion;
 
 public class ControladorSesion implements IControladorSesion{
-
+	private String nick = "";
 	@Override
 	public boolean existeUsuario(String id) {
+		this.nick = "";
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		boolean existe = false;
 		if(id.contains("@")) {
@@ -33,6 +34,7 @@ public class ControladorSesion implements IControladorSesion{
 						tipo = "docente";
 					else
 						tipo = "estudiante";
+					this.nick = u.getNick();
 				}
 			}
 		}
@@ -44,10 +46,16 @@ public class ControladorSesion implements IControladorSesion{
 						tipo = "docente";
 					else
 						tipo = "estudiante";
+					this.nick = u.getNick();
 				}
 			}
 		}
 		return tipo;
+	}
+
+	@Override
+	public String obtenerNick() {
+		return this.nick;
 	}
 
 }
