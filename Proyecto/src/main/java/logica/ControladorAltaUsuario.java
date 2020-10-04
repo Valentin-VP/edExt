@@ -54,7 +54,7 @@ public class ControladorAltaUsuario implements IControladorAltaUsuario {
 	public void cancelarAltaUsuario() {
 		
 	}
-	
+	@Override
 	public String codificarPass(String contrasenia) throws NoSuchAlgorithmException {
 		MessageDigest md = null;
 		byte[] mb = null;
@@ -84,6 +84,7 @@ public class ControladorAltaUsuario implements IControladorAltaUsuario {
 		String laPass = new String();
 		try {
 			laPass = codificarPass(this.usuario.getPassword());
+			this.usuario.setPassword(laPass);
 		} catch (NoSuchAlgorithmException e){
 			e.printStackTrace();
 		}

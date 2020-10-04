@@ -25,4 +25,6 @@ public interface IControladorAltaUsuario {
 	
 	public ArrayList<DtInstituto> listarInstitutos() throws SinInstitutos;
 	
+	public String codificarPass(String contrasenia) throws NoSuchAlgorithmException;
+	
 }

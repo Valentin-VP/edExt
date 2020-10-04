@@ -9,7 +9,8 @@
 <title>Iniciar Sesion de un Usuario</title>
 </head>
 <body>
-<form>
+<h1 align="center"> Ingrese sus datos para iniciar la sesion </h1>
+<form action="ConsultarTipoUsuario" method="post">
   <div class="form-row">
     <div class="col-md-6 mb-3">
       <label for="nick">Nickname/Correo</label>

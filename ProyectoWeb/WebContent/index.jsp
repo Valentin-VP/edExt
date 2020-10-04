@@ -4,11 +4,11 @@
 <head>
 <style>
 #listaInstitutos {
-  position: absolute;
-  top: 200px;
+  position: relative;
+  top: 100px;
   left: 0;
   width: 200px;
-  height: 150px;
+  height: 200px;
   border: 3px solid #73AD21;
   overflow: auto;
 }
@@ -19,11 +19,6 @@
 <title>Pagina de Inicio</title>
 </head>
 <body>
-
-	<div class="text-right"> 
-        <a role="button" href="IniciarSesion.jsp" class="btn btn-secondary">Inicias Sesion</a>
-        <a role="button" href="Registrarse.jsp" class="btn btn-secondary">Registrarse</a> 
-    </div>
                
     <div id="listaInstitutos" class="list-group">
 	  	<a href="#" class="list-group-item list-group-item-action">Crandon</a>
