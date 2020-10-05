@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import interfaces.Fabrica;
 import interfaces.IControladorAltaUsuario;
@@ -40,16 +41,20 @@ public class ConsultarTipoUsuario extends HttpServlet {
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		}
-		String tipo = "ironman";
+		String tipo = "";
+		HttpSession sesion = request.getSession(true);
 		String nickname = "visitante";
 		if(icon.existeUsuario(nick)) {
 			tipo = icon.identificarUsuario(nick, codificada);
-			if(tipo != null)
+			sesion.setAttribute("tipo", tipo);
+			if(tipo != null) {
 				nickname = icon.obtenerNick();
+				sesion.setAttribute("nick", nickname);
+			}	
 		}
 		RequestDispatcher rd;
-		request.setAttribute("tipo", tipo);
-		request.setAttribute("nick", nickname);
+		//request.setAttribute("tipo", tipo);
+		//request.setAttribute("nick", nickname);
 		rd = request.getRequestDispatcher("/index.jsp");
 		rd.forward(request, response);
 	}

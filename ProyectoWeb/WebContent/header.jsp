@@ -3,13 +3,17 @@ integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ
 crossorigin="anonymous">
 
 <%
-	String tipoUser = "visitante";
+	String tipoUser = "";
 	String nickname = "";
-	if (request.getAttribute("tipo") != null){
-		tipoUser = (String) request.getAttribute("tipo");
-		nickname = (String) request.getAttribute("nick");
+	if (request.isRequestedSessionIdValid()){
+		tipoUser = "visitante";
+		System.out.println("entra al if ");
+	} else {
+		System.out.println("entra al else ");
+		tipoUser = (String) request.getSession().getAttribute("tipo");
+		nickname = (String) request.getSession().getAttribute("nick");
 	}
-	if(!tipoUser.equals("visitante")) { %> <!-- NavBar Estudiante/Docente -->
+	if(tipoUser.equals("docente") || tipoUser.equals("estudiante")) { %> <!-- NavBar Estudiante/Docente -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="index.jsp">edExt</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,8 +49,8 @@ crossorigin="anonymous">
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="CerrarSesion" id="IniciarButton" role="button">Cerrar Sesion</a>
-      </li>
+       	<a class="nav-link" href="CerrarSesion" id="IniciarButton" role="button">Cerrar Sesion</a>
+      </li>	
       <li class="nav-item">
         <a class="nav-link" href="ConsultaUsuario" id="RegistrarseButton" role="button">Mi Perfil<%= " - " + nickname %></a>
       </li>
@@ -57,7 +61,7 @@ crossorigin="anonymous">
     </form>
   </div>
 </nav>
-<%} else if(tipoUser.equals("visitante")){%> <!-- NavBar visitante -->
+<%} else {%> <!-- NavBar visitante -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="index.jsp">edExt</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
