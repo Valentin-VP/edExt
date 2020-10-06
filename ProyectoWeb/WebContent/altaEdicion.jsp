@@ -20,18 +20,151 @@
 	if(s.isNew() || cursos == null) {%>
 <form action="IngresoInstitutoAltaEdicion" method="post"> <!-- me traigo los cursos y los docentes del instituto -->
    <div class="form-row">	
-      <div class="form-group col-md-4">
+      <div class=" form-group col-md-4">
 	      <label for="inputInstituto">Instituto</label>
-	      <select id="inputInstituto" name="instituto" class="form-control">
-	        <option selected>Choose...</option>
+	      <select id="inputInstituto" name="instituto" class="selectpicker">
+	        <option selected>Choose...</option> <!-- hay que traer todos los institutos y hacer un for -->
 	        <option value="crandon">Crandon</option>
 	      </select>
 	   </div>
-	   <button type="submit" class="btn btn-primary">Buscar Cursos</button>
    </div>   
+   <div class="form-row">
+      <button type="submit" class="btn btn-primary">Buscar Cursos</button>
+   </div>
 </form>    
-<%} else  {%>
-<!-- otro formulario con el resto del caso de uso -->
+<%  
+	} else {%>
+<form action="AltaEdicionCurso" method="post">
+	<div class=form-row>
+	  	<div class="form-group col-md-3">
+	  	  <label for="inputCurso">Cursos</label>
+	        <select class="selectpicker" id="inputCurso" name="curso" title="Elije un curso">
+	          <option selected>Choose...</option>
+	          <%for(String c: cursos) { %>
+	          <option value="<%= c %>"><%= c %></option>
+	          <% } %>
+	        </select>
+	    </div>
+	    <div class="form-check">
+	      <input class="form-check-input" type="checkbox" id="gridCheck" name="tieneCupos">
+	      <label class="form-check-label" for="gridCheck">Cupos</label>
+	    </div>
+	    <div class="form-group col-md-1">
+	      <label for="inputCupos">Cantidad</label>
+	      <input type="text" name="cantidadCupos" class="form-control" id="inputCupos">
+	    </div>
+	</div>
+	<br>
+	<div class="form-row">
+		<div class="form-group col-md-6">
+	      <label for="inputNombre">Nombre</label>
+	      <input type="text" name="nombreEdicion" class="form-control" id="inputNombre">
+	    </div>
+	</div>
+	<br>
+	<div class="form-row">
+	  	  <div class="form-group col-md-3"> <!-- fecha de inicio -->
+	        <label for="inputDiaI">Dia Inicio</label>
+	        <select id="inputDiaI" name="DiaI" class="selectpicker">
+	          <option selected>Choose...</option>
+	          <option value="1">1</option>
+	          <option value="2">2</option>
+	          <option value="3">3</option>
+	        </select>
+	    </div>
+	    <div class="form-group col-md-3">
+	        <label for="inputMesI">Mes Inicio</label>
+	        <select id="inputMesI" name="MesI" class="selectpicker">
+	          <option selected>Choose...</option>
+	          <option value="1">enero</option>
+	          <option value="2">febrero</option>
+	          <option value="3">marzo</option>
+	        </select>
+	    </div>
+	    <div class="form-group col-md-3">
+	        <label for="inputAnioI">Anio Inicio</label>
+	        <select id="inputAnioI" name="AnioI" class="selectpicker">
+	          <option selected>Choose...</option>
+	          <option value="1997">1997</option>
+	          <option value="1998">1998</option>
+	          <option value="1999">1999</option>
+	        </select>
+	    </div>
+    </div>
+    <br>
+  	<div class="form-row">
+	  	  <div class="form-group col-md-3"> <!-- fecha de Fin -->
+	        <label for="inputDiaF">Dia Fin</label>
+	        <select id="inputDiaF" name="DiaF" class="selectpicker">
+	          <option selected>Choose...</option>
+	          <option value="1">1</option>
+	          <option value="2">2</option>
+	          <option value="3">3</option>
+	        </select>
+	    </div>
+	    <div class="form-group col-md-3">
+	        <label for="inputMesF">Mes Fin</label>
+	        <select id="inputMesF" name="MesF" class="selectpicker">
+	          <option selected>Choose...</option>
+	          <option value="1">enero</option>
+	          <option value="2">febrero</option>
+	          <option value="3">marzo</option>
+	        </select>
+	    </div>
+	    <div class="form-group col-md-3">
+	        <label for="inputAnioF">Anio Fin</label>
+	        <select id="inputAnioF" name="AnioF" class="selectpicker">
+	          <option selected>Choose...</option>
+	          <option value="1997">1997</option>
+	          <option value="1998">1998</option>
+	          <option value="1999">1999</option>
+	        </select>
+	    </div>
+    </div>
+    <br>
+    <div class="form-row">
+	  	  <div class="form-group col-md-3"> <!-- fecha de Publicacion -->
+	        <label for="inputDiaP">Dia Pub</label>
+	        <select id="inputDiaP" name="DiaP" class="selectpicker">
+	          <option selected>Choose...</option>
+	          <option value="1">1</option>
+	          <option value="2">2</option>
+	          <option value="3">3</option>
+	        </select>
+	    </div>
+	    <div class="form-group col-md-3">
+	        <label for="inputMesP">Mes Pub</label>
+	        <select id="inputMesP" name="MesP" class="selectpicker">
+	          <option selected>Choose...</option>
+	          <option value="1">enero</option>
+	          <option value="2">febrero</option>
+	          <option value="3">marzo</option>
+	        </select>
+	    </div>
+	    <div class="form-group col-md-3">
+	        <label for="inputAnioP">Anio Pub</label>
+	        <select id="inputAnioP" name="AnioP" class="selectpicker">
+	          <option selected>Choose...</option>
+	          <option value="1997">1997</option>
+	          <option value="1998">1998</option>
+	          <option value="1999">1999</option>
+	        </select>
+	    </div>
+    </div>
+	<div class="form-row">
+	    <div class="form-group col-md-6">
+	      <label for="docentes">Seleccione los docentes</label>
+	      <select id="docentes" name="docentes" class="selectpicker" multiple>
+  			<%for(String d: docentes) { %>
+	        <option value="<%= d %>"> <%= d %> </option>
+	        <% } %>
+		  </select>
+	    </div>
+	</div>
+	<div class="form-row">
+		<button type="submit" class="btn btn-primary">Confirmar</button>
+	</div>
+</form>
 <% } %>
 <%@include file = "/footer.jsp" %>
 </body>

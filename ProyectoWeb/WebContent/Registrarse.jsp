@@ -33,7 +33,7 @@
   <div class="form-row">
   	<div class="form-group col-md-3">
       <label for="inputDia">Dia</label>
-      <select id="inputDia" name="DiaNac" class="form-control">
+      <select id="inputDia" name="DiaNac" class="selectpicker">
         <option selected>Choose...</option>
         <option value="1">1</option>
         <option value="2">2</option>
@@ -42,7 +42,7 @@
   </div>
   <div class="form-group col-md-3">
       <label for="inputMes">Mes</label>
-      <select id="inputMes" name="MesNac" class="form-control">
+      <select id="inputMes" name="MesNac" class="selectpicker">
         <option selected>Choose...</option>
         <option value="1">enero</option>
         <option value="2">febrero</option>
@@ -51,7 +51,7 @@
   </div>
   <div class="form-group col-md-3">
       <label for="inputAnio">Anio</label>
-      <select id="inputAnio" name="AnioNac" class="form-control">
+      <select id="inputAnio" name="AnioNac" class="selectpicker">
         <option selected>Choose...</option>
         <option value="1997">1997</option>
         <option value="1998">1998</option>
@@ -78,7 +78,7 @@
   <br>
   <div class="form-group col-md-6">
       <label for="inputInstituto">Instituto</label>
-      <select id="inputInstituto" name="instituto" class="form-control">
+      <select id="inputInstituto" name="instituto" class="selectpicker">
         <option selected>Choose...</option>
         <option value="crandon">crandon</option>
       </select>

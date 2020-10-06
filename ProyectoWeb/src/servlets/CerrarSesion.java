@@ -23,7 +23,10 @@ public class CerrarSesion extends HttpServlet {
         if (session != null) {
         	session.removeAttribute("tipo");
         	session.removeAttribute("nick");
+        	session.removeAttribute("cursos");
+        	session.removeAttribute("docentes");
         }
+        
         RequestDispatcher rd;
     	rd = request.getRequestDispatcher("/index.jsp");
     	rd.forward(request, response);    
