@@ -37,6 +37,7 @@ public class IngresoInstitutoAltaEdicion extends HttpServlet {
 		List<String> cursos = new ArrayList<String>();
 		List<String> docentes = new ArrayList<String>();
 		HttpSession sesion = request.getSession(true);
+		sesion.setAttribute("instituto", instituto);
 		try {
 			for(DtCursoBase dtcb: icon.seleccionarInstituto(instituto)) {
 				cursos.add(dtcb.getNombre());

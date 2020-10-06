@@ -37,7 +37,7 @@
 <form action="AltaEdicionCurso" method="post">
 	<div class=form-row>
 	  	<div class="form-group col-md-3">
-	  	  <label for="inputCurso">Cursos</label>
+	  	  <label for="inputCurso">cursos</label>
 	        <select class="selectpicker" id="inputCurso" name="curso" title="Elije un curso">
 	          <option selected>Choose...</option>
 	          <%for(String c: cursos) { %>
@@ -154,7 +154,7 @@
 	<div class="form-row">
 	    <div class="form-group col-md-6">
 	      <label for="docentes">Seleccione los docentes</label>
-	      <select id="docentes" name="docentes" class="selectpicker" multiple>
+	      <select id="docentes" name="docentes" class="selectpicker" multiple="multiple">
   			<%for(String d: docentes) { %>
 	        <option value="<%= d %>"> <%= d %> </option>
 	        <% } %>

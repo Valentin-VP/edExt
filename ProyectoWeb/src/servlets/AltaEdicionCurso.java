@@ -2,6 +2,8 @@ package servlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,8 +11,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import datatypes.DtCursoBase;
 import datatypes.DtFecha;
+import excepciones.CursoNoExiste;
+import excepciones.EdicionRepetida;
+import excepciones.InstitutoInexistente;
+import excepciones.UsuarioNoDocente;
 import interfaces.Fabrica;
 import interfaces.IControladorAltaEdicionCurso;
 
@@ -27,7 +35,8 @@ public class AltaEdicionCurso extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String nombre = request.getParameter("curso");
+		String curso = request.getParameter("curso");
+		String nombre = request.getParameter("nombreEdicion");
 		boolean conCupos = request.getParameter("tieneCupos") != null;
 		Integer cupos = Integer.parseInt(request.getParameter("cantidadCupos"));
 		Integer diaI = Integer.parseInt(request.getParameter("DiaI"));
@@ -42,14 +51,24 @@ public class AltaEdicionCurso extends HttpServlet {
 		Integer mesP = Integer.parseInt(request.getParameter("MesP"));
 		Integer anioP = Integer.parseInt(request.getParameter("AnioP"));
 		DtFecha fechaP = new DtFecha(diaP, mesP, anioP);
-		String docentes = request.getParameter("docentes");//solo trae al primer docente
-		//String[] profes = docentes.split(",");
+		String[] docentes = request.getParameterValues("docentes");
+		ArrayList<String> profes = new ArrayList<String>();
+		for(String s: docentes) {
+			profes.add(s);
+		}
 		Fabrica fabrica = Fabrica.getInstancia();
 		IControladorAltaEdicionCurso icon = fabrica.getIControladorAltaEdicionCurso();
-		//llamar a logica de altaEdicionCurso
+		HttpSession sesion = request.getSession(true);
+		try {
+			String i = (String) sesion.getAttribute("instituto");
+			@SuppressWarnings("unused")
+			List<DtCursoBase> noLosUso = icon.seleccionarInstituto(i);
+			icon.altaEdicionCurso(curso, nombre, fechaI, fechaF, profes, conCupos, cupos, fechaP);
+		} catch (EdicionRepetida | CursoNoExiste | InstitutoInexistente | UsuarioNoDocente e) {
+			e.printStackTrace();
+		}
 		RequestDispatcher rd;
-		System.out.println("docentes: " + docentes);
-		request.setAttribute("mensaje", "los docentes " + docentes + " fueron ingresados");
+		request.setAttribute("mensaje", "La edicion fue agregada con exito");
 		rd = request.getRequestDispatcher("/notifiacion.jsp");
 		rd.forward(request, response);
 	}
