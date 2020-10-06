@@ -16,7 +16,6 @@ import interfaces.IControladorAltaUsuario;
 import interfaces.IControladorSesion;
 
 
-
 @WebServlet("/ConsultarTipoUsuario")
 public class ConsultarTipoUsuario extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -42,13 +41,13 @@ public class ConsultarTipoUsuario extends HttpServlet {
 			e.printStackTrace();
 		}
 		String tipo = "";
-		HttpSession sesion = request.getSession(true);
 		String nickname = "visitante";
 		if(icon.existeUsuario(nick)) {
 			tipo = icon.identificarUsuario(nick, codificada);
-			sesion.setAttribute("tipo", tipo);
 			if(tipo != null) {
 				nickname = icon.obtenerNick();
+				HttpSession sesion = request.getSession(true);
+				sesion.setAttribute("tipo", tipo);
 				sesion.setAttribute("nick", nickname);
 			}	
 		}
@@ -58,5 +57,5 @@ public class ConsultarTipoUsuario extends HttpServlet {
 		rd = request.getRequestDispatcher("/index.jsp");
 		rd.forward(request, response);
 	}
-
+	
 }

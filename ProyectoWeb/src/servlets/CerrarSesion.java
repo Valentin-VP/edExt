@@ -21,11 +21,12 @@ public class CerrarSesion extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
         if (session != null) {
-            session.removeAttribute("tipo");
+        	session.removeAttribute("tipo");
+        	session.removeAttribute("nick");
         }
-            RequestDispatcher rd;
-    		rd = request.getRequestDispatcher("/index.jsp");
-    		rd.forward(request, response);    
+        RequestDispatcher rd;
+    	rd = request.getRequestDispatcher("/index.jsp");
+    	rd.forward(request, response);    
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

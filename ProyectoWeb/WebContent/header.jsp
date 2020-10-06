@@ -3,15 +3,22 @@ integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ
 crossorigin="anonymous">
 
 <%
-	String tipoUser = "";
-	String nickname = "";
-	if (request.isRequestedSessionIdValid()){
+
+	HttpSession sesion = (HttpSession) request.getSession();
+	String tipoUser = (String) sesion.getAttribute("tipo");
+	String nickname = (String) sesion.getAttribute("nick");
+	
+	//String tipoUser = "";
+	//String nickname = "";
+	//if (request.isRequestedSessionIdValid()){
+	if (sesion.isNew() || tipoUser == null){
 		tipoUser = "visitante";
 		System.out.println("entra al if ");
 	} else {
 		System.out.println("entra al else ");
-		tipoUser = (String) request.getSession().getAttribute("tipo");
-		nickname = (String) request.getSession().getAttribute("nick");
+		//tipoUser = (String) sesion.getAttribute("tipo");
+		//nickname = (String) sesion.getAttribute("nick");
+		System.out.print(tipoUser);
 	}
 	if(tipoUser.equals("docente") || tipoUser.equals("estudiante")) { %> <!-- NavBar Estudiante/Docente -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
