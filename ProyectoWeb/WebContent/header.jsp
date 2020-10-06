@@ -36,7 +36,7 @@ crossorigin="anonymous">
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="#">Curso</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Edicion</a>
+          <a class="dropdown-item" href="altaEdicion.jsp">Edicion</a>
         </div>
       </li>
      <li class="nav-item dropdown">

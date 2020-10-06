@@ -154,6 +154,23 @@ public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso
 		return users;
 	}
 	
+	@Override
+	public ArrayList<DtUsuarioBase> getDocentes(){
+		ArrayList<DtUsuarioBase> aretornar = new ArrayList<DtUsuarioBase>();
+		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
+		Instituto i = mI.find(this.instituto);
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		for(Usuario u: mU.getUsuarios()) {
+			if(u instanceof Docente) {
+				if(((Docente) u).getInstituto().equals(i)) {
+					DtUsuarioBase dtub = new DtUsuarioBase(u.getNick(), u.getCorreo());
+					aretornar.add(dtub);
+				}
+			}
+		}
+		return aretornar;
+	} 
+	
 	
 	public void verificarUsuario(String nick, String correo, ArrayList<String> docentes) throws UsuarioNoExiste, UsuarioNoDocente, DocenteDeOtroInstituto, DocenteYaAgregado {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
