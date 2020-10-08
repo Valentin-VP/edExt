@@ -44,7 +44,7 @@ public class IngresoInstitutoAltaEdicion extends HttpServlet {
 			}
 			sesion.setAttribute("cursos", cursos);
 		} catch (InstitutoInexistente e) {
-			e.printStackTrace();
+			throw new ServletException(e.getMessage());
 		}
 		for(DtUsuarioBase dtub: icon.getDocentes()) {
 			docentes.add(dtub.getNick());

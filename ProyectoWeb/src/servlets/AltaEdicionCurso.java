@@ -2,7 +2,6 @@ package servlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -65,7 +64,7 @@ public class AltaEdicionCurso extends HttpServlet {
 			List<DtCursoBase> noLosUso = icon.seleccionarInstituto(i);
 			icon.altaEdicionCurso(curso, nombre, fechaI, fechaF, profes, conCupos, cupos, fechaP);
 		} catch (EdicionRepetida | CursoNoExiste | InstitutoInexistente | UsuarioNoDocente e) {
-			e.printStackTrace();
+			throw new ServletException(e.getMessage());
 		}
 		RequestDispatcher rd;
 		request.setAttribute("mensaje", "La edicion fue agregada con exito");

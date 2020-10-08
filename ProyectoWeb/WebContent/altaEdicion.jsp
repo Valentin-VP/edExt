@@ -23,7 +23,7 @@
       <div class=" form-group col-md-4">
 	      <label for="inputInstituto">Instituto</label>
 	      <select id="inputInstituto" name="instituto" class="selectpicker">
-	        <option selected>Choose...</option> <!-- hay que traer todos los institutos y hacer un for -->
+	        <option selected disabled>Choose...</option> <!-- hay que traer todos los institutos y hacer un for -->
 	        <option value="crandon">Crandon</option>
 	      </select>
 	   </div>
@@ -39,7 +39,6 @@
 	  	<div class="form-group col-md-3">
 	  	  <label for="inputCurso">cursos</label>
 	        <select class="selectpicker" id="inputCurso" name="curso" title="Elije un curso">
-	          <option selected>Choose...</option>
 	          <%for(String c: cursos) { %>
 	          <option value="<%= c %>"><%= c %></option>
 	          <% } %>
@@ -49,9 +48,10 @@
 	      <input class="form-check-input" type="checkbox" id="gridCheck" name="tieneCupos">
 	      <label class="form-check-label" for="gridCheck">Cupos</label>
 	    </div>
+	  	
 	    <div class="form-group col-md-1">
 	      <label for="inputCupos">Cantidad</label>
-	      <input type="text" name="cantidadCupos" class="form-control" id="inputCupos">
+	      <input type="text" name="cantidadCupos" class="form-control" id="inputCupos" value="0">
 	    </div>
 	</div>
 	<br>
@@ -66,7 +66,6 @@
 	  	  <div class="form-group col-md-3"> <!-- fecha de inicio -->
 	        <label for="inputDiaI">Dia Inicio</label>
 	        <select id="inputDiaI" name="DiaI" class="selectpicker">
-	          <option selected>Choose...</option>
 	          <option value="1">1</option>
 	          <option value="2">2</option>
 	          <option value="3">3</option>
@@ -75,7 +74,6 @@
 	    <div class="form-group col-md-3">
 	        <label for="inputMesI">Mes Inicio</label>
 	        <select id="inputMesI" name="MesI" class="selectpicker">
-	          <option selected>Choose...</option>
 	          <option value="1">enero</option>
 	          <option value="2">febrero</option>
 	          <option value="3">marzo</option>
@@ -84,7 +82,6 @@
 	    <div class="form-group col-md-3">
 	        <label for="inputAnioI">Anio Inicio</label>
 	        <select id="inputAnioI" name="AnioI" class="selectpicker">
-	          <option selected>Choose...</option>
 	          <option value="1997">1997</option>
 	          <option value="1998">1998</option>
 	          <option value="1999">1999</option>
@@ -96,7 +93,6 @@
 	  	  <div class="form-group col-md-3"> <!-- fecha de Fin -->
 	        <label for="inputDiaF">Dia Fin</label>
 	        <select id="inputDiaF" name="DiaF" class="selectpicker">
-	          <option selected>Choose...</option>
 	          <option value="1">1</option>
 	          <option value="2">2</option>
 	          <option value="3">3</option>
@@ -105,7 +101,6 @@
 	    <div class="form-group col-md-3">
 	        <label for="inputMesF">Mes Fin</label>
 	        <select id="inputMesF" name="MesF" class="selectpicker">
-	          <option selected>Choose...</option>
 	          <option value="1">enero</option>
 	          <option value="2">febrero</option>
 	          <option value="3">marzo</option>
@@ -114,7 +109,6 @@
 	    <div class="form-group col-md-3">
 	        <label for="inputAnioF">Anio Fin</label>
 	        <select id="inputAnioF" name="AnioF" class="selectpicker">
-	          <option selected>Choose...</option>
 	          <option value="1997">1997</option>
 	          <option value="1998">1998</option>
 	          <option value="1999">1999</option>
@@ -126,7 +120,6 @@
 	  	  <div class="form-group col-md-3"> <!-- fecha de Publicacion -->
 	        <label for="inputDiaP">Dia Pub</label>
 	        <select id="inputDiaP" name="DiaP" class="selectpicker">
-	          <option selected>Choose...</option>
 	          <option value="1">1</option>
 	          <option value="2">2</option>
 	          <option value="3">3</option>
@@ -135,7 +128,6 @@
 	    <div class="form-group col-md-3">
 	        <label for="inputMesP">Mes Pub</label>
 	        <select id="inputMesP" name="MesP" class="selectpicker">
-	          <option selected>Choose...</option>
 	          <option value="1">enero</option>
 	          <option value="2">febrero</option>
 	          <option value="3">marzo</option>
@@ -144,7 +136,6 @@
 	    <div class="form-group col-md-3">
 	        <label for="inputAnioP">Anio Pub</label>
 	        <select id="inputAnioP" name="AnioP" class="selectpicker">
-	          <option selected>Choose...</option>
 	          <option value="1997">1997</option>
 	          <option value="1998">1998</option>
 	          <option value="1999">1999</option>

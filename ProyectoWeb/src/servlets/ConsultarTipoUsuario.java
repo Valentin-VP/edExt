@@ -38,7 +38,7 @@ public class ConsultarTipoUsuario extends HttpServlet {
 		try {
 			codificada = icontrolador.codificarPass(pass);
 		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
+			throw new ServletException(e.getMessage());
 		}
 		String tipo = "";
 		String nickname = "visitante";
