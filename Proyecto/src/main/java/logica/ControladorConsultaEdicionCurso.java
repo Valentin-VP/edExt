@@ -77,6 +77,13 @@ public class ControladorConsultaEdicionCurso implements IControladorConsultaEdic
 		ArrayList<DtEdicionBase> ediciones = new ArrayList<>();
 			ManejadorCurso mC = ManejadorCurso.getInstancia();
 			Curso cur = mC.find(curso);
+			ManejadorInstituto mI = ManejadorInstituto.getInstancia();
+			for(Instituto i: mI.getInstitutos()) {
+				for(Curso c: i.getCursos()) {
+					if(c.getNombre().equals(curso));
+					this.instituto = i.getNombre();
+				}
+			}
 			if(curso.isEmpty()) {
 				throw new CursoNoExiste("No existe el curso seleccionado");
 			}

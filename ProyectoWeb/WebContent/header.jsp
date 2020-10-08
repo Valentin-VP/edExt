@@ -48,7 +48,7 @@ crossorigin="anonymous">
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
         	<a class="dropdown-item" href="#">Curso</a>
-          	<a class="dropdown-item" href="#">Ediciones</a>
+          	<a class="dropdown-item" href="infoEdicion.jsp">Ediciones</a>
         </div>
       </li>
       <li class="nav-item dropdown">
@@ -87,7 +87,7 @@ crossorigin="anonymous">
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
         	<a class="dropdown-item" href="#">Curso</a>
-         	<a class="dropdown-item" href="#">Ediciones</a>
+         	<a class="dropdown-item" href="infoEdicion.jsp">Ediciones</a>
         </div>
       </li>
       <li class="nav-item">

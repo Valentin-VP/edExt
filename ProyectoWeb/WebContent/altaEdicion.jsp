@@ -20,7 +20,7 @@
 	if(s.isNew() || cursos == null) {%>
 <form action="IngresoInstitutoAltaEdicion" method="post"> <!-- me traigo los cursos y los docentes del instituto -->
    <div class="form-row">	
-      <div class=" form-group col-md-4">
+      <div class="form-group col-md-4">
 	      <label for="inputInstituto">Instituto</label>
 	      <select id="inputInstituto" name="instituto" class="selectpicker">
 	        <option selected disabled>Choose...</option> <!-- hay que traer todos los institutos y hacer un for -->
@@ -44,11 +44,10 @@
 	          <% } %>
 	        </select>
 	    </div>
-	    <div class="form-check">
+	    <div class="form-check col-md-2">
 	      <input class="form-check-input" type="checkbox" id="gridCheck" name="tieneCupos">
 	      <label class="form-check-label" for="gridCheck">Cupos</label>
 	    </div>
-	  	
 	    <div class="form-group col-md-1">
 	      <label for="inputCupos">Cantidad</label>
 	      <input type="text" name="cantidadCupos" class="form-control" id="inputCupos" value="0">

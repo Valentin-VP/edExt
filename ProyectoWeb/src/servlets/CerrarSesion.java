@@ -25,7 +25,14 @@ public class CerrarSesion extends HttpServlet {
         	session.removeAttribute("nick");
         	session.removeAttribute("cursos");
         	session.removeAttribute("docentes");
-        	session.removeAttribute("instituto");
+        	session.removeAttribute("instituto");//
+        	session.removeAttribute("cursosInfoEdicion");
+        	session.removeAttribute("edicionesInfoEdicion");
+        	session.removeAttribute("infoEdicion");
+        	session.removeAttribute("InsCat");//
+        	session.removeAttribute("cursoConsultaEdicion");//
+        	session.removeAttribute("esInstituto");//
+        	session.removeAttribute("esCategoria");//
         }
         
         RequestDispatcher rd;
