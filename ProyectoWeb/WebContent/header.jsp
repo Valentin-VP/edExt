@@ -43,11 +43,12 @@ crossorigin="anonymous">
         </div>
       </li>
      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="ConsultasDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Consultas
+     	<a class="nav-link dropdown-toggle" href="#" id="ConsultasDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Informacion
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Ediciones</a>
+        	<a class="dropdown-item" href="#">Curso</a>
+          	<a class="dropdown-item" href="#">Ediciones</a>
         </div>
       </li>
       <li class="nav-item dropdown">
@@ -82,10 +83,11 @@ crossorigin="anonymous">
     <ul class="navbar-nav mr-auto">
      <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="ConsultasDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Consultas
+          Informacion
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Ediciones</a>
+        	<a class="dropdown-item" href="#">Curso</a>
+         	<a class="dropdown-item" href="#">Ediciones</a>
         </div>
       </li>
       <li class="nav-item">
