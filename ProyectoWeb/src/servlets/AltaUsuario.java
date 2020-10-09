@@ -1,6 +1,9 @@
 package servlets;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,6 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import datatypes.DtFecha;
+import datatypes.DtInstituto;
+import excepciones.SinInstitutos;
+import excepciones.UsuarioRepetido;
 import interfaces.Fabrica;
 import interfaces.IControladorAltaUsuario;
 
@@ -32,21 +38,35 @@ public class AltaUsuario extends HttpServlet {
 		String apellido = request.getParameter("apellido");
 		String pass = request.getParameter("pass");
 		String verificacion = request.getParameter("verificar");
-		String instituto = request.getParameter("instituto");
+		String instituto = (String) request.getAttribute("instituto");
 		boolean esDocente = request.getParameter("esDocente") != null;
+		System.out.print(esDocente);
+		instituto = "";
 		Integer dia = Integer.parseInt(request.getParameter("DiaNac"));
 		Integer mes = Integer.parseInt(request.getParameter("MesNac"));
 		Integer anio = Integer.parseInt(request.getParameter("AnioNac"));
 		DtFecha fechaNac = new DtFecha(dia, mes, anio);
 		Fabrica fabrica = Fabrica.getInstancia();
 		IControladorAltaUsuario icon = fabrica.getIControladorAltaUsuario();
+		List<String> institutos = new ArrayList<String>();
 		RequestDispatcher rd;
 		if(pass.equals(verificacion)) {
 			try {
+				if (esDocente) {
+					for(DtInstituto dti: icon.listarInstitutos()) {
+						institutos.add(dti.getNombre());
+					}	
+				}
+				request.setAttribute("institutos", institutos);
+				
 				icon.seleccionarInstituto(instituto);
 				icon.altaUsuario(nick, correo, nombre, apellido, fechaNac, pass);
-				icon.confirmarAltaUsuario(esDocente);
-			} catch(Exception e) {
+				try {
+					icon.confirmarAltaUsuario(esDocente);
+				} catch (NoSuchAlgorithmException e) {
+					e.printStackTrace();
+				}
+			} catch(SinInstitutos | UsuarioRepetido e) {
 				throw new ServletException(e.getMessage());
 			}
 		}

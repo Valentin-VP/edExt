@@ -1,3 +1,4 @@
+<%@ page import="java.util.ArrayList" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -9,6 +10,10 @@
 <title>Registro de un Usuario</title>
 </head>
 <body>
+<% HttpSession s = (HttpSession) request.getSession();
+	@SuppressWarnings("unchecked")
+	ArrayList<String> institutos = (ArrayList<String>) s.getAttribute("institutos");
+%>
 <form action="AltaUsuario" method="post">
   <div class="form-row">
     <div class="form-group col-md-6">
@@ -71,16 +76,26 @@
   </div>
   <div class="form-row">
     <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="gridCheck" name="esDocente">
+      <input class="form-check-input" type="checkbox" id="docente" name="esDocente" value="true" onclick="cargarCombo()">
       <label class="form-check-label" for="gridCheck">Docente</label>
     </div>
   </div>
   <br>
+  <script> function cargarCombo() {
+       	if (document.getElementById("docente").checked) {
+       	<% if (institutos != null) { 
+       	for(String i: institutos) { %>
+    	document.getElementById("inputInstituto").innerHTML = '<option value="<%= i %>"> <%= i %> </option>';
+    <% } %>
+  	<% } %>
+  }
+  }</script>
   <div class="form-group col-md-6">
       <label for="inputInstituto">Instituto</label>
       <select id="inputInstituto" name="instituto" class="selectpicker">
+         <option selected>Choose...</option>
+         <option value="crandon">crandon</option>
         <option selected>Choose...</option>
-        <option value="crandon">crandon</option>
       </select>
   </div>
   <button type="submit" class="btn btn-primary">Registrarse</button>

@@ -38,18 +38,22 @@ public class ConsultarTipoUsuario extends HttpServlet {
 		try {
 			codificada = icontrolador.codificarPass(pass);
 		} catch (NoSuchAlgorithmException e) {
-			throw new ServletException(e.getMessage());
+			e.printStackTrace();
 		}
 		String tipo = "";
 		String nickname = "visitante";
-		if(icon.existeUsuario(nick)) {
-			tipo = icon.identificarUsuario(nick, codificada);
-			if(tipo != null) {
-				nickname = icon.obtenerNick();
-				HttpSession sesion = request.getSession(true);
-				sesion.setAttribute("tipo", tipo);
-				sesion.setAttribute("nick", nickname);
-			}	
+		try {
+			if(icon.existeUsuario(nick)) {
+				tipo = icon.identificarUsuario(nick, codificada);
+				if(tipo != null) {
+					nickname = icon.obtenerNick();
+					HttpSession sesion = request.getSession(true);
+					sesion.setAttribute("tipo", tipo);
+					sesion.setAttribute("nick", nickname);
+				}	
+			}
+		} catch(Exception e) {
+			throw new ServletException(e.getMessage());
 		}
 		RequestDispatcher rd;
 		//request.setAttribute("tipo", tipo);
