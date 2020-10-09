@@ -47,7 +47,7 @@ crossorigin="anonymous">
           Informacion
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-        	<a class="dropdown-item" href="#">Curso</a>
+        	<a class="dropdown-item" href="infoCurso.jsp">Curso</a>
           	<a class="dropdown-item" href="infoEdicion.jsp">Ediciones</a>
         </div>
       </li>
