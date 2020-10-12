@@ -14,7 +14,7 @@
   <div class="form-row">
     <div class="col-md-6 mb-3">
       <label for="nick">Nickname/Correo</label>
-      <input type="text" name="nick-correo" class="form-control" id="nick-correo" value="Elver" required>
+      <input type="text" name="nick-correo" class="form-control" id="nick-correo" required>
     </div>
     <div class="col-md-6 mb-3">
       <label for="pass">Contrasenia</label>
