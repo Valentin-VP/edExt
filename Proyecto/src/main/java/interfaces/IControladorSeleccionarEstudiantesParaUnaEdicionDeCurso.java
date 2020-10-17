@@ -4,13 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import datatypes.DtCursoBase;
-import datatypes.DtEdicionBase;
 import datatypes.DtEdicionCompleta;
 import datatypes.DtInscripcionEd;
 import excepciones.EdicionVigenteNoExiste;
 import excepciones.InstitutoInexistente;
 import excepciones.InstitutoSinCursos;
-import logica.InscripcionEd;
 
 public interface IControladorSeleccionarEstudiantesParaUnaEdicionDeCurso {
 
@@ -23,6 +21,5 @@ public interface IControladorSeleccionarEstudiantesParaUnaEdicionDeCurso {
 	public void cambiarEstadoInscripcion(String nick, String estado);
 	
 	public void confirmarSeleccion();
-	
 	
 }

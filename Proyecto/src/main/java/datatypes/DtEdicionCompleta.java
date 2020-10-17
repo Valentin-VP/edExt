@@ -3,8 +3,6 @@ package datatypes;
 import java.util.ArrayList;
 import java.util.List;
 
-import logica.InscripcionEd;
-
 public class DtEdicionCompleta extends DtEdicion{
 	private List<DtInscripcionEd> inscripciones = new ArrayList<>();
 

@@ -1,9 +1,9 @@
 package interfaces;
 
-import excepciones.InstitutoRepetidoExeption;
+import excepciones.InstitutoRepetidoException;
 
 public interface IControladorAltaInstituto {
 
-	public void darAltaInstituto(String nombre) throws InstitutoRepetidoExeption;
+	public void darAltaInstituto(String nombre) throws InstitutoRepetidoException;
 
 }

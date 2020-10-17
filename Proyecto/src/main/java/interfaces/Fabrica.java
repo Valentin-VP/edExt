@@ -1,5 +1,5 @@
 package interfaces;
-import logica.ControladorAgregarCursoAPF;
+import logica.ControladorAgregarCursoProgFormacion;
 import logica.ControladorAltaCategoria;
 import logica.ControladorAltaCurso;
 import logica.ControladorAltaEdicionCurso;
@@ -91,8 +91,8 @@ public class Fabrica {
 		return new ControladorListarResultadosInscripcionesEdiciones();
 	}
 	
-	public IControladorAgregarCursoAPF getIControladorAgregarCursoAPF() {
-		return new ControladorAgregarCursoAPF();
+	public IControladorAgregarCursoProgFormacion getIControladorAgregarCursoAPF() {
+		return new ControladorAgregarCursoProgFormacion();
 	}
 	
 	public IControladorSeguirUsuario getIControladorSeguirUsuario() {

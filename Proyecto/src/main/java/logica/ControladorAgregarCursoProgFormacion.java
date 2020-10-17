@@ -6,35 +6,35 @@ import java.util.List;
 
 import datatypes.DtCursoBase;
 import datatypes.DtProgramaBase;
-import excepciones.AgregarCursoAPFException;
-import interfaces.IControladorAgregarCursoAPF;
+import excepciones.SinCursos;
+import excepciones.SinProgramas;
+import interfaces.IControladorAgregarCursoProgFormacion;
 
-public class ControladorAgregarCursoAPF implements IControladorAgregarCursoAPF {
-
+public class ControladorAgregarCursoProgFormacion implements IControladorAgregarCursoProgFormacion {
 	
-	public List<DtProgramaBase> getDtPFs() throws AgregarCursoAPFException {
+	public List<DtProgramaBase> getDtPFs() throws SinProgramas {
 		ManejadorProgFormacion mP = ManejadorProgFormacion.getInstancia();
 		List<DtProgramaBase> programas = new ArrayList<>();
 		List<ProgFormacion> progForm = mP.getProgramas();
-		if(progForm.size() > 0) {
-			for(ProgFormacion p: progForm) {
-				programas.add(new DtProgramaBase(p.getNombre()));
-			}
-			return programas;
+		if(progForm.isEmpty()) {
+			throw new SinProgramas("No existen Programas de formacion registrados");
 		}
-		throw new AgregarCursoAPFException("No existen Programas de formacion registrados");
+		for(ProgFormacion p: progForm) {
+			programas.add(new DtProgramaBase(p.getNombre()));
+		}
+		return programas;
 	}
 	
-	public List<DtCursoBase> getDtCurso() throws AgregarCursoAPFException {
+	public List<DtCursoBase> getDtCurso() throws SinCursos {
 		List<DtCursoBase> cursos = new ArrayList<>();
 		ManejadorCurso mC = ManejadorCurso.getInstancia();
+		if(mC.getCursos().isEmpty()) {
+			throw new SinCursos("No existen cursos registrados");
+		}
 		for(Curso c: mC.getCursos()) {
 			cursos.add(new DtCursoBase(c.getNombre()));
 		}
-		if(cursos.size()>0) {
-			return cursos;
-		}
-		throw new AgregarCursoAPFException("No existen cursos registrados");
+		return cursos;
 	}
 	
 	public void agregarCurso(String prog, String curso) {

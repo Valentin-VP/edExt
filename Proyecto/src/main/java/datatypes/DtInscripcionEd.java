@@ -1,9 +1,5 @@
 package datatypes;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-
 public class DtInscripcionEd {
 	private DtFecha fecha;
 	private EstadoInscripcion estado;

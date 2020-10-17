@@ -6,7 +6,6 @@ import java.util.List;
 import datatypes.DtEdicion;
 import datatypes.DtPrograma;
 import datatypes.DtUsuario;
-import excepciones.UsuarioNoExiste;
 import logica.Usuario;
 
 public interface IControladorConsultaUsuario {
