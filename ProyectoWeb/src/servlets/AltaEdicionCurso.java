@@ -68,7 +68,7 @@ public class AltaEdicionCurso extends HttpServlet {
 		}
 		RequestDispatcher rd;
 		request.setAttribute("mensaje", "La edicion fue agregada con exito");
-		rd = request.getRequestDispatcher("/notifiacion.jsp");
+		rd = request.getRequestDispatcher("/notificacion.jsp");
 		rd.forward(request, response);
 	}
 

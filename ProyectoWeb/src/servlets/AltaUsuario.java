@@ -75,7 +75,7 @@ public class AltaUsuario extends HttpServlet {
 			tipo="Docente";
 		} else tipo="Estudiante";
 		request.setAttribute("mensaje", "El usuario de tipo " + tipo + " se ha ingresado correctamente");
-		rd = request.getRequestDispatcher("/notifiacion.jsp");
+		rd = request.getRequestDispatcher("/notificacion.jsp");
 		rd.forward(request, response);
 	}
 }

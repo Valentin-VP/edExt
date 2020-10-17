@@ -10,7 +10,7 @@ crossorigin="anonymous">
 	HttpSession sesion = (HttpSession) request.getSession();
 	String tipoUser = (String) sesion.getAttribute("tipo");
 	String nickname = (String) sesion.getAttribute("nick");
-	String optConsultaCurso = "inicio";
+	String optConsultaCurso = "0";
 	
 	//String tipoUser = "";
 	//String nickname = "";
@@ -48,7 +48,7 @@ crossorigin="anonymous">
           Informacion
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-        	<a class="dropdown-item" href='http://localhost:8080/ProyectoWeb/infoCurso.jsp/?ID=<%= optConsultaCurso %>'>Curso</a>
+        	<a class="dropdown-item" href='infoCurso.jsp?optConsultaCursoInfoCurso=<%= optConsultaCurso %>'>Curso</a>
           	<a class="dropdown-item" href="infoEdicion.jsp">Ediciones</a>
         </div>
       </li>
@@ -87,7 +87,7 @@ crossorigin="anonymous">
           Informacion
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-        	<a class="dropdown-item" href="#">Curso</a>
+        	<a class="dropdown-item" href='infoCurso.jsp?optConsultaCursoInfoCurso=<%= optConsultaCurso %>'>Curso</a>
          	<a class="dropdown-item" href="infoEdicion.jsp">Ediciones</a>
         </div>
       </li>

@@ -16,10 +16,19 @@
   		top: 0px;
 	}
 </style>
+<%
+session.setAttribute("optConsultaCursoInfoCurso", request.getParameter("optConsultaCursoInfoCurso"));
+
+boolean esInstitutoInfoCurso = sesion.getAttribute("esInstituto") != null;
+boolean esCategoriaInfoCurso = sesion.getAttribute("esCategoria") != null;
+%>
 </head>
 <body>
-<form action="obtenerCursos" method="post">
+<form action="ConsultarCurso" method="post">
   <div class="form-row">
+  <input type="text" name="optConsultaCursoInfoCurso" value="<%=request.getParameter("optConsultaCursoInfoCurso")%>">
+  <input type="text" name="esInstitutoInfoCurso" value="<%=esInstitutoInfoCurso%>">
+  <input type="text" name="esCategoriaInfoCurso" value="<%=esCategoriaInfoCurso%>">
     <div class="col-md-3" id="insCat">
     	<input class="form-check-input" type="checkbox" id="checkInstituto" name="esInstituto">
     	<label class="form-check-label" for="checkInstituto">Instituto</label>

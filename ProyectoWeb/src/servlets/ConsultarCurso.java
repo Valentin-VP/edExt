@@ -34,13 +34,14 @@ public class ConsultarCurso extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession sesion = request.getSession(true);
-		switch((String)sesion.getAttribute("optConsultaCurso")) {
-		case "0": 	boolean esInstituto = request.getParameter("esInstituto") != null;
-					boolean esCategoria = request.getParameter("esCategoria") != null;
-					String InsCat = request.getParameter("InsCat");
+		Fabrica fabrica = Fabrica.getInstancia();
+		RequestDispatcher rd;
+		IControladorConsultaEdicionCurso icon = fabrica.getIControladorConsultaEdicionCurso();
+		switch((String)sesion.getAttribute("optConsultaCursoInfoCurso")) {
+		case "0": 	boolean esInstituto = request.getParameter("esInstitutoInfoCurso") != null;
+					boolean esCategoria = request.getParameter("esCategoriaInfoCurso") != null;
+					String InsCat = request.getParameter("instituto-categoria");
 					ArrayList<String> cursosInfoEdicion = new ArrayList<String>();
-					Fabrica fabrica = Fabrica.getInstancia();
-					IControladorConsultaEdicionCurso icon = fabrica.getIControladorConsultaEdicionCurso();
 					if(!esInstituto && esCategoria) {
 						try {
 							for(DtCursoBase dtcb: icon.seleccionarCategoria(InsCat)) {
@@ -60,14 +61,21 @@ public class ConsultarCurso extends HttpServlet {
 							throw new ServletException(e.getMessage());
 						}
 					}
-					sesion.setAttribute("InsCat", InsCat);
+					sesion.setAttribute("instituto-categoria", InsCat);
 					sesion.setAttribute("esCategoria", esCategoria);
 					sesion.setAttribute("esInstituto", esInstituto);
-					RequestDispatcher rd;
+					
 					rd = request.getRequestDispatcher("/infoEdicion.jsp");
+					rd.forward(request, response);
+					sesion.setAttribute("optConsultaCurso", "1"); // testing
+					break;
+		case "1": 
+					request.setAttribute("mensaje", "prueba");
+					rd = request.getRequestDispatcher("/notificacion.jsp");
 					rd.forward(request, response);
 					break;
 		}
+		
 	}
 
 }
