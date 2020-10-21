@@ -11,6 +11,8 @@ crossorigin="anonymous">
 	String tipoUser = (String) sesion.getAttribute("tipo");
 	String nickname = (String) sesion.getAttribute("nick");
 	String optConsultaCurso = "0";
+	String optConsultaEdicion = "0";
+	String optAltaEdicion = "0";
 	
 	//String tipoUser = "";
 	//String nickname = "";
@@ -40,7 +42,7 @@ crossorigin="anonymous">
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="#">Curso</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="altaEdicion.jsp">Edicion</a>
+          <a class="dropdown-item" href='altaEdicion.jsp?optAltaEdicionAltaEd=<%= optAltaEdicion %>'>Edicion</a>
         </div>
       </li>
      <li class="nav-item dropdown">
@@ -49,7 +51,7 @@ crossorigin="anonymous">
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
         	<a class="dropdown-item" href='infoCurso.jsp?optConsultaCursoInfoCurso=<%= optConsultaCurso %>'>Curso</a>
-          	<a class="dropdown-item" href="infoEdicion.jsp">Ediciones</a>
+          	<a class="dropdown-item" href='infoEdicion.jsp?optConsultaEdicionInfoEdicion=<%= optConsultaEdicion %>'>Ediciones</a>
         </div>
       </li>
       <li class="nav-item dropdown">
@@ -88,7 +90,7 @@ crossorigin="anonymous">
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
         	<a class="dropdown-item" href='infoCurso.jsp?optConsultaCursoInfoCurso=<%= optConsultaCurso %>'>Curso</a>
-         	<a class="dropdown-item" href="infoEdicion.jsp">Ediciones</a>
+         	<a class="dropdown-item" href='infoEdicion.jsp?optConsultaEdicionInfoEdicion=<%= optConsultaEdicion %>'>Ediciones</a>
         </div>
       </li>
       <li class="nav-item">

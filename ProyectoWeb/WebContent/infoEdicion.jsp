@@ -12,16 +12,21 @@
 </head>
 <body>
 <% 
-	HttpSession s = (HttpSession) request.getSession();
-	@SuppressWarnings("unchecked")
-	ArrayList<String> cursos = (ArrayList<String>) s.getAttribute("cursosInfoEdicion");
-	@SuppressWarnings("unchecked")
-	ArrayList<String> ediciones = (ArrayList<String>) s.getAttribute("edicionesInfoEdicion");
-	DtEdicion infoEdicion = (DtEdicion) s.getAttribute("infoEdicion");
+session.setAttribute("optConsultaEdicionInfoEdicion", request.getParameter("optConsultaEdicionInfoEdicion"));
+
+ArrayList<String> cursos = (ArrayList) session.getAttribute("cursosInfoEdicion");
+ArrayList<String> ediciones = (ArrayList) session.getAttribute("edicionesInfoEdicion");
+boolean esInstitutoInfoEdicion = sesion.getAttribute("esInstitutoEd") != null;
+boolean esCategoriaInfoEdicion = sesion.getAttribute("esCategoriaEd") != null;
+//String cursoConsultaEdicion = (String) sesion.getAttribute("cursoConsultaEdicion");
+//String edicionConsultaEdicion = (String) sesion.getAttribute("edicionConsultaEdicion");
 	
-	if(s.isNew() || cursos == null) {%>
-<form action="obtenerCursos" method="post">
+if(session.getAttribute("optConsultaEdicionInfoCurso") == "0") {%>
+<form action="ConsultaEdicion" method="post">
 	<div class="form-row">
+	<input type="text" name="optConsultaEdicionInfoEdicion" value="<%=request.getParameter("optConsultaEdicionInfoEdicion")%>">
+	<input type="text" name="esInstitutoInfoEdicion" value="<%=esInstitutoInfoEdicion%>">
+  	<input type="text" name="esCategoriaInfoEdicion" value="<%=esCategoriaInfoEdicion%>">
 		<div class="form-check">
 	      <input class="form-check-input" type="checkbox" id="checkInstituto" name="esInstituto">
 	      <label class="form-check-label" for="checkInstituto">Es Instituto</label>
@@ -34,14 +39,16 @@
 	<br>
 	<div class="form-row">
 		<div class="form-group col-md-3">
-	      <input type="text" name="InsCat" class="form-control" id="InsCat">
+	      <input type="text" name="InsCatEd" class="form-control" id="InsCatEd">
 	    </div>
       	<button type="submit" class="btn btn-primary">Buscar Cursos</button> 
 	</div>
 </form>
-<%} else if(cursos != null && ediciones == null) {%>
-<form action="obtenerEdiciones" method="post">
+<%} else if(session.getAttribute("optConsultaEdicionInfoCurso") == "1") {%>
+<form action="ConsultaEdicion" method="post">
 	<div class="form-row">
+	<input type="text" name="optConsultaEdicionInfoEdicion" value="<%=request.getParameter("optConsultaEdicionInfoEdicion")%>">
+	<!-- <input type="text" name="cursoConsultaEdicion" value="<%=cursoConsultaEdicion%>"> -->
 		<div class="form-group col-md-6">
 	      <label for="inputCurso">Curso</label>
 	      <select id="inputCurso" name="curso" class="selectpicker">
@@ -54,9 +61,11 @@
 	    <button type="submit" class="btn btn-primary">Buscar Ediciones</button>
 	</div>
 </form>
-<%} else if(cursos != null && ediciones != null) { %>
-<form action="obtenerInfoEdicion" method="post">
+<%} else if(session.getAttribute("optConsultaEdicionInfoCurso") == "2") { %>
+<form action="ConsultaEdicion" method="post">
 	<div class="form-row">
+	<input type="text" name="optConsultaEdicionInfoEdicion" value="<%=request.getParameter("optConsultaEdicionInfoEdicion")%>">
+		<!-- <input type="text" name="edicionConsultaEdicion" value="<%=edicionConsultaEdicion%>"> -->
 		<div class="form-group col-md-6">
 	      <label for="inputEdicion">Edicion</label>
 	      <select id="inputEdicion" name="edicion" class="selectpicker">
@@ -70,12 +79,13 @@
 	</div>
 </form>
 <%}
-  if(infoEdicion != null) {%>
+  if(session.getAttribute("optConsultaEdicionInfoCurso") == "3") {%>
 <form>
+	<input type="text" name="optConsultaEdicionInfoEdicion" value="<%=request.getParameter("optConsultaEdicionInfoEdicion")%>">
 <!-- mostrar la informacion de la edicion seleccionada -->
 <h4> falta mostrar los datos de la edicion </h4>
 </form>
-<%} %>  
+<% } %>  
 <%@include file = "/footer.jsp" %>
 </body>
 </html>

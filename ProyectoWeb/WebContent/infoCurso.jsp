@@ -19,8 +19,8 @@
 <%
 session.setAttribute("optConsultaCursoInfoCurso", request.getParameter("optConsultaCursoInfoCurso"));
 
-boolean esInstitutoInfoCurso = sesion.getAttribute("esInstituto") != null;
-boolean esCategoriaInfoCurso = sesion.getAttribute("esCategoria") != null;
+boolean esInstitutoInfoCurso = sesion.getAttribute("esInstitutoEd") != null;
+boolean esCategoriaInfoCurso = sesion.getAttribute("esCategoriaEd") != null;
 %>
 </head>
 <body>

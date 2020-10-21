@@ -17,8 +17,8 @@
 	@SuppressWarnings("unchecked")
 	ArrayList<String> cursos = (ArrayList<String>) s.getAttribute("cursos");
 
-	if(s.isNew() || cursos == null) {%>
-<form action="IngresoInstitutoAltaEdicion" method="post"> <!-- me traigo los cursos y los docentes del instituto -->
+if(session.getAttribute("optAltaEdicionAltaEd") == "0") {%>
+<form action="AltaEdicionCurso" method="post"> <!-- me traigo los cursos y los docentes del instituto -->
    <div class="form-row">	
       <div class="form-group col-md-4">
 	      <label for="inputInstituto">Instituto</label>
@@ -32,8 +32,7 @@
       <button type="submit" class="btn btn-primary">Buscar Cursos</button>
    </div>
 </form>    
-<%  
-	} else {%>
+<% } else {%>
 <form action="AltaEdicionCurso" method="post">
 	<div class=form-row>
 	  	<div class="form-group col-md-3">
