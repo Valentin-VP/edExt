@@ -12,6 +12,7 @@
 <body>
 <% 	
 	HttpSession s = (HttpSession) request.getSession();
+	s.setAttribute("optAltaEdicionAltaEd", request.getParameter("optAltaEdicionAltaEd"));
 	@SuppressWarnings("unchecked")
 	ArrayList<String> docentes = (ArrayList<String>) s.getAttribute("docentes");
 	@SuppressWarnings("unchecked")
@@ -23,7 +24,7 @@ if(session.getAttribute("optAltaEdicionAltaEd") == "0") {%>
       <div class="form-group col-md-4">
 	      <label for="inputInstituto">Instituto</label>
 	      <select id="inputInstituto" name="instituto" class="selectpicker">
-	        <option selected disabled>Choose...</option> <!-- hay que traer todos los institutos y hacer un for -->
+	        <option selected disabled>Choose...</option> <!-- hay que traer todos los institutos y hacer un for, capaz que es en otro servlet-->
 	        <option value="crandon">Crandon</option>
 	      </select>
 	   </div>

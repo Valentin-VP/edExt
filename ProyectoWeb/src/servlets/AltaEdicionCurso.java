@@ -42,24 +42,25 @@ public class AltaEdicionCurso extends HttpServlet {
 		
 		switch((String)sesion.getAttribute("optAltaEdicionAltaEd")) {
 		case "0"://traerme cursos y docentes del instituto
-				String instituto = request.getParameter("instituto");
-				List<String> cursos = new ArrayList<String>();
-				List<String> docentes = new ArrayList<String>();
-				sesion.setAttribute("instituto", instituto);
-				try {
-					for(DtCursoBase dtcb: icon.seleccionarInstituto(instituto)) {
-						cursos.add(dtcb.getNombre());
+					String instituto = request.getParameter("instituto");
+					List<String> cursos = new ArrayList<String>();
+					List<String> docentes = new ArrayList<String>();
+					sesion.setAttribute("instituto", instituto);
+					try {
+						for(DtCursoBase dtcb: icon.seleccionarInstituto(instituto)) {
+							cursos.add(dtcb.getNombre());
+						}
+						sesion.setAttribute("cursos", cursos);
+					} catch (InstitutoInexistente e) {
+						throw new ServletException(e.getMessage());
 					}
-					sesion.setAttribute("cursos", cursos);
-				} catch (InstitutoInexistente e) {
-					throw new ServletException(e.getMessage());
-				}
-				for(DtUsuarioBase dtub: icon.getDocentes()) {
-					docentes.add(dtub.getNick());
-				}
-				sesion.setAttribute("docentes", docentes);
-				rd = request.getRequestDispatcher("/altaEdicion.jsp");
-				rd.forward(request, response);
+					for(DtUsuarioBase dtub: icon.getDocentes()) {
+						docentes.add(dtub.getNick());
+					}
+					sesion.setAttribute("docentes", docentes);
+					rd = request.getRequestDispatcher("/altaEdicion.jsp");
+					rd.forward(request, response);
+					sesion.setAttribute("optAltaEdicion", "1");
 					break;
 		case "1"://hacer el alta de la edicion
 					String curso = request.getParameter("curso");
