@@ -15,7 +15,7 @@ import datatypes.DtCursoBase;
 import excepciones.CategoriaInexistente;
 import excepciones.InstitutoInexistente;
 import interfaces.Fabrica;
-import interfaces.IControladorConsultaEdicionCurso;
+import interfaces.IControladorConsultaCurso;
 
 /**
  * Servlet implementation class ConsultarCurso
@@ -36,7 +36,7 @@ public class ConsultarCurso extends HttpServlet {
 		HttpSession sesion = request.getSession(true);
 		Fabrica fabrica = Fabrica.getInstancia();
 		RequestDispatcher rd;
-		IControladorConsultaEdicionCurso icon = fabrica.getIControladorConsultaEdicionCurso();
+		IControladorConsultaCurso icon = fabrica.getIControladorConsultaCurso();
 		switch((String)sesion.getAttribute("optConsultaCursoInfoCurso")) {
 		case "0": 	boolean esInstituto = request.getParameter("esInstitutoInfoCurso") != null;
 					boolean esCategoria = request.getParameter("esCategoriaInfoCurso") != null;
@@ -65,9 +65,9 @@ public class ConsultarCurso extends HttpServlet {
 					sesion.setAttribute("esCategoria", esCategoria);
 					sesion.setAttribute("esInstituto", esInstituto);
 					
-					rd = request.getRequestDispatcher("/infoEdicion.jsp");
-					rd.forward(request, response);
+					rd = request.getRequestDispatcher("/infoCurso.jsp");
 					sesion.setAttribute("optConsultaCurso", "1"); // testing
+					rd.forward(request, response);
 					break;
 		case "1": 
 					request.setAttribute("mensaje", "prueba");

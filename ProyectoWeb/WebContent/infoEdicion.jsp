@@ -48,7 +48,7 @@ if(session.getAttribute("optConsultaEdicionInfoCurso") == "0") {%>
 <form action="ConsultaEdicion" method="post">
 	<div class="form-row">
 	<input type="text" name="optConsultaEdicionInfoEdicion" value="<%=request.getParameter("optConsultaEdicionInfoEdicion")%>">
-	<!-- <input type="text" name="cursoConsultaEdicion" value="<%=cursoConsultaEdicion%>"> -->
+	
 		<div class="form-group col-md-6">
 	      <label for="inputCurso">Curso</label>
 	      <select id="inputCurso" name="curso" class="selectpicker">
@@ -65,7 +65,6 @@ if(session.getAttribute("optConsultaEdicionInfoCurso") == "0") {%>
 <form action="ConsultaEdicion" method="post">
 	<div class="form-row">
 	<input type="text" name="optConsultaEdicionInfoEdicion" value="<%=request.getParameter("optConsultaEdicionInfoEdicion")%>">
-		<!-- <input type="text" name="edicionConsultaEdicion" value="<%=edicionConsultaEdicion%>"> -->
 		<div class="form-group col-md-6">
 	      <label for="inputEdicion">Edicion</label>
 	      <select id="inputEdicion" name="edicion" class="selectpicker">
