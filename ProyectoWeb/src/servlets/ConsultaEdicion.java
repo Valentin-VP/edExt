@@ -88,11 +88,13 @@ public class ConsultaEdicion extends HttpServlet {
 					break;
 		case "2":	//ingresar edicion, traer informacion y setear el opt en 3
 					String edicion = request.getParameter("edicion");
+					boolean esInstituto2 = request.getParameter("esInstitutoInfoEdicion") != null;
+					boolean esCategoria2 = request.getParameter("esCategoriaInfoEdicion") != null;
 					try {
-						if((boolean)sesion.getAttribute("esInstitutoInfoEdicion") && !(boolean)sesion.getAttribute("esCategoriaInfoEdicion")) {
+						if(esInstituto2 && !esCategoria2) {
 							@SuppressWarnings("unused")
 							ArrayList<DtCursoBase> noLosUso = icon.seleccionarInstituto((String) sesion.getAttribute("InsCatEd"));
-						} else if(!(boolean)sesion.getAttribute("esInstitutoInfoEdicion") && (boolean)sesion.getAttribute("esCategoriaInfoEdicion")) {
+						} else if(!esInstituto2 && esCategoria2) {
 							@SuppressWarnings("unused")
 							ArrayList<DtCursoBase> noLosUso = icon.seleccionarCategoria((String) sesion.getAttribute("InsCatEd"));
 						}

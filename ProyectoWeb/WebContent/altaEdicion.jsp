@@ -18,15 +18,27 @@
 	ArrayList<String> docentes = (ArrayList<String>) session.getAttribute("docentes");
 	@SuppressWarnings("unchecked")
 	ArrayList<String> cursos = (ArrayList<String>) session.getAttribute("cursos");
+	@SuppressWarnings("unchecked")
+	ArrayList<String> institutos = (ArrayList<String>) session.getAttribute("institutosAltaEd");
 
 if(session.getAttribute("optAltaEdicionAltaEd").toString().equals("0")) {%>
-<form action="AltaEdicionCurso" method="post"> <!-- me traigo los cursos y los docentes del instituto -->
+<form action="AltaEdicionCurso" method="post">
+   <div class="form-row">	
+      <div class="form-group col-md-4">
+      	<button type="submit" class="btn btn-primary">Continuar</button>
+	  </div>
+   </div>
+</form>
+<%} else if(session.getAttribute("optAltaEdicionAltaEd").toString().equals("1")) {%>
+<form action="AltaEdicionCurso" method="post">
    <div class="form-row">	
       <div class="form-group col-md-4">
 	      <label for="inputInstituto">Instituto</label>
 	      <select id="inputInstituto" name="instituto" class="selectpicker">
-	        <option selected disabled>Choose...</option> <!-- hay que traer todos los institutos y hacer un for, capaz que es en otro servlet-->
-	        <option value="crandon">Crandon</option>
+	        <option selected disabled>Choose...</option>
+	        <%for(String i: institutos){%>
+	        	<option value="<%= i %>"><%= i %></option>
+	        <%}%>
 	      </select>
 	   </div>
    </div>   
@@ -34,7 +46,7 @@ if(session.getAttribute("optAltaEdicionAltaEd").toString().equals("0")) {%>
       <button type="submit" class="btn btn-primary">Buscar Cursos</button>
    </div>
 </form>    
-<% } else if(session.getAttribute("optAltaEdicionAltaEd").toString().equals("1")){%>
+<% } else if(session.getAttribute("optAltaEdicionAltaEd").toString().equals("2")){%>
 <form action="AltaEdicionCurso" method="post">
 	<div class=form-row>
 	  	<div class="form-group col-md-3">
@@ -63,7 +75,7 @@ if(session.getAttribute("optAltaEdicionAltaEd").toString().equals("0")) {%>
 	</div>
 	<br>
 	<div class="form-row">
-	  	  <div class="form-group col-md-3"> <!-- fecha de inicio -->
+	  	  <div class="form-group col-md-3">
 	        <label for="inputDiaI">Dia Inicio</label>
 	        <select id="inputDiaI" name="DiaI" class="selectpicker">
 	          <option value="1">1</option>
@@ -90,7 +102,7 @@ if(session.getAttribute("optAltaEdicionAltaEd").toString().equals("0")) {%>
     </div>
     <br>
   	<div class="form-row">
-	  	  <div class="form-group col-md-3"> <!-- fecha de Fin -->
+	  	  <div class="form-group col-md-3">
 	        <label for="inputDiaF">Dia Fin</label>
 	        <select id="inputDiaF" name="DiaF" class="selectpicker">
 	          <option value="1">1</option>
@@ -117,7 +129,7 @@ if(session.getAttribute("optAltaEdicionAltaEd").toString().equals("0")) {%>
     </div>
     <br>
     <div class="form-row">
-	  	  <div class="form-group col-md-3"> <!-- fecha de Publicacion -->
+	  	  <div class="form-group col-md-3">
 	        <label for="inputDiaP">Dia Pub</label>
 	        <select id="inputDiaP" name="DiaP" class="selectpicker">
 	          <option value="1">1</option>
