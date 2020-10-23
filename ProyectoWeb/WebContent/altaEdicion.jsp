@@ -10,8 +10,10 @@
 <title>Crear una nueva edicion para un curso</title>
 </head>
 <body>
-<% 	session.setAttribute("optAltaEdicionAltaEd", request.getParameter("optAltaEdicionAltaEd"));
-
+<% 	
+	if(session.getAttribute("optAltaEdicionAltaEd") == null){
+		session.setAttribute("optAltaEdicionAltaEd", request.getParameter("optAltaEdicionAltaEd"));
+	}
 	@SuppressWarnings("unchecked")
 	ArrayList<String> docentes = (ArrayList<String>) session.getAttribute("docentes");
 	@SuppressWarnings("unchecked")

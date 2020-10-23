@@ -37,6 +37,8 @@ public class CerrarSesion extends HttpServlet {
         	session.removeAttribute("esCategoria");
         	session.removeAttribute("esInstitutoEd");
         	session.removeAttribute("esCategoriaEd");
+        	session.removeAttribute("optConsultaEdicionInfoEdicion");
+        	session.removeAttribute("optAltaEdicionAltaEd");
         }
         
         RequestDispatcher rd;

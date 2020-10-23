@@ -37,6 +37,7 @@ public class ConsultaEdicion extends HttpServlet {
 		Fabrica fabrica = Fabrica.getInstancia();
 		RequestDispatcher rd;
 		IControladorConsultaEdicionCurso icon = fabrica.getIControladorConsultaEdicionCurso();
+		
 		switch(sesion.getAttribute("optConsultaEdicionInfoEdicion").toString()) {
 		case "0":	//ingresar instituto, traer cursos y setear el opt en 1
 					boolean esInstituto = request.getParameter("esInstitutoInfoEdicion") != null;
@@ -88,12 +89,12 @@ public class ConsultaEdicion extends HttpServlet {
 		case "2":	//ingresar edicion, traer informacion y setear el opt en 3
 					String edicion = request.getParameter("edicion");
 					try {
-						if((boolean)sesion.getAttribute("esInstituto") && !(boolean)sesion.getAttribute("esCategoria")) {
+						if((boolean)sesion.getAttribute("esInstitutoInfoEdicion") && !(boolean)sesion.getAttribute("esCategoriaInfoEdicion")) {
 							@SuppressWarnings("unused")
-							ArrayList<DtCursoBase> noLosUso = icon.seleccionarInstituto((String) sesion.getAttribute("InsCat"));
-						} else if(!(boolean)sesion.getAttribute("esInstituto") && (boolean)sesion.getAttribute("esCategoria")) {
+							ArrayList<DtCursoBase> noLosUso = icon.seleccionarInstituto((String) sesion.getAttribute("InsCatEd"));
+						} else if(!(boolean)sesion.getAttribute("esInstitutoInfoEdicion") && (boolean)sesion.getAttribute("esCategoriaInfoEdicion")) {
 							@SuppressWarnings("unused")
-							ArrayList<DtCursoBase> noLosUso = icon.seleccionarCategoria((String) sesion.getAttribute("InsCat"));
+							ArrayList<DtCursoBase> noLosUso = icon.seleccionarCategoria((String) sesion.getAttribute("InsCatEd"));
 						}
 					} catch (InstitutoInexistente | CategoriaInexistente e) {
 						throw new ServletException(e.getMessage());

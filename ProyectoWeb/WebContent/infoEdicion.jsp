@@ -12,23 +12,24 @@
 </head>
 <body>
 <% 
-session.setAttribute("optConsultaEdicionInfoEdicion", request.getParameter("optConsultaEdicionInfoEdicion"));
-
+if(session.getAttribute("optConsultaEdicionInfoEdicion") == null){
+	session.setAttribute("optConsultaEdicionInfoEdicion", request.getParameter("optConsultaEdicionInfoEdicion"));
+}//cambios
 ArrayList<String> cursos = (ArrayList) session.getAttribute("cursosInfoEdicion");
 ArrayList<String> ediciones = (ArrayList) session.getAttribute("edicionesInfoEdicion");
 boolean esInstitutoInfoEdicion = sesion.getAttribute("esInstitutoEd") != null;
 boolean esCategoriaInfoEdicion = sesion.getAttribute("esCategoriaEd") != null;
 String cursoConsultaEdicion = (String) sesion.getAttribute("cursoConsultaEdicion");
 //String edicionConsultaEdicion = (String) sesion.getAttribute("edicionConsultaEdicion");
-System.out.println((String)session.getAttribute("optConsultaEdicionInfoEdicion"));
+
 if(session.getAttribute("optConsultaEdicionInfoEdicion").toString().equals("0")) {%>
 <form action="ConsultaEdicion" method="post">
 	<div class="form-row">
-	<!-- <input type="text" name="optConsultaEdicionInfoEdicion" value="<%=request.getParameter("optConsultaEdicionInfoEdicion")%>">
-	<input type="text" name="esInstitutoInfoEdicion" value="<%=esInstitutoInfoEdicion%>">
-  	<input type="text" name="esCategoriaInfoEdicion" value="<%=esCategoriaInfoEdicion%>"> -->
+	<input type="hidden" name="optConsultaEdicionInfoEdicion" value="<%=request.getParameter("optConsultaEdicionInfoEdicion")%>">
+	<input type="hidden" name="esInstitutoInfoEdicion" value="<%=esInstitutoInfoEdicion%>">
+  	<input type="hidden" name="esCategoriaInfoEdicion" value="<%=esCategoriaInfoEdicion%>">
 		<div class="form-check">
-	      <input class="form-check-input" type="checkbox" id="checkInstituto" name="esInstitutoInfoEdicion">
+	      <input class="form-check-input" type="checkbox" id="checkInstituto" name="esInstitutoInfoEdicion" checked>
 	      <label class="form-check-label" for="checkInstituto">Es Instituto</label>
 	    </div>
 	    <div class="form-check col-md-2">
@@ -47,7 +48,7 @@ if(session.getAttribute("optConsultaEdicionInfoEdicion").toString().equals("0"))
 <%} else if(session.getAttribute("optConsultaEdicionInfoEdicion").toString().equals("1")) {%>
 <form action="ConsultaEdicion" method="post">
 	<div class="form-row">
-	<input type="text" name="optConsultaEdicionInfoEdicion" value="<%=request.getParameter("optConsultaEdicionInfoEdicion")%>">
+	<input type="hidden" name="optConsultaEdicionInfoEdicion" value="<%=request.getParameter("optConsultaEdicionInfoEdicion")%>">
 	
 		<div class="form-group col-md-6">
 	      <label for="inputCurso">Curso</label>
@@ -64,7 +65,7 @@ if(session.getAttribute("optConsultaEdicionInfoEdicion").toString().equals("0"))
 <%} else if(session.getAttribute("optConsultaEdicionInfoEdicion").toString().equals("2")) { %>
 <form action="ConsultaEdicion" method="post">
 	<div class="form-row">
-	<input type="text" name="optConsultaEdicionInfoEdicion" value="<%=request.getParameter("optConsultaEdicionInfoEdicion")%>">
+	<input type="hidden" name="optConsultaEdicionInfoEdicion" value="<%=request.getParameter("optConsultaEdicionInfoEdicion")%>">
 		<div class="form-group col-md-6">
 	      <label for="inputEdicion">Edicion</label>
 	      <select id="inputEdicion" name="edicion" class="selectpicker">
@@ -77,10 +78,9 @@ if(session.getAttribute("optConsultaEdicionInfoEdicion").toString().equals("0"))
 	    <button type="submit" class="btn btn-primary">Mostrar Informacion</button>
 	</div>
 </form>
-<%}
-  if(session.getAttribute("optConsultaEdicionInfoEdicion").toString().equals("3")) {%>
+<%}else if(session.getAttribute("optConsultaEdicionInfoEdicion").toString().equals("3")) {%>
 <form>
-	<input type="text" name="optConsultaEdicionInfoEdicion" value="<%=request.getParameter("optConsultaEdicionInfoEdicion")%>">
+	<input type="hidden" name="optConsultaEdicionInfoEdicion" value="<%=request.getParameter("optConsultaEdicionInfoEdicion")%>">
 <!-- mostrar la informacion de la edicion seleccionada -->
 <h4> falta mostrar los datos de la edicion </h4>
 </form>

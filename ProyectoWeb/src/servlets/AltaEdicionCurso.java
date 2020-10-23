@@ -40,7 +40,7 @@ public class AltaEdicionCurso extends HttpServlet {
 		HttpSession sesion = request.getSession(true);
 		RequestDispatcher rd;
 		
-		switch((String)sesion.getAttribute("optAltaEdicionAltaEd")) {
+		switch(sesion.getAttribute("optAltaEdicionAltaEd").toString()) {
 		case "0"://traerme cursos y docentes del instituto
 					String instituto = request.getParameter("instituto");
 					List<String> cursos = new ArrayList<String>();
@@ -58,9 +58,9 @@ public class AltaEdicionCurso extends HttpServlet {
 						docentes.add(dtub.getNick());
 					}
 					sesion.setAttribute("docentes", docentes);
+					sesion.setAttribute("optAltaEdicionAltaEd", "1");
 					rd = request.getRequestDispatcher("/altaEdicion.jsp");
 					rd.forward(request, response);
-					sesion.setAttribute("optAltaEdicion", "1");
 					break;
 		case "1"://hacer el alta de la edicion
 					String curso = request.getParameter("curso");
