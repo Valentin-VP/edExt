@@ -10,15 +10,14 @@
 <title>Crear una nueva edicion para un curso</title>
 </head>
 <body>
-<% 	
-	HttpSession s = (HttpSession) request.getSession();
-	s.setAttribute("optAltaEdicionAltaEd", request.getParameter("optAltaEdicionAltaEd"));
-	@SuppressWarnings("unchecked")
-	ArrayList<String> docentes = (ArrayList<String>) s.getAttribute("docentes");
-	@SuppressWarnings("unchecked")
-	ArrayList<String> cursos = (ArrayList<String>) s.getAttribute("cursos");
+<% 	session.setAttribute("optAltaEdicionAltaEd", request.getParameter("optAltaEdicionAltaEd"));
 
-if(session.getAttribute("optAltaEdicionAltaEd") == "0") {%>
+	@SuppressWarnings("unchecked")
+	ArrayList<String> docentes = (ArrayList<String>) session.getAttribute("docentes");
+	@SuppressWarnings("unchecked")
+	ArrayList<String> cursos = (ArrayList<String>) session.getAttribute("cursos");
+
+if(session.getAttribute("optAltaEdicionAltaEd").toString().equals("0")) {%>
 <form action="AltaEdicionCurso" method="post"> <!-- me traigo los cursos y los docentes del instituto -->
    <div class="form-row">	
       <div class="form-group col-md-4">
@@ -33,7 +32,7 @@ if(session.getAttribute("optAltaEdicionAltaEd") == "0") {%>
       <button type="submit" class="btn btn-primary">Buscar Cursos</button>
    </div>
 </form>    
-<% } else {%>
+<% } else if(session.getAttribute("optAltaEdicionAltaEd").toString().equals("1")){%>
 <form action="AltaEdicionCurso" method="post">
 	<div class=form-row>
 	  	<div class="form-group col-md-3">

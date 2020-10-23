@@ -37,7 +37,7 @@ public class ConsultaEdicion extends HttpServlet {
 		Fabrica fabrica = Fabrica.getInstancia();
 		RequestDispatcher rd;
 		IControladorConsultaEdicionCurso icon = fabrica.getIControladorConsultaEdicionCurso();
-		switch((String)sesion.getAttribute("optConsultaEdicionInfoEdicion")) {
+		switch(sesion.getAttribute("optConsultaEdicionInfoEdicion").toString()) {
 		case "0":	//ingresar instituto, traer cursos y setear el opt en 1
 					boolean esInstituto = request.getParameter("esInstitutoInfoEdicion") != null;
 					boolean esCategoria = request.getParameter("esCategoriaInfoEdicion") != null;
@@ -65,12 +65,12 @@ public class ConsultaEdicion extends HttpServlet {
 					sesion.setAttribute("InsCatEd", InsCat);
 					sesion.setAttribute("esCategoriaEd", esCategoria);
 					sesion.setAttribute("esInstitutoEd", esInstituto);
+					sesion.setAttribute("optConsultaEdicionInfoEdicion", "1");
 					rd = request.getRequestDispatcher("/infoEdicion.jsp");
 					rd.forward(request, response);
-					sesion.setAttribute("optConsultaEdicion", "1");
 					break;
 		case "1":	//ingresar curso, traer ediciones y setear el opt en 2
-					String curso = request.getParameter("curso");
+					String curso = request.getParameter("cursoInfoEdicion");
 					ArrayList<String> edicionesInfoEdicion = new ArrayList<String>();
 					try {
 						for(DtEdicionBase dteb: icon.seleccionarCurso(curso)) {
@@ -80,10 +80,10 @@ public class ConsultaEdicion extends HttpServlet {
 					} catch (CursoNoExiste e) {
 						throw new ServletException(e.getMessage());
 					}
-					//sesion.setAttribute("cursoConsultaEdicion", curso);
+					sesion.setAttribute("cursoConsultaEdicion", curso);
+					sesion.setAttribute("optConsultaEdicionInfoEdicion", "2");
 					rd = request.getRequestDispatcher("/infoEdicion.jsp");
 					rd.forward(request, response);
-					sesion.setAttribute("optConsultaEdicion", "2");
 					break;
 		case "2":	//ingresar edicion, traer informacion y setear el opt en 3
 					String edicion = request.getParameter("edicion");
@@ -106,9 +106,9 @@ public class ConsultaEdicion extends HttpServlet {
 					}
 					DtEdicion infoEdicion = icon.seleccionarEdicion(edicion);
 					sesion.setAttribute("infoEdicion", infoEdicion);
+					sesion.setAttribute("optConsultaEdicionInfoEdicion", "3");
 					rd = request.getRequestDispatcher("/infoEdicion.jsp");
 					rd.forward(request, response);
-					sesion.setAttribute("optConsultaEdicion", "3");
 					break;
 		}
 	}

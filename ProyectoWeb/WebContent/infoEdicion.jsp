@@ -18,21 +18,21 @@ ArrayList<String> cursos = (ArrayList) session.getAttribute("cursosInfoEdicion")
 ArrayList<String> ediciones = (ArrayList) session.getAttribute("edicionesInfoEdicion");
 boolean esInstitutoInfoEdicion = sesion.getAttribute("esInstitutoEd") != null;
 boolean esCategoriaInfoEdicion = sesion.getAttribute("esCategoriaEd") != null;
-//String cursoConsultaEdicion = (String) sesion.getAttribute("cursoConsultaEdicion");
+String cursoConsultaEdicion = (String) sesion.getAttribute("cursoConsultaEdicion");
 //String edicionConsultaEdicion = (String) sesion.getAttribute("edicionConsultaEdicion");
-	
-if(session.getAttribute("optConsultaEdicionInfoCurso") == "0") {%>
+System.out.println((String)session.getAttribute("optConsultaEdicionInfoEdicion"));
+if(session.getAttribute("optConsultaEdicionInfoEdicion").toString().equals("0")) {%>
 <form action="ConsultaEdicion" method="post">
 	<div class="form-row">
-	<input type="text" name="optConsultaEdicionInfoEdicion" value="<%=request.getParameter("optConsultaEdicionInfoEdicion")%>">
+	<!-- <input type="text" name="optConsultaEdicionInfoEdicion" value="<%=request.getParameter("optConsultaEdicionInfoEdicion")%>">
 	<input type="text" name="esInstitutoInfoEdicion" value="<%=esInstitutoInfoEdicion%>">
-  	<input type="text" name="esCategoriaInfoEdicion" value="<%=esCategoriaInfoEdicion%>">
+  	<input type="text" name="esCategoriaInfoEdicion" value="<%=esCategoriaInfoEdicion%>"> -->
 		<div class="form-check">
-	      <input class="form-check-input" type="checkbox" id="checkInstituto" name="esInstituto">
+	      <input class="form-check-input" type="checkbox" id="checkInstituto" name="esInstitutoInfoEdicion">
 	      <label class="form-check-label" for="checkInstituto">Es Instituto</label>
 	    </div>
 	    <div class="form-check col-md-2">
-	      <input class="form-check-input" type="checkbox" id="checkCategoria" name="esCategoria">
+	      <input class="form-check-input" type="checkbox" id="checkCategoria" name="esCategoriaInfoEdicion">
 	      <label class="form-check-label" for="checkCategoria">Es Categoria</label>
 	    </div>
 	</div>
@@ -44,14 +44,14 @@ if(session.getAttribute("optConsultaEdicionInfoCurso") == "0") {%>
       	<button type="submit" class="btn btn-primary">Buscar Cursos</button> 
 	</div>
 </form>
-<%} else if(session.getAttribute("optConsultaEdicionInfoCurso") == "1") {%>
+<%} else if(session.getAttribute("optConsultaEdicionInfoEdicion").toString().equals("1")) {%>
 <form action="ConsultaEdicion" method="post">
 	<div class="form-row">
 	<input type="text" name="optConsultaEdicionInfoEdicion" value="<%=request.getParameter("optConsultaEdicionInfoEdicion")%>">
 	
 		<div class="form-group col-md-6">
 	      <label for="inputCurso">Curso</label>
-	      <select id="inputCurso" name="curso" class="selectpicker">
+	      <select id="inputCurso" name="cursoInfoEdicion" class="selectpicker">
 	        <option selected disabled>Choose...</option>
 	        <%for(String c: cursos){ %>
 	        <option value="<%= c %>"><%= c %></option>
@@ -61,7 +61,7 @@ if(session.getAttribute("optConsultaEdicionInfoCurso") == "0") {%>
 	    <button type="submit" class="btn btn-primary">Buscar Ediciones</button>
 	</div>
 </form>
-<%} else if(session.getAttribute("optConsultaEdicionInfoCurso") == "2") { %>
+<%} else if(session.getAttribute("optConsultaEdicionInfoEdicion").toString().equals("2")) { %>
 <form action="ConsultaEdicion" method="post">
 	<div class="form-row">
 	<input type="text" name="optConsultaEdicionInfoEdicion" value="<%=request.getParameter("optConsultaEdicionInfoEdicion")%>">
@@ -78,7 +78,7 @@ if(session.getAttribute("optConsultaEdicionInfoCurso") == "0") {%>
 	</div>
 </form>
 <%}
-  if(session.getAttribute("optConsultaEdicionInfoCurso") == "3") {%>
+  if(session.getAttribute("optConsultaEdicionInfoEdicion").toString().equals("3")) {%>
 <form>
 	<input type="text" name="optConsultaEdicionInfoEdicion" value="<%=request.getParameter("optConsultaEdicionInfoEdicion")%>">
 <!-- mostrar la informacion de la edicion seleccionada -->
