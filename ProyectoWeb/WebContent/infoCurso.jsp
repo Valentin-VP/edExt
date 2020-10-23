@@ -1,9 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+    pageEncoding="UTF-8"%>
+<%@page import="java.util.ArrayList"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, inicial-scale=1, shrink-to-fit=no">
 <%@include file = "header.jsp" %>
 <title>Informacion de un curso</title>
 <style>
@@ -18,50 +20,56 @@
 	#tabla{
 		position: absolute; 
 		left: 0px;
-		display: "none";
+		display: none;
 	}
 </style>
-<script>
-	if()
-</script>
-<%
-session.setAttribute("optConsultaCursoInfoCurso", request.getParameter("optConsultaCursoInfoCurso"));
 
-boolean esInstitutoInfoCurso = sesion.getAttribute("esInstitutoEd") != null;
-boolean esCategoriaInfoCurso = sesion.getAttribute("esCategoriaEd") != null;
+<%
+System.out.println(session.getAttribute("optConsultaCursoInfoCurso"));
+if(session.getAttribute("optConsultaCursoInfoCurso").toString().equals("0")){ 
+	System.out.println("entro al if de info");
+	session.setAttribute("cursosConsulta", null);
+} 
+ArrayList<String> cursosConsulta = (ArrayList) session.getAttribute("cursosConsulta");
+boolean esInstitutoInfoCurso = sesion.getAttribute("esInstitutoInfoCurso") != null;
+boolean esCategoriaInfoCurso = sesion.getAttribute("esCategoriaInfoCurso") != null;
+System.out.println(cursosConsulta);
 %>
 </head>
 <body>
-<form action="ConsultarCurso" method="post">
-  <div class="form-row">
-  <!-- <input type="text" name="optConsultaCursoInfoCurso" value="<%=request.getParameter("optConsultaCursoInfoCurso")%>">
-  <input type="text" name="esInstitutoInfoCurso" value="<%=esInstitutoInfoCurso%>">
-  <input type="text" name="esCategoriaInfoCurso" value="<%=esCategoriaInfoCurso%>">-->
-    <div class="col-md-3" id="insCat">
-    	<input class="form-check-input" type="checkbox" id="checkInstituto" name="esInstituto">
-    	<label class="form-check-label" for="checkInstituto">Instituto</label>
-    </div>
-    <div>
-	    <input class="form-check-input" type="checkbox" id="checkCategoria" name="esCategoria">
-	    <label class="form-check-label" for="checkCategoria">Categoria</label>
-    </div>
-  </div>
-  <div class="form-row">
-  	<div class="col-md-6">
-	    <input type="text" name="instituto-categoria" class="form-control" id="instituto-categoria" required>
-    </div>
-    <button class="btn btn-primary" id="botonInsCat" type="submit">Submit form</button>
-  </div>
-  <div class="dropdown">
-  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropCursos" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Cursos
-  </button>
-  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <a class="dropdown-item" href="#">Action</a>
-    <a class="dropdown-item" href="#">Another action</a>
-    <a class="dropdown-item" href="#">Something else here</a>
-  </div>
-</div>
+	<form action="ConsultarCurso" method="post">
+	  <div class="form-row">
+	  <!-- <input type="text" name="optConsultaCursoInfoCurso" value="<%=request.getParameter("optConsultaCursoInfoCurso")%>">
+	  <input type="text" name="esInstitutoInfoCurso" value="<%=esInstitutoInfoCurso%>">
+	  <input type="text" name="esCategoriaInfoCurso" value="<%=esCategoriaInfoCurso%>">-->
+	    <div class="col-md-3" id="insCat">
+	    	<input class="form-check-input" type="checkbox" id="checkInstituto" name="esInstituto"  checked>
+	    	<label class="form-check-label" for="checkInstituto">Instituto</label>
+	    </div>
+	    <div>
+		    <input class="form-check-input" type="checkbox" id="checkCategoria" name="esCategoria">
+		    <label class="form-check-label" for="checkCategoria">Categoria</label>
+	    </div>
+	  </div>
+	  <div class="form-row">
+	  	<div class="col-md-6">
+		    <input type="text" name="instituto-categoria" class="form-control" id="instituto-categoria" required>
+	    </div>
+	    <button class="btn btn-primary" id="botonInsCat" type="submit" >Aceptar</button>
+	  </div>
+	</form>
+	
+	<div class="form-row">
+	  	<div class="form-group col-md-3">
+	      <label for="inputDia">Cursos</label>
+	      <select id="inputDia" name="DiaNac" class="dropdown">
+	        <option selected>Choose...</option>
+	        <option value="1">1</option>
+	        <option value="2">2</option>
+	        <option value="3">3</option>
+	      </select>
+	  </div>
+
   <div class="container" id="tabla">
   	<table class="table">
 	  <tbody>
@@ -95,7 +103,5 @@ boolean esCategoriaInfoCurso = sesion.getAttribute("esCategoriaEd") != null;
 	  </tbody>
 	</table>
   </div>
-</form>
-
 </body>
 </html>

@@ -13,7 +13,9 @@ import javax.servlet.http.HttpSession;
 
 import datatypes.DtCursoBase;
 import excepciones.CategoriaInexistente;
+import excepciones.CategoriaSinCursos;
 import excepciones.InstitutoInexistente;
+import excepciones.InstitutoSinCursos;
 import interfaces.Fabrica;
 import interfaces.IControladorConsultaCurso;
 
@@ -38,26 +40,27 @@ public class ConsultarCurso extends HttpServlet {
 		RequestDispatcher rd;
 		IControladorConsultaCurso icon = fabrica.getIControladorConsultaCurso();
 		switch((String)sesion.getAttribute("optConsultaCursoInfoCurso")) {
-		case "0": 	boolean esInstituto = request.getParameter("esInstitutoInfoCurso") != null;
+		case "0": //carga una variable con los cursos
+					boolean esInstituto = request.getParameter("esInstitutoInfoCurso") != null;
 					boolean esCategoria = request.getParameter("esCategoriaInfoCurso") != null;
 					String InsCat = request.getParameter("instituto-categoria");
-					ArrayList<String> cursosInfoEdicion = new ArrayList<String>();
+					ArrayList<String> cursos = new ArrayList<String>();
 					if(!esInstituto && esCategoria) {
 						try {
-							for(DtCursoBase dtcb: icon.seleccionarCategoria(InsCat)) {
-								cursosInfoEdicion.add(dtcb.getNombre());
+							for(DtCursoBase dtcb: icon.listarCursosCategoria(InsCat)) {
+								cursos.add(dtcb.getNombre());
 							}
-							sesion.setAttribute("cursosInfoEdicion", cursosInfoEdicion);
-						} catch (CategoriaInexistente e) {
+							sesion.setAttribute("cursos", cursos);
+						} catch (CategoriaInexistente |CategoriaSinCursos e) {
 							throw new ServletException(e.getMessage());
 						}
 					} else {//por default busco por instituto
 						try {
-							for(DtCursoBase dtcb: icon.seleccionarInstituto(InsCat)) {
-								cursosInfoEdicion.add(dtcb.getNombre());
+							for(DtCursoBase dtcb: icon.listarCursosInstituto(InsCat)) {
+								cursos.add(dtcb.getNombre());
 							}
-							sesion.setAttribute("cursosInfoEdicion", cursosInfoEdicion);
-						} catch (InstitutoInexistente e) {
+							sesion.setAttribute("cursosConsulta", cursos);
+						} catch (InstitutoInexistente | InstitutoSinCursos e) {
 							throw new ServletException(e.getMessage());
 						}
 					}
@@ -66,13 +69,10 @@ public class ConsultarCurso extends HttpServlet {
 					sesion.setAttribute("esInstituto", esInstituto);
 					
 					rd = request.getRequestDispatcher("/infoCurso.jsp");
-					sesion.setAttribute("optConsultaCurso", "1"); // testing
+					sesion.setAttribute("optConsultaCursoInfoCurso", "1");
 					rd.forward(request, response);
-					break;
+					break;	
 		case "1": 
-					request.setAttribute("mensaje", "prueba");
-					rd = request.getRequestDispatcher("/notificacion.jsp");
-					rd.forward(request, response);
 					break;
 		}
 		
