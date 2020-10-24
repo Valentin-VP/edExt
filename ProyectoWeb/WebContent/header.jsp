@@ -28,7 +28,7 @@ crossorigin="anonymous">
 	}
 if(tipoUser.equals("docente")) { %> <!-- NavBar Estudiante/Docente -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="index.jsp">edExt</a>
+  <a class="navbar-brand" href="RefreshInicio">edExt</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -77,7 +77,7 @@ if(tipoUser.equals("docente")) { %> <!-- NavBar Estudiante/Docente -->
 </nav>
 <%} else if(tipoUser.equals("estudiante")) {  %>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="index.jsp">edExt</a>
+  <a class="navbar-brand" href="RefreshInicio">edExt</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -116,7 +116,7 @@ if(tipoUser.equals("docente")) { %> <!-- NavBar Estudiante/Docente -->
 </nav>
 <%} else {%> <!-- NavBar visitante -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="index.jsp">edExt</a>
+  <a class="navbar-brand" href="RefreshInicio">edExt</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
