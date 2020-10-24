@@ -47,7 +47,7 @@ public class AltaCurso extends HttpServlet {
 		case "inicio" : 
 			DtInstituto instituto = new DtInstituto (request.getParameter("institutoAltaCurso").toString());
 			List<String> categorias = new ArrayList<String>();
-			ArrayList<DtCursoBase> previas = new ArrayList<DtCursoBase>();
+			ArrayList<String> previas = new ArrayList<String>();
 			try {
 				for(String strcat: icon.listarCategorias()) {
 					categorias.add(strcat);
@@ -59,7 +59,7 @@ public class AltaCurso extends HttpServlet {
 			
 			try {
 				for(DtCursoBase dtcb: iconaux.listarCursosInstituto(instituto.getNombre())) {
-					previas.add(dtcb);
+					previas.add(dtcb.getNombre());
 				}
 				sesion.setAttribute("previasAltaCurso", previas);
 			} catch (InstitutoInexistente | InstitutoSinCursos e) {

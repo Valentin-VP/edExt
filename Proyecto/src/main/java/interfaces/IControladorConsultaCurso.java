@@ -7,6 +7,7 @@ import excepciones.CategoriaSinCursos;
 import excepciones.InstitutoInexistente;
 import excepciones.InstitutoSinCursos;
 import excepciones.SinCategorias;
+import excepciones.SinCursos;
 import excepciones.SinInstitutos;
 import datatypes.DtProgramaBase;
 import datatypes.DtCurso;
@@ -24,4 +25,6 @@ public interface IControladorConsultaCurso {
 	public ArrayList<String> listarCategorias() throws SinCategorias;
 
 	public ArrayList<DtProgramaBase> getProgramas();
+	
+	public ArrayList<DtCursoBase> listarCursosPlataforma() throws SinCursos;
 }

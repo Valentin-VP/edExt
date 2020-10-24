@@ -13,6 +13,7 @@ import excepciones.CategoriaSinCursos;
 import excepciones.InstitutoInexistente;
 import excepciones.InstitutoSinCursos;
 import excepciones.SinCategorias;
+import excepciones.SinCursos;
 import excepciones.SinInstitutos;
 import interfaces.IControladorConsultaCurso;
 
@@ -151,6 +152,21 @@ public class ControladorConsultaCurso implements IControladorConsultaCurso{
 			throw new CategoriaSinCursos("No existen Cursos para la Categoría seleccionada");
 		}
 		return cursoscategoria;
+	}
+	
+	@Override
+	public ArrayList<DtCursoBase> listarCursosPlataforma() throws SinCursos {
+		ManejadorCurso mCu = ManejadorCurso.getInstancia();
+		ArrayList <DtCursoBase> cursosplataforma = new ArrayList <DtCursoBase>();
+		for(Curso cu: mCu.getCursos()){
+			DtCursoBase curso = new DtCursoBase (cu.getNombre());
+			cursosplataforma.add(curso);
+		}
+		if(cursosplataforma.isEmpty()) {
+			throw new SinCursos("No existen Cursos en la Plataforma");
+		}
+		return cursosplataforma;
+		
 	}
 	
 }	

@@ -31,15 +31,14 @@
 
 <%if (session.getAttribute("optAltaCurso").toString().equals("inicio")){ %>
 <form action="AltaCurso" method="post">
-   <div class="form-row">	
-      <div class="form-group col-md-4">
-	      <label for="institutoAltaCurso">Instituto</label>
+	<h1 align="center">Instituto</h1>
+	<br><br>
+   	<div class="form-row">	
+      <div class="form-group col-md-10">
 	      <input type="text" name="institutoAltaCurso" class="form-control" id="institutoAltaCurso">
 	   </div>
-   </div>   
-   <div class="form-row">
-      <button type="submit" class="btn btn-primary">Nuevo Curso</button>
-   </div>
+	   <button type="submit" class="btn btn-primary">Nuevo Curso</button>
+   	</div>   
 </form> 
 
 <%}else if(session.getAttribute("optAltaCurso").toString().equals("cargaDatos")) { %>
@@ -108,9 +107,8 @@
 	    
 	      <div class="form-row">
 			<div class="form-group col-md-6">
-	    	  <label for="inputCategoria">Seleccione Categorias</label>
-	 		     <select id="inputCategoria" name="categoriaAltaCurso" class="selectpicker" multiple="multiple">
-	    		    <option selected disabled>Choose...</option>
+	    	  <label for="inputCategorias">Seleccione Categorias</label>
+	 		     <select id="inputCategorias" name="categoriasAltaCurso" class="selectpicker" multiple="multiple">
 	     		   <%for(String c: categorias){ %>
 	    		    <option value="<%= c %>"><%= c %></option>
 	  			   <%} %>
@@ -120,11 +118,10 @@
 			
 			<div class="form-row">
 				<div class="form-group col-md-6">
-	    		  <label for="inputCategoria">Seleccione Categorias</label>
-	 		  		<select id="inputCategoria" name="categoriaAltaCurso" class="selectpicker" multiple="multiple">
-	    		    	<option selected disabled>Choose...</option>
-			     		   <%for(String c: categorias){ %>
-			    		    <option value="<%= c %>"><%= c %></option>
+	    		  <label for="inputCategorias">Seleccione Previas</label>
+	 		  		<select id="inputPrevias" name="previasAltaCurso" class="selectpicker" multiple="multiple">
+			     		   <%for(String p: previas){ %>
+			    		    <option value="<%= p %>"><%= p %></option>
 			  			   <%} %>
 	 		  		</select>
 	  		 	 </div>
@@ -134,7 +131,11 @@
 	    <!-- Fin segunda columna -->
 	  </div>
 	</div>
-	<button type="submit" class="btn btn-primary">Dar de Alta</button>
+	<div class="form-row"  align="center">
+		<div class="col-sm">
+			<button type="submit" class="btn btn-primary">Dar de Alta</button>
+		</div>
+	</div>
 </form>
 <%} %>
 
