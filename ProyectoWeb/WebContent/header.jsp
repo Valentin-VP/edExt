@@ -71,8 +71,8 @@ if(tipoUser.equals("docente")) { %> <!-- NavBar Estudiante/Docente -->
         <a class="nav-link" href="ConsultaUsuario" id="RegistrarseButton" role="button">Mi Perfil<%= " - " + nickname %></a>
       </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+    <form action="FiltradoYBusqueda" method="post" class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
   </div>
