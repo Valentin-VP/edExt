@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import excepciones.CursoRepetido;
 import excepciones.InstitutoInexistente;
 import excepciones.SinCategorias;
+import excepciones.SinInstitutos;
 import datatypes.DtCursoBase;
 import datatypes.DtFecha;
+import datatypes.DtInstituto;
 
 public interface IControladorAltaCurso {
 	public void altaCurso (String instituto,String nombre,String descripcion,String duracion,int cantHoras,int creditos,String url,DtFecha fechaR) throws CursoRepetido, InstitutoInexistente;
@@ -23,5 +25,7 @@ public interface IControladorAltaCurso {
 	public void agregarCategoria(String categoria);
 
 	public void cleanCategorias();
+	
+	public ArrayList<DtInstituto> listarInstitutos() throws SinInstitutos;
 	
 }

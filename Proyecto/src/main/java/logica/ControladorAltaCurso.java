@@ -5,6 +5,7 @@ import persistencia.Conexion;
 import excepciones.CursoRepetido;
 import excepciones.InstitutoInexistente;
 import excepciones.SinCategorias;
+import excepciones.SinInstitutos;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import javax.persistence.EntityManager;
 import datatypes.DtCurso;
 import datatypes.DtCursoBase;
 import datatypes.DtFecha;
+import datatypes.DtInstituto;
 
 public class ControladorAltaCurso implements IControladorAltaCurso{
 	private DtCurso curso;
@@ -232,6 +234,19 @@ public class ControladorAltaCurso implements IControladorAltaCurso{
 		}
 		
 		return strcategorias;
+	}
+	
+	public ArrayList<DtInstituto> listarInstitutos() throws SinInstitutos{
+		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
+		ArrayList<DtInstituto> dtinstitutos = new ArrayList<DtInstituto>();
+		if(mI.getInstitutos().isEmpty()) {
+			throw new SinInstitutos("No se han ingresado institutos aun");
+		}
+		for(DtInstituto i: mI.getDtInstitutos()) {
+			DtInstituto dti = new DtInstituto(i.getNombre());
+			dtinstitutos.add(dti);
+		}
+		return dtinstitutos;
 	}
 	
 }

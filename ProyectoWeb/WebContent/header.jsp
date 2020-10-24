@@ -40,7 +40,7 @@ if(tipoUser.equals("docente")) { %> <!-- NavBar Estudiante/Docente -->
           Altas
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Curso</a>
+          <a class="dropdown-item" href='agregarCurso.jsp?'>Curso</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href='altaEdicion.jsp?optAltaEdicionAltaEd=<%= optAltaEdicion %>'>Edicion</a>
         </div>
