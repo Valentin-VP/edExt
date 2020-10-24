@@ -10,6 +10,7 @@
 </head>
 <body>
 <h1 align="center"> Ingrese sus datos para iniciar la sesion </h1>
+<br><br>
 <form action="ConsultarTipoUsuario" method="post">
   <div class="form-row">
     <div class="col-md-6 mb-3">
@@ -21,7 +22,7 @@
       <input type="password" name="pass" class="form-control" id="pass" required>
     </div>
   </div>
-  <button class="btn btn-primary" type="submit">Submit form</button>
+  <button class="btn btn-primary" type="submit">Iniciar Sesion</button>
 </form>
 <%@include file = "/footer.jsp" %>
 </body>

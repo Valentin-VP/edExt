@@ -33,7 +33,7 @@ public class CerrarSesion extends HttpServlet {
         	session.removeAttribute("InsCat");
         	session.removeAttribute("InsCatEd");
         	session.removeAttribute("cursoConsultaEdicion");
-        	//session.removeAttribute("edicionConsultaEdicion");
+        	session.removeAttribute("edicionConsultaEdicion");
         	session.removeAttribute("esInstituto");
         	session.removeAttribute("esCategoria");
         	session.removeAttribute("esInstitutoEd");

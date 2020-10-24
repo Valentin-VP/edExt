@@ -9,6 +9,15 @@
 <meta name="viewport" content="width=device-width, inicial-scale=1, shrink-to-fit=no">
 <%@include file = "/header.jsp" %>
 <title>Consultar la Informacion de una Edicion</title>
+<style>
+#checker{
+	left: 200px;
+}
+
+#checker2{
+	left: 300px;
+}
+</style>
 </head>
 <body>
 <% 
@@ -21,52 +30,58 @@ boolean esInstitutoInfoEdicion = session.getAttribute("esInstitutoEd") != null;
 boolean esCategoriaInfoEdicion = session.getAttribute("esCategoriaEd") != null;
 String cursoConsultaEdicion = (String) session.getAttribute("cursoConsultaEdicion");
 DtEdicion infoEdicion = (DtEdicion) session.getAttribute("infoEdicion");
-//String edicionConsultaEdicion = (String) sesion.getAttribute("edicionConsultaEdicion");
+String edicionConsultaEdicion = (String) sesion.getAttribute("edicionConsultaEdicion");
 
 if(session.getAttribute("optConsultaEdicionInfoEdicion").toString().equals("0")) {%>
+<h1 align="center"> Ingrese el Instituto </h1>
+<br><br>
 <form action="ConsultaEdicion" method="post">
 	<div class="form-row">
 	<!-- <input type="text" name="optConsultaEdicionInfoEdicion" value="<%=request.getParameter("optConsultaEdicionInfoEdicion")%>">
 	<input type="text" name="esInstitutoInfoEdicion" value="<%=esInstitutoInfoEdicion%>">
   	<input type="text" name="esCategoriaInfoEdicion" value="<%=esCategoriaInfoEdicion%>"> -->
-		<div class="form-check">
+		<div id=checker class="form-check col-md-3">
 	      <input class="form-check-input" type="checkbox" id="checkInstituto" name="esInstitutoInfoEdicion" checked>
 	      <label class="form-check-label" for="checkInstituto">Es Instituto</label>
 	    </div>
-	    <div class="form-check col-md-2">
+	    <div id=checker2 class="form-check">
 	      <input class="form-check-input" type="checkbox" id="checkCategoria" name="esCategoriaInfoEdicion">
 	      <label class="form-check-label" for="checkCategoria">Es Categoria</label>
 	    </div>
 	</div>
-	<br>
+	<br><br>
 	<div class="form-row">
-		<div class="form-group col-md-3">
+		<div class="form-group col-md-10">
 	      <input type="text" name="InsCatEd" class="form-control" id="InsCatEd">
 	    </div>
       	<button type="submit" class="btn btn-primary">Buscar Cursos</button> 
 	</div>
 </form>
 <%} else if(session.getAttribute("optConsultaEdicionInfoEdicion").toString().equals("1")) {%>
+<h1 align="center"> Seleccione el Curso </h1>
+<br><br>
 <form action="ConsultaEdicion" method="post">
 	<div class="form-row">
 	<!-- <input type="text" name="optConsultaEdicionInfoEdicion" value="<%=request.getParameter("optConsultaEdicionInfoEdicion")%>"> -->
-		<div class="form-group col-md-6">
+		<div align="center" class="form-group col-md-6">
 	      <label for="inputCurso">Curso</label>
-	      <select id="inputCurso" name="cursoInfoEdicion" class="selectpicker">
-	        <option selected disabled>Choose...</option>
-	        <%for(String c: cursos){ %>
-	        <option value="<%= c %>"><%= c %></option>
-	        <%} %>
-	      </select>
+      	<select id="inputCurso" name="cursoInfoEdicion" class="selectpicker">
+        	<option selected disabled>Choose...</option>
+        	<%for(String c: cursos){ %>
+        	<option value="<%= c %>"><%= c %></option>
+        	<%} %>
+      	</select>
 	    </div>
 	    <button type="submit" class="btn btn-primary">Buscar Ediciones</button>
 	</div>
 </form>
 <%} else if(session.getAttribute("optConsultaEdicionInfoEdicion").toString().equals("2")) { %>
+<h1 align="center"> Seleccione la Edicion </h1>
+<br><br>
 <form action="ConsultaEdicion" method="post">
 	<div class="form-row">
 	<!-- <input type="text" name="optConsultaEdicionInfoEdicion" value="<%=request.getParameter("optConsultaEdicionInfoEdicion")%>"> -->
-		<div class="form-group col-md-6">
+		<div align="center" class="form-group col-md-6">
 	      <label for="inputEdicion">Edicion</label>
 	      <select id="inputEdicion" name="edicion" class="selectpicker">
 	        <option selected disabled>Choose...</option>
@@ -79,6 +94,8 @@ if(session.getAttribute("optConsultaEdicionInfoEdicion").toString().equals("0"))
 	</div>
 </form>
 <%}else if(session.getAttribute("optConsultaEdicionInfoEdicion").toString().equals("3")) {%>
+<h1 align="center"> Informacion de <%= edicionConsultaEdicion %> </h1>
+<br><br>
 <form>
 	<div class="form-row">
 	<!-- <input type="text" name="optConsultaEdicionInfoEdicion" value="<%=request.getParameter("optConsultaEdicionInfoEdicion")%>"> -->

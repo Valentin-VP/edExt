@@ -14,17 +14,20 @@
 	@SuppressWarnings("unchecked")
 	ArrayList<String> institutos = (ArrayList<String>) s.getAttribute("institutos");
 %>
+<h1 align="center"> Ingrese sus datos </h1>
+<br><br>
 <form action="AltaUsuario" method="post">
   <div class="form-row">
     <div class="form-group col-md-6">
       <label for="inputEmail4">Correo</label>
-      <input type="email" name="correo" class="form-control" id="inputCorreo4">
+      <input type="email" name="correo" class="form-control" id="inputCorreo4" placeholder="example@starkinstitutes.com">
     </div>
     <div class="form-group col-md-6">
       <label for="inputNick4">Nickname</label>
       <input type="Text" name="nick" class="form-control" id="inputNick4">
     </div>
-  </div> 
+  </div>
+  <br><br> 
   <div class="form-row"> 
     <div class="form-group col-md-6">
       <label for="inputPassword4">Password</label>
@@ -35,8 +38,9 @@
       <input type="password" name="verificar" class="form-control" id="inputVerificacion4">
     </div>
   </div>
+  <br><br>
   <div class="form-row">
-  	<div class="form-group col-md-3">
+  	<div class="form-group col-md-4">
       <label for="inputDia">Dia</label>
       <select id="inputDia" name="DiaNac" class="selectpicker">
         <option selected disabled>Choose...</option>
@@ -73,7 +77,7 @@
         <option value="31">31</option>
       </select>
   </div>
-  <div class="form-group col-md-3">
+  <div class="form-group col-md-4">
       <label for="inputMes">Mes</label>
       <select id="inputMes" name="MesNac" class="selectpicker">
         <option selected disabled>Choose...</option>
@@ -91,7 +95,7 @@
         <option value="12">diciembre</option>
       </select>
   </div>
-  <div class="form-group col-md-3">
+  <div class="form-group col-md-4">
       <label for="inputAnio">Anio</label>
       <select id="inputAnio" name="AnioNac" class="selectpicker">
         <option selected disabled>Choose...</option>
@@ -107,32 +111,35 @@
       </select>
   </div>
   </div>
+  <br><br>
   <div class="form-row">
   	<div class="form-group col-md-6">
     	<label for="inputNombre">Nombre</label>
-    	<input type="text" name="nombre" class="form-control" id="inputNombre" placeholder="Elver">
+    	<input type="text" name="nombre" class="form-control" id="inputNombre" placeholder="Tony">
   	</div>
   		<div class="form-group col-md-6">
     	<label for="inputApellido">Apellido</label>
-    	<input type="text" name="apellido" class="form-control" id="inputApellido" placeholder="Galarga">
+    	<input type="text" name="apellido" class="form-control" id="inputApellido" placeholder="Stark">
   	</div>
   </div>
+  <br><br>
   <div class="form-row">
     <div class="form-check">
 	  <input class="form-check-input" type="checkbox" id="docente" name="esDocente" checked="checked" onchange="cargarSelect(this);" value="true">
       <label class="form-check-label" for="gridCheck">Docente</label>
     </div>
   </div>
-  <br>
-  <div class="form-group col-md-6">
-      <label for="inputInstituto">Instituto</label>
-      <select id="inputInstituto" name="instituto" class="selectpicker">
-         <option selected>Choose...</option>
-         <option value="crandon">crandon</option>
-        <option selected>Choose...</option>
-      </select>
+  <br><br>
+  <div class="form-row">
+	  <div class="form-group col-md-6">
+	      <label for="inputInstituto">Instituto</label>
+	      <select id="inputInstituto" name="instituto" class="selectpicker">
+	         <option selected disabled>Choose...</option>
+	         <option value="crandon">crandon</option>
+	      </select>
+	  </div>
+	  <button type="submit" class="btn btn-primary">Registrarse</button>
   </div>
-  <button type="submit" class="btn btn-primary">Registrarse</button>
 </form>
 <!-- <input type="button" id="cargarCombo" onClick="cargarInstitutos()"> -->
 <script>
