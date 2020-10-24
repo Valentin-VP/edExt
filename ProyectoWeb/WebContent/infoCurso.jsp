@@ -36,6 +36,10 @@ ArrayList<String> cursosConsulta = (ArrayList) sesion.getAttribute("cursosConsul
 if(cursosConsulta == null){
 	cursosConsulta = new ArrayList<String>();
 }
+ArrayList<String> infoCurso = (ArrayList) sesion.getAttribute("infoCurso");
+if(infoCurso == null){
+	infoCurso = new ArrayList<String>();
+}
 boolean esInstitutoInfoCurso = sesion.getAttribute("esInstitutoInfoCurso") != null;
 boolean esCategoriaInfoCurso = sesion.getAttribute("esCategoriaInfoCurso") != null;
 System.out.println(cursosConsulta);

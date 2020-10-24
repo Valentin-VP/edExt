@@ -77,6 +77,7 @@ public class ConsultarCurso extends HttpServlet {
 					System.out.println("ConsultarCurso setea: " + sesion.getAttribute("optConsultaCursoInfoCurso"));
 					rd.forward(request, response);
 					break;	
+
 		case "1": 	String nomCurso = (String) request.getParameter("dropdownCursos");
 					ArrayList<String> infoCurso = new ArrayList<String>();
 					DtCurso curso = icon.consultarCurso(nomCurso);
@@ -93,6 +94,12 @@ public class ConsultarCurso extends HttpServlet {
 						}
 					}
 					infoCurso.add(categorias);
+					sesion.setAttribute("infoCurso", infoCurso);
+					rd = request.getRequestDispatcher("/infoCurso.jsp");
+					rd.forward(request, response);
+					break;
+
+		case "2":	
 					break;
 		}
 		
