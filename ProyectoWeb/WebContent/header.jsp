@@ -13,6 +13,7 @@ crossorigin="anonymous">
 	String optConsultaCurso = "0";
 	String optConsultaEdicion = "0";
 	String optAltaEdicion = "0";
+	String optAltaCurso = "inicio";
 	
 	//String tipoUser = "";
 	//String nickname = "";
@@ -39,7 +40,7 @@ if(tipoUser.equals("docente")) { %> <!-- NavBar Estudiante/Docente -->
           Altas
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href='agregarCurso.jsp?'>Curso</a>
+          <a class="dropdown-item" href='agregarCurso.jsp?optAltaCurso=<%= optAltaCurso %>'>Curso</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href='altaEdicion.jsp?optAltaEdicionAltaEd=<%= optAltaEdicion %>'>Edicion</a>
         </div>
