@@ -53,12 +53,20 @@ public class ListarAceptadosEdicion extends HttpServlet {
 					cursos.add(dtcb.getNombre());
 				}
 				sesion.setAttribute("cursosAceptados", cursos);
+				sesion.setAttribute("opAceptadosEdicion", "1");
+				response.sendRedirect("ListarAceptadosEdicion.jsp");
 			} catch (InstitutoInexistente | InstitutoSinCursos e) {
-				throw new ServletException(e.getMessage());
+				request.setAttribute("mensaje", e.getMessage());
+				rd = request.getRequestDispatcher("/notificacion.jsp");
+				rd.forward(request, response);
+			} catch (Exception e) {
+				request.setAttribute("mensaje", "El formulario ha partido.");
+				rd = request.getRequestDispatcher("/notificacion.jsp");
+				rd.forward(request, response);
 			}
-			sesion.setAttribute("opAceptadosEdicion", "1");
-			rd = request.getRequestDispatcher("/ListarAceptadosEdicion.jsp");
-			rd.forward(request, response);
+			
+//			rd = request.getRequestDispatcher("/ListarAceptadosEdicion.jsp");
+//			rd.forward(request, response);
 			
 			break;
 			
@@ -71,12 +79,19 @@ public class ListarAceptadosEdicion extends HttpServlet {
 					ediciones.add(dteb.getNombre());
 				}
 				sesion.setAttribute("edicionesAceptados", ediciones);
+				sesion.setAttribute("opAceptadosEdicion", "2");
+				response.sendRedirect("ListarAceptadosEdicion.jsp");
 			} catch (CursoNoExiste | EdicionNoExiste e) {
-				throw new ServletException(e.getMessage());
+				request.setAttribute("mensaje", e.getMessage());
+				rd = request.getRequestDispatcher("/notificacion.jsp");
+				rd.forward(request, response);
+			} catch (Exception e) {
+				request.setAttribute("mensaje", "El formulario ha partido.");
+				rd = request.getRequestDispatcher("/notificacion.jsp");
+				rd.forward(request, response);
 			}
-			sesion.setAttribute("opAceptadosEdicion", "2");
-			rd = request.getRequestDispatcher("/ListarAceptadosEdicion.jsp");
-			rd.forward(request, response);
+			
+			
 			
 			break;
 			
@@ -88,15 +103,18 @@ public class ListarAceptadosEdicion extends HttpServlet {
 				
 				
 				sesion.setAttribute("infoFinalAceptados", infoEdicion);
+				sesion.setAttribute("opAceptadosEdicion", "3");
+				response.sendRedirect("ListarAceptadosEdicion.jsp");
 				if (infoEdicion.getInscripciones().isEmpty()) System.out.println("vacio");
 			} catch (EdicionNoExiste e) {
-
-				throw new ServletException(e.getMessage());
+				request.setAttribute("mensaje", e.getMessage());
+				rd = request.getRequestDispatcher("/notificacion.jsp");
+				rd.forward(request, response);
+			} catch (Exception e) {
+				request.setAttribute("mensaje", "El formulario ha partido.");
+				rd = request.getRequestDispatcher("/notificacion.jsp");
+				rd.forward(request, response);
 			}
-			sesion.setAttribute("opAceptadosEdicion", "3");
-			rd = request.getRequestDispatcher("/ListarAceptadosEdicion.jsp");
-			rd.forward(request, response);
-			
 			break;
 		}
 	}
