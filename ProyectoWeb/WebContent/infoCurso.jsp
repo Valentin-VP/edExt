@@ -9,7 +9,13 @@
 <%@include file = "/header.jsp" %>
 <title>Informacion de un curso</title>
 <style>
+	#nomIns{
+		margin: auto;
+		width: 100%;
+		padding: 10px;
+	}
 	#insCat{
+		
 		left: 30px;
 	}
 	#botonInsCat{
@@ -27,13 +33,10 @@
 	  	height: 39px;
   		
 	}
-</style>
-
-<script>
-	function setOpt(){
-		sesion.setAttribute("optConsultaCursoInfoCurso", "0");
+	#dropCursos{
+		margin: auto;
 	}
-</script>
+</style>
 
 <%
 System.out.println(sesion.getAttribute("optConsultaCursoInfoCurso"));
@@ -57,7 +60,7 @@ System.out.println(cursosConsulta);
 	<h1 align="center"> Consulta Curso </h1>
 	<br><br>
 	<form action="ConsultarCurso" method="post">
-	  <div class="form-row">
+	  <div class="form-row" id="nombres">
 	    <div class="col-md-3" id="insCat">
 	    	<input class="form-check-input" type="checkbox" id="checkInstituto" name="esInstituto"  checked>
 	    	<label class="form-check-label" for="checkInstituto">Instituto</label>
@@ -67,16 +70,16 @@ System.out.println(cursosConsulta);
 		    <label class="form-check-label" for="checkCategoria">Categoria</label>
 	    </div>
 	  </div>
-	  <div class="form-row">
+	  <div class="form-row" id="nomIns">
 	  	<div class="col-md-6">
 		    <input type="text" name="instituto-categoria" class="form-control" id="instituto-categoria" required>
 	    </div>
-	    <button class="btn btn-primary" id="botonInsCat" type="submit" onclick="setOpt()" >Aceptar</button>
+	    <button class="btn btn-primary" id="botonInsCat" type="submit" onclick="setOpt()">Aceptar</button>
 	  </div>
 	</form>
-	
+	<br></br>
 	<form action="ConsultarCurso" method="post">
-	   <div class="form-row">	
+	   <div class="form-row" id="dropCursos">	
 	      <div class="form-group col-md-4">
 		      <select id="dropdownCursos" name="dropdownCursos" class="selectpicker" required>
 		      	<option></option>
@@ -128,6 +131,13 @@ System.out.println(cursosConsulta);
 	<%}%>	
 	  </div>
 	</form>
+
+<script>
+	function setOpt(){
+		sesion.setAttribute("optConsultaCursoInfoCurso", "0");
+	}
+</script>
+
 <%@include file = "/footer.jsp" %>
 </body>
 </html>
