@@ -34,9 +34,9 @@ public class FiltradoYBusqueda extends HttpServlet {
 		Fabrica fabrica = Fabrica.getInstancia();
 		RequestDispatcher rd;
 		IControladorConsultaCurso icon = fabrica.getIControladorConsultaCurso();
+		ArrayList<DtCurso> misCursos = new ArrayList<DtCurso>();
 		try {
 			ArrayList<DtCursoBase> cursosPlataforma = icon.listarCursosPlataforma();
-			ArrayList<DtCurso> misCursos = new ArrayList<DtCurso>();
 			for(DtCursoBase dtcb: cursosPlataforma) {
 				DtCurso dtc = icon.consultarCurso(dtcb.getNombre());
 				misCursos.add(dtc);
@@ -45,11 +45,19 @@ public class FiltradoYBusqueda extends HttpServlet {
 		} catch (SinCursos e) {
 			e.printStackTrace();
 		}
-		String filtrado = request.getParameter("comboFiltrado");
-		String ordenado = request.getParameter("comboOrdenado");
+		String filtrado = (String) request.getParameter("comboFiltrado");
+		String ordenado = (String) request.getParameter("comboOrdenado");
+		String buscando = (String) request.getParameter("busqueda");
+		sesion.setAttribute("buscando", buscando);//falta ponerlo en refresh y cerrar sesion
 		if(filtrado != null) {
 			switch(filtrado) {//entro desde el jsp de la busqueda
 			case "curso":	//filtro por cursos(hace lo mismo que el search)
+							ArrayList<String> cursosQueMuestro = new ArrayList<String>();
+							for(DtCurso dtc: misCursos) {
+								if(dtc.getNombre().contains(sesion.getAttribute("buscando").toString()) || dtc.getDescripcion().contains(sesion.getAttribute("buscando").toString())) {
+									cursosQueMuestro.add(dtc.getNombre());
+								}
+							}
 							break;
 			case "programa":	//filtro por programas(no lo uso)
 								System.out.println("No Disponible");
@@ -59,15 +67,23 @@ public class FiltradoYBusqueda extends HttpServlet {
 		
 		if(ordenado != null) {
 			switch(ordenado) {//entro desde el jsp de la busqueda
-			case "alfabeticamente":	//ordeno alfabeticamente(lo que esta en la lista "todosLosCursos")
+			case "alfabeticamente":	//ordeno alfabeticamente(ascendente)
+									
 									break;
-			case "fecha":	//ordeno por fecha(lo que esta en la lista "todosLosCursos")
+			case "fecha":	//ordeno por fecha(descendente)
+							
 							break;
 			}
 		}
 		
-		if(filtrado == null && ordenado == null) {//entro desde el search del header
+		if(filtrado == null && ordenado == null) {//entro desde el search del header(con "busqueda")
 			//despliego todos los CURSOS que contienen lo buscado en el nombre o la descripcion
+			ArrayList<String> cursosQueMuestro = new ArrayList<String>();
+			for(DtCurso dtc: misCursos) {
+				if(dtc.getNombre().contains(buscando) || dtc.getDescripcion().contains(buscando)) {
+					cursosQueMuestro.add(dtc.getNombre());
+				}
+			}
 		}
 	}
 

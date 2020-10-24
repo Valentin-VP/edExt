@@ -30,7 +30,7 @@ if(session.getAttribute("optAltaEdicionAltaEd").toString().equals("0")) {%>
    </div>   
 </form>    
 <% } else if(session.getAttribute("optAltaEdicionAltaEd").toString().equals("1")){%>
-<h1 align="center"> Ingrese los datos de el Curso </h1>
+<h1 align="center"> Resultados de la busqueda </h1>
 <br><br>
 <form action="AltaEdicionCurso" method="post">
 	<div class=form-row>
