@@ -12,9 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import interfaces.Fabrica;
-import interfaces.IControladorAltaUsuario;
 import interfaces.IControladorSesion;
-
 
 @WebServlet("/ConsultarTipoUsuario")
 public class ConsultarTipoUsuario extends HttpServlet {
@@ -33,10 +31,9 @@ public class ConsultarTipoUsuario extends HttpServlet {
 		String pass = request.getParameter("pass");
 		Fabrica fabrica = Fabrica.getInstancia();
 		IControladorSesion icon = fabrica.getIControladorSesion();
-		IControladorAltaUsuario icontrolador = fabrica.getIControladorAltaUsuario();
 		String codificada = "";
 		try {
-			codificada = icontrolador.codificarPass(pass);
+			codificada = icon.codificarPass(pass);
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		}

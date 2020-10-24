@@ -1,9 +1,13 @@
 package logica;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 import interfaces.IControladorSesion;
 
 public class ControladorSesion implements IControladorSesion{
 	private String nick = "";
+	private String password = "";
 	@Override
 	public boolean existeUsuario(String id) {
 		this.nick = "";
@@ -13,6 +17,7 @@ public class ControladorSesion implements IControladorSesion{
 			for(Usuario u: mU.getUsuarios()) {
 				if(u.getCorreo().equals(id)) {
 					existe = true;
+					
 				}
 			}
 		}
@@ -35,6 +40,7 @@ public class ControladorSesion implements IControladorSesion{
 					else
 						tipo = "estudiante";
 					this.nick = u.getNick();
+					this.password = u.getPassword();
 				}
 			}
 		}
@@ -58,4 +64,26 @@ public class ControladorSesion implements IControladorSesion{
 		return this.nick;
 	}
 
+	@Override
+	public String obtenerPassword() {
+		return this.password;
+	}
+	
+	@Override
+	public String codificarPass(String contrasenia) throws NoSuchAlgorithmException {
+		MessageDigest md = null;
+		byte[] mb = null;
+	        try {
+	            md = MessageDigest.getInstance("SHA-512");
+	            mb = md.digest(contrasenia.getBytes());
+	        } catch  (NoSuchAlgorithmException e) {
+				e.printStackTrace();
+	        }
+	        StringBuffer sb = new StringBuffer();
+	        for(byte b: mb) {
+	        	sb.append(String.format("%02x", b));
+	        }
+	        return sb.toString();
+	}
+	
 }

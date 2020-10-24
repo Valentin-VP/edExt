@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
 import datatypes.DtFecha;
 import datatypes.DtInstituto;
 import excepciones.SinInstitutos;
@@ -28,7 +30,20 @@ public class AltaUsuario extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		Fabrica fabrica = Fabrica.getInstancia();
+		IControladorAltaUsuario icon = fabrica.getIControladorAltaUsuario();
+		List<DtInstituto> institutos = new ArrayList<DtInstituto>();
+		try {
+			institutos = icon.listarInstitutos();
+		} catch (SinInstitutos e) {
+			e.printStackTrace();
+		}
+	    String json = new Gson().toJson(institutos);
+
+	    response.setContentType("application/json");
+	    response.setCharacterEncoding("UTF-8");
+	    response.getWriter().write(json);
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
