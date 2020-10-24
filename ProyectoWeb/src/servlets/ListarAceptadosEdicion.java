@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.google.gson.Gson;
+
 import datatypes.DtCursoBase;
 import datatypes.DtEdicionBase;
 import datatypes.DtEdicionCompleta;
@@ -41,24 +43,9 @@ public class ListarAceptadosEdicion extends HttpServlet {
 		HttpSession sesion = request.getSession(true);
 		RequestDispatcher rd;
 		//doGet(request, response);
-		switch((String)sesion.getAttribute("opAceptadosEdicion")) {
-		case "0":	//carga institutos (inmediatamente)
-			ArrayList<String> institutos = new ArrayList<String>();
-			try {
-				for(DtInstituto dti: icon.listarInstitutos()) {
-					institutos.add(dti.getNombre());
-				}
-				sesion.setAttribute("institutosAceptados", institutos);
-			} catch (SinInstitutos e) {
-				throw new ServletException(e.getMessage());
-			}
-			rd = request.getRequestDispatcher("/ListarAceptadosEdicion.jsp");
-			rd.forward(request, response);
-			sesion.setAttribute("opAceptadosEdicion", "1");
-			break;
-			
-		case "1":	//selecciona instituto, devuelve cursos
-			String instituto = request.getParameter("institutoSelectAceptados");
+		switch(sesion.getAttribute("opAceptadosEdicion").toString()) {
+		case "0":	//selecciona instituto, devuelve cursos
+			String instituto = request.getParameter("institutoAceptados");
 			ArrayList<String> cursos = new ArrayList<String>();
 			
 			try {
@@ -69,13 +56,13 @@ public class ListarAceptadosEdicion extends HttpServlet {
 			} catch (InstitutoInexistente | InstitutoSinCursos e) {
 				throw new ServletException(e.getMessage());
 			}
-			
+			sesion.setAttribute("opAceptadosEdicion", "1");
 			rd = request.getRequestDispatcher("/ListarAceptadosEdicion.jsp");
 			rd.forward(request, response);
-			sesion.setAttribute("opAceptadosEdicion", "2");
+			
 			break;
 			
-		case "2":	//selecciona curso, devuelve ediciones
+		case "1":	//selecciona curso, devuelve ediciones
 			String curso = request.getParameter("cursoSelectAceptados");
 			ArrayList<String> ediciones = new ArrayList<String>();
 			//sin comprobacion de instituto
@@ -87,25 +74,29 @@ public class ListarAceptadosEdicion extends HttpServlet {
 			} catch (CursoNoExiste | EdicionNoExiste e) {
 				throw new ServletException(e.getMessage());
 			}
-			
+			sesion.setAttribute("opAceptadosEdicion", "2");
 			rd = request.getRequestDispatcher("/ListarAceptadosEdicion.jsp");
 			rd.forward(request, response);
-			sesion.setAttribute("opAceptadosEdicion", "3");
+			
 			break;
 			
-		case "3":	//selecciona edicion, devuelve sus datos + los 'aceptados'
+		case "2":	//selecciona edicion, devuelve sus datos + los 'aceptados'
 			String edicion = request.getParameter("edicionSelectAceptados");
 			//sin comprobacion de curso
 			try {
 				DtEdicionCompleta infoEdicion = icon.ingresarEdicion(edicion);
+				
+				
 				sesion.setAttribute("infoFinalAceptados", infoEdicion);
+				if (infoEdicion.getInscripciones().isEmpty()) System.out.println("vacio");
 			} catch (EdicionNoExiste e) {
 
 				throw new ServletException(e.getMessage());
 			}
+			sesion.setAttribute("opAceptadosEdicion", "3");
 			rd = request.getRequestDispatcher("/ListarAceptadosEdicion.jsp");
 			rd.forward(request, response);
-			sesion.setAttribute("opAceptadosEdicion", "4");
+			
 			break;
 		}
 	}

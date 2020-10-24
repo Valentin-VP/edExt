@@ -13,6 +13,7 @@ crossorigin="anonymous">
 	String optConsultaCurso = "0";
 	String optConsultaEdicion = "0";
 	String optAltaEdicion = "0";
+	String opAceptadosEdicion = "0";
 	String optAltaCurso = "inicio";
 	
 	//String tipoUser = "";
@@ -60,6 +61,7 @@ if(tipoUser.equals("docente")) { %> <!-- NavBar Estudiante/Docente -->
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="#">Inscripciones</a>
+          <a class="dropdown-item" href='ListarAceptadosEdicion.jsp?opAceptadosEdicion=<%= opAceptadosEdicion %>'>Listar inscripciones aceptados</a>
         </div>
       </li>
       <li class="nav-item">
