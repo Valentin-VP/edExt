@@ -29,6 +29,11 @@
 	}
 </style>
 
+<script>
+	function setOpt(){
+		sesion.setAttribute("optConsultaCursoInfoCurso", "0");
+	}
+</script>
 
 <%
 System.out.println(sesion.getAttribute("optConsultaCursoInfoCurso"));
@@ -49,6 +54,8 @@ System.out.println(cursosConsulta);
 %>
 </head>
 <body>
+	<h1 align="center"> Consulta Curso </h1>
+	<br><br>
 	<form action="ConsultarCurso" method="post">
 	  <div class="form-row">
 	    <div class="col-md-3" id="insCat">
@@ -64,15 +71,15 @@ System.out.println(cursosConsulta);
 	  	<div class="col-md-6">
 		    <input type="text" name="instituto-categoria" class="form-control" id="instituto-categoria" required>
 	    </div>
-	    <button class="btn btn-primary" id="botonInsCat" type="submit" onclick="mostrarTable()" >Aceptar</button>
+	    <button class="btn btn-primary" id="botonInsCat" type="submit" onclick="setOpt()" >Aceptar</button>
 	  </div>
 	</form>
 	
 	<form action="ConsultarCurso" method="post">
 	   <div class="form-row">	
 	      <div class="form-group col-md-4">
-		      <select id="dropdownCursos" name="dropdownCursos" class="selectpicker">
-		      	<option selected disabled>Curso</option>
+		      <select id="dropdownCursos" name="dropdownCursos" class="selectpicker" required>
+		      	<option></option>
 		        <%for(String c: cursosConsulta){
 		        	%><option value="<%=c %>"><%= c %></option><%
 		        } %>

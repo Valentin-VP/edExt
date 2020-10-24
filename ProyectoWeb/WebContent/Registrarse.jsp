@@ -42,8 +42,8 @@
   <div class="form-row">
   	<div class="form-group col-md-4">
       <label for="inputDia">Dia</label>
-      <select id="inputDia" name="DiaNac" class="selectpicker">
-        <option selected disabled>Choose...</option>
+      <select id="inputDia" name="DiaNac" class="selectpicker" required>
+      	<option></option>
         <option value="1">1</option>
         <option value="2">2</option>
         <option value="3">3</option>
@@ -79,8 +79,8 @@
   </div>
   <div class="form-group col-md-4">
       <label for="inputMes">Mes</label>
-      <select id="inputMes" name="MesNac" class="selectpicker">
-        <option selected disabled>Choose...</option>
+      <select id="inputMes" name="MesNac" class="selectpicker" required>
+      	<option></option>
         <option value="1">enero</option>
         <option value="2">febrero</option>
         <option value="3">marzo</option>
@@ -97,8 +97,8 @@
   </div>
   <div class="form-group col-md-4">
       <label for="inputAnio">Anio</label>
-      <select id="inputAnio" name="AnioNac" class="selectpicker">
-        <option selected disabled>Choose...</option>
+      <select id="inputAnio" name="AnioNac" class="selectpicker" required>
+      	<option></option>
         <option value="1994">1994</option>
         <option value="1995">1995</option>
         <option value="1996">1996</option>
@@ -125,7 +125,7 @@
   <br><br>
   <div class="form-row">
     <div class="form-check">
-	  <input class="form-check-input" type="checkbox" id="docente" name="esDocente" checked="checked" onchange="cargarSelect(this);" value="true">
+	  <input class="form-check-input" type="checkbox" id="docente" name="esDocente" onchange="cargarSelect(this);" value="true">
       <label class="form-check-label" for="gridCheck">Docente</label>
     </div>
   </div>
@@ -133,8 +133,8 @@
   <div class="form-row">
 	  <div class="form-group col-md-6">
 	      <label for="inputInstituto">Instituto</label>
-	      <select id="inputInstituto" name="instituto" class="selectpicker">
-	         <option selected disabled>Choose...</option>
+	      <select id="inputInstituto" name="instituto" class="selectpicker" >
+			 <option></option>
 	         <option value="crandon">crandon</option>
 	      </select>
 	  </div>
