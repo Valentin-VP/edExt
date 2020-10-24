@@ -15,10 +15,6 @@
       <label for="validationDefault01">Instituto</label>
       <input type="text" class="form-control" id="inputInstituto"name="instituto" placeholder="Fing" required>
     </div>
-    <div class="col-md-6 mb-3">
-      <label for="validationDefault02">Curso</label>
-      <input type="text" class="form-control" id="validationDefault02" placeholder="Calculo 2" required>
-    </div>
   </div>
   <div class="form-row">
     <div class="col-md-6 mb-3">
@@ -28,80 +24,19 @@
         <option>Calculo 2</option>
       </select>
     </div>
-    <div class="col-md-3 mb-3">
-      <label for="validationDefault04">State</label>
-      <select class="custom-select" id="validationDefault04" required>
-        <option selected disabled value="">Choose...</option>
-        <option>...</option>
-      </select>
-    </div>
-    <div class="col-md-3 mb-3">
-      <label for="validationDefault05">Zip</label>
-      <input type="text" class="form-control" id="validationDefault05" required>
-    </div>
-  </div>
-  <div class="form-group">
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" value="" id="invalidCheck2" required>
-      <label class="form-check-label" for="invalidCheck2">
-        Agree to terms and conditions
-      </label>
-    </div>
   </div>
   <button class="btn btn-primary" type="submit">Submit form</button>
 </form>
 
-<div class="dropdown">
-  <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Dropdown link
-  </a>
-  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-    <a class="dropdown-item" href="#">Action</a>
-    <a class="dropdown-item" href="#">Another action</a>
-    <a class="dropdown-item" href="#">Something else here</a>
-  </div>
-</div>
-
-<div class="table-responsive">
-<table class="table table-dark">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
 <div id="mostrardatos">
-<button id="boton1" onclick="imprimir();">Send an HTTP GET request to a page and get the result back</button>
+	<button id="boton1" onclick="imprimirInstitutos();">Mostrar institutos</button>
+	<button id="boton2" onclick="imprimirCursos();">Mostrar primer curso</button>
+	<h3 id="result"></h3>
 </div>
 
 <script>
-	//function cargarDropDown() {
-		
+
+	// GET en AJAX, CREA una tabla con la lista de objetos JSON
 	//Returning List<Entity> as JSON
 	//$(document).on("click", "#somebutton", function() {        // When HTML DOM "click" event is invoked on element with ID "somebutton", execute the following function...
 	//    $.get("someservlet", function(responseJson) {          // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
@@ -115,27 +50,36 @@
 	//    });
 	//});
 	
+	// GET EN AJAX
 	//Returning List<String> as JSON
-	function imprimir() {
+	function imprimirInstitutos() {
 		$(document).ready(function(){
-			  $("#boton1").click(function(){
-			    $.get("AltaUsuario.java", function(data, status){
-			      alert("Data: " + data + "\nStatus: " + status);
+			  $("#boton1").click(function(){ // Evento click del boton con id boton1
+			    $.get("InscripcionEdicionCurso", function(data, status){ // hago el get al serverlet InscripcionEdicionCurso
+			    	// data son los datos que devuelve, status es el resultado de la solicitud
+			      alert("Data: " + data[0].nombre + "\nStatus: " + status); //imprimo un mensaje con el primer valor del JSON
+			      alert("Data: " + data[1].nombre + "\nStatus: " + status);
 			    });
 			  });
 			});
 	}
 	
-	$(document).on("click", "#texto", function() {  // When HTML DOM "click" event is invoked on element with ID "somebutton", execute the following function...
-	    $.get("AltaUsuario.java", function(responseJson) {    // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
-	        var $ul = $("<ul>").appendTo($("#mostrardatos")); // Create HTML <ul> element and append it to HTML DOM element with ID "somediv".
-	        $.each(responseJson, function(index, item) { // Iterate over the JSON array.
-	            $("<li>").text(item).appendTo($ul);      // Create HTML <li> element, set its text content with currently iterated item and append it to the <ul>.
-	        });
-	    });
-	});
+	 // POST EN AJAX
+	 function imprimirCursos() {
+			var instituto=$('#inputInstituto').val(); // creo variable con el valor del input usando su id
+			$.ajax({ // 
+				url: 'InscripcionEdicionCurso', // Serverlet
+				method: 'POST',					// Metodo
+				data: {instituto : instituto}, // los datos que voy a mandar, nombre del atributo : el valor
+				success: function(resultText){ // si sale bien el request
+				$('#result').html(resultText); // muestro los datos en el h3 usando su id para identificarlo
+				},
+				error: function(jqXHR, exception){ // si da error el request
+				console.log('Error occured!!'); // imprimo en la consola del navegador
+				}
+			});
+	 }
 	
-	//}
 </script>
 
 <%@include file = "/footer.jsp" %>

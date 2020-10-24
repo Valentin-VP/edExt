@@ -3,13 +3,17 @@ package servlets;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import com.google.gson.Gson;
 
 import datatypes.DtCursoBase;
 import datatypes.DtEdicionBase;
@@ -22,6 +26,7 @@ import excepciones.SinInstitutos;
 import excepciones.UsuarioNoEstudiante;
 import excepciones.UsuarioNoExiste;
 import interfaces.Fabrica;
+import interfaces.IControladorAltaUsuario;
 import interfaces.IControladorInscripcionEdicionCurso;
 
 @WebServlet("/InscripcionEdicionCurso")
@@ -33,13 +38,45 @@ public class InscripcionEdicionCurso extends HttpServlet {
     }
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+	
+		Fabrica fabrica = Fabrica.getInstancia();
+		IControladorInscripcionEdicionCurso icon = fabrica.getIControladorInscripcionEdicionCurso();
+		List<DtInstituto> institutos = new ArrayList<DtInstituto>();
+		try {
+			institutos = icon.listarInstitutos();
+		} catch (SinInstitutos e) {
+			e.printStackTrace();
+		}
+		
+		//Ejemplo con Lista de Objetos JSON funcionando
+		//Returning List<Entity> as JSON
+		List<DtInstituto> products = institutos;
+		String json = new Gson().toJson(products);
+		// Gson es una clase de google que permite convertir en objetos JSON
+		// La dependencia de Maven esta incluida en el POM
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(json);		
+		
+		// Ejemplo con lista de String funcionando
+		/*Returning List<String> as JSON
+		List<String> list = new ArrayList<>();
+		list.add("item1");
+		list.add("item2");
+		list.add("item3");
+		String json = new Gson().toJson(list);
+	    response.setContentType("application/json");
+	    response.setCharacterEncoding("UTF-8");
+	    response.getWriter().write(json);
+		*/
+		
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		Fabrica fabrica = Fabrica.getInstancia();
+		IControladorInscripcionEdicionCurso icon = fabrica.getIControladorInscripcionEdicionCurso();
 		HttpSession sesion = request.getSession();
-		String tipo = (String) sesion.getAttribute("tipo");
 		String nick = (String) sesion.getAttribute("nick");
 		String correo = (String) sesion.getAttribute("correo");
 		String instituto = (String) request.getAttribute("instituto");
@@ -47,35 +84,71 @@ public class InscripcionEdicionCurso extends HttpServlet {
 		LocalDate hoy = LocalDate.now();
 		DtFecha fecha = new DtFecha(hoy.getDayOfMonth(),hoy.getMonthValue(),hoy.getYear());
 		
-		Fabrica fabrica = Fabrica.getInstancia();
-		IControladorInscripcionEdicionCurso icon = fabrica.getIControladorInscripcionEdicionCurso();
-		ArrayList<DtInstituto> institutos = new ArrayList<>();
-		try {
-			institutos = icon.listarInstitutos();
-		} catch (SinInstitutos e) {
-			e.printStackTrace();
+		// Comparo si es una request de AJAX o una request normal
+		boolean ajax = "XMLHttpRequest".equals(request.getHeader("X-Requested-With"));
+
+		if (ajax) { // Es una request de AJAX
+			
+			String ins = request.getParameter("instituto");
+			ArrayList<DtCursoBase> cursos = new ArrayList<>();
+			try {
+				cursos = icon.seleccionarInstituto(ins);
+			} catch (CursoNoExiste e) {
+				e.printStackTrace();
+			}
+			
+			// Ejemplo con lista de String funcionando
+			//Returning List<String> as JSON
+			List<String> strcursos = new ArrayList<String>();
+			for(DtCursoBase dtcb:cursos) {
+				strcursos.add(dtcb.getNombre());
+			}
+			
+			String json = new Gson().toJson(strcursos);
+		    response.setContentType("application/json");
+		    response.setCharacterEncoding("UTF-8");
+		    response.getWriter().write(json);
+			
+		    // Devuelve un String
+			//String name = request.getParameter("name");
+			//response.getWriter().print("Hello "+ name + "!!");
 		}
-		ArrayList<DtCursoBase> cursos = new ArrayList<>();
-		try {
-			cursos = icon.seleccionarInstituto(instituto);
-		} catch (CursoNoExiste e) {
-			e.printStackTrace();
+		else { // Sino es una request normal
+			
+			ArrayList<DtInstituto> institutos = new ArrayList<>();
+			RequestDispatcher rd;
+			
+			try {
+				institutos = icon.listarInstitutos();
+			} catch (SinInstitutos e) {
+				e.printStackTrace();
+			}
+			ArrayList<DtCursoBase> cursos = new ArrayList<>();
+			try {
+				cursos = icon.seleccionarInstituto(instituto);
+			} catch (CursoNoExiste e) {
+				e.printStackTrace();
+			}
+			DtEdicionBase dteb = new DtEdicionBase();
+			try {
+				dteb = icon.seleccionarCurso(curso);
+			} catch (EdicionVigenteNoExiste e) {
+				e.printStackTrace();
+			}
+			try {
+				icon.registrarInscripcionEd(nick, correo, curso, fecha);
+			} catch (InscripcionEdRepetido | UsuarioNoExiste | UsuarioNoEstudiante e) {
+				e.printStackTrace();
+			}
+			icon.confirmar();
+			icon.cancelar();
+			
+			request.setAttribute("mensaje", "La inscripcion a la edicion se realizo correctamente");
+			rd = request.getRequestDispatcher("/notificacion.jsp");
+			rd.forward(request, response);
+			
 		}
-		DtEdicionBase dteb = new DtEdicionBase();
-		try {
-			dteb = icon.seleccionarCurso(curso);
-		} catch (EdicionVigenteNoExiste e) {
-			e.printStackTrace();
-		}
-		try {
-			icon.registrarInscripcionEd(nick, correo, curso, fecha);
-		} catch (InscripcionEdRepetido | UsuarioNoExiste | UsuarioNoEstudiante e) {
-			e.printStackTrace();
-		}
-		icon.confirmar();
-		icon.cancelar();
 		
-		doGet(request, response);
 	}
 
 }
