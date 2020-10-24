@@ -26,7 +26,6 @@ import excepciones.SinInstitutos;
 import excepciones.UsuarioNoEstudiante;
 import excepciones.UsuarioNoExiste;
 import interfaces.Fabrica;
-import interfaces.IControladorAltaUsuario;
 import interfaces.IControladorInscripcionEdicionCurso;
 
 @WebServlet("/InscripcionEdicionCurso")
@@ -79,8 +78,6 @@ public class InscripcionEdicionCurso extends HttpServlet {
 		HttpSession sesion = request.getSession();
 		String nick = (String) sesion.getAttribute("nick");
 		String correo = (String) sesion.getAttribute("correo");
-		String instituto = (String) request.getAttribute("instituto");
-		String curso = (String) request.getAttribute("curso");
 		LocalDate hoy = LocalDate.now();
 		DtFecha fecha = new DtFecha(hoy.getDayOfMonth(),hoy.getMonthValue(),hoy.getYear());
 		
@@ -89,7 +86,7 @@ public class InscripcionEdicionCurso extends HttpServlet {
 
 		if (ajax) { // Es una request de AJAX
 			
-			String ins = request.getParameter("instituto");
+			String ins = request.getParameter("institutoselect");
 			ArrayList<DtCursoBase> cursos = new ArrayList<>();
 			try {
 				cursos = icon.seleccionarInstituto(ins);
@@ -115,6 +112,14 @@ public class InscripcionEdicionCurso extends HttpServlet {
 		}
 		else { // Sino es una request normal
 			
+			String instituto = request.getParameter("selectInstitutos");
+			String curso = request.getParameter("selectCursos");
+			System.out.println("\n"+nick);
+			System.out.println(correo);
+			System.out.println(instituto);
+			System.out.print(curso);
+			
+			@SuppressWarnings("unused")
 			ArrayList<DtInstituto> institutos = new ArrayList<>();
 			RequestDispatcher rd;
 			
@@ -123,11 +128,14 @@ public class InscripcionEdicionCurso extends HttpServlet {
 			} catch (SinInstitutos e) {
 				e.printStackTrace();
 			}
+			
+			@SuppressWarnings("unused")
 			ArrayList<DtCursoBase> cursos = new ArrayList<>();
 			try {
 				cursos = icon.seleccionarInstituto(instituto);
 			} catch (CursoNoExiste e) {
 				e.printStackTrace();
+				System.out.print(e);
 			}
 			DtEdicionBase dteb = new DtEdicionBase();
 			try {
@@ -143,7 +151,7 @@ public class InscripcionEdicionCurso extends HttpServlet {
 			icon.confirmar();
 			icon.cancelar();
 			
-			request.setAttribute("mensaje", "La inscripcion a la edicion se realizo correctamente");
+			request.setAttribute("mensaje", "La inscripcion a la edicion"+ dteb.getNombre() +"se realizo correctamente");
 			rd = request.getRequestDispatcher("/notificacion.jsp");
 			rd.forward(request, response);
 			
