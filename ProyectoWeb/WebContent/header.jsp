@@ -17,7 +17,7 @@ crossorigin="anonymous">
 	//String tipoUser = "";
 	//String nickname = "";
 	//if (request.isRequestedSessionIdValid()){
-	if (sesion.isNew() || tipoUser == null){
+	if (/*sesion.isNew() || */tipoUser == null){
 		tipoUser = "visitante";
 		System.out.println("entra al if ");
 	} else {
