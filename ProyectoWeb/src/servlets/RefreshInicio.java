@@ -51,6 +51,7 @@ public class RefreshInicio extends HttpServlet {
         	session.removeAttribute("cursosAceptados");
         	session.removeAttribute("edicionesAceptados");
         	session.removeAttribute("infoFinalAceptados");
+        	session.removeAttribute("todosLosCursos");
         	//session.invalidate();
         }
 
