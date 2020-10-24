@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import datatypes.DtCursoBase;
+import datatypes.DtCurso;
+import datatypes.DtFecha;
 import excepciones.CategoriaInexistente;
 import excepciones.CategoriaSinCursos;
 import excepciones.InstitutoInexistente;
@@ -39,7 +41,7 @@ public class ConsultarCurso extends HttpServlet {
 		Fabrica fabrica = Fabrica.getInstancia();
 		RequestDispatcher rd;
 		IControladorConsultaCurso icon = fabrica.getIControladorConsultaCurso();
-		switch((String)sesion.getAttribute("optConsultaCursoInfoCurso")) {
+		switch(sesion.getAttribute("optConsultaCursoInfoCurso").toString()) {
 		case "0": //carga una variable con los cursos
 					boolean esInstituto = request.getParameter("esInstitutoInfoCurso") != null;
 					boolean esCategoria = request.getParameter("esCategoriaInfoCurso") != null;
@@ -67,12 +69,30 @@ public class ConsultarCurso extends HttpServlet {
 					sesion.setAttribute("instituto-categoria", InsCat);
 					sesion.setAttribute("esCategoria", esCategoria);
 					sesion.setAttribute("esInstituto", esInstituto);
+					sesion.setAttribute("optConsultaCursoInfoCurso", "1");
+					
 					
 					rd = request.getRequestDispatcher("/infoCurso.jsp");
-					sesion.setAttribute("optConsultaCursoInfoCurso", "1");
+					
+					System.out.println("ConsultarCurso setea: " + sesion.getAttribute("optConsultaCursoInfoCurso"));
 					rd.forward(request, response);
 					break;	
-		case "1": 
+		case "1": 	String nomCurso = (String) request.getParameter("dropdownCursos");
+					ArrayList<String> infoCurso = new ArrayList<String>();
+					DtCurso curso = icon.consultarCurso(nomCurso);
+					infoCurso.add(nomCurso);
+					infoCurso.add(curso.getDescripcion());
+					infoCurso.add(curso.getDuracion());
+					infoCurso.add(Integer.toString(curso.getCantHoras()));
+					infoCurso.add(curso.getCreditos().toString());
+					infoCurso.add(curso.getUrl());
+					String categorias = "";
+					if(!curso.getCategorias().isEmpty()){
+						for(String c: curso.getCategorias()){
+							categorias = categorias + ", " + c;
+						}
+					}
+					infoCurso.add(categorias);
 					break;
 		}
 		
