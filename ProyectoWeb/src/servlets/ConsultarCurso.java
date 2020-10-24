@@ -78,7 +78,10 @@ public class ConsultarCurso extends HttpServlet {
 					rd.forward(request, response);
 					break;	
 
-		case "1": 	String nomCurso = (String) request.getParameter("dropdownCursos");
+		case "1": 	String nomCurso = "";
+					if(request.getParameter("dropdownCursos") == null) {
+						nomCurso = request.getParameter("dropdownCursos").toString();
+					}
 					ArrayList<String> infoCurso = new ArrayList<String>();
 					DtCurso curso = icon.consultarCurso(nomCurso);
 					infoCurso.add(nomCurso);

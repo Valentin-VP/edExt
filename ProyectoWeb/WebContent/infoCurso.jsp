@@ -31,7 +31,10 @@
 
 
 <%
-sesion.setAttribute("optConsultaCursoInfoCurso", "0");
+System.out.println(sesion.getAttribute("optConsultaCursoInfoCurso"));
+if(sesion.getAttribute("optConsultaCursoInfoCurso") == null){	
+	sesion.setAttribute("optConsultaCursoInfoCurso", "0");
+}
 ArrayList<String> cursosConsulta = (ArrayList) sesion.getAttribute("cursosConsulta");
 if(cursosConsulta == null){
 	cursosConsulta = new ArrayList<String>();
@@ -65,7 +68,7 @@ System.out.println(cursosConsulta);
 	  </div>
 	</form>
 	
-	<form action="ConsultaCurso" method="post">
+	<form action="ConsultarCurso" method="post">
 	   <div class="form-row">	
 	      <div class="form-group col-md-4">
 		      <select id="dropdownCursos" name="dropdownCursos" class="selectpicker">
@@ -74,49 +77,48 @@ System.out.println(cursosConsulta);
 		        	%><option value="<%=c %>"><%= c %></option><%
 		        } %>
 		      </select>
-		   </div> 
-		   <%if(!cursosConsulta.isEmpty()) {
-			   sesion.setAttribute("optConsultaCursoInfoCruso", 1);
-		   }%>
-	      <button type="submit" class="btn btn-secondary" id="buscarCursos">Buscar</button>
-	      </div>
+		  </div> 
+	      	<button type="submit" class="btn btn-secondary" id="buscarCursos">Buscar</button>
+		  </div>
 	   </div>
 	</form> 
 		  		
 		  	
-	
+	<%if(!infoCurso.isEmpty()){
+		%>
 	  <div class="container" id="tabla">
 	  	<table class="table">
 		  <tbody>
 		    <tr>
 		      <th scope="row">Nombre del curso</th>
-		      <td>Mark</td>
+		      <td><%=infoCurso.get(0)%></td>
 		    </tr>
 		    <tr>
 		      <th scope="row">Descripcion</th>
-		      <td>Jacob</td>
+		      <td><%=infoCurso.get(1) %></td>
 		    </tr>
 		    <tr>
 		      <th scope="row">Duracion</th>
-		      <td>Larry</td>
+		      <td><%=infoCurso.get(2) %></td>
 		    </tr>
 		    <tr>
 		      <th scope="row">Cant. horas</th>
-		      <td>Larry</td>
+		      <td><%=infoCurso.get(3) %></td>
 		    </tr>
 		    <tr>
 		      <th scope="row">Creditos</th>
-		      <td>Larry</td>
+		      <td><%=infoCurso.get(4) %></td>
 		    </tr>
 		    <tr>
 		      <th scope="row">URL</th>
-		      <td>Larry</td>
+		      <td><%=infoCurso.get(5) %></td>
 		    </tr>
 		    <tr>
 		      <th scope="row">Categorias a las que pertenece</th>
-		      <td>Larry</td>
+		      <td><%=infoCurso.get(6) %></td>
 		  </tbody>
 		</table>
+	<%}%>	
 	  </div>
 	</form>
 <%@include file = "/footer.jsp" %>
