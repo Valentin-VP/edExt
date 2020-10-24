@@ -10,7 +10,7 @@ public interface IControladorSesion {
 		
 		public String obtenerNick();
 		
-		public String obtenerPassword();
+		public String obtenerCorreo();
 		
 		public String codificarPass(String contrasenia) throws NoSuchAlgorithmException;
 }

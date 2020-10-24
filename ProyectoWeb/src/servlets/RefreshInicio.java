@@ -38,6 +38,7 @@ public class RefreshInicio extends HttpServlet {
         	session.removeAttribute("esCategoriaEd");
         	session.removeAttribute("optConsultaEdicionInfoEdicion");
         	session.removeAttribute("optAltaEdicionAltaEd");
+        	session.invalidate();
         }
         
         RequestDispatcher rd;

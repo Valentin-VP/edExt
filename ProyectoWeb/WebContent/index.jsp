@@ -26,8 +26,22 @@
 	  	<a href="#" class="list-group-item list-group-item-action">UTU</a>
 	  	<a href="#" class="list-group-item list-group-item-action">UTEC</a>
 	  	<a href="#" class="list-group-item list-group-item-action">Kenedy</a>
+	  	<!-- Botton de prueba AJAX -->
+	  	<a class="list-group-item list-group-item-action" href="AJAXexample.jsp">prueba AJAX</a>
 	</div>
- 
+ <script> 
+	$(document).ready(function(){
+  		//$("#cargarCombo").click(function(){
+  		//$("#cargarCombo").on("click", function() {
+		$.get("AltaUsuario", function(responseJson) {
+    		//$.each(responseJson, function(index, instituto) {
+  			//$("<option>").appendTo($("#inputInstituto")).text(instituto.nombre);      
+  			//});
+  			alert("Datos: " + responseJson);
+  		});
+  		//});
+  	});	
+</script>
 <%@include file = "/footer.jsp" %>
 </body>
 </html>

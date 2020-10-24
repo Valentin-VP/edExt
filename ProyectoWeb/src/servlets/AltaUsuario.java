@@ -38,7 +38,22 @@ public class AltaUsuario extends HttpServlet {
 		} catch (SinInstitutos e) {
 			e.printStackTrace();
 		}
-	    String json = new Gson().toJson(institutos);
+		
+		//Returning List<Entity> as JSON
+		/*
+		List<DtInstituto> products = institutos;
+		    String json = new Gson().toJson(products);
+		    response.setContentType("application/json");
+		    response.setCharacterEncoding("UTF-8");
+		    response.getWriter().write(json);		
+		   */
+		
+		//Returning List<String> as JSON
+		List<String> list = new ArrayList<>();
+		list.add("item1");
+		list.add("item2");
+		list.add("item3");
+		String json = new Gson().toJson(list);
 
 	    response.setContentType("application/json");
 	    response.setCharacterEncoding("UTF-8");

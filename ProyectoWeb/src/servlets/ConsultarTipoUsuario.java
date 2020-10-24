@@ -39,14 +39,17 @@ public class ConsultarTipoUsuario extends HttpServlet {
 		}
 		String tipo = "";
 		String nickname = "visitante";
+		String correo = "";
 		try {
 			if(icon.existeUsuario(nick)) {
 				tipo = icon.identificarUsuario(nick, codificada);
 				if(tipo != null) {
 					nickname = icon.obtenerNick();
+					correo = icon.obtenerCorreo();
 					HttpSession sesion = request.getSession(true);
 					sesion.setAttribute("tipo", tipo);
 					sesion.setAttribute("nick", nickname);
+					sesion.setAttribute("correo", correo);
 				}	
 			}
 		} catch(Exception e) {

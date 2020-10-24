@@ -7,7 +7,7 @@ import interfaces.IControladorSesion;
 
 public class ControladorSesion implements IControladorSesion{
 	private String nick = "";
-	private String password = "";
+	private String correo = "";
 	@Override
 	public boolean existeUsuario(String id) {
 		this.nick = "";
@@ -40,7 +40,7 @@ public class ControladorSesion implements IControladorSesion{
 					else
 						tipo = "estudiante";
 					this.nick = u.getNick();
-					this.password = u.getPassword();
+					this.correo = u.getCorreo();
 				}
 			}
 		}
@@ -53,6 +53,7 @@ public class ControladorSesion implements IControladorSesion{
 					else
 						tipo = "estudiante";
 					this.nick = u.getNick();
+					this.correo = u.getCorreo();
 				}
 			}
 		}
@@ -65,8 +66,8 @@ public class ControladorSesion implements IControladorSesion{
 	}
 
 	@Override
-	public String obtenerPassword() {
-		return this.password;
+	public String obtenerCorreo() {
+		return this.correo;
 	}
 	
 	@Override

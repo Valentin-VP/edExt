@@ -32,7 +32,6 @@ if(tipoUser.equals("docente")) { %> <!-- NavBar Estudiante/Docente -->
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item dropdown">
@@ -81,7 +80,6 @@ if(tipoUser.equals("docente")) { %> <!-- NavBar Estudiante/Docente -->
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
      <li class="nav-item dropdown">
@@ -98,7 +96,7 @@ if(tipoUser.equals("docente")) { %> <!-- NavBar Estudiante/Docente -->
           Estudiantes
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Inscribirse</a>
+          <a class="dropdown-item" href="inscripcionEdicionCurso.jsp">Inscribirse</a>
         </div>
       </li>
       <li class="nav-item">
@@ -120,7 +118,6 @@ if(tipoUser.equals("docente")) { %> <!-- NavBar Estudiante/Docente -->
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
      <li class="nav-item dropdown">
@@ -145,5 +142,4 @@ if(tipoUser.equals("docente")) { %> <!-- NavBar Estudiante/Docente -->
     </form>
   </div>
 </nav>
- 
 <% } %>

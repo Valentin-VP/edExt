@@ -119,20 +119,11 @@
   </div>
   <div class="form-row">
     <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="docente" name="esDocente" value="true" onclick="cargarCombo()">
+	  <input class="form-check-input" type="checkbox" id="docente" name="esDocente" checked="checked" onchange="cargarSelect(this);" value="true">
       <label class="form-check-label" for="gridCheck">Docente</label>
     </div>
   </div>
   <br>
-  <script> function cargarCombo() {
-       	if (document.getElementById("docente").checked) {
-       	<% if (institutos != null) { 
-       	for(String i: institutos) { %>
-    	document.getElementById("inputInstituto").innerHTML = '<option value="<%= i %>"> <%= i %> </option>';
-    <% } %>
-  	<% } %>
-  }
-  }</script>
   <div class="form-group col-md-6">
       <label for="inputInstituto">Instituto</label>
       <select id="inputInstituto" name="instituto" class="selectpicker">
@@ -143,7 +134,24 @@
   </div>
   <button type="submit" class="btn btn-primary">Registrarse</button>
 </form>
-
+<!-- <input type="button" id="cargarCombo" onClick="cargarInstitutos()"> -->
+<script>
+	function cargarSelect(elem) {
+		if (elem.checked) {
+			$(document).ready(function(){
+				//$("#cargarCombo").click(function(){
+				//$("#cargarCombo").on("click", function() {
+					$.get("AltaUsuario", function(responseJson) {
+				        $.each(responseJson, function(index, instituto) {
+				        	$("<option>").appendTo($("#inputInstituto")).text(instituto.nombre);      
+						});
+						alert("Datos: " + responseJson);
+					});
+				//});
+			});	
+		}
+	}
+</script>
 <%@include file = "/footer.jsp" %>
 </body>
 </html>
