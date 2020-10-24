@@ -80,8 +80,41 @@ if(session.getAttribute("optConsultaEdicionInfoEdicion").toString().equals("0"))
 </form>
 <%}else if(session.getAttribute("optConsultaEdicionInfoEdicion").toString().equals("3")) {%>
 <form>
+	<div class="form-row">
 	<!-- <input type="text" name="optConsultaEdicionInfoEdicion" value="<%=request.getParameter("optConsultaEdicionInfoEdicion")%>"> -->
-	<h4> falta mostrar los datos de la edicion </h4>
+	<table class="table">
+	  <tbody>
+	    <tr>
+	      <th scope="row">Nombre de la Edicion</th>
+	      <td><%= infoEdicion.getNombre() %></td>
+	    </tr>
+	    <tr>
+	      <th scope="row">Fecha de Inicio</th>
+	      <td><%= infoEdicion.getFechaI().getDia() + "/" + infoEdicion.getFechaI().getMes() + "/" + infoEdicion.getFechaI().getAnio() %></td>
+	    </tr>
+	    <tr>
+	      <th scope="row">Fecha de Fin</th>
+	      <td><%= infoEdicion.getFechaF().getDia() + "/" + infoEdicion.getFechaF().getMes() + "/" + infoEdicion.getFechaF().getAnio() %></td>
+	    </tr>
+	    <tr>
+	      <th scope="row">Tiene Cupos</th>
+	      <% if(infoEdicion.isTieneCupos()){ %>
+	      <td> Si </td>
+	      <%} else { %>
+	      <td> No </td>
+	      <%} %>
+	    </tr>
+	    <tr>
+	      <th scope="row">Cupos(Si la edicion no tiene cupos se imprime 0)</th>
+	      <td><%= infoEdicion.getCupo() %></td>
+	    </tr>
+	    <tr>
+	      <th scope="row">Fecha de Publicacion</th>
+	      <td><%= infoEdicion.getFechaPub().getDia() + "/" + infoEdicion.getFechaPub().getMes() + "/" + infoEdicion.getFechaPub().getAnio() %></td>
+	    </tr>
+	  </tbody>
+	</table>
+	</div>
 </form>
 <% } %>  
 <%@include file = "/footer.jsp" %>

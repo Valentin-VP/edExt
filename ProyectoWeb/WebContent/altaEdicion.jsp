@@ -18,35 +18,19 @@
 	ArrayList<String> docentes = (ArrayList<String>) session.getAttribute("docentes");
 	@SuppressWarnings("unchecked")
 	ArrayList<String> cursos = (ArrayList<String>) session.getAttribute("cursos");
-	@SuppressWarnings("unchecked")
-	ArrayList<String> institutos = (ArrayList<String>) session.getAttribute("institutosAltaEd");
-
 if(session.getAttribute("optAltaEdicionAltaEd").toString().equals("0")) {%>
 <form action="AltaEdicionCurso" method="post">
    <div class="form-row">	
       <div class="form-group col-md-4">
-      	<button type="submit" class="btn btn-primary">Continuar</button>
-	  </div>
-   </div>
-</form>
-<%} else if(session.getAttribute("optAltaEdicionAltaEd").toString().equals("1")) {%>
-<form action="AltaEdicionCurso" method="post">
-   <div class="form-row">	
-      <div class="form-group col-md-4">
 	      <label for="inputInstituto">Instituto</label>
-	      <select id="inputInstituto" name="instituto" class="selectpicker">
-	        <option selected disabled>Choose...</option>
-	        <%for(String i: institutos){%>
-	        	<option value="<%= i %>"><%= i %></option>
-	        <%}%>
-	      </select>
+	      <input type="text" name="institutoAltaEd" class="form-control" id="inputInstituto">
 	   </div>
    </div>   
    <div class="form-row">
       <button type="submit" class="btn btn-primary">Buscar Cursos</button>
    </div>
 </form>    
-<% } else if(session.getAttribute("optAltaEdicionAltaEd").toString().equals("2")){%>
+<% } else if(session.getAttribute("optAltaEdicionAltaEd").toString().equals("1")){%>
 <form action="AltaEdicionCurso" method="post">
 	<div class=form-row>
 	  	<div class="form-group col-md-3">

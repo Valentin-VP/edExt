@@ -44,25 +44,11 @@ public class AltaEdicionCurso extends HttpServlet {
 		RequestDispatcher rd;
 		
 		switch(sesion.getAttribute("optAltaEdicionAltaEd").toString()) {
-		case "0":	IControladorAltaUsuario icon2 = fabrica.getIControladorAltaUsuario();
-					ArrayList<String> institutos = new ArrayList<String>();
-					try {
-						for(DtInstituto dti: icon2.listarInstitutos()) {
-							institutos.add(dti.getNombre());
-						}
-					} catch (SinInstitutos e1) {
-						e1.printStackTrace();
-					}	
-					sesion.setAttribute("institutosAltaEd", institutos);
-					sesion.setAttribute("optAltaEdicionAltaEd", "1");
-					rd = request.getRequestDispatcher("/altaEdicion.jsp");
-					rd.forward(request, response);
-					break;
-		case "1"://traerme cursos y docentes del instituto
-					String instituto = request.getParameter("instituto");
+		case "0"://traerme cursos y docentes del instituto
+					String instituto = request.getParameter("institutoAltaEd");
 					List<String> cursos = new ArrayList<String>();
 					List<String> docentes = new ArrayList<String>();
-					sesion.setAttribute("instituto", instituto);
+					sesion.setAttribute("institutoAltaEd", instituto);
 					try {
 						for(DtCursoBase dtcb: icon.seleccionarInstituto(instituto)) {
 							cursos.add(dtcb.getNombre());
@@ -75,11 +61,11 @@ public class AltaEdicionCurso extends HttpServlet {
 						docentes.add(dtub.getNick());
 					}
 					sesion.setAttribute("docentes", docentes);
-					sesion.setAttribute("optAltaEdicionAltaEd", "2");
+					sesion.setAttribute("optAltaEdicionAltaEd", "1");
 					rd = request.getRequestDispatcher("/altaEdicion.jsp");
 					rd.forward(request, response);
 					break;
-		case "2"://hacer el alta de la edicion
+		case "1"://hacer el alta de la edicion
 					String curso = request.getParameter("curso");
 					String nombre = request.getParameter("nombreEdicion");
 					boolean conCupos = request.getParameter("tieneCupos") != null;
