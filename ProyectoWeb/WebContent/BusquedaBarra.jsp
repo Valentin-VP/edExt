@@ -42,7 +42,10 @@
 			<button type="submit" class="btn btn-primary">Filtrar</button>
 		</div>
 	</div>
+</form>
+
 	<br><br>
+<form action="ConsultarCurso" method="post">	
 	<div class="form-row">
 	<% if(textoFiltrado != null) {%>
 		<h5> Filtrado por: <%= textoFiltrado %> </h5>
@@ -53,12 +56,21 @@
 	</div>
 	<br><br>
 	<h3 align="center"> Se muestran resultados </h3>
-	<%for(String curso: cursosAMostrar){ %>
-		<p>
-		<%=curso %>
-		</p>
-	<%} %>
-</form>
+	
+	<div id="listaInstitutos" class="list-group">
+		<%if (cursosAMostrar != null) { 
+			for(String curso: cursosAMostrar) { %>
+				<a class="list-group-item list-group-item-action"><%=curso %></a>
+			<%}
+		
+		}else{%>
+			<a class="list-group-item list-group-item-action">No hay resultados</a>
+		<%} %>
+	</div>
+	
+</form>	
+
+
 <%@include file = "/footer.jsp" %>
 </body>
 </html>

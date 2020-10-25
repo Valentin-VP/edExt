@@ -116,15 +116,30 @@ if(session.getAttribute("optAltaEdicionAltaEd").toString().equals("0")) {%>
 	    <div class="form-group col-md-3">
 	        <label for="inputAnioI">Anio Inicio</label>
 	        <select id="inputAnioI" name="AnioI" class="selectpicker">
-	          <option value="1994">1994</option>
-	          <option value="1995">1995</option>
-	          <option value="1996">1996</option>
-	          <option value="1997">1997</option>
-	          <option value="1998">1998</option>
-	          <option value="1999">1999</option>
 	          <option value="2000">2000</option>
 	          <option value="2001">2001</option>
-	          <option value="2002">2002</option>
+	          <option value="2002">2003</option>
+	          <option value="1994">2004</option>
+	          <option value="1995">2005</option>
+	          <option value="1996">2006</option>
+	          <option value="1997">2007</option>
+	          <option value="1998">2008</option>
+	          <option value="1999">2009</option>
+	          <option value="2000">2010</option>
+	          <option value="2001">2011</option>
+	          <option value="2002">2012</option>
+	          <option value="2013">2013</option>
+	          <option value="2014">2014</option>
+	          <option value="2015">2015</option>
+	          <option value="2016">2016</option>
+	          <option value="2017">2017</option>
+	          <option value="2018">2018</option>
+	          <option value="2019">2019</option>
+	          <option value="2020">2020</option>
+	          <option value="2021">2021</option>
+	          <option value="2022">2022</option>
+	          <option value="2023">2023</option>
+	          <option value="2024">2024</option>
 	        </select>
 	    </div>
     </div>
@@ -186,15 +201,30 @@ if(session.getAttribute("optAltaEdicionAltaEd").toString().equals("0")) {%>
 	    <div class="form-group col-md-3">
 	        <label for="inputAnioF">Anio Fin</label>
 	        <select id="inputAnioF" name="AnioF" class="selectpicker">
-	          <option value="1994">1994</option>
-	          <option value="1995">1995</option>
-	          <option value="1996">1996</option>
-	          <option value="1997">1997</option>
-	          <option value="1998">1998</option>
-	          <option value="1999">1999</option>
 	          <option value="2000">2000</option>
 	          <option value="2001">2001</option>
-	          <option value="2002">2002</option>
+	          <option value="2002">2003</option>
+	          <option value="1994">2004</option>
+	          <option value="1995">2005</option>
+	          <option value="1996">2006</option>
+	          <option value="1997">2007</option>
+	          <option value="1998">2008</option>
+	          <option value="1999">2009</option>
+	          <option value="2000">2010</option>
+	          <option value="2001">2011</option>
+	          <option value="2002">2012</option>
+	          <option value="2013">2013</option>
+	          <option value="2014">2014</option>
+	          <option value="2015">2015</option>
+	          <option value="2016">2016</option>
+	          <option value="2017">2017</option>
+	          <option value="2018">2018</option>
+	          <option value="2019">2019</option>
+	          <option value="2020">2020</option>
+	          <option value="2021">2021</option>
+	          <option value="2022">2022</option>
+	          <option value="2023">2023</option>
+	          <option value="2024">2024</option>
 	        </select>
 	    </div>
     </div>
@@ -256,15 +286,30 @@ if(session.getAttribute("optAltaEdicionAltaEd").toString().equals("0")) {%>
 	    <div class="form-group col-md-3">
 	        <label for="inputAnioP">Anio Pub</label>
 	        <select id="inputAnioP" name="AnioP" class="selectpicker">
-	          <option value="1994">1994</option>
-	          <option value="1995">1995</option>
-	          <option value="1996">1996</option>
-	          <option value="1997">1997</option>
-	          <option value="1998">1998</option>
-	          <option value="1999">1999</option>
 	          <option value="2000">2000</option>
 	          <option value="2001">2001</option>
-	          <option value="2002">2002</option>
+	          <option value="2002">2003</option>
+	          <option value="1994">2004</option>
+	          <option value="1995">2005</option>
+	          <option value="1996">2006</option>
+	          <option value="1997">2007</option>
+	          <option value="1998">2008</option>
+	          <option value="1999">2009</option>
+	          <option value="2000">2010</option>
+	          <option value="2001">2011</option>
+	          <option value="2002">2012</option>
+	          <option value="2013">2013</option>
+	          <option value="2014">2014</option>
+	          <option value="2015">2015</option>
+	          <option value="2016">2016</option>
+	          <option value="2017">2017</option>
+	          <option value="2018">2018</option>
+	          <option value="2019">2019</option>
+	          <option value="2020">2020</option>
+	          <option value="2021">2021</option>
+	          <option value="2022">2022</option>
+	          <option value="2023">2023</option>
+	          <option value="2024">2024</option>
 	        </select>
 	    </div>
     </div>

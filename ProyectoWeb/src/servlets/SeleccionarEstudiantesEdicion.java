@@ -38,7 +38,7 @@ public class SeleccionarEstudiantesEdicion extends HttpServlet {
 		IControladorSeleccionarEstudiantesParaUnaEdicionDeCurso icon = fabrica.getIControladorSeleccionarEstudiantesParaUnaEdicionDeCurso();
 		HttpSession sesion = request.getSession(true);
 		RequestDispatcher rd;
-			
+		String curso = request.getParameter("cursoSeleccionarEstudiantes");	
 		// Comparo si es una request de AJAX o una request normal
 		boolean ajax = "XMLHttpRequest".equals(request.getHeader("X-Requested-With"));
 
@@ -81,7 +81,8 @@ public class SeleccionarEstudiantesEdicion extends HttpServlet {
 				}		
 				break;
 			case "1":	//selecciona curso, devuelve edicion completa vigente
-				String curso = request.getParameter("cursoSeleccionarEstudiantes");
+				curso = request.getParameter("cursoSeleccionarEstudiantes");
+				sesion.setAttribute("cursoSeleccionarEstudiantes", curso);
 				System.out.println("el curso es"+curso);
 				DtEdicionCompleta dtec = new DtEdicionCompleta();
 				try {
@@ -94,10 +95,12 @@ public class SeleccionarEstudiantesEdicion extends HttpServlet {
 					request.setAttribute("mensaje", e.getMessage());
 					rd = request.getRequestDispatcher("/error.jsp");
 					rd.forward(request, response);
+					System.out.println(e.getMessage());
 				} catch (Exception e) {
 					request.setAttribute("mensaje", "El formulario ha partido.");
 					rd = request.getRequestDispatcher("/error.jsp");
 					rd.forward(request, response);
+					System.out.println(e.getMessage());
 				}
 				break;
 			case "2":	//selecciona el orden de los estudiantes
@@ -105,7 +108,7 @@ public class SeleccionarEstudiantesEdicion extends HttpServlet {
 				List<DtInscripcionEd> inscripciones = new ArrayList<DtInscripcionEd>();
 				System.out.print("esta ordenado por"+ordenar);
 				try {
-					
+					dtec = icon.seleccionarCurso(sesion.getAttribute("cursoSeleccionarEstudiantes").toString());
 					inscripciones = icon.ordenarInscripciones(ordenar);
 					
 					sesion.setAttribute("inscripcionesEstudiantes", inscripciones);
