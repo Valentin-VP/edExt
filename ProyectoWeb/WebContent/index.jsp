@@ -10,8 +10,19 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
 <%@include file = "/header.jsp" %>
 <title>Stark Institutes</title>
-<style>
 
+<%
+String session_val = (String) sesion.getAttribute("welcome"); 
+System.out.println("session_val "+session_val);
+ArrayList<String> institutosIndex = (ArrayList) sesion.getAttribute("institutosPlataforma");
+ArrayList<String> categoriasIndex = (ArrayList) sesion.getAttribute("categoriasPlataforma");
+%>
+
+<%
+
+if(session_val != null){%>
+
+<style>
 
 #carouselExampleIndicators{
 	top: 50px;
@@ -19,7 +30,7 @@
  	margin: 0 1.5%;
 	width: calc(70%);
 	position : relative;
-	border : 3px solid #73AD21;
+	border : 3px solid #FF0000;
 }
 
 #listaInstitutos {
@@ -30,22 +41,45 @@
 	top: 50px;
 	left: 0;
 	height: 600px;
-	border: 3px solid #73AD21;
+	border: 3px solid #FF0000;
 	overflow: auto;
 	visibility: hidden;
 }
 
 </style>
+
+<%}else{%>
+<style>
+
+#carouselExampleIndicators{
+	top: 50px;
+	float: right;
+ 	margin: 0 1.5%;
+	width: calc(70%);
+	position : relative;
+	border : 3px solid #FF0000;
+	right : 170px;
+}
+
+#listaInstitutos {
+	float: left;
+	margin: 0 1.5%;
+	width: 63%;
+	position: relative;
+	top: 50px;
+	left: 0;
+	height: 600px;
+	border: 3px solid #FF0000;
+	overflow: auto;
+	visibility: hidden;
+}
+
+</style>
+
+<%} %>
 </head>
 
 <body>
-
-<%
-String session_val = (String) sesion.getAttribute("welcome"); 
-System.out.println("session_val "+session_val);
-ArrayList<String> institutosIndex = (ArrayList) sesion.getAttribute("institutosPlataforma");
-ArrayList<String> categoriasIndex = (ArrayList) sesion.getAttribute("categoriasPlataforma");
-%>
 
 <div id="listaInstitutos" class="list-group">
 <h4 align=center>Institutos</h4>
