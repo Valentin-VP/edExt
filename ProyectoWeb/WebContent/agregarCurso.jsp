@@ -42,7 +42,7 @@
 </form> 
 
 <%}else if(session.getAttribute("optAltaCurso").toString().equals("cargaDatos")) { %>
-<form action="altaCurso" method="post">
+<form action="AltaCurso" method="post">
 	<div class="container">
 	  <div class="row">
 		    <div class="col-sm">
@@ -61,7 +61,7 @@
 	  		<div class="input-group-prepend">
 	    		<span class="input-group-text" id="basic-addon1">Nombre</span>
 	  		</div>
-	  		<input type="text" class="form-control" placeholder="Ironman" aria-label="Username" aria-describedby="basic-addon1" name=cursoAltaCurso>
+	  		<input type="text" class="form-control" placeholder="Tony Stark" aria-label="Username" aria-describedby="basic-addon1" name=cursoAltaCurso>
 		</div>
 	</div>
 	
@@ -73,6 +73,15 @@
 	  		<input type="text" class="form-control" placeholder="The best hero" aria-label="Username" aria-describedby="basic-addon1" name=descripcionAltaCurso>
 		</div>
 	</div>
+	
+	<div class="form-row">
+		<div class="input-group mt-2 mb-3">
+	  		<div class="input-group-prepend">
+	    		<span class="input-group-text" id="basic-addon1">Duracion</span>
+	  		</div>
+	  		<input type="text" class="form-control" placeholder="0" aria-label="Username" aria-describedby="basic-addon1" name=duracionAltaCurso>
+		</div>
+	</div>	
 	
 	<div class="form-row">
 		<div class="input-group mt-2 mb-3">
