@@ -22,4 +22,6 @@ public interface IControladorSeleccionarEstudiantesParaUnaEdicionDeCurso {
 	
 	public void confirmarSeleccion();
 	
+	public void limpiar();
+	
 }

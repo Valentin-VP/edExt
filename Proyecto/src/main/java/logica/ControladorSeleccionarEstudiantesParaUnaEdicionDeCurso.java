@@ -60,7 +60,7 @@ public class ControladorSeleccionarEstudiantesParaUnaEdicionDeCurso implements I
 	private Edicion edicion;
 	private DtEdicionCompleta edicioncompleta;
 	private Curso c;
-	private List<DtInscripcionEd> dtinscripcionesed;
+	private List<DtInscripcionEd> dtinscripcionesed = new ArrayList<DtInscripcionEd>();
 	
 	public ArrayList<DtCursoBase> getCursos() {
 		return cursos;
@@ -130,8 +130,6 @@ public class ControladorSeleccionarEstudiantesParaUnaEdicionDeCurso implements I
 	    }
 	};
 	
-	
-	
 	public List<DtInscripcionEd> ordenarInscripciones(String ordenarpor){
 		if(ordenarpor == "fecha") {
 			Collections.sort(this.edicion.getInscripciones(), ordenarPorFecha);
@@ -183,8 +181,6 @@ public class ControladorSeleccionarEstudiantesParaUnaEdicionDeCurso implements I
 		return dtinscripcionesed;
 	}
 
-	
-	
 	public void cambiarEstadoInscripcion(String nick, String estado) {
 		EstadoInscripcion estadoins = null;
 		switch(estado) {
