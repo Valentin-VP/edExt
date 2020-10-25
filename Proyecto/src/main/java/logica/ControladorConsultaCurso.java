@@ -155,11 +155,13 @@ public class ControladorConsultaCurso implements IControladorConsultaCurso{
 	}
 	
 	@Override
-	public ArrayList<DtCursoBase> listarCursosPlataforma() throws SinCursos {
+	public ArrayList<DtCurso> listarCursosPlataforma() throws SinCursos {
 		ManejadorCurso mCu = ManejadorCurso.getInstancia();
-		ArrayList <DtCursoBase> cursosplataforma = new ArrayList <DtCursoBase>();
+		ArrayList <DtCurso> cursosplataforma = new ArrayList <DtCurso>();
 		for(Curso cu: mCu.getCursos()){
-			DtCursoBase curso = new DtCursoBase (cu.getNombre());
+			//public DtCurso(String descripcion, String duracion, int cantHoras, Integer creditos, DtFecha fechaR, String url, String nombre, ArrayList<DtEdicionBase> ediciones, ArrayList<DtCursoBase> previas, ArrayList <String> categorias) {
+			Integer creditosInteger = new Integer (cu.getCreditos());
+			DtCurso curso = new DtCurso (cu.getDescripcion(),cu.getDuracion(),cu.getCantHoras(),creditosInteger,cu.convertToDtFecha(cu.getFechaR()),cu.getUrl(),cu.getNombre(),(ArrayList)cu.getEdiciones(),(ArrayList)cu.getPrevias(),(ArrayList)cu.getCategorias());
 			cursosplataforma.add(curso);
 		}
 		if(cursosplataforma.isEmpty()) {

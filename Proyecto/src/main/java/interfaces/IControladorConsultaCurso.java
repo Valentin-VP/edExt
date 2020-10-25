@@ -26,5 +26,5 @@ public interface IControladorConsultaCurso {
 
 	public ArrayList<DtProgramaBase> getProgramas();
 	
-	public ArrayList<DtCursoBase> listarCursosPlataforma() throws SinCursos;
+	public ArrayList<DtCurso> listarCursosPlataforma() throws SinCursos;
 }
