@@ -94,7 +94,9 @@ public class AltaUsuario extends HttpServlet {
 				try {
 					icon.confirmarAltaUsuario(esDocente);
 				} catch (NoSuchAlgorithmException e) {
-					e.printStackTrace();
+					request.setAttribute("mensaje", e.getMessage());
+					rd = request.getRequestDispatcher("/error.jsp");
+					rd.forward(request, response);
 				}
 			} catch(SinInstitutos | UsuarioRepetido e) {
 				request.setAttribute("mensaje", e.getMessage());

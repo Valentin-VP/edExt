@@ -51,7 +51,9 @@ public class ConsultaEdicion extends HttpServlet {
 							}
 							sesion.setAttribute("cursosInfoEdicion", cursosInfoEdicion);
 						} catch (CategoriaInexistente e) {
-							throw new ServletException(e.getMessage());
+							request.setAttribute("mensaje", e.getMessage());
+							rd = request.getRequestDispatcher("/error.jsp");
+							rd.forward(request, response);
 						}
 					} else {//por default busco por instituto
 						try {
@@ -60,7 +62,9 @@ public class ConsultaEdicion extends HttpServlet {
 							}
 							sesion.setAttribute("cursosInfoEdicion", cursosInfoEdicion);
 						} catch (InstitutoInexistente e) {
-							throw new ServletException(e.getMessage());
+							request.setAttribute("mensaje", e.getMessage());
+							rd = request.getRequestDispatcher("/error.jsp");
+							rd.forward(request, response);
 						}
 					}
 					sesion.setAttribute("InsCatEd", InsCat);
@@ -79,7 +83,9 @@ public class ConsultaEdicion extends HttpServlet {
 						}
 						sesion.setAttribute("edicionesInfoEdicion", edicionesInfoEdicion);
 					} catch (CursoNoExiste e) {
-						throw new ServletException(e.getMessage());
+						request.setAttribute("mensaje", e.getMessage());
+						rd = request.getRequestDispatcher("/error.jsp");
+						rd.forward(request, response);
 					}
 					sesion.setAttribute("cursoConsultaEdicion", curso);
 					sesion.setAttribute("optConsultaEdicionInfoEdicion", "2");
@@ -99,13 +105,17 @@ public class ConsultaEdicion extends HttpServlet {
 							ArrayList<DtCursoBase> noLosUso = icon.seleccionarCategoria((String) sesion.getAttribute("InsCatEd"));
 						}
 					} catch (InstitutoInexistente | CategoriaInexistente e) {
-						throw new ServletException(e.getMessage());
+						request.setAttribute("mensaje", e.getMessage());
+						rd = request.getRequestDispatcher("/error.jsp");
+						rd.forward(request, response);
 					}	
 					try {
 						@SuppressWarnings("unused")
 						ArrayList<DtEdicionBase> tampocoLasUso = icon.seleccionarCurso((String) sesion.getAttribute("cursoConsultaEdicion"));
 					} catch (CursoNoExiste a) {
-						throw new ServletException(a.getMessage());
+						request.setAttribute("mensaje", a.getMessage());
+						rd = request.getRequestDispatcher("/error.jsp");
+						rd.forward(request, response);
 					}
 					DtEdicion infoEdicion = icon.seleccionarEdicion(edicion);
 					sesion.setAttribute("infoEdicion", infoEdicion);

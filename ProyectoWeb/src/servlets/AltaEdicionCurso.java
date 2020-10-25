@@ -55,7 +55,9 @@ public class AltaEdicionCurso extends HttpServlet {
 						}
 						sesion.setAttribute("cursos", cursos);
 					} catch (InstitutoInexistente e) {
-						throw new ServletException(e.getMessage());
+						request.setAttribute("mensaje", e.getMessage());
+						rd = request.getRequestDispatcher("/error.jsp");
+						rd.forward(request, response);
 					}
 					for(DtUsuarioBase dtub: icon.getDocentes()) {
 						docentes.add(dtub.getNick());
@@ -93,7 +95,9 @@ public class AltaEdicionCurso extends HttpServlet {
 						List<DtCursoBase> noLosUso = icon.seleccionarInstituto(i);
 						icon.altaEdicionCurso(curso, nombre, fechaI, fechaF, profes, conCupos, cupos, fechaP);
 					} catch (EdicionRepetida | CursoNoExiste | InstitutoInexistente | UsuarioNoDocente e) {
-						throw new ServletException(e.getMessage());
+						request.setAttribute("mensaje", e.getMessage());
+						rd = request.getRequestDispatcher("/error.jsp");
+						rd.forward(request, response);
 					}
 					request.setAttribute("mensaje", "La edicion fue agregada con exito");
 					rd = request.getRequestDispatcher("/notificacion.jsp");

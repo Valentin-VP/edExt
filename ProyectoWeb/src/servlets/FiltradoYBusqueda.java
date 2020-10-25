@@ -37,7 +37,6 @@ public class FiltradoYBusqueda extends HttpServlet {
 		ArrayList<DtCurso> misCursos = new ArrayList<DtCurso>();
 		try {
 			misCursos = icon.listarCursosPlataforma();
-			sesion.setAttribute("todosLosCursos", misCursos);
 		} catch (SinCursos e) {
 			e.printStackTrace();
 		}
@@ -83,6 +82,7 @@ public class FiltradoYBusqueda extends HttpServlet {
 		}
 		request.setAttribute("filtrado", filtrado);
 		request.setAttribute("ordenado", ordenado);
+		sesion.setAttribute("todosLosCursos", misCursos);
 		rd = request.getRequestDispatcher("/BusquedaBarra.jsp");
 		rd.forward(request, response);
 	}
