@@ -129,9 +129,13 @@
 				<div class="form-group col-md-6">
 	    		  <label for="inputCategorias">Seleccione Previas</label>
 	 		  		<select id="inputPrevias" name="previasAltaCurso" class="selectpicker" multiple="multiple">
-			     		   <%for(String p: previas){ %>
-			    		    <option value="<%= p %>"><%= p %></option>
-			  			   <%} %>
+			     		   <%if(!previas.isEmpty()){
+			     			  for(String p: previas){ %>
+				    		    <option value="<%= p %>"><%= p %></option>
+				  			   <%}%>
+			     		   <%}else{%>
+			     		   <option disabled>Sin Previas</option>
+			     		   <%}%>
 	 		  		</select>
 	  		 	 </div>
 	  		</div>

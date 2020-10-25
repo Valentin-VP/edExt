@@ -44,25 +44,22 @@ public class CargarTodo extends HttpServlet {
 		
 		try {
 			categoriasPlataforma = icon.listarCategorias();
+			sesion.setAttribute("categoriasPlataforma", categoriasPlataforma);
 		} catch (SinCategorias e) {
-			request.setAttribute("mensaje", e.getMessage());
-			rd = request.getRequestDispatcher("/notificacion.jsp");
-			rd.forward(request, response);
+			categoriasPlataforma.add("No se encontraron categorias");
+			sesion.setAttribute("categoriasPlataforma", categoriasPlataforma);
 		}
-		sesion.setAttribute("categoriasPlataforma", categoriasPlataforma);
 		
 		try {
 			dtinstitutosPlataforma = icon.listarInstitutos();
+			for(DtInstituto dtin: dtinstitutosPlataforma) {
+				institutosPlataforma.add(dtin.getNombre());
+			}
+			sesion.setAttribute("institutosPlataforma", institutosPlataforma);
 		} catch (SinInstitutos e) {
-			request.setAttribute("mensaje", e.getMessage());
-			rd = request.getRequestDispatcher("/notificacion.jsp");
-			rd.forward(request, response);
+			institutosPlataforma.add("No se encontraron institutos");
+			sesion.setAttribute("institutosPlataforma", institutosPlataforma);
 		}
-		
-		for(DtInstituto dtin: dtinstitutosPlataforma) {
-			institutosPlataforma.add(dtin.getNombre());
-		}
-		sesion.setAttribute("institutosPlataforma", institutosPlataforma);
 		sesion.setAttribute("welcome", "welcome");
 		rd = request.getRequestDispatcher("/index.jsp");
 		rd.forward(request, response);

@@ -63,7 +63,9 @@ public class AltaCurso extends HttpServlet {
 				}
 				sesion.setAttribute("categoriasAltaCurso", categorias);
 			} catch (SinCategorias e) {
-				throw new ServletException(e.getMessage());
+				request.setAttribute("mensaje", e.getMessage());
+				rd = request.getRequestDispatcher("/error.jsp");
+				rd.forward(request, response);
 			}
 			
 			try {
@@ -71,8 +73,11 @@ public class AltaCurso extends HttpServlet {
 					previas.add(dtcb.getNombre());
 				}
 				sesion.setAttribute("previasAltaCurso", previas);
-			} catch (InstitutoInexistente | InstitutoSinCursos e) {
+			}catch (InstitutoInexistente e) {
 				throw new ServletException(e.getMessage());
+			}catch (InstitutoSinCursos e) {
+				previas = null;
+				sesion.setAttribute("previasAltaCurso", previas);
 			}
 			sesion.setAttribute("institutoAltaCurso", instituto);
 			sesion.setAttribute("optAltaCurso", "cargaDatos");

@@ -97,7 +97,9 @@ public class AltaUsuario extends HttpServlet {
 					e.printStackTrace();
 				}
 			} catch(SinInstitutos | UsuarioRepetido e) {
-				throw new ServletException(e.getMessage());
+				request.setAttribute("mensaje", e.getMessage());
+				rd = request.getRequestDispatcher("/error.jsp");
+				rd.forward(request, response);
 			}
 		}
 		String tipo;

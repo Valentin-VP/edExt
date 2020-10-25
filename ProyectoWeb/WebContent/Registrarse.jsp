@@ -12,7 +12,7 @@
 <body>
 <% HttpSession s = (HttpSession) request.getSession();
 	@SuppressWarnings("unchecked")
-	ArrayList<String> institutos = (ArrayList<String>) s.getAttribute("institutos");
+	ArrayList<String> institutos = (ArrayList<String>) s.getAttribute("institutosPlataforma");
 %>
 <h1 align="center"> Ingrese sus datos </h1>
 <br><br>
@@ -134,11 +134,14 @@
 	  <div class="form-group col-md-6">
 	      <label for="inputInstituto">Instituto</label>
 	      <select id="inputInstituto" name="instituto" class="selectpicker" >
-			 <option></option>
+			<%if(!institutos.isEmpty()){
+     			  for(String ins: institutos){ %>
+	    		    <option value="<%=ins%>"><%=ins%></option>
+	  			   <%}%>
+     		   <%}else{%>
+     		   <option disabled>Sin Previas</option>
+     		   <%}%>
 <!-- 			 <option value="cra">cra</option> -->
-			 <%for(String ins: institutos){%>
-	         <option value="<%=ins%>"><%=ins%></option>
-	         <%}%>
 	      </select>
 	  </div>
 	  <button type="submit" class="btn btn-primary">Registrarse</button>

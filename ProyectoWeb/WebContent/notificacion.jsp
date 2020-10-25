@@ -9,7 +9,8 @@
 <title>Aviso</title>
 </head>
 <body>
-<h1>${mensaje}</h1>
+<h1 align=center>${mensaje}</h1>
+<img src="imagenes/iron-man-thumb-up.png" class="d-block w-100" alt="Stark Institutes">
 <%@include file = "/footer.jsp" %>
 </body>
 </html>
