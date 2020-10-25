@@ -1,6 +1,7 @@
 package logica;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import datatypes.DtCurso;
 import datatypes.DtCursoBase;
@@ -161,7 +162,28 @@ public class ControladorConsultaCurso implements IControladorConsultaCurso{
 		for(Curso cu: mCu.getCursos()){
 			//public DtCurso(String descripcion, String duracion, int cantHoras, Integer creditos, DtFecha fechaR, String url, String nombre, ArrayList<DtEdicionBase> ediciones, ArrayList<DtCursoBase> previas, ArrayList <String> categorias) {
 			Integer creditosInteger = new Integer (cu.getCreditos());
-			DtCurso curso = new DtCurso (cu.getDescripcion(),cu.getDuracion(),cu.getCantHoras(),creditosInteger,cu.convertToDtFecha(cu.getFechaR()),cu.getUrl(),cu.getNombre(),(ArrayList)cu.getEdiciones(),(ArrayList)cu.getPrevias(),(ArrayList)cu.getCategorias());
+			
+			List <Edicion> edicioneslist = cu.getEdiciones();
+			ArrayList <DtEdicionBase> dtedicionesbase = new ArrayList <DtEdicionBase>();
+			for(Edicion e: edicioneslist) {
+				DtEdicionBase dteb = new DtEdicionBase (e.getNombre());
+				dtedicionesbase.add(dteb);
+			}
+			
+			List <Curso> cursoslist = cu.getPrevias();
+			ArrayList <DtCursoBase> dtcursosbase = new ArrayList <DtCursoBase>();
+			for(Curso c: cursoslist) {
+				DtCursoBase dtc = new DtCursoBase (c.getNombre());
+				dtcursosbase.add(dtc);
+			}
+			
+			List<Categoria> categoriaslist = cu.getCategorias();
+			ArrayList <String> strcategorias = new ArrayList <String>();
+			for(Categoria c: categoriaslist) {
+				strcategorias.add(c.getNombre());
+			}
+			
+			DtCurso curso = new DtCurso (cu.getDescripcion(),cu.getDuracion(),cu.getCantHoras(),creditosInteger,cu.convertToDtFecha(cu.getFechaR()),cu.getUrl(),cu.getNombre(),dtedicionesbase,dtcursosbase,strcategorias);
 			cursosplataforma.add(curso);
 		}
 		if(cursosplataforma.isEmpty()) {

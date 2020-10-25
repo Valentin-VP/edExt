@@ -80,8 +80,9 @@ public class ControladorConsultaEdicionCurso implements IControladorConsultaEdic
 			ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 			for(Instituto i: mI.getInstitutos()) {
 				for(Curso c: i.getCursos()) {
-					if(c.getNombre().equals(curso));
-					this.instituto = i.getNombre();
+					if(c.getNombre().equals(curso)) {
+						this.instituto = i.getNombre();
+					}
 				}
 			}
 			if(curso.isEmpty()) {
@@ -98,8 +99,8 @@ public class ControladorConsultaEdicionCurso implements IControladorConsultaEdic
 	@Override
 	public DtEdicion seleccionarEdicion(String edicion) {
 		this.edicion = edicion;
-		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
-		Edicion e = mI.find(this.instituto).findCurso(this.curso).findEdicion(this.edicion);
+		ManejadorEdicion mE = ManejadorEdicion.getInstancia();
+		Edicion e = mE.find(this.edicion);
 		
 		DtFecha dtfechaI = e.convertToDtFecha(e.getFechaI());
 		DtFecha dtfechaF = e.convertToDtFecha(e.getFechaF());

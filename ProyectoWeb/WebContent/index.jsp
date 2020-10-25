@@ -53,12 +53,11 @@ if(session_val != null){%>
 
 #carouselExampleIndicators{
 	top: 50px;
-	float: right;
- 	margin: 0 1.5%;
+	float: center;
+ 	margin: auto;
 	width: calc(70%);
 	position : relative;
 	border : 3px solid #FF0000;
-	right : 170px;
 }
 
 #listaInstitutos {
