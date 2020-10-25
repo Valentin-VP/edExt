@@ -58,9 +58,7 @@ if(session.getAttribute("opSeleccionarEstudiantes").toString().equals("0")) {%>
 	      <label for="edicionSelect">Edicion Vigente</label>
 	      <select id="edicionSelect" name="edicionSelect" class="selectpicker">
 	        <option selected disabled>Choose...</option>
-	        <%//for(String e: ediciones){ %>
 	        <option value="<%= edicion.getNombre() %>"><%= edicion.getNombre() %></option>
-	        <%//} %>
 	      </select>
 	    </div>
 	</div>
@@ -80,7 +78,7 @@ if(session.getAttribute("opSeleccionarEstudiantes").toString().equals("0")) {%>
 <%}else if(session.getAttribute("opSeleccionarEstudiantes").toString().equals("3")) {%>
 <h1 align="left"> Informacion de Estudiantes inscriptos a la edicion  </h1>
 <br><br>
-<form>
+<form action="SeleccionarEstudiantesEdicion" method="post">
 	<div class="form-row">
 	<table class="table">
 	  <tbody>
@@ -113,7 +111,7 @@ if(session.getAttribute("opSeleccionarEstudiantes").toString().equals("0")) {%>
 	      <td><%= edicion.getFechaPub().getDia() + "/" + edicion.getFechaPub().getMes() + "/" + edicion.getFechaPub().getAnio() %></td>
 	    </tr>
 	    <tr>
-	      <th scope="row" rowspan="1">Estudiantes con Inscripcion en estado Aceptada</th>
+	      <th scope="row" rowspan="1">Estudiantes con Inscripcion realizada</th>
 	    </tr>
 	  </tbody>
 	</table>
@@ -133,12 +131,12 @@ if(session.getAttribute("opSeleccionarEstudiantes").toString().equals("0")) {%>
 	  </tbody>     
 	</table>
 	</div>
-</form>
-<form action="SeleccionarEstudiantesEdicion" method="post">
+<!-- </form> -->
+<!-- <form action="SeleccionarEstudiantesEdicion" method="post"> -->
 	<div class="form-row">
 		<div align="left" class="form-group col-md-5">
 	      <label for="cursoSelect">Curso</label>
-      	<select id="cursoSeleccionarEstudiantes" name="cursoSeleccionarEstudiantes" class="selectpicker" required>
+      	<select id="estudianteSeleccionado" name="estudianteSeleccionado" class="selectpicker" required>
         	<option selected disabled>Choose...</option>
         	<%for(DtInscripcionEd dted: edicion.getInscripciones()){ %>
         	<option value="<%= dted.getEstudiante().getNick() %>"><%= dted.getEstudiante().getNick() %></option>
@@ -147,36 +145,33 @@ if(session.getAttribute("opSeleccionarEstudiantes").toString().equals("0")) {%>
 	    </div>
 	    <div align="right" class="form-group col-md-5">
 	      <label for="cursoSelect">Curso</label>
-      	<select id="cursoSeleccionarEstudiantes" name="cursoSeleccionarEstudiantes" class="selectpicker" required>
+      	<select id="estadoSeleccionado" name="estadoSeleccionado" class="selectpicker" required>
         	<option selected disabled>Choose...</option>
         	<option value="Aceptada">Aceptada</option>
         	<option value="Rechazada">Rechazada</option>
       	</select>
 	    </div>
-	    <button type="submit" class="btn btn-primary" type="button" onclick="actualizarEstudiante();">Actualizar Datos</button>
+	    <button class="btn btn-primary" type="button" onclick="actualizarEstudiante();">Actualizar Datos</button>
 	</div>
+	<h3 id="result"></h3>
 	<div class="form-row">
 	     <button type="submit" class="btn btn-primary">Confirmar Datos</button>
 	</div>
 </form>
 <% } %>
 <script type="text/javascript">
-function cargarCursos() {
- 	var instituto=$("#selectInstitutos :selected").text();
+function actualizarEstudiante() {
+	var nickestudiante=$("#estudianteSeleccionado :selected").text();
+ 	var estadoestudiante=$("#estadoSeleccionado :selected").val();
  	//var instituto=$("#selectInstitutos :selected").val(); // obtiene el valor del select seleccionado
 	//var instituto=$('#inputInstituto').val(); // creo variable con el valor del input usando su id
 	$.ajax({ // Request Asincronica AJAX
-		url: 'InscripcionEdicionCurso', // Serverlet
+		url: 'SeleccionarEstudiantesEdicion', // Serverlet
 		method: 'POST',					// Metodo
-		data: {institutoselect : instituto}, // los datos que voy a mandar, nombre del atributo : el valor
+		data: {nickestudiante : nickestudiante,
+				estadoestudiante : estadoestudiante}, // los datos que voy a mandar, nombre del atributo : el valor
 		success: function(resultText){ // si sale bien el request
-			var $select = $("#selectCursos");                         // Locate HTML DOM element with ID "someselect".
-	        $select.find("option").remove();                          // Find all child elements with tag name "option" and remove them (just to prevent duplicate options when button is pressed again).
-	        $.each(resultText, function(value, result) {               // Iterate over the JSON object.
-	        	$("<option>").text(result).appendTo($select); 
-	        	//$("<option>").val(key).text(value).appendTo($select); // Create HTML <option> element, set its value with currently iterated key and its text content with currently iterated item and finally append it to the <select>.
-	        });
-			//$('#result').html(resultText); // muestro los datos en el h3 usando su id para identificarlo
+			$('#result').html(resultText); // muestro los datos en el h3 usando su id para identificarlo
 		},
 		error: function(jqXHR, exception){ // si da error el request
 		console.log('Error occured!!'); // imprimo en la consola del navegador

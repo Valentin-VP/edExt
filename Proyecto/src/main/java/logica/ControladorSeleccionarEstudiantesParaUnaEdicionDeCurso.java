@@ -3,10 +3,7 @@ package logica;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Dictionary;
-import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -18,11 +15,9 @@ import static java.util.stream.Collectors.*;
 import static java.util.Map.Entry.*;
 
 import datatypes.DtEdicionBase;
-import datatypes.DtInstituto;
 import datatypes.DtUsuarioBase;
 import datatypes.EstadoInscripcion;
 import datatypes.DtCursoBase;
-import datatypes.DtEdicion;
 import datatypes.DtEdicionCompleta;
 import datatypes.DtFecha;
 import datatypes.DtInscripcionEd;
@@ -101,7 +96,8 @@ public class ControladorSeleccionarEstudiantesParaUnaEdicionDeCurso implements I
 		List <DtInscripcionEd> dtinscripciones = new ArrayList <DtInscripcionEd>();
 		for(Edicion ed: c.getEdiciones()) {
 			if (ed.getNombre()==dteb.getNombre()) {
-				edicion = ed;
+				this.edicion = ed;
+				System.out.print("la edicion guardada es"+this.edicion.getNombre());
 				dtinscripciones = getDtInscripciones(ed.getInscripciones());
 				DtFecha dtfi = ed.convertToDtFecha(ed.getFechaI());
 				DtFecha dtff = ed.convertToDtFecha(ed.getFechaF());
@@ -109,8 +105,7 @@ public class ControladorSeleccionarEstudiantesParaUnaEdicionDeCurso implements I
 				this.edicioncompleta = new DtEdicionCompleta (ed.getNombre(),dtfi,dtff,ed.isTieneCupos(),ed.getCupos(),dtfp,dtinscripciones);
 			}
 		}
-
-		return edicioncompleta;
+		return this.edicioncompleta;
 	}
 	
 	private List <DtInscripcionEd> getDtInscripciones(List <InscripcionEd> inscripciones) {
@@ -131,10 +126,10 @@ public class ControladorSeleccionarEstudiantesParaUnaEdicionDeCurso implements I
 	};
 	
 	public List<DtInscripcionEd> ordenarInscripciones(String ordenarpor){
-		if(ordenarpor == "fecha") {
+		if(ordenarpor.equals("fecha")) {
 			Collections.sort(this.edicion.getInscripciones(), ordenarPorFecha);
 		}
-		else if(ordenarpor == "prioridad") {
+		else if(ordenarpor.equals("prioridad")) {
 			//obtener lista de nicks de estudiantes con contadores en 0
 			HashMap<String, Integer> estudiantes = new HashMap<String, Integer>();
 			for(InscripcionEd ins: this.edicion.getInscripciones()) {
@@ -177,6 +172,8 @@ public class ControladorSeleccionarEstudiantesParaUnaEdicionDeCurso implements I
 		    	}
 		    }
 		    this.dtinscripcionesed = dtinscripcionesed2;
+		} else if(ordenarpor.equals("no ordenar")){
+			this.dtinscripcionesed = getDtInscripciones(this.edicion.getInscripciones());
 		}
 		return dtinscripcionesed;
 	}
@@ -210,6 +207,6 @@ public class ControladorSeleccionarEstudiantesParaUnaEdicionDeCurso implements I
 		this.edicion = new Edicion();
 		this.edicioncompleta= new DtEdicionCompleta();
 		this.c = new Curso();
-		this.dtinscripcionesed = new ArrayList<DtInscripcionEd>() ;
+		this.dtinscripcionesed = new ArrayList<DtInscripcionEd>();
 	}
 }
