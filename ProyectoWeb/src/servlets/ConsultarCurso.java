@@ -83,7 +83,6 @@ public class ConsultarCurso extends HttpServlet {
 					ArrayList<String> infoCurso = new ArrayList<String>();
 					ArrayList<DtEdicionBase> ediciones = new ArrayList<DtEdicionBase>();
 					ArrayList<String> edicionesStr = new ArrayList<String>();
-					System.out.println(sesion.getAttribute("institutoConsultaCurso").toString());
 					try {
 						icon.listarCursosInstituto(sesion.getAttribute("institutoConsultaCurso").toString());
 					}catch (InstitutoInexistente | InstitutoSinCursos e) {
@@ -103,6 +102,7 @@ public class ConsultarCurso extends HttpServlet {
 						}
 					}
 					infoCurso.add(categorias);
+					ediciones = curso.getEdiciones();
 					for(DtEdicionBase e: ediciones) {
 						edicionesStr.add(e.getNombre());
 					}
@@ -112,8 +112,7 @@ public class ConsultarCurso extends HttpServlet {
 					rd.forward(request, response);
 					break;
 
-		case "2":	
-					break;
+
 		}
 		
 	}

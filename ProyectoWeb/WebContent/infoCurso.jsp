@@ -24,7 +24,7 @@
   		top: 0px;
 	}
 	#tabla{
-		position: absolute; 
+		position: relative; 
 		left: 0px;
 		
 	}
@@ -36,6 +36,7 @@
 	#dropCursos{
 		margin: auto;
 	}
+
 </style>
 
 <%
@@ -51,8 +52,10 @@ ArrayList<String> infoCurso = (ArrayList) sesion.getAttribute("infoCurso");
 if(infoCurso == null){
 	infoCurso = new ArrayList<String>();
 }
-boolean esInstitutoInfoCurso = sesion.getAttribute("esInstitutoInfoCurso") != null;
-boolean esCategoriaInfoCurso = sesion.getAttribute("esCategoriaInfoCurso") != null;
+ArrayList<String> edicionesConsulta = (ArrayList) sesion.getAttribute("edicionesConsultaCurso");
+if(edicionesConsulta == null){
+	edicionesConsulta = new ArrayList<String>();
+}
 System.out.println(cursosConsulta);
 %>
 </head>
@@ -60,22 +63,22 @@ System.out.println(cursosConsulta);
 	<h1 align="center"> Consulta Curso </h1>
 	<br><br>
 	<form action="ConsultarCurso" method="post">
-	  <div class="form-row" id="nombres">
-	    <div class="col-md-3" id="insCat">
-	    	<input class="form-check-input" type="checkbox" id="checkInstituto" name="esInstituto"  checked>
-	    	<label class="form-check-label" for="checkInstituto">Instituto</label>
-	    </div>
-	    <div>
-		    <input class="form-check-input" type="checkbox" id="checkCategoria" name="esCategoria">
-		    <label class="form-check-label" for="checkCategoria">Categoria</label>
-	    </div>
-	  </div>
-	  <div class="form-row" id="nomIns">
-	  	<div class="col-md-6">
-		    <input type="text" name="instituto-categoria" class="form-control" id="instituto-categoria" required>
-	    </div>
-	    <button class="btn btn-primary" id="botonInsCat" type="submit" onclick="setOpt()">Aceptar</button>
-	  </div>
+		<div class="form-row" id="nombres">
+			<div class="col-md-3" id="insCat">
+	    		<input class="form-check-input" type="checkbox" id="checkInstituto" name="esInstitutoInfoEdicion"  checked>
+	    		<label class="form-check-label" for="checkInstituto">Instituto</label>
+	    	</div>
+	    	<div>
+		    	<input class="form-check-input" type="checkbox" id="checkCategoria" name="esCategoriaInfoEdicion">
+		    	<label class="form-check-label" for="checkCategoria">Categoria</label>
+	    	</div>
+	  	</div>
+	  	<div class="form-row" id="nomIns">
+	  		<div class="col-md-6">
+		    	<input type="text" name="instituto-categoria" class="form-control" id="instituto-categoria" required>
+	    	</div>
+	    	<button class="btn btn-primary" id="botonInsCat" type="submit" onclick="setOpt()">Aceptar</button>
+	  	</div>
 	</form>
 	<br></br>
 	<form action="ConsultarCurso" method="post">
@@ -83,55 +86,70 @@ System.out.println(cursosConsulta);
 	      <div class="form-group col-md-4">
 		      <select id="dropdownCursos" name="dropdownCursos" class="selectpicker" required>
 		      	<option></option>
-		        <%for(String c: cursosConsulta){
-		        	%><option value="<%=c %>"><%= c %></option><%
-		        } %>
+		        <%for(String c: cursosConsulta){%>
+					<option value="<%=c %>"><%= c %></option><%
+				}%>
 		      </select>
 		  </div> 
-	      	<button type="submit" class="btn btn-secondary" id="buscarCursos">Buscar</button>
-		  </div>
-	   </div>
+	      <button type="submit" class="btn btn-secondary" id="buscarCursos">Buscar</button>
+		</div>
 	</form> 
 		  		
 		  	
-	<%if(!infoCurso.isEmpty()){
-		%>
-	  <div class="container" id="tabla">
-	  	<table class="table">
-		  <tbody>
-		    <tr>
-		      <th scope="row">Nombre del curso</th>
-		      <td><%=infoCurso.get(0)%></td>
-		    </tr>
-		    <tr>
-		      <th scope="row">Descripcion</th>
-		      <td><%=infoCurso.get(1) %></td>
-		    </tr>
-		    <tr>
-		      <th scope="row">Duracion</th>
-		      <td><%=infoCurso.get(2) %></td>
-		    </tr>
-		    <tr>
-		      <th scope="row">Cant. horas</th>
-		      <td><%=infoCurso.get(3) %></td>
-		    </tr>
-		    <tr>
-		      <th scope="row">Creditos</th>
-		      <td><%=infoCurso.get(4) %></td>
-		    </tr>
-		    <tr>
-		      <th scope="row">URL</th>
-		      <td><%=infoCurso.get(5) %></td>
-		    </tr>
-		    <tr>
-		      <th scope="row">Categorias a las que pertenece</th>
-		      <td><%=infoCurso.get(6) %></td>
-		  </tbody>
-		</table>
-	<%}%>	
-	  </div>
-	</form>
-
+	<%if(!infoCurso.isEmpty()){%>
+		<div class="form-row" id="tabla">
+			<table class="table">
+	 			<tbody>
+	 				<tr>
+	     				<th scope="row">Nombre del curso</th>
+	     				<td><%=infoCurso.get(0)%></td>
+					</tr>
+					<tr>
+					<th scope="row">Descripcion</th>
+						<td><%=infoCurso.get(1) %></td>
+					</tr>
+					<tr>
+						<th scope="row">Duracion</th>
+						<td><%=infoCurso.get(2) %></td>
+					</tr>
+					<tr>
+						<th scope="row">Cant. horas</th>
+						<td><%=infoCurso.get(3) %></td>
+					</tr>
+					<tr>
+						<th scope="row">Creditos</th>
+						<td><%=infoCurso.get(4) %></td>
+					</tr>
+					<tr>
+						<th scope="row">URL</th>
+						<td><%=infoCurso.get(5) %></td>
+					</tr>
+					<tr>
+						<th scope="row">Categorias a las que pertenece</th>
+					 	<td><%=infoCurso.get(6) %></td>
+				</tbody>
+			</table>
+		</div>
+	
+		<form action="ConsultaEdicion" method="post">
+		 	<div class="form-row" id="dropEdiciones">	
+				<div class="form-group col-md-4">
+					<label id="edicion">Edicion</label>
+					<select id="dropdownEdiciones" name="dropdownEdiciones" class="selectpicker" required>
+			     		<option></option>
+			        	<%for(String c: edicionesConsulta){%>
+			        		<option value="<%=c %>"><%= c %></option><%
+						}%>
+			      	</select>
+			  	</div> 
+			  	<%sesion.setAttribute("InsCatEd",sesion.getAttribute("institutoConsultaCurso"));
+			  	
+			  	%>
+		      	<button type="submit" class="btn btn-secondary" id="buscarCursos">Consultar</button>
+			</div>
+		</form><%
+	}%>	
+	
 <script>
 	function setOpt(){
 		sesion.setAttribute("optConsultaCursoInfoCurso", "0");

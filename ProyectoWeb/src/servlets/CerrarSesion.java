@@ -45,6 +45,8 @@ public class CerrarSesion extends HttpServlet {
 			session.removeAttribute("infoCurso");
 			session.removeAttribute("edicionesConsultaCurso");
 			session.removeAttribute("institutoConsultaCurso");
+			session.removeAttribute("cursoConsulta");
+			session.removeAttribute("edicionConsulta");
         	session.removeAttribute("optAltaCurso");
         	session.removeAttribute("institutoAltaCurso");
         	session.removeAttribute("previasAltaCurso");
