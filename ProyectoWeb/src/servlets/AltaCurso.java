@@ -74,14 +74,15 @@ public class AltaCurso extends HttpServlet {
 				}
 				sesion.setAttribute("previasAltaCurso", previas);
 			}catch (InstitutoInexistente e) {
-				throw new ServletException(e.getMessage());
+				request.setAttribute("mensaje", e.getMessage());
+				rd = request.getRequestDispatcher("/error.jsp");
+				rd.forward(request, response);
 			}catch (InstitutoSinCursos e) {
 				previas = null;
 				sesion.setAttribute("previasAltaCurso", previas);
 			}
 			sesion.setAttribute("institutoAltaCurso", instituto);
 			sesion.setAttribute("optAltaCurso", "cargaDatos");
-			System.out.println("Saliendo de Servlet");
 			rd = request.getRequestDispatcher("/agregarCurso.jsp");
 			rd.forward(request, response);
 			break;
@@ -104,10 +105,6 @@ public class AltaCurso extends HttpServlet {
 			}
 			DtFecha fechaR = new DtFecha(datos.get(0),datos.get(1),datos.get(2));
 			
-			// previas = new ArrayList<>();
-			// categorias = new ArrayList<>();
-		
-			// chequeo
 			if (checkeo(instituto,nombre,descripcion,duracion,request.getParameter("cantHorasAltaCurso"),request.getParameter("creditosAltaCurso"),url)) {
 				Integer cantHoras = Integer.parseInt(request.getParameter("cantHorasAltaCurso"));
 				Integer creditos = Integer.parseInt(request.getParameter("creditosAltaCurso"));
@@ -116,20 +113,18 @@ public class AltaCurso extends HttpServlet {
 					icon.altaCurso(instituto, nombre, descripcion, duracion, cantHoras, creditos, url, fechaR);
 				} catch (CursoRepetido | InstitutoInexistente e) {
 					request.setAttribute("mensaje", e.getMessage());
-					rd = request.getRequestDispatcher("/notificacion.jsp");
+					rd = request.getRequestDispatcher("/error.jsp");
 					rd.forward(request, response);
 				}
 				
 				if(selprevias != null) {
 					for(String p: selprevias) {
 						icon.agregarPrevia(p);
-						// previas.add(p);
 					}
 				}
 				if(selcategorias != null) {
 					for(String c: selcategorias) {
 						icon.agregarCategoria(c);
-						// categorias.add(c);
 					}
 				}
 				
@@ -139,14 +134,16 @@ public class AltaCurso extends HttpServlet {
 				rd.forward(request, response);
 			}
 			else {
-				request.setAttribute("mensaje", "Revise los datos ingresados");
-				rd = request.getRequestDispatcher("/notificacion.jsp");
+				request.setAttribute("mensaje", error);
+				rd = request.getRequestDispatcher("/error.jsp");
 				rd.forward(request, response);
 			}
 
 			break;
 		default :
-			System.out.println("Ha ocurrido un error en servlet de Alta Curso");
+			request.setAttribute("mensaje", "Ha ocurrido un error en servlet de Alta Curso");
+			rd = request.getRequestDispatcher("/error.jsp");
+			rd.forward(request, response);
 			break;
 		}
 		

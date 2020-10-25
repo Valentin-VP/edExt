@@ -95,7 +95,7 @@ if(welcome == "notwelcome"){%>
     </ul>
     <form action="FiltradoYBusqueda" method="post" class="form-inline my-2 my-lg-0">
       <input name="busqueda" class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Search</button>
     </form>
   </div>
 </nav>
@@ -133,7 +133,7 @@ if(welcome == "notwelcome"){%>
     </ul>
     <form action="FiltradoYBusqueda" method="post" class="form-inline my-2 my-lg-0">
       <input name="busqueda" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Search</button>
     </form>
   </div>
 </nav>
@@ -163,7 +163,7 @@ if(welcome == "notwelcome"){%>
     </ul>
     <form action="FiltradoYBusqueda" method="post" class="form-inline my-2 my-lg-0">
       <input name="busqueda" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Search</button>
     </form>
   </div>
 </nav>

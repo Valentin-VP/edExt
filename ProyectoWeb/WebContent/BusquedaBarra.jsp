@@ -1,3 +1,4 @@
+<%@ page import="java.util.ArrayList" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -10,8 +11,11 @@
 </head>
 <body>
 <% 
-	String textoFiltrado = (String) request.getParameter("filtrado");
-	String textoOrdenado = (String) request.getParameter("ordenado");
+	String textoFiltrado = (String) sesion.getAttribute("filtrado");
+	String textoOrdenado = (String) sesion.getAttribute("ordenado");
+	ArrayList <String> cursosAMostrar = (ArrayList) sesion.getAttribute("todosLosCursos");
+	System.out.println("Se recupera un filtrado " + textoFiltrado);
+	System.out.println("Se recupera un ordenado " + textoOrdenado);
 	
 %>
 <h1 align="center"> Resultados de la busqueda </h1>
@@ -40,13 +44,20 @@
 	</div>
 	<br><br>
 	<div class="form-row">
-	<% if(textoFiltrado != null) %>
+	<% if(textoFiltrado != null) {%>
 		<h5> Filtrado por: <%= textoFiltrado %> </h5>
-	<% if(textoOrdenado != null) %>	
+	<%} %>
+	<% if(textoOrdenado != null) {%>	
 		<h5> Ordenado por: <%= textoOrdenado %> </h5>
+	<%} %>
 	</div>
 	<br><br>
 	<h3 align="center"> Se muestran resultados </h3>
+	<%for(String curso: cursosAMostrar){ %>
+		<p>
+		<%=curso %>
+		</p>
+	<%} %>
 </form>
 <%@include file = "/footer.jsp" %>
 </body>
