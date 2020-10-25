@@ -41,6 +41,8 @@ public class RefreshInicio extends HttpServlet {
 			session.removeAttribute("optConsultaCursoInfoCurso");
 			session.removeAttribute("cursosConsulta");
 			session.removeAttribute("infoCurso");
+			session.removeAttribute("edicionesConsultaCurso");
+			session.removeAttribute("institutoConsultaCurso");
         	session.removeAttribute("optAltaCurso");
         	session.removeAttribute("institutoAltaCurso");
         	session.removeAttribute("previasAltaCurso");
@@ -50,6 +52,8 @@ public class RefreshInicio extends HttpServlet {
         	session.removeAttribute("cursosAceptados");
         	session.removeAttribute("edicionesAceptados");
         	session.removeAttribute("infoFinalAceptados");
+        	session.removeAttribute("todosLosCursos");
+        	session.removeAttribute("buscando");
         	//session.invalidate();
         }
 

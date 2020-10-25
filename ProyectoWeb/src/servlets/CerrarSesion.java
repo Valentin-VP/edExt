@@ -43,11 +43,15 @@ public class CerrarSesion extends HttpServlet {
 			session.removeAttribute("optConsultaCursoInfoCurso");
 			session.removeAttribute("cursosConsulta");
 			session.removeAttribute("infoCurso");
+			session.removeAttribute("edicionesConsultaCurso");
+			session.removeAttribute("institutoConsultaCurso");
         	session.removeAttribute("optAltaCurso");
         	session.removeAttribute("institutoAltaCurso");
         	session.removeAttribute("previasAltaCurso");
         	session.removeAttribute("categoriasAltaCurso");
         	session.removeAttribute("institutoAltaCurso");
+        	session.removeAttribute("todosLosCursos");
+        	session.removeAttribute("buscando");
 			session.invalidate();
 			
         }

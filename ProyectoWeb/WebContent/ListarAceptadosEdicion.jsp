@@ -10,15 +10,6 @@
 <meta name="viewport" content="width=device-width, inicial-scale=1, shrink-to-fit=no">
 <%@include file = "/header.jsp" %>
 <title>Listar estudiantes aceptados a Edicion</title>
-<style>
-#checker{
-	left: 200px;
-}
-
-#checker2{
-	left: 300px;
-}
-</style>
 </head>
 <body>
 <% 
@@ -60,7 +51,8 @@ if(session.getAttribute("opAceptadosEdicion").toString().equals("0")) {%>
 	    <button type="submit" class="btn btn-primary">Buscar Ediciones</button>
 	</div>
 </form>
-<%} else if(session.getAttribute("opAceptadosEdicion").toString().equals("2")) { %>
+<%} else if(session.getAttribute("opAceptadosEdicion").toString().equals("2")) {
+%>
 <h1 align="left"> Seleccione la Edicion </h1>
 <br><br>
 <form action="ListarAceptadosEdicion" method="post">

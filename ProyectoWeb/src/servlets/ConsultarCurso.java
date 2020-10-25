@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import datatypes.DtCursoBase;
 import datatypes.DtCurso;
 import datatypes.DtFecha;
+import datatypes.DtEdicionBase;
 import excepciones.CategoriaInexistente;
 import excepciones.CategoriaSinCursos;
 import excepciones.InstitutoInexistente;
@@ -38,6 +39,7 @@ public class ConsultarCurso extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession sesion = request.getSession(true);
+		System.out.println(sesion.getAttribute("optConsultaCursoInfoCurso").toString());
 		Fabrica fabrica = Fabrica.getInstancia();
 		RequestDispatcher rd;
 		IControladorConsultaCurso icon = fabrica.getIControladorConsultaCurso();
@@ -45,11 +47,12 @@ public class ConsultarCurso extends HttpServlet {
 		case "0": //carga una variable con los cursos
 					boolean esInstituto = request.getParameter("esInstitutoInfoCurso") != null;
 					boolean esCategoria = request.getParameter("esCategoriaInfoCurso") != null;
-					String InsCat = request.getParameter("instituto-categoria");
+					String insCat = request.getParameter("instituto-categoria");
+					sesion.setAttribute("institutoConsultaCurso", insCat);
 					ArrayList<String> cursos = new ArrayList<String>();
 					if(!esInstituto && esCategoria) {
 						try {
-							for(DtCursoBase dtcb: icon.listarCursosCategoria(InsCat)) {
+							for(DtCursoBase dtcb: icon.listarCursosCategoria(insCat)) {
 								cursos.add(dtcb.getNombre());
 							}
 							sesion.setAttribute("cursos", cursos);
@@ -58,7 +61,7 @@ public class ConsultarCurso extends HttpServlet {
 						}
 					} else {//por default busco por instituto
 						try {
-							for(DtCursoBase dtcb: icon.listarCursosInstituto(InsCat)) {
+							for(DtCursoBase dtcb: icon.listarCursosInstituto(insCat)) {
 								cursos.add(dtcb.getNombre());
 							}
 							sesion.setAttribute("cursosConsulta", cursos);
@@ -66,24 +69,27 @@ public class ConsultarCurso extends HttpServlet {
 							throw new ServletException(e.getMessage());
 						}
 					}
-					sesion.setAttribute("instituto-categoria", InsCat);
+					sesion.setAttribute("instituto-categoria", insCat);
 					sesion.setAttribute("esCategoria", esCategoria);
 					sesion.setAttribute("esInstituto", esInstituto);
 					sesion.setAttribute("optConsultaCursoInfoCurso", "1");
 					
 					
 					rd = request.getRequestDispatcher("/infoCurso.jsp");
-					
-					System.out.println("ConsultarCurso setea: " + sesion.getAttribute("optConsultaCursoInfoCurso"));
 					rd.forward(request, response);
 					break;	
 
-		case "1": 	String nomCurso = "";
-					if(request.getParameter("dropdownCursos") == null) {
-						nomCurso = request.getParameter("dropdownCursos").toString();
-					}
+		case "1":	String nomCurso = request.getParameter("dropdownCursos").toString();
 					ArrayList<String> infoCurso = new ArrayList<String>();
-					DtCurso curso = icon.consultarCurso(nomCurso);
+					ArrayList<DtEdicionBase> ediciones = new ArrayList<DtEdicionBase>();
+					ArrayList<String> edicionesStr = new ArrayList<String>();
+					System.out.println(sesion.getAttribute("institutoConsultaCurso").toString());
+					try {
+						icon.listarCursosInstituto(sesion.getAttribute("institutoConsultaCurso").toString());
+					}catch (InstitutoInexistente | InstitutoSinCursos e) {
+						throw new ServletException(e.getMessage());
+					}
+					DtCurso curso = icon.consultarCurso(request.getParameter("dropdownCursos"));
 					infoCurso.add(nomCurso);
 					infoCurso.add(curso.getDescripcion());
 					infoCurso.add(curso.getDuracion());
@@ -93,10 +99,14 @@ public class ConsultarCurso extends HttpServlet {
 					String categorias = "";
 					if(!curso.getCategorias().isEmpty()){
 						for(String c: curso.getCategorias()){
-							categorias = categorias + ", " + c;
+							categorias = categorias + " " + c;
 						}
 					}
 					infoCurso.add(categorias);
+					for(DtEdicionBase e: ediciones) {
+						edicionesStr.add(e.getNombre());
+					}
+					sesion.setAttribute("edicionesConsultaCurso", edicionesStr);
 					sesion.setAttribute("infoCurso", infoCurso);
 					rd = request.getRequestDispatcher("/infoCurso.jsp");
 					rd.forward(request, response);

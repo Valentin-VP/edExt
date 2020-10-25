@@ -8,32 +8,39 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+<% 
+	HttpSession s = (HttpSession) request.getSession();
+%>
 <form action="InscripcionEdicionCurso" method="post">
-  <div class="form-row">
+  <!-- <div class="form-row">
     <div class="col-md-6 mb-3">
       <label for="validationDefault01">Instituto</label>
-      <input type="text" class="form-control" id="inputInstituto"name="instituto" placeholder="Fing" required>
+      <input type="text" class="form-control" id="inputInstituto" name="instituto" placeholder="Fing" required>
+    </div>
+  </div>-->
+   <div class="form-row">
+    <div class="col-md-6 mb-3">
+      <label for="validationDefault04">Institutos</label>
+      <select class="custom-select" id="selectInstitutos" name="selectInstitutos" required>
+        <option selected disabled value="">Choose...</option>
+        <option>Fing</option>
+      </select>
+      <button class="btn btn-secondary" type="button" id="boton1" onclick="cargarCursosenOption();">Mostrar institutos</button>
     </div>
   </div>
   <div class="form-row">
     <div class="col-md-6 mb-3">
       <label for="validationDefault04">Cursos</label>
-      <select class="custom-select" id="validationDefault04" required>
+      <select class="custom-select" id="selectCursos" name="selectCursos">
         <option selected disabled value="">Choose...</option>
         <option>Calculo 2</option>
       </select>
+      <button class="btn btn-secondary" type="button" id="boton2" onclick="imprimirCursos();">Mostrar primer curso</button>
     </div>
   </div>
   <button class="btn btn-primary" type="submit">Submit form</button>
 </form>
-
-<div id="mostrardatos">
-	<button id="boton1" onclick="imprimirInstitutos();">Mostrar institutos</button>
-	<button id="boton2" onclick="imprimirCursos();">Mostrar primer curso</button>
-	<h3 id="result"></h3>
-</div>
-
+	<!-- <h3 id="result"></h3> -->
 <script>
 
 	// GET en AJAX, CREA una tabla con la lista de objetos JSON
@@ -52,27 +59,50 @@
 	
 	// GET EN AJAX
 	//Returning List<String> as JSON
-	function imprimirInstitutos() {
+	/*function imprimirInstitutos() {
 		$(document).ready(function(){
 			  $("#boton1").click(function(){ // Evento click del boton con id boton1
 			    $.get("InscripcionEdicionCurso", function(data, status){ // hago el get al serverlet InscripcionEdicionCurso
 			    	// data son los datos que devuelve, status es el resultado de la solicitud
 			      alert("Data: " + data[0].nombre + "\nStatus: " + status); //imprimo un mensaje con el primer valor del JSON
 			      alert("Data: " + data[1].nombre + "\nStatus: " + status);
+			      document.getElementById("validationDefault04").innerHTML = data[1].nombre;
 			    });
 			  });
 			});
 	}
+	*/
+	
+	function cargarCursosenOption() {
+		$(document).on("click", "#boton1", function() {               // When HTML DOM "click" event is invoked on element with ID "somebutton", execute the following function...
+		    $.get("InscripcionEdicionCurso", function(responseJson) {                 // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
+		        var $select = $("#selectInstitutos");                         // Locate HTML DOM element with ID "someselect".
+		        $select.find("option").remove();                          // Find all child elements with tag name "option" and remove them (just to prevent duplicate options when button is pressed again).
+		        $.each(responseJson, function(value, result) {               // Iterate over the JSON object.
+		        	$("<option>").text(result.nombre).appendTo($select); 
+		        	//$("<option>").val(key).text(value).appendTo($select); // Create HTML <option> element, set its value with currently iterated key and its text content with currently iterated item and finally append it to the <select>.
+		        });
+		    });
+		});
+	}
 	
 	 // POST EN AJAX
 	 function imprimirCursos() {
-			var instituto=$('#inputInstituto').val(); // creo variable con el valor del input usando su id
-			$.ajax({ // 
+		 	var instituto=$("#selectInstitutos :selected").text();
+		 	//var instituto=$("#selectInstitutos :selected").val(); // obtiene el valor del select seleccionado
+			//var instituto=$('#inputInstituto').val(); // creo variable con el valor del input usando su id
+			$.ajax({ // Request Asincronica AJAX
 				url: 'InscripcionEdicionCurso', // Serverlet
 				method: 'POST',					// Metodo
-				data: {instituto : instituto}, // los datos que voy a mandar, nombre del atributo : el valor
+				data: {institutoselect : instituto}, // los datos que voy a mandar, nombre del atributo : el valor
 				success: function(resultText){ // si sale bien el request
-				$('#result').html(resultText); // muestro los datos en el h3 usando su id para identificarlo
+					var $select = $("#selectCursos");                         // Locate HTML DOM element with ID "someselect".
+			        $select.find("option").remove();                          // Find all child elements with tag name "option" and remove them (just to prevent duplicate options when button is pressed again).
+			        $.each(resultText, function(value, result) {               // Iterate over the JSON object.
+			        	$("<option>").text(result).appendTo($select); 
+			        	//$("<option>").val(key).text(value).appendTo($select); // Create HTML <option> element, set its value with currently iterated key and its text content with currently iterated item and finally append it to the <select>.
+			        });
+					//$('#result').html(resultText); // muestro los datos en el h3 usando su id para identificarlo
 				},
 				error: function(jqXHR, exception){ // si da error el request
 				console.log('Error occured!!'); // imprimo en la consola del navegador
