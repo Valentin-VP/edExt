@@ -135,15 +135,16 @@ System.out.println(cursosConsulta);
 		 	<div class="form-row" id="dropEdiciones">	
 				<div class="form-group col-md-4">
 					<label id="edicion">Edicion</label>
-					<select id="dropdownEdiciones" name="dropdownEdiciones" class="selectpicker" required>
+					<select id="dropdownEdiciones" name="edicion" class="selectpicker" required>
 			     		<option></option>
 			        	<%for(String c: edicionesConsulta){%>
 			        		<option value="<%=c %>"><%= c %></option><%
 						}%>
 			      	</select>
 			  	</div> 
-			  	<%sesion.setAttribute("InsCatEd",sesion.getAttribute("institutoConsultaCurso"));
-			  	
+			  	<%sesion.setAttribute("InsCatEd",sesion.getAttribute("institutoConsultaCurso").toString());
+			  	sesion.setAttribute("cursoConsultaEdicion", sesion.getAttribute("cursoConsulta").toString());
+			  	sesion.setAttribute("optConsultaEdicionInfoEdicion", 5);
 			  	%>
 		      	<button type="submit" class="btn btn-secondary" id="buscarCursos">Consultar</button>
 			</div>

@@ -80,6 +80,7 @@ public class ConsultarCurso extends HttpServlet {
 					break;	
 
 		case "1":	String nomCurso = request.getParameter("dropdownCursos").toString();
+					sesion.setAttribute("cursoConsulta", nomCurso);
 					ArrayList<String> infoCurso = new ArrayList<String>();
 					ArrayList<DtEdicionBase> ediciones = new ArrayList<DtEdicionBase>();
 					ArrayList<String> edicionesStr = new ArrayList<String>();

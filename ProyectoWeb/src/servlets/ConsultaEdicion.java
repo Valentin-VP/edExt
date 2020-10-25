@@ -114,6 +114,15 @@ public class ConsultaEdicion extends HttpServlet {
 					rd = request.getRequestDispatcher("/infoEdicion.jsp");
 					rd.forward(request, response);
 					break;
+		
+		case "5":	String edicion3 = request.getParameter("edicion");
+					DtEdicion infoEdicion3 = icon.seleccionarEdicion(edicion3);
+					sesion.setAttribute("infoEdicion", infoEdicion3);
+					sesion.setAttribute("edicionConsultaEdicion",edicion3);
+					sesion.setAttribute("optConsultaEdicionInfoEdicion", "3");
+					rd = request.getRequestDispatcher("/infoEdicion.jsp");
+					rd.forward(request, response);
+					break;
 		}
 	}
 
