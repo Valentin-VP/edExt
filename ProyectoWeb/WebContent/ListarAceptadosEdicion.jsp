@@ -29,7 +29,7 @@ if(session.getAttribute("opAceptadosEdicion").toString().equals("0")) {%>
 	<br><br>
 	<div class="form-row">
 		<div class="form-group col-md-5">
-	      <input type="text" name="institutoAceptados" class="form-control" id="institutoAceptados">
+	      <input type="text" name="institutoAceptados" class="form-control" id="institutoAceptados" required>
 	    </div>
       	<button type="submit" class="btn btn-primary">Buscar Cursos</button> 
 	</div>

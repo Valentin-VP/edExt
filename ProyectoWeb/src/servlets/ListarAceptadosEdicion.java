@@ -57,11 +57,11 @@ public class ListarAceptadosEdicion extends HttpServlet {
 				response.sendRedirect("ListarAceptadosEdicion.jsp");
 			} catch (InstitutoInexistente | InstitutoSinCursos e) {
 				request.setAttribute("mensaje", e.getMessage());
-				rd = request.getRequestDispatcher("/notificacion.jsp");
+				rd = request.getRequestDispatcher("/error.jsp");
 				rd.forward(request, response);
 			} catch (Exception e) {
-				request.setAttribute("mensaje", "El formulario ha partido.");
-				rd = request.getRequestDispatcher("/notificacion.jsp");
+				request.setAttribute("mensaje", e.getMessage());
+				rd = request.getRequestDispatcher("/error.jsp");
 				rd.forward(request, response);
 			}
 			
@@ -83,11 +83,11 @@ public class ListarAceptadosEdicion extends HttpServlet {
 				response.sendRedirect("ListarAceptadosEdicion.jsp");
 			} catch (CursoNoExiste | EdicionNoExiste e) {
 				request.setAttribute("mensaje", e.getMessage());
-				rd = request.getRequestDispatcher("/notificacion.jsp");
+				rd = request.getRequestDispatcher("/error.jsp");
 				rd.forward(request, response);
 			} catch (Exception e) {
-				request.setAttribute("mensaje", "El formulario ha partido.");
-				rd = request.getRequestDispatcher("/notificacion.jsp");
+				request.setAttribute("mensaje", e.getMessage());
+				rd = request.getRequestDispatcher("/error.jsp");
 				rd.forward(request, response);
 			}
 			
@@ -108,11 +108,11 @@ public class ListarAceptadosEdicion extends HttpServlet {
 				if (infoEdicion.getInscripciones().isEmpty()) System.out.println("vacio");
 			} catch (EdicionNoExiste e) {
 				request.setAttribute("mensaje", e.getMessage());
-				rd = request.getRequestDispatcher("/notificacion.jsp");
+				rd = request.getRequestDispatcher("/error.jsp");
 				rd.forward(request, response);
 			} catch (Exception e) {
-				request.setAttribute("mensaje", "El formulario ha partido.");
-				rd = request.getRequestDispatcher("/notificacion.jsp");
+				request.setAttribute("mensaje", e.getMessage());
+				rd = request.getRequestDispatcher("/error.jsp");
 				rd.forward(request, response);
 			}
 			break;
