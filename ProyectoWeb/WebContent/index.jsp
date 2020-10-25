@@ -30,7 +30,7 @@ if(session_val != null){%>
  	margin: 0 1.5%;
 	width: calc(70%);
 	position : relative;
-	border : 3px solid #FF0000;
+	/*border : 3px solid #FF0000;*/
 }
 
 #listaInstitutos {
@@ -41,7 +41,7 @@ if(session_val != null){%>
 	top: 50px;
 	left: 0;
 	height: 600px;
-	border: 3px solid #FF0000;
+	border: 3px solid #222222;
 	overflow: auto;
 	visibility: hidden;
 }
@@ -88,6 +88,7 @@ if(session_val != null){%>
 	<%}
 	
 	}%>
+	<br></br>
           <!-- Botton de prueba AJAX -->
 <!--      <a class="list-group-item list-group-item-action" href="AJAXexample.jsp">prueba AJAX</a> -->
 <h4 align=center>Categorias</h4>
