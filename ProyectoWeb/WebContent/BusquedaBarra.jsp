@@ -9,6 +9,11 @@
 <title> Tu Busqueda </title>
 </head>
 <body>
+<% 
+	String textoFiltrado = (String) request.getParameter("filtrado");
+	String textoOrdenado = (String) request.getParameter("ordenado");
+	
+%>
 <h1 align="center"> Resultados de la busqueda </h1>
 <br><br>
 <form action="FiltradoYBusqueda" method="post">
@@ -33,6 +38,14 @@
 			<button type="submit" class="btn btn-primary">Filtrar</button>
 		</div>
 	</div>
+	<br><br>
+	<div class="form-row">
+	<% if(textoFiltrado != null) %>
+		<h5> Filtrado por: <%= textoFiltrado %> </h5>
+	<% if(textoOrdenado != null) %>	
+		<h5> Ordenado por: <%= textoOrdenado %> </h5>
+	</div>
+	<br><br>
 	<h3 align="center"> Se muestran resultados </h3>
 </form>
 <%@include file = "/footer.jsp" %>

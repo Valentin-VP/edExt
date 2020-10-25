@@ -36,11 +36,7 @@ public class FiltradoYBusqueda extends HttpServlet {
 		IControladorConsultaCurso icon = fabrica.getIControladorConsultaCurso();
 		ArrayList<DtCurso> misCursos = new ArrayList<DtCurso>();
 		try {
-			ArrayList<DtCursoBase> cursosPlataforma = icon.listarCursosPlataforma();
-			for(DtCursoBase dtcb: cursosPlataforma) {
-				DtCurso dtc = icon.consultarCurso(dtcb.getNombre());
-				misCursos.add(dtc);
-			}
+			misCursos = icon.listarCursosPlataforma();
 			sesion.setAttribute("todosLosCursos", misCursos);
 		} catch (SinCursos e) {
 			e.printStackTrace();
@@ -85,6 +81,9 @@ public class FiltradoYBusqueda extends HttpServlet {
 				}
 			}
 		}
+		request.setAttribute("filtrado", filtrado);
+		request.setAttribute("ordenado", ordenado);
+		rd = request.getRequestDispatcher("/BusquedaBarra.jsp");
+		rd.forward(request, response);
 	}
-
 }
