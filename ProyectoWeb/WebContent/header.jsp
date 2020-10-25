@@ -92,7 +92,7 @@ if(welcome == "notwelcome"){%>
        	<a class="nav-link" href="CerrarSesion" id="IniciarButton" role="button">Cerrar Sesion</a>
       </li>	
       <li class="nav-item">
-        <a class="nav-link" href="ConsultaUsuario" id="RegistrarseButton" role="button">Mi Perfil<%= " - " + nickname %></a>
+        <a class="nav-link" href="ConsultaUsuario.jsp" id="RegistrarseButton" role="button">Mi Perfil<%= " - " + nickname %></a>
       </li>
     </ul>
     <form action="FiltradoYBusqueda" method="post" class="form-inline my-2 my-lg-0">
@@ -130,7 +130,7 @@ if(welcome == "notwelcome"){%>
        	<a class="nav-link" href="CerrarSesion" id="IniciarButton" role="button">Cerrar Sesion</a>
       </li>	
       <li class="nav-item">
-        <a class="nav-link" href="ConsultaUsuario" id="RegistrarseButton" role="button">Mi Perfil<%= " - " + nickname %></a>
+        <a class="nav-link" href="ConsultaUsuario.jsp" id="RegistrarseButton" role="button">Mi Perfil<%= " - " + nickname %></a>
       </li>
     </ul>
     <form action="FiltradoYBusqueda" method="post" class="form-inline my-2 my-lg-0">
