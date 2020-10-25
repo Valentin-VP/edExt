@@ -41,8 +41,7 @@ if(session.getAttribute("opAceptadosEdicion").toString().equals("0")) {%>
 	<div class="form-row">
 		<div align="left" class="form-group col-md-5">
 	      <label for="cursoSelectAceptados">Curso</label>
-      	<select id="cursoSelectAceptados" name="cursoSelectAceptados" class="selectpicker">
-        	<option selected disabled>Choose...</option>
+      	<select id="cursoSelectAceptados" name="cursoSelectAceptados" class="selectpicker" required>
         	<%for(String c: cursos){ %>
         	<option value="<%= c %>"><%= c %></option>
         	<%} %>
@@ -59,8 +58,7 @@ if(session.getAttribute("opAceptadosEdicion").toString().equals("0")) {%>
 	<div class="form-row">
 		<div align="left" class="form-group col-md-5">
 	      <label for="edicionSelectAceptados">Edicion</label>
-	      <select id="edicionSelectAceptados" name="edicionSelectAceptados" class="selectpicker">
-	        <option selected disabled>Choose...</option>
+	      <select id="edicionSelectAceptados" name="edicionSelectAceptados" class="selectpicker" required>
 	        <%for(String e: ediciones){ %>
 	        <option value="<%= e %>"><%= e %></option>
 	        <%} %>

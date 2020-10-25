@@ -74,6 +74,11 @@ public class ListarAceptadosEdicion extends HttpServlet {
 			String curso = request.getParameter("cursoSelectAceptados");
 			ArrayList<String> ediciones = new ArrayList<String>();
 			//sin comprobacion de instituto
+			if(curso==null) {
+				request.setAttribute("mensaje", "No se ha ingresado el curso.");
+				rd = request.getRequestDispatcher("/error.jsp");
+				rd.forward(request, response);
+			}
 			try {
 				for(DtEdicionBase dteb: icon.ingresarCurso(curso)) {
 					ediciones.add(dteb.getNombre());
@@ -98,6 +103,11 @@ public class ListarAceptadosEdicion extends HttpServlet {
 		case "2":	//selecciona edicion, devuelve sus datos + los 'aceptados'
 			String edicion = request.getParameter("edicionSelectAceptados");
 			//sin comprobacion de curso
+			if(edicion==null) {
+				request.setAttribute("mensaje", "No se ha ingresado la edicion.");
+				rd = request.getRequestDispatcher("/error.jsp");
+				rd.forward(request, response);
+			}
 			try {
 				DtEdicionCompleta infoEdicion = icon.ingresarEdicion(edicion);
 				
