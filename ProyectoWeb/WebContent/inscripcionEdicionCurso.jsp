@@ -12,12 +12,6 @@
 	HttpSession s = (HttpSession) request.getSession();
 %>
 <form action="InscripcionEdicionCurso" method="post">
-  <!-- <div class="form-row">
-    <div class="col-md-6 mb-3">
-      <label for="validationDefault01">Instituto</label>
-      <input type="text" class="form-control" id="inputInstituto" name="instituto" placeholder="Fing" required>
-    </div>
-  </div>-->
    <div class="form-row">
     <div class="col-md-6 mb-3">
       <label for="validationDefault04">Institutos</label>
@@ -25,7 +19,7 @@
         <option selected disabled value="">Choose...</option>
         <option>Fing</option>
       </select>
-      <button class="btn btn-secondary" type="button" id="boton1" onclick="cargarCursosenOption();">Mostrar institutos</button>
+      <button class="btn btn-secondary" type="button" id="boton1" onclick="cargarInstitutos();">Mostrar institutos</button>
     </div>
   </div>
   <div class="form-row">
@@ -35,7 +29,7 @@
         <option selected disabled value="">Choose...</option>
         <option>Calculo 2</option>
       </select>
-      <button class="btn btn-secondary" type="button" id="boton2" onclick="imprimirCursos();">Mostrar primer curso</button>
+      <button class="btn btn-secondary" type="button" id="boton2" onclick="cargarCursos();">Mostrar cursos</button>
     </div>
   </div>
   <button class="btn btn-primary" type="submit">Submit form</button>
@@ -73,7 +67,7 @@
 	}
 	*/
 	
-	function cargarCursosenOption() {
+	function cargarInstitutos() {
 		$(document).on("click", "#boton1", function() {               // When HTML DOM "click" event is invoked on element with ID "somebutton", execute the following function...
 		    $.get("InscripcionEdicionCurso", function(responseJson) {                 // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
 		        var $select = $("#selectInstitutos");                         // Locate HTML DOM element with ID "someselect".
@@ -87,7 +81,7 @@
 	}
 	
 	 // POST EN AJAX
-	 function imprimirCursos() {
+	 function cargarCursos() {
 		 	var instituto=$("#selectInstitutos :selected").text();
 		 	//var instituto=$("#selectInstitutos :selected").val(); // obtiene el valor del select seleccionado
 			//var instituto=$('#inputInstituto').val(); // creo variable con el valor del input usando su id
@@ -110,6 +104,25 @@
 			});
 	 }
 	
+	// Ejemplo para cargar institutos en el Registrar 
+	//if (document.getElementById("docente").checked) {
+	 function cargarSelect(){
+	 	if($("docente").prop("checked")) {
+	 	$(document).ready(function(){
+	 		  $("#boton1").click(function(){ // Evento click del boton con id boton1
+	 		    $.get("AltaUsuario", function(data, status){ // hago el get al serverlet InscripcionEdicionCurso
+	 		    	var $select = $("#selectInstituto");                         // Locate HTML DOM element with ID "someselect".
+	 		        $select.find("option").remove();                     // Find all child elements with tag name "option" and remove them (just to prevent duplicate options when button is pressed again).
+	 		        $.each(data, function(value, result) {               // Iterate over the JSON object.
+	 		   			$("<option>").text(result.nombre).appendTo($select); 
+	 		        	//$("<option>").val(key).text(value).appendTo($select); // Create HTML <option> element, set its value with currently iterated key and its text content with currently iterated item and finally append it to the <select>.
+	 		        });
+	 		    });
+	 		  });
+	 	 });
+	 	}
+	 }
+	 
 </script>
 
 <%@include file = "/footer.jsp" %>

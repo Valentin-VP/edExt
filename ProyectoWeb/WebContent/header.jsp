@@ -23,6 +23,7 @@ crossorigin="anonymous">
 	String optAltaEdicion = "0";
 	String opAceptadosEdicion = "0";
 	String optAltaCurso = "inicio";
+	String opSeleccionarEstudiantes = "0";
 	
 	//String tipoUser = "";
 	//String nickname = "";
@@ -81,7 +82,7 @@ if(welcome == "notwelcome"){%>
           Estudiantes
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Inscripciones</a>
+		  <a class="dropdown-item" href='seleccionarEstudiantesEdicion.jsp?opSeleccionarEstudiantes=<%= opSeleccionarEstudiantes %>'>Seleccionar estudiantes para edicion</a>
           <a class="dropdown-item" href='ListarAceptadosEdicion.jsp?opAceptadosEdicion=<%= opAceptadosEdicion %>'>Listar inscripciones aceptados</a>
         </div>
       </li>
