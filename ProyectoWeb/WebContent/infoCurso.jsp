@@ -65,11 +65,11 @@ System.out.println(cursosConsulta);
 	<form action="ConsultarCurso" method="post">
 		<div class="form-row" id="nombres">
 			<div class="col-md-3" id="insCat">
-	    		<input class="form-check-input" type="checkbox" id="checkInstituto" name="esInstitutoInfoEdicion"  checked>
+	    		<input class="form-check-input" type="checkbox" id="checkInstituto" name="esInstitutoInfoCurso"  checked>
 	    		<label class="form-check-label" for="checkInstituto">Instituto</label>
 	    	</div>
 	    	<div>
-		    	<input class="form-check-input" type="checkbox" id="checkCategoria" name="esCategoriaInfoEdicion">
+		    	<input class="form-check-input" type="checkbox" id="checkCategoria" name="esCategoriaInfoCurso">
 		    	<label class="form-check-label" for="checkCategoria">Categoria</label>
 	    	</div>
 	  	</div>

@@ -19,6 +19,7 @@ import excepciones.CategoriaInexistente;
 import excepciones.CategoriaSinCursos;
 import excepciones.InstitutoInexistente;
 import excepciones.InstitutoSinCursos;
+import excepciones.SinCursos;
 import interfaces.Fabrica;
 import interfaces.IControladorConsultaCurso;
 
@@ -50,6 +51,8 @@ public class ConsultarCurso extends HttpServlet {
 					String insCat = request.getParameter("instituto-categoria");
 					sesion.setAttribute("institutoConsultaCurso", insCat);
 					ArrayList<String> cursos = new ArrayList<String>();
+					System.out.println(esInstituto);
+					System.out.println(esCategoria);
 					if(!esInstituto && esCategoria) {
 						try {
 							for(DtCursoBase dtcb: icon.listarCursosCategoria(insCat)) {
@@ -57,18 +60,22 @@ public class ConsultarCurso extends HttpServlet {
 							}
 							sesion.setAttribute("cursos", cursos);
 						} catch (CategoriaInexistente |CategoriaSinCursos e) {
-							throw new ServletException(e.getMessage());
+							request.setAttribute("mensaje", e.getMessage());
+			                rd = request.getRequestDispatcher("/error.jsp");
+			                rd.forward(request, response);
 						}
 					} else {//por default busco por instituto
 						try {
 							for(DtCursoBase dtcb: icon.listarCursosInstituto(insCat)) {
 								cursos.add(dtcb.getNombre());
 							}
-							sesion.setAttribute("cursosConsulta", cursos);
 						} catch (InstitutoInexistente | InstitutoSinCursos e) {
-							throw new ServletException(e.getMessage());
+							request.setAttribute("mensaje", e.getMessage());
+			                rd = request.getRequestDispatcher("/error.jsp");
+			                rd.forward(request, response);
 						}
 					}
+					sesion.setAttribute("cursosConsulta", cursos);
 					sesion.setAttribute("instituto-categoria", insCat);
 					sesion.setAttribute("esCategoria", esCategoria);
 					sesion.setAttribute("esInstituto", esInstituto);
@@ -84,12 +91,17 @@ public class ConsultarCurso extends HttpServlet {
 					ArrayList<String> infoCurso = new ArrayList<String>();
 					ArrayList<DtEdicionBase> ediciones = new ArrayList<DtEdicionBase>();
 					ArrayList<String> edicionesStr = new ArrayList<String>();
+					DtCurso curso = new DtCurso();
 					try {
-						icon.listarCursosInstituto(sesion.getAttribute("institutoConsultaCurso").toString());
-					}catch (InstitutoInexistente | InstitutoSinCursos e) {
-						throw new ServletException(e.getMessage());
+						for(DtCurso dtc: icon.listarCursosPlataforma()) {
+							if(dtc.getNombre().equals(nomCurso))
+								curso = dtc;
+						}
+					} catch (SinCursos e1) {
+						request.setAttribute("mensaje", e1.getMessage());
+		                rd = request.getRequestDispatcher("/error.jsp");
+		                rd.forward(request, response);
 					}
-					DtCurso curso = icon.consultarCurso(request.getParameter("dropdownCursos"));
 					infoCurso.add(nomCurso);
 					infoCurso.add(curso.getDescripcion());
 					infoCurso.add(curso.getDuracion());
