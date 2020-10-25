@@ -88,7 +88,7 @@ public class AltaEdicionCurso extends HttpServlet {
 						profes.add(s);
 					}
 					try {
-						String i = (String) sesion.getAttribute("instituto");
+						String i = (String) sesion.getAttribute("institutoAltaEd");
 						@SuppressWarnings("unused")
 						List<DtCursoBase> noLosUso = icon.seleccionarInstituto(i);
 						icon.altaEdicionCurso(curso, nombre, fechaI, fechaF, profes, conCupos, cupos, fechaP);

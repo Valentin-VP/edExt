@@ -4,10 +4,18 @@ crossorigin="anonymous">
 
 <!-- nuevo -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
-
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
 <%
 
 	HttpSession sesion = (HttpSession) request.getSession();
+
+	String welcome = (String) sesion.getAttribute("welcome");
+	if (welcome == null){
+		welcome = "notwelcome";
+	}
+
 	String tipoUser = (String) sesion.getAttribute("tipo");
 	String nickname = (String) sesion.getAttribute("nick");
 	String optConsultaCurso = "0";
@@ -28,7 +36,20 @@ crossorigin="anonymous">
 		//nickname = (String) sesion.getAttribute("nick");
 		System.out.print(tipoUser);
 	}
-if(tipoUser.equals("docente")) { %> <!-- NavBar Estudiante/Docente -->
+if(welcome == "notwelcome"){%>
+
+<div class="container" align=center>
+  <nav class="navbar navbar-expand-sm white justify-content-center" >
+    <form action="CargarTodo" method="post" >
+	<div class="form-row" align=center>
+		<button type="submit" class="btn btn-outline-danger">Stark Institutes</button>
+	</div>
+	</form>
+  </nav>
+</div>
+
+	
+<% }else if(tipoUser.equals("docente")) { %> <!-- NavBar Estudiante/Docente -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="RefreshInicio">edExt</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

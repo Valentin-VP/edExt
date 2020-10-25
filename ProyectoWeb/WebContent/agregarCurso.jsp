@@ -35,7 +35,7 @@
 	<br><br>
    	<div class="form-row">	
       <div class="form-group col-md-10">
-	      <input type="text" name="institutoAltaCurso" class="form-control" id="institutoAltaCurso">
+	      <input type="text" name="institutoAltaCurso" class="form-control" id="institutoAltaCurso" required>
 	   </div>
 	   <button type="submit" class="btn btn-primary">Nuevo Curso</button>
    	</div>   
@@ -52,7 +52,7 @@
 	  		<div class="input-group-prepend">
 	    		<span class="input-group-text" id="basic-addon1">Instituto</span>
 	  		</div>
-	  		<input type="text" class="form-control" placeholder="StarkInstitutes" aria-label="Username" aria-describedby="basic-addon1" name=institutoAltaCurso>
+	  		<input type="text" class="form-control" placeholder="StarkInstitutes" aria-label="Username" aria-describedby="basic-addon1" name=institutoAltaCurso required>
 		</div>
 	</div>
 	
@@ -61,7 +61,7 @@
 	  		<div class="input-group-prepend">
 	    		<span class="input-group-text" id="basic-addon1">Nombre</span>
 	  		</div>
-	  		<input type="text" class="form-control" placeholder="Tony Stark" aria-label="Username" aria-describedby="basic-addon1" name=cursoAltaCurso>
+	  		<input type="text" class="form-control" placeholder="Tony Stark" aria-label="Username" aria-describedby="basic-addon1" name=cursoAltaCurso required>
 		</div>
 	</div>
 	
@@ -70,7 +70,7 @@
 	  		<div class="input-group-prepend">
 	    		<span class="input-group-text" id="basic-addon1">Descripcion</span>
 	  		</div>
-	  		<input type="text" class="form-control" placeholder="The best hero" aria-label="Username" aria-describedby="basic-addon1" name=descripcionAltaCurso>
+	  		<input type="text" class="form-control" placeholder="The best hero" aria-label="Username" aria-describedby="basic-addon1" name=descripcionAltaCurso required>
 		</div>
 	</div>
 	
@@ -79,7 +79,7 @@
 	  		<div class="input-group-prepend">
 	    		<span class="input-group-text" id="basic-addon1">Duracion</span>
 	  		</div>
-	  		<input type="text" class="form-control" placeholder="0" aria-label="Username" aria-describedby="basic-addon1" name=duracionAltaCurso>
+	  		<input type="text" class="form-control" placeholder="0" aria-label="Username" aria-describedby="basic-addon1" name=duracionAltaCurso required>
 		</div>
 	</div>	
 	
@@ -88,7 +88,7 @@
 	  		<div class="input-group-prepend">
 	    		<span class="input-group-text" id="basic-addon1">Cantidad Horas</span>
 	  		</div>
-	  		<input type="text" class="form-control" placeholder="0" aria-label="Username" aria-describedby="basic-addon1" name=cantHorasAltaCurso>
+	  		<input type="text" class="form-control" placeholder="0" aria-label="Username" aria-describedby="basic-addon1" name=cantHorasAltaCurso required>
 		</div>
 	</div>
 	
@@ -97,7 +97,7 @@
 	  		<div class="input-group-prepend">
 	    		<span class="input-group-text" id="basic-addon1">Creditos</span>
 	  		</div>
-	  		<input type="text" class="form-control" placeholder="0" aria-label="Username" aria-describedby="basic-addon1" name=creditosAltaCurso>
+	  		<input type="text" class="form-control" placeholder="0" aria-label="Username" aria-describedby="basic-addon1" name=creditosAltaCurso required>
 		</div>
 	</div>
 	
@@ -106,7 +106,7 @@
 	  		<div class="input-group-prepend">
 	    		<span class="input-group-text" id="basic-addon1">URL</span>
 	  		</div>
-	  		<input type="text" class="form-control" placeholder="www" aria-label="Username" aria-describedby="basic-addon1" name=urlAltaCurso>
+	  		<input type="text" class="form-control" placeholder="www" aria-label="Username" aria-describedby="basic-addon1" name=urlAltaCurso required>
 		</div>
 	</div>
 		      

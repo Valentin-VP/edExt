@@ -89,6 +89,7 @@ public class AltaUsuario extends HttpServlet {
 				request.setAttribute("institutos", institutos);
 				
 				icon.seleccionarInstituto(instituto);
+				System.out.println("Fue seteado el instituto: " + instituto);
 				icon.altaUsuario(nick, correo, nombre, apellido, fechaNac, pass);
 				try {
 					icon.confirmarAltaUsuario(esDocente);

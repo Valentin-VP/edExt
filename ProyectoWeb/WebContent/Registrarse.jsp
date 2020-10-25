@@ -135,30 +135,17 @@
 	      <label for="inputInstituto">Instituto</label>
 	      <select id="inputInstituto" name="instituto" class="selectpicker" >
 			 <option></option>
-	         <option value="crandon">crandon</option>
+<!-- 			 <option value="cra">cra</option> -->
+			 <%for(String ins: institutos){%>
+	         <option value="<%=ins%>"><%=ins%></option>
+	         <%}%>
 	      </select>
 	  </div>
 	  <button type="submit" class="btn btn-primary">Registrarse</button>
   </div>
 </form>
 <!-- <input type="button" id="cargarCombo" onClick="cargarInstitutos()"> -->
-<script>
-	function cargarSelect(elem) {
-		if (elem.checked) {
-			$(document).ready(function(){
-				//$("#cargarCombo").click(function(){
-				//$("#cargarCombo").on("click", function() {
-					$.get("AltaUsuario", function(responseJson) {
-				        $.each(responseJson, function(index, instituto) {
-				        	$("<option>").appendTo($("#inputInstituto")).text(instituto.nombre);      
-						});
-						alert("Datos: " + responseJson);
-					});
-				//});
-			});	
-		}
-	}
-</script>
+
 <%@include file = "/footer.jsp" %>
 </body>
 </html>

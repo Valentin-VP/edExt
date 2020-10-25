@@ -162,7 +162,7 @@ public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		for(Usuario u: mU.getUsuarios()) {
 			if(u instanceof Docente) {
-				if(((Docente) u).getInstituto().equals(i)) {
+				if(((Docente) u).getInstituto().getNombre().equals(i.getNombre())) {
 					DtUsuarioBase dtub = new DtUsuarioBase(u.getNick(), u.getCorreo());
 					aretornar.add(dtub);
 				}

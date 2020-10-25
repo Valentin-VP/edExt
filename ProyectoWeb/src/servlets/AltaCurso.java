@@ -115,13 +115,13 @@ public class AltaCurso extends HttpServlet {
 					rd.forward(request, response);
 				}
 				
-				if(selprevias.length != 0) {
+				if(selprevias != null) {
 					for(String p: selprevias) {
 						icon.agregarPrevia(p);
 						// previas.add(p);
 					}
 				}
-				if(selcategorias.length != 0) {
+				if(selcategorias != null) {
 					for(String c: selcategorias) {
 						icon.agregarCategoria(c);
 						// categorias.add(c);
