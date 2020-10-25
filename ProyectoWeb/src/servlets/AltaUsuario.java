@@ -68,10 +68,9 @@ public class AltaUsuario extends HttpServlet {
 		String apellido = request.getParameter("apellido");
 		String pass = request.getParameter("pass");
 		String verificacion = request.getParameter("verificar");
-		String instituto = (String) request.getAttribute("instituto");
+		String instituto = (String) request.getParameter("instituto");
 		boolean esDocente = request.getParameter("esDocente") != null;
 		System.out.print(esDocente);
-		instituto = "";
 		Integer dia = Integer.parseInt(request.getParameter("DiaNac"));
 		Integer mes = Integer.parseInt(request.getParameter("MesNac"));
 		Integer anio = Integer.parseInt(request.getParameter("AnioNac"));
