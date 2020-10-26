@@ -46,15 +46,6 @@
 	<div class="container">
 	  <div class="row">
 		    <div class="col-sm">
-		      
-		      	<div class="form-row">
-		<div class="input-group mt-2 mb-3">
-	  		<div class="input-group-prepend">
-	    		<span class="input-group-text" id="basic-addon1">Instituto</span>
-	  		</div>
-	  		<input type="text" class="form-control" placeholder="StarkInstitutes" aria-label="Username" aria-describedby="basic-addon1" name=institutoAltaCurso required>
-		</div>
-	</div>
 	
 	<div class="form-row">
 		<div class="input-group mt-2 mb-3">

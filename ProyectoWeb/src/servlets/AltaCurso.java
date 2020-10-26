@@ -87,7 +87,7 @@ public class AltaCurso extends HttpServlet {
 			rd.forward(request, response);
 			break;
 		case "cargaDatos" :
-			instituto = request.getParameter("institutoAltaCurso").toString();
+			instituto = sesion.getAttribute("institutoAltaCurso").toString();
 			String[] selcategorias = request.getParameterValues("categoriasAltaCurso");
 			String[] selprevias = request.getParameterValues("previasAltaCurso");
 			String nombre = request.getParameter("cursoAltaCurso");
