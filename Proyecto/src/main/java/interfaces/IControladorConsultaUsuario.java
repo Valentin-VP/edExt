@@ -1,6 +1,7 @@
 package interfaces;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 import datatypes.DtEdicion;
@@ -10,6 +11,8 @@ import logica.Usuario;
 
 public interface IControladorConsultaUsuario {
 	public List<Usuario> listarUsuarios();
+	
+	public ArrayList<DtUsuario> listarDtUsuarios();
 	
 	public DtUsuario ElegirUsuario(String nick, String correo);
 

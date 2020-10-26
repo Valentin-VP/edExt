@@ -24,6 +24,16 @@ public class ControladorConsultaUsuario implements IControladorConsultaUsuario {
 	}
 	
 	@Override
+	public ArrayList<DtUsuario> listarDtUsuarios() {
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		ArrayList<DtUsuario> usuarios = new ArrayList<DtUsuario>();
+		for(Usuario u: mU.getUsuarios()) {
+			usuarios.add(u.getDtUsuario());
+		}
+		return usuarios;
+	}
+	
+	@Override
 	public DtUsuario ElegirUsuario(String nick, String correo) {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		return mU.findUsuario(nick).getDtUsuario();

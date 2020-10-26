@@ -40,11 +40,13 @@ public class ConsultaUsuario extends HttpServlet {
 		ArrayList<DtUsuario> usuarios = new ArrayList<DtUsuario>();
 		IControladorConsultaUsuario icon = fabrica.getIControladorConsultaUsuario();
 		switch(sesion.getAttribute("optConsultaUsuario").toString()) {
-		case "0": usuarios = (ArrayList) icon.listarUsuarios();
+		case "0": usuarios =  icon.listarDtUsuarios();
 				  sesion.setAttribute("usuariosConsultaUsuario", usuarios);
 				  sesion.setAttribute("optConsultaUsuario", 1);
 				  rd = request.getRequestDispatcher("ConsultaUsuario.jsp");
 				  rd.forward(request, response);
+				  break;
+		case "1": System.out.println("Entro al case1 asdasksdhfbfhsdbhdsljdbljskfjbskdflaj");
 				  break;
 		}
 	}
