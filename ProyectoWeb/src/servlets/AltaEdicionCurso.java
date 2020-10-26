@@ -71,7 +71,15 @@ public class AltaEdicionCurso extends HttpServlet {
 					String curso = request.getParameter("curso");
 					String nombre = request.getParameter("nombreEdicion");
 					boolean conCupos = request.getParameter("tieneCupos") != null;
-					Integer cupos = Integer.parseInt(request.getParameter("cantidadCupos"));
+					
+					Integer cupos = 0;
+					try {
+						 cupos = Integer.parseInt(request.getParameter("cantidadCupos"));
+					}catch(NumberFormatException e) {
+						request.setAttribute("mensaje", "Valor incorrecto en Cupos");
+						rd = request.getRequestDispatcher("/error.jsp");
+						rd.forward(request, response);
+					}
 					Integer diaI = Integer.parseInt(request.getParameter("DiaI"));
 					Integer mesI = Integer.parseInt(request.getParameter("MesI"));
 					Integer anioI = Integer.parseInt(request.getParameter("AnioI"));
@@ -85,10 +93,17 @@ public class AltaEdicionCurso extends HttpServlet {
 					Integer anioP = Integer.parseInt(request.getParameter("AnioP"));
 					DtFecha fechaP = new DtFecha(diaP, mesP, anioP);
 					String[] profesores = request.getParameterValues("docentes");
+					if (profesores==null)
+					{
+						request.setAttribute("mensaje", "No hay profesores ingresados.");
+						rd = request.getRequestDispatcher("/error.jsp");
+						rd.forward(request, response);
+					}
 					ArrayList<String> profes = new ArrayList<String>();
 					for(String s: profesores) {
 						profes.add(s);
 					}
+
 					try {
 						String i = (String) sesion.getAttribute("institutoAltaEd");
 						@SuppressWarnings("unused")

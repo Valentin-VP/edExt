@@ -24,7 +24,7 @@ if(session.getAttribute("optAltaEdicionAltaEd").toString().equals("0")) {%>
 <form action="AltaEdicionCurso" method="post">
    <div class="form-row">
       <div class="form-group col-md-10">
-	      <input type="text" name="institutoAltaEd" class="form-control" id="inputInstituto">
+	      <input type="text" name="institutoAltaEd" class="form-control" id="inputInstituto" required>
 	   </div>
 	   <button type="submit" class="btn btn-primary">Buscar Cursos</button>
    </div>   
@@ -36,7 +36,7 @@ if(session.getAttribute("optAltaEdicionAltaEd").toString().equals("0")) {%>
 	<div class=form-row>
 	  	<div class="form-group col-md-5">
 	  	  <label for="inputCurso">cursos</label>
-	        <select class="selectpicker" id="inputCurso" name="curso" title="Elije un curso">
+	        <select class="selectpicker" id="inputCurso" name="curso" title="Elije un curso" required>
 	          <%for(String c: cursos) { %>
 	          <option value="<%= c %>"><%= c %></option>
 	          <% } %>
@@ -48,14 +48,14 @@ if(session.getAttribute("optAltaEdicionAltaEd").toString().equals("0")) {%>
 	    </div>
 	    <div class="form-group col-md-1">
 	      <label for="inputCupos">Cantidad</label>
-	      <input type="text" name="cantidadCupos" class="form-control" id="inputCupos" value="0">
+	      <input type="text" name="cantidadCupos" class="form-control" id="inputCupos" value="0" required>
 	    </div>
 	</div>
 	<br>
 	<div class="form-row">
 		<div class="form-group col-md-6">
 	      <label for="inputNombre">Nombre</label>
-	      <input type="text" name="nombreEdicion" class="form-control" id="inputNombre">
+	      <input type="text" name="nombreEdicion" class="form-control" id="inputNombre" required>
 	    </div>
 	</div>
 	<br>
