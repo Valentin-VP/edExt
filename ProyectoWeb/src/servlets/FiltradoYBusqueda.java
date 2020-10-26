@@ -1,8 +1,10 @@
 package servlets;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -38,6 +40,7 @@ public class FiltradoYBusqueda extends HttpServlet {
 		RequestDispatcher rd;
 		IControladorConsultaCurso icon = fabrica.getIControladorConsultaCurso();
 		ArrayList<DtCurso> misCursos = new ArrayList<DtCurso>();
+		ArrayList<DtCurso> cursosCompletos = new ArrayList<DtCurso>();
 		try {
 			misCursos = icon.listarCursosPlataforma();
 			// misProgramas = icon.listarProgramasPlataforma(); WARNING, NO EXISTE AUN
@@ -62,20 +65,33 @@ public class FiltradoYBusqueda extends HttpServlet {
 		ArrayList<String> cursosQueMuestro = new ArrayList<String>();
 		for(DtCurso dtc: misCursos) {
 			if(dtc.getNombre().toLowerCase().contains(buscando.toLowerCase()) || dtc.getDescripcion().toLowerCase().contains(buscando.toLowerCase())) {
-				cursosQueMuestro.add(dtc.getNombre());
-				System.out.println("Curso que matchea: "+dtc.getNombre());
+				cursosCompletos.add(dtc);
 			}
 		}
 		
+//		for(DtCurso dtc: misCursos) {
+//			if(dtc.getNombre().toLowerCase().contains(buscando.toLowerCase()) || dtc.getDescripcion().toLowerCase().contains(buscando.toLowerCase())) {
+//				cursosQueMuestro.add(dtc.getNombre());
+//				System.out.println("Curso que matchea: "+dtc.getNombre());
+//			}
+//		}
+//		
 		// Lo mismo con PF (no disponible) 
 		
 		ArrayList<String> ResultadosFinales = new ArrayList<String>();
-		ResultadosFinales = cursosQueMuestro;
+		
+		for(DtCurso dtc: cursosCompletos){
+			ResultadosFinales.add(dtc.getNombre()); 
+		} 
 		
 		sesion.setAttribute("buscando", buscando);//falta ponerlo en refresh y cerrar sesion
 		if(filtrado != null) { // QUIERO FILTRAR
 			switch(filtrado) {//entro desde el jsp de la busqueda
 			case "curso":		//filtro por cursos(hace lo mismo que el search)
+								for(DtCurso dtc: cursosCompletos) {
+									cursosQueMuestro.add(dtc.getNombre());
+									System.out.println("Curso que matchea: "+dtc.getNombre());
+								}
 								ResultadosFinales = cursosQueMuestro;
 								break;
 			case "programa":	//filtro por programas(no lo uso)
@@ -85,10 +101,7 @@ public class FiltradoYBusqueda extends HttpServlet {
 								rd.forward(request, response);
 								break;
 			}
-		} /*
-			 * else { cursosQueMuestro = new ArrayList<String>(); for(DtCurso dtc:
-			 * misCursos) { cursosQueMuestro.add(dtc.getNombre()); } }
-			 */
+		}			 
 		
 		if(ordenado != null) { //QUIERO ORDENAR
 			switch(ordenado) {//entro desde el jsp de la busqueda
@@ -96,12 +109,25 @@ public class FiltradoYBusqueda extends HttpServlet {
 									Collections.sort(ResultadosFinales);
 									break;
 			case "fecha":	//ordeno por fecha(descendente)
-									System.out.println("Ordenando por fecha");
+									Collections.sort(cursosCompletos, new Comparator<DtCurso>() {
+										  public int compare(DtCurso o1, DtCurso o2) {
+										      try {
+												if (o1.getFechaR().DtFechaToDate() == null || o2.getFechaR().DtFechaToDate() == null)
+												    return 0;
+											} catch (ParseException e) {
+												e.printStackTrace();
+											}
+										      try {
+												return o1.getFechaR().DtFechaToDate().compareTo(o2.getFechaR().DtFechaToDate());
+											} catch (ParseException e) {
+												e.printStackTrace();
+											}
+											return 0;
+										  }
+										});
 									break;
 			}
 		}
-		
-
 		System.out.println("comboFiltrado vale " + filtrado);
 		System.out.println("comboOrdenado vale " + ordenado);
 		sesion.setAttribute("filtrado", filtrado);
