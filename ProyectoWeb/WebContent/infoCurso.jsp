@@ -56,7 +56,7 @@ ArrayList<String> edicionesConsulta = (ArrayList) sesion.getAttribute("ediciones
 if(edicionesConsulta == null){
 	edicionesConsulta = new ArrayList<String>();
 }
-System.out.println(cursosConsulta);
+System.out.println(infoCurso);
 %>
 </head>
 <body>
@@ -142,7 +142,7 @@ System.out.println(cursosConsulta);
 						}%>
 			      	</select>
 			  	</div> 
-			  	<%sesion.setAttribute("InsCatEd",sesion.getAttribute("institutoConsultaCurso").toString());
+			  	<%
 			  	sesion.setAttribute("cursoConsultaEdicion", sesion.getAttribute("cursoConsulta").toString());
 			  	sesion.setAttribute("optConsultaEdicionInfoEdicion", 5);
 			  	%>

@@ -2,6 +2,7 @@ package servlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -30,6 +31,8 @@ public class FiltradoYBusqueda extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// Cuando se tengan programas de formacion, se deben tener 2 Array (los cursos y progF), y luego aplicar los filtros (es decir, retornar solo 1 de ellos)
+		
 		HttpSession sesion = request.getSession(true);
 		Fabrica fabrica = Fabrica.getInstancia();
 		RequestDispatcher rd;
@@ -37,41 +40,60 @@ public class FiltradoYBusqueda extends HttpServlet {
 		ArrayList<DtCurso> misCursos = new ArrayList<DtCurso>();
 		try {
 			misCursos = icon.listarCursosPlataforma();
+			// misProgramas = icon.listarProgramasPlataforma(); WARNING, NO EXISTE AUN
+			
 		} catch (SinCursos e) {
 			e.printStackTrace();
 		}
 		for(DtCurso cu: misCursos) {
 			System.out.println("Curso: " + cu.getNombre());
 		}
+		
 		String filtrado = (String) request.getParameter("comboFiltrado");
 		String ordenado = (String) request.getParameter("comboOrdenado");
 		String buscando = (String) request.getParameter("busqueda");
+		
 		if(buscando == null) {
 			buscando = (String) sesion.getAttribute("buscando");
 		}
 		System.out.println("Buscando vale " + buscando);
 		
+		// Se hace MATCH con la palabra buscada
 		ArrayList<String> cursosQueMuestro = new ArrayList<String>();
-		sesion.setAttribute("buscando", buscando);//falta ponerlo en refresh y cerrar sesion
-		if(filtrado != null) {
-			switch(filtrado) {//entro desde el jsp de la busqueda
-			case "curso":	//filtro por cursos(hace lo mismo que el search)
-							for(DtCurso dtc: misCursos) {
-								if(dtc.getNombre().toLowerCase().contains(sesion.getAttribute("buscando").toString().toLowerCase()) || dtc.getDescripcion().toLowerCase().contains(sesion.getAttribute("buscando").toString().toLowerCase())) {
-									cursosQueMuestro.add(dtc.getNombre());
-								}
-							}
-							break;
-			case "programa":	//filtro por programas(no lo uso)
-								System.out.println("No Disponible");
-								break;
+		for(DtCurso dtc: misCursos) {
+			if(dtc.getNombre().toLowerCase().contains(buscando.toLowerCase()) || dtc.getDescripcion().toLowerCase().contains(buscando.toLowerCase())) {
+				cursosQueMuestro.add(dtc.getNombre());
+				System.out.println("Curso que matchea: "+dtc.getNombre());
 			}
 		}
 		
-		if(ordenado != null) {
+		// Lo mismo con PF (no disponible) 
+		
+		ArrayList<String> ResultadosFinales = new ArrayList<String>();
+		ResultadosFinales = cursosQueMuestro;
+		
+		sesion.setAttribute("buscando", buscando);//falta ponerlo en refresh y cerrar sesion
+		if(filtrado != null) { // QUIERO FILTRAR
+			switch(filtrado) {//entro desde el jsp de la busqueda
+			case "curso":		//filtro por cursos(hace lo mismo que el search)
+								ResultadosFinales = cursosQueMuestro;
+								break;
+			case "programa":	//filtro por programas(no lo uso)
+								// ResultadosFinales = programasQueMuestro;
+								request.setAttribute("mensaje", "Funcionalidad no disponible en la version gratuita :wink ");
+								rd = request.getRequestDispatcher("/error.jsp");
+								rd.forward(request, response);
+								break;
+			}
+		} /*
+			 * else { cursosQueMuestro = new ArrayList<String>(); for(DtCurso dtc:
+			 * misCursos) { cursosQueMuestro.add(dtc.getNombre()); } }
+			 */
+		
+		if(ordenado != null) { //QUIERO ORDENAR
 			switch(ordenado) {//entro desde el jsp de la busqueda
 			case "alfabeticamente":	//ordeno alfabeticamente(ascendente)
-									System.out.println("Ordenando alfabeticamente");
+									Collections.sort(ResultadosFinales);
 									break;
 			case "fecha":	//ordeno por fecha(descendente)
 									System.out.println("Ordenando por fecha");
@@ -79,21 +101,12 @@ public class FiltradoYBusqueda extends HttpServlet {
 			}
 		}
 		
-		if(filtrado == null && ordenado == null) {//entro desde el search del header(con "busqueda")
-			//despliego todos los CURSOS que contienen lo buscado en el nombre o la descripcion
-			
-			for(DtCurso dtc: misCursos) {
-				if(dtc.getNombre().toLowerCase().contains(buscando.toLowerCase()) || dtc.getDescripcion().toLowerCase().contains(buscando.toLowerCase())) {
-					cursosQueMuestro.add(dtc.getNombre());
-					System.out.println("Curso que matchea: "+dtc.getNombre());
-				}
-			}
-		}
+
 		System.out.println("comboFiltrado vale " + filtrado);
 		System.out.println("comboOrdenado vale " + ordenado);
 		sesion.setAttribute("filtrado", filtrado);
 		sesion.setAttribute("ordenado", ordenado);
-		sesion.setAttribute("todosLosCursos", cursosQueMuestro);
+		sesion.setAttribute("todosLosCursos", ResultadosFinales);
 		rd = request.getRequestDispatcher("/BusquedaBarra.jsp");
 		rd.forward(request, response);
 	}

@@ -8,6 +8,13 @@
 <meta name="viewport" content="width=device-width, inicial-scale=1, shrink-to-fit=no">
 <%@include file = "/header.jsp" %>
 <title> Tu Busqueda </title>
+<style>
+#listaResultados{
+float : center;
+position: relative;
+}
+</style>
+
 </head>
 <body>
 <% 
@@ -24,22 +31,23 @@
 	<div class="form-row">
 		<div align="center" class="form-group col-md-6">
 		  <label for="comboFiltrado">Filtrado</label>
-	      <select id="comboFiltrado" name="comboFiltrado" class="selectpicker" required>
+	      <select id="comboFiltrado" name="comboFiltrado" class="selectpicker">
 	        <option></option>
 	        <option value="curso">curso</option>
 	        <option value="programa">programa</option>
 	      </select>
 		</div>
+	
 		<div align="center" class="form-group">
 		  <label for="comboOrdenado">Ordenado</label>
-	      <select id="comboOrdenado" name="comboOrdenado" class="selectpicker" required>
+	      <select id="comboOrdenado" name="comboOrdenado" class="selectpicker">
 	        <option></option>
 	        <option value="alfabeticamente">alfabeticamente(ascendente)</option>
 	        <option value="fecha">fecha(descendente)</option>
 	      </select>
 		</div>
 		<div>
-			<button type="submit" class="btn btn-primary">Filtrar</button>
+			<button type="submit" class="btn btn-danger">Aplicar</button>
 		</div>
 	</div>
 </form>
@@ -56,18 +64,26 @@
 	</div>
 	<br><br>
 	<h3 align="center"> Se muestran resultados </h3>
-	
-	<div id="listaInstitutos" class="list-group">
-		<%if (cursosAMostrar != null) { 
-			for(String curso: cursosAMostrar) { %>
-				<a class="list-group-item list-group-item-action"><%=curso %></a>
-			<%}
-		
-		}else{%>
-			<a class="list-group-item list-group-item-action">No hay resultados</a>
-		<%} %>
+	<br><br>
+	<div class="container" align=center>
+		<div id="listaResultados" class="form-group">
+		<select id="dropdownCursos" name="dropdownCursos" class="selectpicker" required>	
+			<%if (cursosAMostrar != null) { 
+				for(String curso: cursosAMostrar) { %>
+					<option value="<%=curso %>"><%=curso %></option>
+				<%}
+			
+			}else{%>
+				<option value="No hay resultados">No hay resultados</option>
+			<%} %>
+		</select>
+		</div>
+		<br><br>
+		<%sesion.setAttribute("optConsultaCursoInfoCurso", 1); %>
+		<div>
+			<button type="submit" class="btn btn-danger">Ver Resultado</button>
+		</div>
 	</div>
-	
 </form>	
 
 

@@ -49,7 +49,6 @@ public class ConsultarCurso extends HttpServlet {
 					boolean esInstituto = request.getParameter("esInstitutoInfoCurso") != null;
 					boolean esCategoria = request.getParameter("esCategoriaInfoCurso") != null;
 					String insCat = request.getParameter("instituto-categoria");
-					sesion.setAttribute("institutoConsultaCurso", insCat);
 					ArrayList<String> cursos = new ArrayList<String>();
 					System.out.println(esInstituto);
 					System.out.println(esCategoria);
@@ -87,6 +86,7 @@ public class ConsultarCurso extends HttpServlet {
 					break;	
 
 		case "1":	String nomCurso = request.getParameter("dropdownCursos").toString();
+					System.out.println("Recibe el nomcurso: "+nomCurso);
 					sesion.setAttribute("cursoConsulta", nomCurso);
 					ArrayList<String> infoCurso = new ArrayList<String>();
 					ArrayList<DtEdicionBase> ediciones = new ArrayList<DtEdicionBase>();
