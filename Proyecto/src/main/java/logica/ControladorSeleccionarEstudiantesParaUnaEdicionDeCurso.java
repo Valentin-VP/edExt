@@ -86,12 +86,23 @@ public class ControladorSeleccionarEstudiantesParaUnaEdicionDeCurso implements I
 		return getCursos();		
 	}
 	
-	public DtEdicionCompleta seleccionarCurso(String curso) throws EdicionVigenteNoExiste{
+	public DtEdicionCompleta seleccionarCurso(String curso, String nick) throws EdicionVigenteNoExiste{
 		ManejadorCurso mC = ManejadorCurso.getInstancia();
 		this.c = mC.find(curso);
+		c.getEdiciones();
 		DtEdicionBase dteb = c.getEdicionVigente();
 		if (dteb == null) {
 			throw new EdicionVigenteNoExiste("No existe una edicion vigente para el curso seleccionado");
+		}
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		Usuario u = mU.findUsuario(nick);
+		if(u instanceof Docente) {
+			List<Edicion> ediciones = ((Docente) u).getEdiciones();
+			for(Edicion ed: ediciones) {
+				if (!ed.getNombre().equals(dteb.getNombre())) {
+					throw new EdicionVigenteNoExiste("No dicta una edicion en el curso");
+				}
+			}
 		}
 		List <DtInscripcionEd> dtinscripciones = new ArrayList <DtInscripcionEd>();
 		for(Edicion ed: c.getEdiciones()) {
@@ -151,7 +162,8 @@ public class ControladorSeleccionarEstudiantesParaUnaEdicionDeCurso implements I
 			Map<String, Float> estudiantesprioridad = new HashMap<String, Float>();
 			Iterator<Entry<String, Integer>> it = estudiantes.entrySet().iterator();
 		    while (it.hasNext()) {
-		        Map.Entry pair = (Map.Entry)it.next();
+		        @SuppressWarnings("rawtypes")
+				Map.Entry pair = (Map.Entry)it.next();
 		        float prioridad = (float) ((int) pair.getValue() * 0.5);
 		        estudiantesprioridad.put((String) pair.getKey(),prioridad);
 		        it.remove(); // avoids a ConcurrentModificationException
@@ -161,10 +173,11 @@ public class ControladorSeleccionarEstudiantesParaUnaEdicionDeCurso implements I
 		                toMap(e -> e.getKey(), e -> e.getValue(), (e1, e2) -> e2,
 		                    LinkedHashMap::new));
 		    // Una vez ordenados, iterar sobre estudiantesordenados y por cada uno, buscar la inscripcion y agregarla a la lista de retorno
-		    List<DtInscripcionEd> dtinscripcionesed2 = null;
+		    List<DtInscripcionEd> dtinscripcionesed2 = new ArrayList<DtInscripcionEd>();
 		    Iterator<Entry<String, Float>> it2 = estudiantesordenados.entrySet().iterator();
 		    while (it2.hasNext()) {
-		    	Map.Entry pair = (Map.Entry)it2.next();
+		    	@SuppressWarnings("rawtypes")
+				Map.Entry pair = (Map.Entry)it2.next();
 		    	for (DtInscripcionEd dtie: this.dtinscripcionesed) {
 		    		if(dtie.getEstudiante().getNick().equals(pair.getKey())) {
 		    			dtinscripcionesed2.add(dtie);

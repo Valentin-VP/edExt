@@ -26,7 +26,7 @@ if(session.getAttribute("opSeleccionarEstudiantes").toString().equals("0")) {%>
 	<br><br>
 	<div class="form-row">
 		<div class="form-group col-md-5">
-	      <input type="text" name="institutoSeleccionado" class="form-control" id="institutoSeleccionado">
+	      <input type="text" name="institutoSeleccionado" class="form-control" id="institutoSeleccionado" required>
 	    </div>
       	<button type="submit" class="btn btn-primary">Buscar Cursos</button> 
 	</div>
@@ -56,7 +56,7 @@ if(session.getAttribute("opSeleccionarEstudiantes").toString().equals("0")) {%>
 	<div class="form-row">
 		<div align="left" class="form-group col-md-5">
 	      <label for="edicionSelect">Edicion Vigente</label>
-	      <select id="edicionSelect" name="edicionSelect" class="selectpicker">
+	      <select id="edicionSelect" name="edicionSelect" class="selectpicker" required>
 	        <option selected disabled>Choose...</option>
 	        <option value="<%= edicion.getNombre() %>"><%= edicion.getNombre() %></option>
 	      </select>
@@ -163,8 +163,6 @@ if(session.getAttribute("opSeleccionarEstudiantes").toString().equals("0")) {%>
 function actualizarEstudiante() {
 	var nickestudiante=$("#estudianteSeleccionado :selected").text();
  	var estadoestudiante=$("#estadoSeleccionado :selected").val();
- 	//var instituto=$("#selectInstitutos :selected").val(); // obtiene el valor del select seleccionado
-	//var instituto=$('#inputInstituto').val(); // creo variable con el valor del input usando su id
 	$.ajax({ // Request Asincronica AJAX
 		url: 'SeleccionarEstudiantesEdicion', // Serverlet
 		method: 'POST',					// Metodo

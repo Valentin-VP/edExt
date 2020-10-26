@@ -14,7 +14,7 @@ public interface IControladorSeleccionarEstudiantesParaUnaEdicionDeCurso {
 
 	public ArrayList<DtCursoBase> listarCursosInstituto(String instituto) throws InstitutoInexistente, InstitutoSinCursos;
 	
-	public DtEdicionCompleta seleccionarCurso(String nomCurso) throws EdicionVigenteNoExiste;
+	public DtEdicionCompleta seleccionarCurso(String nomCurso, String nick) throws EdicionVigenteNoExiste;
 	
 	public List<DtInscripcionEd> ordenarInscripciones(String ordenarpor);
 	

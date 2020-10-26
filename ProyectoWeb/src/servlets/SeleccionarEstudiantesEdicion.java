@@ -38,12 +38,20 @@ public class SeleccionarEstudiantesEdicion extends HttpServlet {
 		IControladorSeleccionarEstudiantesParaUnaEdicionDeCurso icon = fabrica.getIControladorSeleccionarEstudiantesParaUnaEdicionDeCurso();
 		HttpSession sesion = request.getSession(true);
 		RequestDispatcher rd;
-		String curso = request.getParameter("cursoSeleccionarEstudiantes");	
+		String curso = request.getParameter("cursoSeleccionarEstudiantes");
+		String edicion = (String) request.getAttribute("edicionCompletaSeleccionarEstudiantes");
 		// Comparo si es una request de AJAX o una request normal
 		boolean ajax = "XMLHttpRequest".equals(request.getHeader("X-Requested-With"));
 
 		if (ajax) { // Es una request de AJAX
 			
+			try {
+				icon.seleccionarCurso(sesion.getAttribute("cursoSeleccionarEstudiantes").toString(),sesion.getAttribute("nick").toString());
+			} catch (EdicionVigenteNoExiste e1) {
+				request.setAttribute("mensaje", e1.getMessage());
+				rd = request.getRequestDispatcher("/error.jsp");
+				rd.forward(request, response);
+			}
 			String nick = request.getParameter("nickestudiante");
 			String estadonuevo = request.getParameter("estadoestudiante");
 			System.out.print(nick);
@@ -51,7 +59,9 @@ public class SeleccionarEstudiantesEdicion extends HttpServlet {
 			try {
 				icon.cambiarEstadoInscripcion(nick, estadonuevo);
 			} catch (Exception e) {
-				e.printStackTrace();
+				request.setAttribute("mensaje", "El formulario ha partido.");
+				rd = request.getRequestDispatcher("/error.jsp");
+				rd.forward(request, response);
 			}
 			response.getWriter().print("Datos actualizados");
 		}
@@ -86,7 +96,7 @@ public class SeleccionarEstudiantesEdicion extends HttpServlet {
 				System.out.println("el curso es"+curso);
 				DtEdicionCompleta dtec = new DtEdicionCompleta();
 				try {
-					dtec = icon.seleccionarCurso(curso);
+					dtec = icon.seleccionarCurso(curso,sesion.getAttribute("nick").toString());
 					System.out.println("la edicion es"+dtec.getNombre());
 					sesion.setAttribute("edicionCompletaSeleccionarEstudiantes", dtec);
 					sesion.setAttribute("opSeleccionarEstudiantes", "2");
@@ -95,12 +105,10 @@ public class SeleccionarEstudiantesEdicion extends HttpServlet {
 					request.setAttribute("mensaje", e.getMessage());
 					rd = request.getRequestDispatcher("/error.jsp");
 					rd.forward(request, response);
-					System.out.println(e.getMessage());
 				} catch (Exception e) {
 					request.setAttribute("mensaje", "El formulario ha partido.");
 					rd = request.getRequestDispatcher("/error.jsp");
 					rd.forward(request, response);
-					System.out.println(e.getMessage());
 				}
 				break;
 			case "2":	//selecciona el orden de los estudiantes
@@ -108,7 +116,7 @@ public class SeleccionarEstudiantesEdicion extends HttpServlet {
 				List<DtInscripcionEd> inscripciones = new ArrayList<DtInscripcionEd>();
 				System.out.print("esta ordenado por"+ordenar);
 				try {
-					dtec = icon.seleccionarCurso(sesion.getAttribute("cursoSeleccionarEstudiantes").toString());
+					dtec = icon.seleccionarCurso(sesion.getAttribute("cursoSeleccionarEstudiantes").toString(),sesion.getAttribute("nick").toString());
 					inscripciones = icon.ordenarInscripciones(ordenar);
 					
 					sesion.setAttribute("inscripcionesEstudiantes", inscripciones);
@@ -118,14 +126,13 @@ public class SeleccionarEstudiantesEdicion extends HttpServlet {
 					request.setAttribute("mensaje", "El formulario ha partido.");
 					rd = request.getRequestDispatcher("/error.jsp");
 					rd.forward(request, response);
-					e.printStackTrace();
 				}
 				break;
 			case "3":	//confirma los datos de los estudiante
 				try {
 					
 					System.out.print("Llegue");
-					
+					dtec = icon.seleccionarCurso(sesion.getAttribute("cursoSeleccionarEstudiantes").toString(),sesion.getAttribute("nick").toString());
 					icon.confirmarSeleccion();
 					icon.limpiar();
 					
@@ -136,7 +143,6 @@ public class SeleccionarEstudiantesEdicion extends HttpServlet {
 					request.setAttribute("mensaje", "El formulario ha partido.");
 					rd = request.getRequestDispatcher("/error.jsp");
 					rd.forward(request, response);
-					e.printStackTrace();
 				}
 				break;
 			}
