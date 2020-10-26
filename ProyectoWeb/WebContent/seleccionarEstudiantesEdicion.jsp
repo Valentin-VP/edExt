@@ -39,7 +39,6 @@ if(session.getAttribute("opSeleccionarEstudiantes").toString().equals("0")) {%>
 		<div align="left" class="form-group col-md-5">
 	      <label for="cursoSelect">Curso</label>
       	<select id="cursoSeleccionarEstudiantes" name="cursoSeleccionarEstudiantes" class="selectpicker" required>
-        	<option selected disabled>Choose...</option>
         	<%for(String c: cursos){ %>
         	<option value="<%= c %>"><%= c %></option>
         	<%} %>
@@ -57,7 +56,6 @@ if(session.getAttribute("opSeleccionarEstudiantes").toString().equals("0")) {%>
 		<div align="left" class="form-group col-md-5">
 	      <label for="edicionSelect">Edicion Vigente</label>
 	      <select id="edicionSelect" name="edicionSelect" class="selectpicker" required>
-	        <option selected disabled>Choose...</option>
 	        <option value="<%= edicion.getNombre() %>"><%= edicion.getNombre() %></option>
 	      </select>
 	    </div>
@@ -66,7 +64,6 @@ if(session.getAttribute("opSeleccionarEstudiantes").toString().equals("0")) {%>
 		<div align="left" class="form-group col-md-5">
 	      <label for="ordenarEstudiantes">Ordenar</label>
 	      <select id="ordenarEstudiantes" name="ordenarEstudiantes" class="selectpicker" required>
-	        <option selected disabled>Choose...</option>
 	        <option value="no ordenar">no ordenar</option>
 	        <option value="fecha">fecha</option>
 	        <option value="prioridad">prioridad</option>
@@ -124,7 +121,7 @@ if(session.getAttribute("opSeleccionarEstudiantes").toString().equals("0")) {%>
 	    <%} else { %>
 	    <%for(DtInscripcionEd dted: edicion.getInscripciones()){ %>
 		<tr>
-	      <td>Nombre: <%=dted.getEstudiante().getNick()%> | Fecha de Inscripcion: <%= dted.getFecha().getDia() + "/" + dted.getFecha().getMes() + "/" + dted.getFecha().getAnio() %></td>
+	      <td>Nick: <%=dted.getEstudiante().getNick()%> Estado: <%=dted.getEstado()%> | Fecha de Inscripcion: <%= dted.getFecha().getDia() + "/" + dted.getFecha().getMes() + "/" + dted.getFecha().getAnio() %></td>
 	    </tr>  
 	      <%} %>
 	    <%} %>
@@ -135,18 +132,16 @@ if(session.getAttribute("opSeleccionarEstudiantes").toString().equals("0")) {%>
 <!-- <form action="SeleccionarEstudiantesEdicion" method="post"> -->
 	<div class="form-row">
 		<div align="left" class="form-group col-md-5">
-	      <label for="cursoSelect">Curso</label>
+	      <label for="cursoSelect">Nick</label>
       	<select id="estudianteSeleccionado" name="estudianteSeleccionado" class="selectpicker" required>
-        	<option selected disabled>Choose...</option>
         	<%for(DtInscripcionEd dted: edicion.getInscripciones()){ %>
         	<option value="<%= dted.getEstudiante().getNick() %>"><%= dted.getEstudiante().getNick() %></option>
         	<%} %>
       	</select>
 	    </div>
 	    <div align="right" class="form-group col-md-5">
-	      <label for="cursoSelect">Curso</label>
+	      <label for="cursoSelect">Estado</label>
       	<select id="estadoSeleccionado" name="estadoSeleccionado" class="selectpicker" required>
-        	<option selected disabled>Choose...</option>
         	<option value="Aceptada">Aceptada</option>
         	<option value="Rechazada">Rechazada</option>
       	</select>

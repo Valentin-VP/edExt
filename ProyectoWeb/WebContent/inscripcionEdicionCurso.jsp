@@ -8,16 +8,12 @@
 <title>Insert title here</title>
 </head>
 <body>
-<% 
-	HttpSession s = (HttpSession) request.getSession();
-%>
 <form action="InscripcionEdicionCurso" method="post">
    <div class="form-row">
     <div class="col-md-6 mb-3">
       <label for="validationDefault04">Institutos</label>
-      <select class="custom-select" id="selectInstitutos" name="selectInstitutos" required>
+      <select class="custom-select" id="selectInstitutos" name="selectInstitutos">
         <option selected disabled value="">Choose...</option>
-        <option>Fing</option>
       </select>
       <button class="btn btn-secondary" type="button" id="boton1" onclick="cargarInstitutos();">Mostrar institutos</button>
     </div>
@@ -27,7 +23,6 @@
       <label for="validationDefault04">Cursos</label>
       <select class="custom-select" id="selectCursos" name="selectCursos">
         <option selected disabled value="">Choose...</option>
-        <option>Calculo 2</option>
       </select>
       <button class="btn btn-secondary" type="button" id="boton2" onclick="cargarCursos();">Mostrar cursos</button>
     </div>
@@ -72,6 +67,7 @@
 		    $.get("InscripcionEdicionCurso", function(responseJson) {                 // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
 		        var $select = $("#selectInstitutos");                         // Locate HTML DOM element with ID "someselect".
 		        $select.find("option").remove();                          // Find all child elements with tag name "option" and remove them (just to prevent duplicate options when button is pressed again).
+		         //$('#selectInstitutos').append(`<option selected disabled value="${'Elige un instituto'}"> ${'Elige un instituto'} </option>`);
 		        $.each(responseJson, function(value, result) {               // Iterate over the JSON object.
 		        	$("<option>").text(result.nombre).appendTo($select); 
 		        	//$("<option>").val(key).text(value).appendTo($select); // Create HTML <option> element, set its value with currently iterated key and its text content with currently iterated item and finally append it to the <select>.
@@ -92,6 +88,8 @@
 				success: function(resultText){ // si sale bien el request
 					var $select = $("#selectCursos");                         // Locate HTML DOM element with ID "someselect".
 			        $select.find("option").remove();                          // Find all child elements with tag name "option" and remove them (just to prevent duplicate options when button is pressed again).
+			        //$('#selectCursos').append(`<option value="${optionValue}"> ${optionText} </option>`); Crear un option personalizado
+			        //$('#selectCursos').append(`<option selected disabled value="${'Elige un curso'}"> ${'Elige un curso'} </option>`);
 			        $.each(resultText, function(value, result) {               // Iterate over the JSON object.
 			        	$("<option>").text(result).appendTo($select); 
 			        	//$("<option>").val(key).text(value).appendTo($select); // Create HTML <option> element, set its value with currently iterated key and its text content with currently iterated item and finally append it to the <select>.

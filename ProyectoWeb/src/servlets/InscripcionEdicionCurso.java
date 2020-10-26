@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.hibernate.Session;
+
 import com.google.gson.Gson;
 
 import datatypes.DtCursoBase;
@@ -80,6 +82,7 @@ public class InscripcionEdicionCurso extends HttpServlet {
 		String correo = (String) sesion.getAttribute("correo");
 		LocalDate hoy = LocalDate.now();
 		DtFecha fecha = new DtFecha(hoy.getDayOfMonth(),hoy.getMonthValue(),hoy.getYear());
+		RequestDispatcher rd;
 		
 		// Comparo si es una request de AJAX o una request normal
 		boolean ajax = "XMLHttpRequest".equals(request.getHeader("X-Requested-With"));
@@ -91,7 +94,9 @@ public class InscripcionEdicionCurso extends HttpServlet {
 			try {
 				cursos = icon.seleccionarInstituto(ins);
 			} catch (CursoNoExiste e) {
-				e.printStackTrace();
+				request.setAttribute("mensaje", e.getMessage());
+				rd = request.getRequestDispatcher("/error.jsp");
+				rd.forward(request, response);
 			}
 			
 			// Ejemplo con lista de String funcionando
@@ -121,12 +126,13 @@ public class InscripcionEdicionCurso extends HttpServlet {
 			
 			@SuppressWarnings("unused")
 			ArrayList<DtInstituto> institutos = new ArrayList<>();
-			RequestDispatcher rd;
 			
 			try {
 				institutos = icon.listarInstitutos();
 			} catch (SinInstitutos e) {
-				e.printStackTrace();
+				request.setAttribute("mensaje", e.getMessage());
+				rd = request.getRequestDispatcher("/error.jsp");
+				rd.forward(request, response);
 			}
 			
 			@SuppressWarnings("unused")
@@ -134,19 +140,24 @@ public class InscripcionEdicionCurso extends HttpServlet {
 			try {
 				cursos = icon.seleccionarInstituto(instituto);
 			} catch (CursoNoExiste e) {
-				e.printStackTrace();
-				System.out.print(e);
+				request.setAttribute("mensaje", e.getMessage());
+				rd = request.getRequestDispatcher("/error.jsp");
+				rd.forward(request, response);
 			}
 			DtEdicionBase dteb = new DtEdicionBase();
 			try {
 				dteb = icon.seleccionarCurso(curso);
 			} catch (EdicionVigenteNoExiste e) {
-				e.printStackTrace();
+				request.setAttribute("mensaje", e.getMessage());
+				rd = request.getRequestDispatcher("/error.jsp");
+				rd.forward(request, response);
 			}
 			try {
 				icon.registrarInscripcionEd(nick, correo, curso, fecha);
 			} catch (InscripcionEdRepetido | UsuarioNoExiste | UsuarioNoEstudiante e) {
-				e.printStackTrace();
+				request.setAttribute("mensaje", e.getMessage());
+				rd = request.getRequestDispatcher("/error.jsp");
+				rd.forward(request, response);
 			}
 			icon.confirmar();
 			icon.cancelar();

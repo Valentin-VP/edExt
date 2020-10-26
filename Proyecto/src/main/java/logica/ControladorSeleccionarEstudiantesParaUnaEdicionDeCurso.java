@@ -96,13 +96,22 @@ public class ControladorSeleccionarEstudiantesParaUnaEdicionDeCurso implements I
 		}
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		Usuario u = mU.findUsuario(nick);
+		//List<Edicion> dictadas = new ArrayList<Edicion>();
+		boolean ladicto = false;
 		if(u instanceof Docente) {
 			List<Edicion> ediciones = ((Docente) u).getEdiciones();
 			for(Edicion ed: ediciones) {
-				if (!ed.getNombre().equals(dteb.getNombre())) {
-					throw new EdicionVigenteNoExiste("No dicta una edicion en el curso");
+				if (ed.getNombre().equals(dteb.getNombre())) {
+					//dictadas.add(ed);
+					ladicto=true;
+					break;
+				} else {
+					ladicto=false;
 				}
 			}
+		}
+		if(ladicto==false) {
+			throw new EdicionVigenteNoExiste("No dicta una edicion en el curso");
 		}
 		List <DtInscripcionEd> dtinscripciones = new ArrayList <DtInscripcionEd>();
 		for(Edicion ed: c.getEdiciones()) {
