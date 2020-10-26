@@ -1,5 +1,6 @@
 Proyecto/.classpath
 Proyecto/.project
+Proyecto/.settings/
 Proyecto/.settings/org.eclipse.wst.common.component
 Proyecto/.settings/org.eclipse.wst.common.project.facet.core.xml
 Proyecto/.settings/org.eclipse.wst.validation.prefs
@@ -8,3 +9,10 @@ ProyectoWeb/.classpath
 ProyectoWeb/.settings/org.eclipse.jdt.core.prefs
 ProyectoWeb/.settings/org.eclipse.wst.common.component
 ProyectoWeb/.settings/org.eclipse.wst.common.project.facet.core.xml
+Proyecto/RemoteSystemsTempFiles/
+Proyecto/src/.classpath
+Proyecto/src/.project
+Proyecto/src/.settings/
+ProyectoWeb/.project
+ProyectoWeb/.settings/
+ProyectoWeb/.tern-project
