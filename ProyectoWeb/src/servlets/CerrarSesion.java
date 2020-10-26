@@ -64,6 +64,7 @@ public class CerrarSesion extends HttpServlet {
         	session.removeAttribute("todosLosCursos");
         	session.removeAttribute("dropdownCursos");
         	session.removeAttribute("optConsultaUsuario");
+        	session.removeAttribute("usuariosConsultaUsuario");
 			session.invalidate();
         }
         
