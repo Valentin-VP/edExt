@@ -62,6 +62,7 @@ public class RefreshInicio extends HttpServlet {
         	session.removeAttribute("todosLosCursos");
         	session.removeAttribute("dropdownCursos");
         	
+        	session.removeAttribute("optConsultaUsuario");
         }
 
         RequestDispatcher rd;

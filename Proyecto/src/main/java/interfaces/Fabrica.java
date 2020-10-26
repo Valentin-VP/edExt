@@ -8,6 +8,7 @@ import logica.ControladorAltaProgFormacion;
 import logica.ControladorAltaUsuario;
 import logica.ControladorConsultaEdicionCurso;
 import logica.ControladorConsultaPrograma;
+import logica.ControladorConsultaUsuario;
 import logica.ControladorInscripcionEdicionCurso;
 import logica.ControladorListarAceptadosAUnaEdicionDeCurso;
 import logica.ControladorListarResultadosInscripcionesEdiciones;
@@ -33,6 +34,10 @@ public class Fabrica {
 	
 	public IControladorAltaCurso getIControladorAltaCurso() {
 		return new ControladorAltaCurso();
+	}
+	
+	public IControladorConsultaUsuario getIControladorConsultaUsuario() {
+		return new ControladorConsultaUsuario();
 	}
 	
 	public IControladorConsultaCurso getIControladorConsultaCurso() {
