@@ -108,7 +108,7 @@
 	      <div class="form-row">
 			<div class="form-group col-md-6">
 	    	  <label for="inputCategorias">Seleccione Categorias</label>
-	 		     <select id="inputCategorias" name="categoriasAltaCurso" class="selectpicker" multiple="multiple">
+	 		     <select id="inputCategorias" name="categoriasAltaCurso" class="selectpicker" multiple="multiple" required>
 	     		   <%for(String c: categorias){ %>
 	    		    <option value="<%= c %>"><%= c %></option>
 	  			   <%} %>

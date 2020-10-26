@@ -1,0 +1,10 @@
+Proyecto/.classpath
+Proyecto/.project
+Proyecto/.settings/org.eclipse.wst.common.component
+Proyecto/.settings/org.eclipse.wst.common.project.facet.core.xml
+Proyecto/.settings/org.eclipse.wst.validation.prefs
+Proyecto/src/main/java/META-INF/persistence.xml
+ProyectoWeb/.classpath
+ProyectoWeb/.settings/org.eclipse.jdt.core.prefs
+ProyectoWeb/.settings/org.eclipse.wst.common.component
+ProyectoWeb/.settings/org.eclipse.wst.common.project.facet.core.xml
