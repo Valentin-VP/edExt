@@ -1,7 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@page import="datatypes.DtUsuario"%>
+<%@page import="datatypes.DtFecha"%>
 <!DOCTYPE html>
 <html>
+<%@include file = "/header.jsp" %>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -10,7 +13,9 @@
 
 <link rel="stylesheet" href="https://bootswatch.com/4/simplex/bootstrap.min.css"/>
 
+<%DtUsuario u = (DtUsuario) sesion.getAttribute("DtUser");
 
+%>
 <div class="container">
         <div class="row">
             <div class="col-12">
@@ -22,14 +27,17 @@
                                 <div class="image-container">
                                     <img src="http://placehold.it/150x150" id="imgProfile" style="width: 150px; height: 150px" class="img-thumbnail" />
                                     <div class="middle">
-                                        <input type="button" class="btn btn-secondary" id="btnChangePicture" value="Change" />
+                                   		<form action="PerfilUsuario" method="post">
+                                   			<%sesion.setAttribute("seguido", u.getNick()); %>
+                                   			<button type="submit" class="btn btn-secondary" id="btnChangePicture">seguir</button>
+                                        	<!-- <input type="button" class="btn btn-primary" id="btnChangePicture" value="Seguir" /> -->
+                                        </form>
                                         <input type="file" style="display: none;" id="profilePicture" name="file" />
                                     </div>
                                 </div>
                                 <div class="userData ml-3">
-                                    <h2 class="d-block" style="font-size: 1.5rem; font-weight: bold"><a href="javascript:void(0);">Some Name</a></h2>
-                                    <h6 class="d-block"><a href="javascript:void(0)">1,500</a> Video Uploads</h6>
-                                    <h6 class="d-block"><a href="javascript:void(0)">300</a> Blog Posts</h6>
+                                    <h2 class="d-block" style="font-size: 1.5rem; font-weight: bold"><a href="javascript:void(0);"><%=u.getNombre() + " " + u.getApellido() %></a></h2>
+
                                 </div>
                                 <div class="ml-auto">
                                     <input type="button" class="btn btn-primary d-none" id="btnDiscard" value="Discard Changes" />
@@ -41,7 +49,7 @@
                             <div class="col-12">
                                 <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
                                     <li class="nav-item">
-                                        <a class="nav-link active" id="basicInfo-tab" data-toggle="tab" href="#basicInfo" role="tab" aria-controls="basicInfo" aria-selected="true">Basic Info</a>
+                                        <a class="nav-link active" id="basicInfo-tab" data-toggle="tab" href="#basicInfo" role="tab" aria-controls="basicInfo" aria-selected="true">General</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" id="connectedServices-tab" data-toggle="tab" href="#connectedServices" role="tab" aria-controls="connectedServices" aria-selected="false">Connected Services</a>
@@ -53,33 +61,42 @@
 
                                         <div class="row">
                                             <div class="col-sm-3 col-md-2 col-5">
-                                                <label style="font-weight:bold;">Full Name</label>
+                                                <label style="font-weight:bold;">Nickname</label>
                                             </div>
                                             <div class="col-md-8 col-6">
-                                                Jamshaid Kamran
+                                                <%=u.getNick() %>
                                             </div>
                                         </div>
                                         <hr />
 
                                         <div class="row">
                                             <div class="col-sm-3 col-md-2 col-5">
-                                                <label style="font-weight:bold;">Birth Date</label>
+                                                <label style="font-weight:bold;">Correo</label>
                                             </div>
                                             <div class="col-md-8 col-6">
-                                                March 22, 1994.
+                                                <%=u.getCorreo() %>
                                             </div>
                                         </div>
                                         <hr />
                                         
                                         
-                                        <div class="row">
+                                         <div class="row">
+                                            <div class="col-sm-3 col-md-2 col-5">
+                                                <label style="font-weight:bold;">Fecha de Nacimiento</label>
+                                            </div>
+                                            <div class="col-md-8 col-6">
+                                                <%=u.getFechaNac().DtFechaToDate().toString()%>
+                                            </div>
+                                        </div>
+                                        <hr />
+                                      <%--  <div class="row">
                                             <div class="col-sm-3 col-md-2 col-5">
                                                 <label style="font-weight:bold;">Something</label>
                                             </div>
                                             <div class="col-md-8 col-6">
                                                 Something
                                             </div>
-                                        </div>
+                                        </div> 
                                         <hr />
                                         <div class="row">
                                             <div class="col-sm-3 col-md-2 col-5">
@@ -88,16 +105,7 @@
                                             <div class="col-md-8 col-6">
                                                 Something
                                             </div>
-                                        </div>
-                                        <hr />
-                                        <div class="row">
-                                            <div class="col-sm-3 col-md-2 col-5">
-                                                <label style="font-weight:bold;">Something</label>
-                                            </div>
-                                            <div class="col-md-8 col-6">
-                                                Something
-                                            </div>
-                                        </div>
+                                        </div>--%>
                                         <hr />
 
                                     </div>

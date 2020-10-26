@@ -59,7 +59,7 @@ if(usuarios == null){
 					      <td><%=u.getNick() %></td>
 					      <td><%=u.getNombre() %></td>
 					      <td><%=u.getApellido() %></td>
-					      <td class="btn btn-danger" width="20%"><a href="ConsultaUsuario">Perfil</a></td>
+					      <td class="btn btn-danger" width="20%"><a href="PerfilUsuario?nickConsultaUsuario=<%= u.getNick() %>">Perfil</a></td>
 					    </tr>
 					<%} %>
 				  </tbody>

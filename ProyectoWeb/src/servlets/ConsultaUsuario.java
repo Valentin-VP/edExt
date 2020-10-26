@@ -46,8 +46,7 @@ public class ConsultaUsuario extends HttpServlet {
 				  rd = request.getRequestDispatcher("ConsultaUsuario.jsp");
 				  rd.forward(request, response);
 				  break;
-		case "1": System.out.println("Entro al case1 asdasksdhfbfhsdbhdsljdbljskfjbskdflaj");
-				  break;
+
 		}
 	}
 
