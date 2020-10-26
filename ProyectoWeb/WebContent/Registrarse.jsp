@@ -20,22 +20,22 @@
   <div class="form-row">
     <div class="form-group col-md-6">
       <label for="inputEmail4">Correo</label>
-      <input type="email" name="correo" class="form-control" id="inputCorreo4" placeholder="example@starkinstitutes.com">
+      <input type="email" name="correo" class="form-control" id="inputCorreo4" placeholder="example@starkinstitutes.com" required>
     </div>
     <div class="form-group col-md-6">
       <label for="inputNick4">Nickname</label>
-      <input type="Text" name="nick" class="form-control" id="inputNick4">
+      <input type="Text" name="nick" class="form-control" id="inputNick4" required>
     </div>
   </div>
   <br><br> 
   <div class="form-row"> 
     <div class="form-group col-md-6">
       <label for="inputPassword4">Password</label>
-      <input type="password" name="pass" class="form-control" id="inputPassword4">
+      <input type="password" name="pass" class="form-control" id="inputPassword4" required>
     </div>
     <div class="form-group col-md-6">
       <label for="inputVerificacion4">Confirmar Password</label>
-      <input type="password" name="verificar" class="form-control" id="inputVerificacion4">
+      <input type="password" name="verificar" class="form-control" id="inputVerificacion4" required>
     </div>
   </div>
   <br><br>
@@ -115,11 +115,11 @@
   <div class="form-row">
   	<div class="form-group col-md-6">
     	<label for="inputNombre">Nombre</label>
-    	<input type="text" name="nombre" class="form-control" id="inputNombre" placeholder="Tony">
+    	<input type="text" name="nombre" class="form-control" id="inputNombre" placeholder="Tony" required>
   	</div>
   		<div class="form-group col-md-6">
     	<label for="inputApellido">Apellido</label>
-    	<input type="text" name="apellido" class="form-control" id="inputApellido" placeholder="Stark">
+    	<input type="text" name="apellido" class="form-control" id="inputApellido" placeholder="Stark" required>
   	</div>
   </div>
   <br><br>
