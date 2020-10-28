@@ -95,36 +95,16 @@ public class ControladorSeleccionarEstudiantesParaUnaEdicionDeCurso implements I
 		List<Edicion> ediciones = new ArrayList<Edicion>();
 		if(u instanceof Docente) {
 			ediciones = ((Docente) u).getEdiciones();
-			dteb = ((Docente) u).getEdicionVigente();
+			dteb = ((Docente) u).getDtEdicionVigente();
 		} else {
 			throw new EdicionVigenteNoExiste("No es un docente");
 		}
 		if (ediciones.isEmpty()) {
 			throw new EdicionVigenteNoExiste("No dicta ninguna edicion");
 		}
-		//c.getEdiciones();
-		//DtEdicionBase dteb = c.getEdicionVigente();
 		if (dteb == null) {
 			throw new EdicionVigenteNoExiste("No existe una edicion vigente para el curso seleccionado");
 		}
-		//List<Edicion> dictadas = new ArrayList<Edicion>();
-		/*boolean ladicto = false;
-		if(u instanceof Docente) {
-			List<Edicion> ediciones = ((Docente) u).getEdiciones();
-			for(Edicion ed: ediciones) {
-				if (ed.getNombre().equals(dteb.getNombre())) {
-					//dictadas.add(ed);
-					ladicto=true;
-					break;
-				} else {
-					ladicto=false;
-				}
-			}
-		}
-		if(ladicto==false) {
-			throw new EdicionVigenteNoExiste("No dicta una edicion en el curso");
-		}
-		*/
 		List <DtInscripcionEd> dtinscripciones = new ArrayList <DtInscripcionEd>();
 		for(Edicion ed: ediciones) {
 			if (ed.getNombre()==dteb.getNombre()) {

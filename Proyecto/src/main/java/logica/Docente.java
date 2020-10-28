@@ -67,8 +67,8 @@ public class Docente extends Usuario {
 		this.dicta = ediciones;
 	}
 	
-	// Para obtener la edicion vigente del curso -- Mauri
-	public DtEdicionBase getEdicionVigente() {
+	// Para obtener la edicion vigente que dicta el docente
+	public DtEdicionBase getDtEdicionVigente() {
 		LocalDate date = LocalDate.now();
 		DtEdicionBase dteb=new DtEdicionBase();
 		for(int i=dicta.size()-1;i >= 0;i--) {
@@ -78,6 +78,19 @@ public class Docente extends Usuario {
 			}
 		}
 		return null;
+	}
+	
+	// Para obtener las ediciones vigentes que dicta el docente
+	public List<DtEdicionBase> getDtEdicionesVigentes() {
+		LocalDate date = LocalDate.now();
+		List<DtEdicionBase> edicionesvigentes = new ArrayList<DtEdicionBase>();
+		for(int i=dicta.size()-1;i >= 0;i--) {
+			if (fechaValidaInicio(dicta.get(i).convertToDtFecha(dicta.get(i).getFechaI()),date) && fechaValidaFin(dicta.get(i).convertToDtFecha(dicta.get(i).getFechaF()),date)) {
+			DtEdicionBase dteb = new DtEdicionBase(dicta.get(i).getNombre());
+			edicionesvigentes.add(dteb);//return dteb;
+			}
+		}
+		return edicionesvigentes;
 	}
 	
 	public boolean fechaValidaInicio(DtFecha fecha,LocalDate date) {
