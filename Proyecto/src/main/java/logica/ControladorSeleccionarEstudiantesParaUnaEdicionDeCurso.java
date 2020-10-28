@@ -87,17 +87,28 @@ public class ControladorSeleccionarEstudiantesParaUnaEdicionDeCurso implements I
 	}
 	
 	public DtEdicionCompleta seleccionarCurso(String curso, String nick) throws EdicionVigenteNoExiste{
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		Usuario u = mU.findUsuario(nick);
 		ManejadorCurso mC = ManejadorCurso.getInstancia();
 		this.c = mC.find(curso);
-		c.getEdiciones();
-		DtEdicionBase dteb = c.getEdicionVigente();
+		DtEdicionBase dteb = new DtEdicionBase();
+		List<Edicion> ediciones = new ArrayList<Edicion>();
+		if(u instanceof Docente) {
+			ediciones = ((Docente) u).getEdiciones();
+			dteb = ((Docente) u).getEdicionVigente();
+		} else {
+			throw new EdicionVigenteNoExiste("No es un docente");
+		}
+		if (ediciones.isEmpty()) {
+			throw new EdicionVigenteNoExiste("No dicta ninguna edicion");
+		}
+		//c.getEdiciones();
+		//DtEdicionBase dteb = c.getEdicionVigente();
 		if (dteb == null) {
 			throw new EdicionVigenteNoExiste("No existe una edicion vigente para el curso seleccionado");
 		}
-		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
-		Usuario u = mU.findUsuario(nick);
 		//List<Edicion> dictadas = new ArrayList<Edicion>();
-		boolean ladicto = false;
+		/*boolean ladicto = false;
 		if(u instanceof Docente) {
 			List<Edicion> ediciones = ((Docente) u).getEdiciones();
 			for(Edicion ed: ediciones) {
@@ -113,8 +124,9 @@ public class ControladorSeleccionarEstudiantesParaUnaEdicionDeCurso implements I
 		if(ladicto==false) {
 			throw new EdicionVigenteNoExiste("No dicta una edicion en el curso");
 		}
+		*/
 		List <DtInscripcionEd> dtinscripciones = new ArrayList <DtInscripcionEd>();
-		for(Edicion ed: c.getEdiciones()) {
+		for(Edicion ed: ediciones) {
 			if (ed.getNombre()==dteb.getNombre()) {
 				this.edicion = ed;
 				System.out.print("la edicion guardada es"+this.edicion.getNombre());

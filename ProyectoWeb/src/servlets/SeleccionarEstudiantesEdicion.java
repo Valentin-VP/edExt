@@ -63,7 +63,7 @@ public class SeleccionarEstudiantesEdicion extends HttpServlet {
 				rd = request.getRequestDispatcher("/error.jsp");
 				rd.forward(request, response);
 			}
-			response.getWriter().print("Datos actualizados");
+			response.getWriter().print("Datos actualizados de " + nick);
 		}
 		else { // Sino es una request normal
 		

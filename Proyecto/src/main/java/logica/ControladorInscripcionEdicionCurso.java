@@ -97,7 +97,7 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 	}
 
 	@Override
-	public void registrarInscripcionEd(String nick, String correo, String nomCurso, DtFecha fecha) throws InscripcionEdRepetido, UsuarioNoExiste, UsuarioNoEstudiante {
+	public void registrarInscripcionEd(String nick, String correo, String nomCurso, DtFecha fecha) throws UsuarioNoExiste, UsuarioNoEstudiante {
 		this.nick = nick;
 		this.setCorreo(correo);
 		this.setNomCurso(nomCurso);
@@ -111,10 +111,6 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 			throw new UsuarioNoExiste("No existe un usuario con el nick y correo ingresados");
 		}
 		if(u instanceof Estudiante) {
-			boolean existeInscripcion = ((Estudiante) u).existeInscripcion(this.nombreEd);
-			if (existeInscripcion) {
-				throw new InscripcionEdRepetido("Ya existe una inscripcion a la edicion");
-			}
 		} else {
 			throw new UsuarioNoEstudiante("El usuario ingresado es un docente");
 		}
@@ -131,7 +127,7 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 	}
 
 	@Override
-	public void confirmar() {
+	public void confirmar() throws InscripcionEdRepetido{
 		//ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 		//Instituto ins = mI.find(nomIns);
 		//ManejadorCurso mC = ManejadorCurso.getInstancia();
@@ -147,19 +143,27 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		InscripcionEd ie=new InscripcionEd(datefecha,estado,ed,(Estudiante) u);
+		
 		if(u instanceof Estudiante) {
-			((Estudiante) u).agregarInscripcionEd(ie);
-			
-			Conexion conexion = Conexion.getInstancia();
-			EntityManager em = conexion.getEntityManager();
-			em.getTransaction().begin();
-			
-			em.persist(u);
-			
-			em.getTransaction().commit();
-			
+			boolean existeInscripcion = ((Estudiante) u).existeInscripcion(this.nombreEd);
+			if (existeInscripcion) {
+				throw new InscripcionEdRepetido("Ya existe una inscripcion a la edicion");
+			} else {
+				
+				InscripcionEd ie=new InscripcionEd(datefecha,estado,ed,(Estudiante) u);
+				((Estudiante) u).agregarInscripcionEd(ie);
+				
+				Conexion conexion = Conexion.getInstancia();
+				EntityManager em = conexion.getEntityManager();
+				em.getTransaction().begin();
+				
+				em.persist(u);
+				
+				em.getTransaction().commit();
+				
+			}
 		}
+		
 	}
 
 }

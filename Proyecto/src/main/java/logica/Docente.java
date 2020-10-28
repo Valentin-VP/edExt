@@ -1,5 +1,6 @@
 package logica;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -10,6 +11,9 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+
+import datatypes.DtEdicionBase;
+import datatypes.DtFecha;
 
 @Entity
 @DiscriminatorValue("D")//nuevo
@@ -61,6 +65,41 @@ public class Docente extends Usuario {
 
 	public void setEdiciones(List<Edicion> ediciones) {
 		this.dicta = ediciones;
+	}
+	
+	// Para obtener la edicion vigente del curso -- Mauri
+	public DtEdicionBase getEdicionVigente() {
+		LocalDate date = LocalDate.now();
+		DtEdicionBase dteb=new DtEdicionBase();
+		for(int i=dicta.size()-1;i >= 0;i--) {
+			if (fechaValidaInicio(dicta.get(i).convertToDtFecha(dicta.get(i).getFechaI()),date) && fechaValidaFin(dicta.get(i).convertToDtFecha(dicta.get(i).getFechaF()),date)) {
+			dteb.setNombre(dicta.get(i).getNombre());
+			return dteb;
+			}
+		}
+		return null;
+	}
+	
+	public boolean fechaValidaInicio(DtFecha fecha,LocalDate date) {
+		if(fecha.getAnio().intValue() > date.getYear()) {
+			return false;
+		} else if(fecha.getAnio().intValue() == date.getYear() && fecha.getMes().intValue() > date.getMonthValue()) {
+			return false;
+		} else if(fecha.getAnio().intValue() == date.getYear() && fecha.getMes().intValue() == date.getMonthValue() && fecha.getDia().intValue() > date.getDayOfMonth()) {
+			return false;
+		}
+		return true;
+	}
+	
+	public boolean fechaValidaFin(DtFecha fecha,LocalDate date) {
+		if(fecha.getAnio().intValue() < date.getYear()) {
+			return false;
+		} else if(fecha.getAnio().intValue() == date.getYear() && fecha.getMes().intValue() < date.getMonthValue()) {
+			return false;
+		} else if(fecha.getAnio().intValue() == date.getYear() && fecha.getMes().intValue() == date.getMonthValue() && fecha.getDia().intValue() < date.getDayOfMonth()) {
+			return false;
+		}
+		return true;
 	}
 	
 }

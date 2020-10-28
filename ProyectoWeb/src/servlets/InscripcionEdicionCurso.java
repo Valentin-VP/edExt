@@ -13,8 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.hibernate.Session;
-
 import com.google.gson.Gson;
 
 import datatypes.DtCursoBase;
@@ -154,15 +152,21 @@ public class InscripcionEdicionCurso extends HttpServlet {
 			}
 			try {
 				icon.registrarInscripcionEd(nick, correo, curso, fecha);
-			} catch (InscripcionEdRepetido | UsuarioNoExiste | UsuarioNoEstudiante e) {
+			} catch (UsuarioNoExiste | UsuarioNoEstudiante e) {
 				request.setAttribute("mensaje", e.getMessage());
 				rd = request.getRequestDispatcher("/error.jsp");
 				rd.forward(request, response);
 			}
-			icon.confirmar();
+			try {
+				icon.confirmar();
+			} catch (InscripcionEdRepetido e) {
+				request.setAttribute("mensaje", e.getMessage());
+				rd = request.getRequestDispatcher("/error.jsp");
+				rd.forward(request, response);
+			}
 			icon.cancelar();
 			
-			request.setAttribute("mensaje", "La inscripcion a la edicion"+ dteb.getNombre() +"se realizo correctamente");
+			request.setAttribute("mensaje", "La inscripcion a la edicion "+ dteb.getNombre() +" se realizo correctamente");
 			rd = request.getRequestDispatcher("/notificacion.jsp");
 			rd.forward(request, response);
 			
