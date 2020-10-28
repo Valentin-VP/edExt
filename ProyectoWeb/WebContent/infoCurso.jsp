@@ -127,6 +127,11 @@ System.out.println(infoCurso);
 					<tr>
 						<th scope="row">Categorias a las que pertenece</th>
 					 	<td><%=infoCurso.get(6) %></td>
+					</tr>
+					<tr>
+						<th scope="row">Previas</th>
+						<td><%=infoCurso.get(7) %></td>
+					</tr>
 				</tbody>
 			</table>
 		</div>

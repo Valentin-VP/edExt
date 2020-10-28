@@ -115,6 +115,15 @@ public class ConsultarCurso extends HttpServlet {
 						}
 					}
 					infoCurso.add(categorias);
+					String previas = "";
+					if(!curso.getPrevias().isEmpty()){
+						for(DtCursoBase p: curso.getPrevias()){
+							previas = previas + " " + p.getNombre();
+						}
+					}
+					if(previas == "") 
+						previas = "Sin previas";
+					infoCurso.add(previas);
 					ediciones = curso.getEdiciones();
 					for(DtEdicionBase e: ediciones) {
 						edicionesStr.add(e.getNombre());
