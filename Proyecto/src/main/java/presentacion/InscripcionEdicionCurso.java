@@ -218,7 +218,7 @@ public class InscripcionEdicionCurso extends JInternalFrame {
 				icon.confirmar();
 				JOptionPane.showMessageDialog(this, "La inscripcion se realizo con exito", "Inscripcion a Edicion Curso",
 						JOptionPane.INFORMATION_MESSAGE);
-			} catch (InscripcionEdRepetido | UsuarioNoExiste | UsuarioNoEstudiante un) {
+			} catch (InscripcionEdRepetido | UsuarioNoExiste | UsuarioNoEstudiante | EdicionVigenteNoExiste un) {
 				JOptionPane.showMessageDialog(this, un.getMessage(), "Inscripcion a Edicion Curso", JOptionPane.ERROR_MESSAGE);
 			}	
 			

@@ -23,5 +23,5 @@ public interface IControladorInscripcionEdicionCurso {
 	
 	public void cancelar();
 	
-	public void confirmar() throws InscripcionEdRepetido;
+	public void confirmar() throws InscripcionEdRepetido, EdicionVigenteNoExiste, UsuarioNoExiste;
 }

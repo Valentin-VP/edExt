@@ -127,14 +127,20 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 	}
 
 	@Override
-	public void confirmar() throws InscripcionEdRepetido{
+	public void confirmar() throws InscripcionEdRepetido, EdicionVigenteNoExiste, UsuarioNoExiste{
 		//ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 		//Instituto ins = mI.find(nomIns);
 		//ManejadorCurso mC = ManejadorCurso.getInstancia();
 		//Curso c = mC.find(nomCurso);//ins.findCurso(nomCurso);
 		ManejadorEdicion mE = ManejadorEdicion.getInstancia();
+		if (nombreEd == null) {
+			throw new EdicionVigenteNoExiste("No existe una edicion vigente para el curso seleccionado");
+		}
 		Edicion ed = mE.find(nombreEd);//c.findEdicion(nombreEd);
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		if (this.nick == null) {
+			throw new UsuarioNoExiste("No existe un usuario con el nick y correo ingresados");
+		}
 		Usuario u = mU.findUsuario(this.nick);
 		Date datefecha = null;
 		EstadoInscripcion estado = EstadoInscripcion.Inscripto;

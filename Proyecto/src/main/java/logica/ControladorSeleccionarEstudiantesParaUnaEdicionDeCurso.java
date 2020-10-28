@@ -83,7 +83,7 @@ public class ControladorSeleccionarEstudiantesParaUnaEdicionDeCurso implements I
 			}
 		}
 		setCursos(cursosinstituto);
-		return getCursos();		
+		return cursosinstituto;		
 	}
 	
 	public DtEdicionCompleta seleccionarCurso(String curso, String nick) throws EdicionVigenteNoExiste{

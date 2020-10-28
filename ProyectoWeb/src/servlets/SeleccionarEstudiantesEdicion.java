@@ -118,6 +118,9 @@ public class SeleccionarEstudiantesEdicion extends HttpServlet {
 				try {
 					dtec = icon.seleccionarCurso(sesion.getAttribute("cursoSeleccionarEstudiantes").toString(),sesion.getAttribute("nick").toString());
 					inscripciones = icon.ordenarInscripciones(ordenar);
+					System.out.print("Estudiante 1" + inscripciones.get(0).getEstudiante().getNick());
+					//System.out.print("Estudiante 2" + inscripciones.get(1).getEstudiante().getNick());
+					//System.out.print("Estudiante 3" + inscripciones.get(2).getEstudiante().getNick());
 					
 					sesion.setAttribute("inscripcionesEstudiantes", inscripciones);
 					sesion.setAttribute("opSeleccionarEstudiantes", "3");
@@ -126,6 +129,7 @@ public class SeleccionarEstudiantesEdicion extends HttpServlet {
 					request.setAttribute("mensaje", "El formulario ha partido.");
 					rd = request.getRequestDispatcher("/error.jsp");
 					rd.forward(request, response);
+					e.printStackTrace();
 				}
 				break;
 			case "3":	//confirma los datos de los estudiante

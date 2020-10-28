@@ -152,14 +152,8 @@ public class InscripcionEdicionCurso extends HttpServlet {
 			}
 			try {
 				icon.registrarInscripcionEd(nick, correo, curso, fecha);
-			} catch (UsuarioNoExiste | UsuarioNoEstudiante e) {
-				request.setAttribute("mensaje", e.getMessage());
-				rd = request.getRequestDispatcher("/error.jsp");
-				rd.forward(request, response);
-			}
-			try {
 				icon.confirmar();
-			} catch (InscripcionEdRepetido e) {
+			} catch (UsuarioNoExiste | UsuarioNoEstudiante | InscripcionEdRepetido | EdicionVigenteNoExiste e) {
 				request.setAttribute("mensaje", e.getMessage());
 				rd = request.getRequestDispatcher("/error.jsp");
 				rd.forward(request, response);

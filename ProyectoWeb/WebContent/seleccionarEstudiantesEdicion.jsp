@@ -73,7 +73,7 @@ if(session.getAttribute("opSeleccionarEstudiantes").toString().equals("0")) {%>
 	</div>
 </form>
 <%}else if(session.getAttribute("opSeleccionarEstudiantes").toString().equals("3")) {%>
-<h1 align="left"> Informacion de Estudiantes inscriptos a la edicion  </h1>
+<h1 align="left"> Informacion de Estudiantes inscriptos a la edicion </h1>
 <br><br>
 <form action="SeleccionarEstudiantesEdicion" method="post">
 	<div class="form-row">
