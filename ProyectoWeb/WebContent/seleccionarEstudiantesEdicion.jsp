@@ -150,7 +150,7 @@ if(session.getAttribute("opSeleccionarEstudiantes").toString().equals("0")) {%>
 	</div>
 	<h3 id="result"></h3>
 	<div class="form-row">
-	     <button type="submit" class="btn btn-primary">Confirmar Datos</button>
+	     <button type="submit" class="btn btn-primary">Confirmar</button>
 	</div>
 </form>
 <% } %>

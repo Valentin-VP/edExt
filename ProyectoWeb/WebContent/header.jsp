@@ -31,12 +31,9 @@ crossorigin="anonymous">
 	//if (request.isRequestedSessionIdValid()){
 	if (/*sesion.isNew() || */tipoUser == null){
 		tipoUser = "visitante";
-		System.out.println("entra al if ");
 	} else {
-		System.out.println("entra al else ");
 		//tipoUser = (String) sesion.getAttribute("tipo");
 		//nickname = (String) sesion.getAttribute("nick");
-		System.out.print(tipoUser);
 	}
 if(welcome == "notwelcome"){%>
 
@@ -90,9 +87,12 @@ if(welcome == "notwelcome"){%>
       </li>
       <li class="nav-item">
        	<a class="nav-link" href="CerrarSesion" id="IniciarButton" role="button">Cerrar Sesion</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="ConsultaUsuario.jsp" id="ConsultaUsuarios" role="button">Usuarios</a>
       </li>	
       <li class="nav-item">
-        <a class="nav-link" href="ConsultaUsuario.jsp" id="RegistrarseButton" role="button">Mi Perfil<%= " - " + nickname %></a>
+        <a class="nav-link disabled" href="#" id="RegistrarseButton" role="button">Mi Perfil<%= " - " + nickname %></a>
       </li>
     </ul>
     <form action="FiltradoYBusqueda" method="post" class="form-inline my-2 my-lg-0">
@@ -128,9 +128,12 @@ if(welcome == "notwelcome"){%>
       </li>
       <li class="nav-item">
        	<a class="nav-link" href="CerrarSesion" id="IniciarButton" role="button">Cerrar Sesion</a>
-      </li>	
+      </li>
       <li class="nav-item">
-        <a class="nav-link" href="ConsultaUsuario.jsp" id="RegistrarseButton" role="button">Mi Perfil<%= " - " + nickname %></a>
+        <a class="nav-link" href="ConsultaUsuario.jsp" id="ConsultaUsuarios" role="button">Usuarios</a>
+      </li>		
+      <li class="nav-item">
+        <a class="nav-link disabled" href="ConsultaUsuario.jsp" id="RegistrarseButton" role="button">Mi Perfil<%= " - " + nickname %></a>
       </li>
     </ul>
     <form action="FiltradoYBusqueda" method="post" class="form-inline my-2 my-lg-0">
@@ -155,6 +158,9 @@ if(welcome == "notwelcome"){%>
         	<a class="dropdown-item" href='infoCurso.jsp?optConsultaCursoInfoCurso=<%= optConsultaCurso %>'>Curso</a>
          	<a class="dropdown-item" href='infoEdicion.jsp?optConsultaEdicionInfoEdicion=<%= optConsultaEdicion %>'>Ediciones</a>
         </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="ConsultaUsuario.jsp" id="ConsultaUsuarios" role="button">Usuarios</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="IniciarSesion.jsp" id="IniciarButton" role="button">Iniciar Sesion</a>

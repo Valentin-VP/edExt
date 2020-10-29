@@ -20,6 +20,8 @@ public interface IControladorSeleccionarEstudiantesParaUnaEdicionDeCurso {
 	
 	public void cambiarEstadoInscripcion(String nick, String estado);
 	
+	public void setEdicion(String edicion);
+	
 	public void confirmarSeleccion();
 	
 	public void limpiar();

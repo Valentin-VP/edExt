@@ -64,7 +64,12 @@ public class ControladorSeleccionarEstudiantesParaUnaEdicionDeCurso implements I
 	public void setCursos(ArrayList<DtCursoBase> cursos) {
 		this.cursos = cursos;
 	}
-
+	
+	public void setEdicion(String edicion) {
+		ManejadorEdicion mE = ManejadorEdicion.getInstancia();
+		this.edicion = mE.find(edicion);
+	}
+	
 	@Override
 	public ArrayList<DtCursoBase> listarCursosInstituto(String instituto) throws InstitutoInexistente, InstitutoSinCursos{
 		limpiar();
@@ -109,7 +114,7 @@ public class ControladorSeleccionarEstudiantesParaUnaEdicionDeCurso implements I
 		for(Edicion ed: ediciones) {
 			if (ed.getNombre()==dteb.getNombre()) {
 				this.edicion = ed;
-				System.out.print("la edicion guardada es"+this.edicion.getNombre());
+				System.out.println("la edicion guardada es"+this.edicion.getNombre());
 				dtinscripciones = getDtInscripciones(ed.getInscripciones());
 				DtFecha dtfi = ed.convertToDtFecha(ed.getFechaI());
 				DtFecha dtff = ed.convertToDtFecha(ed.getFechaF());
@@ -138,6 +143,7 @@ public class ControladorSeleccionarEstudiantesParaUnaEdicionDeCurso implements I
 	};
 	
 	public List<DtInscripcionEd> ordenarInscripciones(String ordenarpor){
+		dtinscripcionesed = new ArrayList<DtInscripcionEd>();
 		if(ordenarpor.equals("fecha")) {
 			Collections.sort(this.edicion.getInscripciones(), ordenarPorFecha);
 		}
@@ -187,7 +193,7 @@ public class ControladorSeleccionarEstudiantesParaUnaEdicionDeCurso implements I
 		    }
 		    this.dtinscripcionesed = dtinscripcionesed2;
 		} else if(ordenarpor.equals("no ordenar")){
-			this.dtinscripcionesed = getDtInscripciones(this.edicion.getInscripciones());
+			dtinscripcionesed = getDtInscripciones(this.edicion.getInscripciones());
 		}
 		return dtinscripcionesed;
 	}

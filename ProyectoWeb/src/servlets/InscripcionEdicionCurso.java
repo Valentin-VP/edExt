@@ -120,28 +120,9 @@ public class InscripcionEdicionCurso extends HttpServlet {
 			System.out.println("\n"+nick);
 			System.out.println(correo);
 			System.out.println(instituto);
-			System.out.print(curso);
+			System.out.println(curso);
+		
 			
-			@SuppressWarnings("unused")
-			ArrayList<DtInstituto> institutos = new ArrayList<>();
-			
-			try {
-				institutos = icon.listarInstitutos();
-			} catch (SinInstitutos e) {
-				request.setAttribute("mensaje", e.getMessage());
-				rd = request.getRequestDispatcher("/error.jsp");
-				rd.forward(request, response);
-			}
-			
-			@SuppressWarnings("unused")
-			ArrayList<DtCursoBase> cursos = new ArrayList<>();
-			try {
-				cursos = icon.seleccionarInstituto(instituto);
-			} catch (CursoNoExiste e) {
-				request.setAttribute("mensaje", e.getMessage());
-				rd = request.getRequestDispatcher("/error.jsp");
-				rd.forward(request, response);
-			}
 			DtEdicionBase dteb = new DtEdicionBase();
 			try {
 				dteb = icon.seleccionarCurso(curso);

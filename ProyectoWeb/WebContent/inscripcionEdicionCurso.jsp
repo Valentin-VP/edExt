@@ -27,7 +27,7 @@
       <button class="btn btn-secondary" type="button" id="boton2" onclick="cargarCursos();">Mostrar cursos</button>
     </div>
   </div>
-  <button class="btn btn-primary" type="submit">Submit form</button>
+  <button class="btn btn-primary" type="submit">Inscribirse</button>
 </form>
 	<!-- <h3 id="result"></h3> -->
 <script>

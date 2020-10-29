@@ -158,11 +158,13 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 				
 				InscripcionEd ie=new InscripcionEd(datefecha,estado,ed,(Estudiante) u);
 				((Estudiante) u).agregarInscripcionEd(ie);
+				ed.addInscripcion(ie);
 				
 				Conexion conexion = Conexion.getInstancia();
 				EntityManager em = conexion.getEntityManager();
 				em.getTransaction().begin();
 				
+				em.persist(ed);
 				em.persist(u);
 				
 				em.getTransaction().commit();

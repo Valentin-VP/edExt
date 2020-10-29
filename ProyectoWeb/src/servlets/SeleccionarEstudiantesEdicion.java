@@ -45,13 +45,8 @@ public class SeleccionarEstudiantesEdicion extends HttpServlet {
 
 		if (ajax) { // Es una request de AJAX
 			
-			try {
-				icon.seleccionarCurso(sesion.getAttribute("cursoSeleccionarEstudiantes").toString(),sesion.getAttribute("nick").toString());
-			} catch (EdicionVigenteNoExiste e1) {
-				request.setAttribute("mensaje", e1.getMessage());
-				rd = request.getRequestDispatcher("/error.jsp");
-				rd.forward(request, response);
-			}
+
+			icon.setEdicion(sesion.getAttribute("edicionSEEC").toString());
 			String nick = request.getParameter("nickestudiante");
 			String estadonuevo = request.getParameter("estadoestudiante");
 			System.out.print(nick);
@@ -97,7 +92,7 @@ public class SeleccionarEstudiantesEdicion extends HttpServlet {
 				DtEdicionCompleta dtec = new DtEdicionCompleta();
 				try {
 					dtec = icon.seleccionarCurso(curso,sesion.getAttribute("nick").toString());
-					System.out.println("la edicion es"+dtec.getNombre());
+					System.out.println("la edicion es "+dtec.getNombre());
 					sesion.setAttribute("edicionCompletaSeleccionarEstudiantes", dtec);
 					sesion.setAttribute("opSeleccionarEstudiantes", "2");
 					response.sendRedirect("seleccionarEstudiantesEdicion.jsp");
@@ -114,11 +109,14 @@ public class SeleccionarEstudiantesEdicion extends HttpServlet {
 			case "2":	//selecciona el orden de los estudiantes
 				String ordenar = request.getParameter("ordenarEstudiantes");
 				List<DtInscripcionEd> inscripciones = new ArrayList<DtInscripcionEd>();
-				System.out.print("esta ordenado por"+ordenar);
+				System.out.println("esta ordenado por "+ordenar);
 				try {
-					dtec = icon.seleccionarCurso(sesion.getAttribute("cursoSeleccionarEstudiantes").toString(),sesion.getAttribute("nick").toString());
+					//dtec = icon.seleccionarCurso(sesion.getAttribute("cursoSeleccionarEstudiantes").toString(),sesion.getAttribute("nick").toString());
+					//System.out.println("ediciones: " + dtec.getInscripciones().size());
+					sesion.setAttribute("edicionSEEC", request.getParameter("edicionSelect"));
+					icon.setEdicion(request.getParameter("edicionSelect"));
 					inscripciones = icon.ordenarInscripciones(ordenar);
-					System.out.print("Estudiante 1" + inscripciones.get(0).getEstudiante().getNick());
+					System.out.println("cant estudiantes: " + inscripciones.size());
 					//System.out.print("Estudiante 2" + inscripciones.get(1).getEstudiante().getNick());
 					//System.out.print("Estudiante 3" + inscripciones.get(2).getEstudiante().getNick());
 					
@@ -126,28 +124,24 @@ public class SeleccionarEstudiantesEdicion extends HttpServlet {
 					sesion.setAttribute("opSeleccionarEstudiantes", "3");
 					response.sendRedirect("seleccionarEstudiantesEdicion.jsp");
 				} catch (Exception e) {
-					request.setAttribute("mensaje", "El formulario ha partido.");
+					request.setAttribute("mensaje", e.getMessage());
 					rd = request.getRequestDispatcher("/error.jsp");
 					rd.forward(request, response);
 					e.printStackTrace();
 				}
 				break;
-			case "3":	//confirma los datos de los estudiante
-				try {
-					
-					System.out.print("Llegue");
-					dtec = icon.seleccionarCurso(sesion.getAttribute("cursoSeleccionarEstudiantes").toString(),sesion.getAttribute("nick").toString());
-					icon.confirmarSeleccion();
-					icon.limpiar();
-					
-					request.setAttribute("mensaje", "Los datos han sido confirmados");
+			case "3":
+					icon.setEdicion(sesion.getAttribute("edicionSEEC").toString());
+					try {
+						icon.confirmarSeleccion();
+					}catch(Exception e) {
+						request.setAttribute("mensaje", "Error en persistencia");
+						rd = request.getRequestDispatcher("/error.jsp");
+						rd.forward(request, response);
+					}
+					request.setAttribute("mensaje", "Inscripciones actualizadas correctamente");
 					rd = request.getRequestDispatcher("/notificacion.jsp");
 					rd.forward(request, response);
-				}catch (Exception e) {
-					request.setAttribute("mensaje", "El formulario ha partido.");
-					rd = request.getRequestDispatcher("/error.jsp");
-					rd.forward(request, response);
-				}
 				break;
 			}
 		} // cierra if para verificar si es request ajax o comun
