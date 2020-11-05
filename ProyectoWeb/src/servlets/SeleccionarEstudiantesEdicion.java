@@ -114,6 +114,7 @@ public class SeleccionarEstudiantesEdicion extends HttpServlet {
 					//dtec = icon.seleccionarCurso(sesion.getAttribute("cursoSeleccionarEstudiantes").toString(),sesion.getAttribute("nick").toString());
 					//System.out.println("ediciones: " + dtec.getInscripciones().size());
 					sesion.setAttribute("edicionSEEC", request.getParameter("edicionSelect"));
+					icon.seleccionarCurso(sesion.getAttribute("cursoSeleccionarEstudiantes").toString(), sesion.getAttribute("nick").toString());
 					icon.setEdicion(request.getParameter("edicionSelect"));
 					inscripciones = icon.ordenarInscripciones(ordenar);
 					System.out.println("cant estudiantes: " + inscripciones.size());

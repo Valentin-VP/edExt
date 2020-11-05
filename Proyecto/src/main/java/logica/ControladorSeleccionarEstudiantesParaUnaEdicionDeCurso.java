@@ -146,6 +146,7 @@ public class ControladorSeleccionarEstudiantesParaUnaEdicionDeCurso implements I
 		dtinscripcionesed = new ArrayList<DtInscripcionEd>();
 		if(ordenarpor.equals("fecha")) {
 			Collections.sort(this.edicion.getInscripciones(), ordenarPorFecha);
+			dtinscripcionesed = getDtInscripciones(this.edicion.getInscripciones());
 		}
 		else if(ordenarpor.equals("prioridad")) {
 			//obtener lista de nicks de estudiantes con contadores en 0
@@ -173,9 +174,9 @@ public class ControladorSeleccionarEstudiantesParaUnaEdicionDeCurso implements I
 				Map.Entry pair = (Map.Entry)it.next();
 		        float prioridad = (float) ((int) pair.getValue() * 0.5);
 		        estudiantesprioridad.put((String) pair.getKey(),prioridad);
-		        it.remove(); // avoids a ConcurrentModificationException
+		        it.remove(); // avoids a ConcurrentModificationException --> Es una buena práctica, pero como no tenemos acceso concurrente, no sería necesario
 		    }
-		    // ordenar los estudiantes
+		    // ordenar los estudiantes: https://stackoverflow.com/questions/1066589/iterate-through-a-hashmap
 		    Map<String, Float> estudiantesordenados = estudiantesprioridad.entrySet().stream().sorted(comparingByValue()).collect(
 		                toMap(e -> e.getKey(), e -> e.getValue(), (e1, e2) -> e2,
 		                    LinkedHashMap::new));
@@ -185,8 +186,8 @@ public class ControladorSeleccionarEstudiantesParaUnaEdicionDeCurso implements I
 		    while (it2.hasNext()) {
 		    	@SuppressWarnings("rawtypes")
 				Map.Entry pair = (Map.Entry)it2.next();
-		    	for (DtInscripcionEd dtie: this.dtinscripcionesed) {
-		    		if(dtie.getEstudiante().getNick().equals(pair.getKey())) {
+		    	for (DtInscripcionEd dtie: getDtInscripciones(this.edicion.getInscripciones())) {
+		    		if(dtie.getEstudiante().getNick().equals(pair.getKey()) && !dtinscripcionesed2.contains(dtie)) { // Me aseguro de tener las incsripciones en orden, de acuerdo a los estudiantes ya ordenados por prioridad
 		    			dtinscripcionesed2.add(dtie);
 		    		}
 		    	}
