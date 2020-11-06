@@ -29,6 +29,7 @@ import interfaces.IControladorAltaInstituto;
 import interfaces.IControladorAltaEdicionCurso;
 import interfaces.IControladorAltaUsuario;
 import interfaces.IControladorConsultaCurso;
+import publicadores.ControladorSesionPublish;
 import interfaces.IControladorAltaCurso;
 
 import javax.swing.JOptionPane;
@@ -70,6 +71,9 @@ public class Principal {
 	}
 
 	public Principal() {
+		ControladorSesionPublish cp = new ControladorSesionPublish();
+		cp.publicar();
+		
 		initialize();
 		
 		//Dimension desktopSize = frame.getMaximumSize(); esto y lo de abajo es para dejar el internal frame en el medio
