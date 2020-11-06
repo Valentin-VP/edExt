@@ -5,7 +5,7 @@ import java.io.FileReader;
 import java.util.HashMap;
 
 public class WebServiceConfiguration {
-	private String path = System.getProperty("user.home") + "/eclipse-workspace/edExt/.properties"; //cambiar dependiendo su PC NO PUSHEAAAARR
+	private String path = System.getProperty("user.home") + "/.properties"; //cambiar dependiendo su PC NO PUSHEAAAARR
     private HashMap<String, String> configs;
     
     public WebServiceConfiguration() throws Exception {
