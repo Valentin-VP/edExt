@@ -37,7 +37,10 @@ public class InscripcionEdicionCurso extends HttpServlet {
     }
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
+		//ControladorPublishService cps = new ControladorPublishServiceLocator();
+		//ControladorPublish port = cps.getControladorPublishPort();
+		//port.funcion();
+		
 		Fabrica fabrica = Fabrica.getInstancia();
 		IControladorInscripcionEdicionCurso icon = fabrica.getIControladorInscripcionEdicionCurso();
 		List<DtInstituto> institutos = new ArrayList<DtInstituto>();
