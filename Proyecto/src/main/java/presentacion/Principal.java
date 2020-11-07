@@ -29,6 +29,7 @@ import interfaces.IControladorAltaInstituto;
 import interfaces.IControladorAltaEdicionCurso;
 import interfaces.IControladorAltaUsuario;
 import interfaces.IControladorConsultaCurso;
+import publicadores.ControladorAltaEdicionCursoPublish;
 import publicadores.ControladorAltaUsuarioPublish;
 import publicadores.ControladorInscripcionEdicionPublish;
 import publicadores.ControladorSesionPublish;
@@ -78,7 +79,10 @@ public class Principal {
 		ControladorAltaUsuarioPublish cp2 = new ControladorAltaUsuarioPublish();
 		cp2.publicar();
 		ControladorInscripcionEdicionPublish cp3 = new ControladorInscripcionEdicionPublish();
-		cp3.publicar();		
+		cp3.publicar();
+		ControladorAltaEdicionCursoPublish cp4 = new ControladorAltaEdicionCursoPublish();
+		cp4.publicar();
+		
 		initialize();
 		
 		//Dimension desktopSize = frame.getMaximumSize(); esto y lo de abajo es para dejar el internal frame en el medio
