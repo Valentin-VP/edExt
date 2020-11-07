@@ -1,7 +1,6 @@
 package servlets;
 
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,16 +10,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.rpc.ServiceException;
 
 import com.google.gson.Gson;
 
 import publicadores.DtFecha;
 import publicadores.DtInstituto;
-import excepciones.SinInstitutos;
-import excepciones.UsuarioRepetido;
-import interfaces.Fabrica;
-import interfaces.IControladorAltaUsuario;
 import publicadores.ControladorAltaUsuarioPublish;
 import publicadores.ControladorAltaUsuarioPublishService;
 import publicadores.ControladorAltaUsuarioPublishServiceLocator;
@@ -95,7 +89,7 @@ public class AltaUsuario extends HttpServlet {
 				altaUsuario(nick, correo, nombre, apellido, fechaNac, pass);
 				try {
 					confirmarAltaUsuario(esDocente);
-				} catch (NoSuchAlgorithmException e) {
+				} catch (Exception e) {
 					request.setAttribute("mensaje", e.getMessage());
 					rd = request.getRequestDispatcher("/error.jsp");
 					rd.forward(request, response);
@@ -132,7 +126,7 @@ public class AltaUsuario extends HttpServlet {
 		port.seleccionarInstituto(instituto);
 	}
 	
-	public void altaUsuario(String nick, String correo, String nombre, String apellido, DtFecha fechaNac, String password) throws UsuarioRepetido, Exception {
+	public void altaUsuario(String nick, String correo, String nombre, String apellido, DtFecha fechaNac, String password) throws Exception {
 		ControladorAltaUsuarioPublishService cps = new ControladorAltaUsuarioPublishServiceLocator();
 		ControladorAltaUsuarioPublish port = cps.getControladorAltaUsuarioPublishPort();
 		port.altaUsuario(nick, correo, nombre, apellido, fechaNac, password);

@@ -24,7 +24,7 @@ public class ControladorAltaEdicionCursoPublishPortBindingStub extends org.apach
         org.apache.axis.description.OperationDesc oper;
         org.apache.axis.description.ParameterDesc param;
         oper = new org.apache.axis.description.OperationDesc();
-        oper.setName("getDocentes");
+        oper.setName("getUsuarios");
         oper.setReturnType(new javax.xml.namespace.QName("http://publicadores/", "dtUsuarioBaseArray"));
         oper.setReturnClass(publicadores.DtUsuarioBase[].class);
         oper.setReturnQName(new javax.xml.namespace.QName("", "return"));
@@ -35,7 +35,7 @@ public class ControladorAltaEdicionCursoPublishPortBindingStub extends org.apach
         _operations[0] = oper;
 
         oper = new org.apache.axis.description.OperationDesc();
-        oper.setName("getUsuarios");
+        oper.setName("getDocentes");
         oper.setReturnType(new javax.xml.namespace.QName("http://publicadores/", "dtUsuarioBaseArray"));
         oper.setReturnClass(publicadores.DtUsuarioBase[].class);
         oper.setReturnQName(new javax.xml.namespace.QName("", "return"));
@@ -55,7 +55,8 @@ public class ControladorAltaEdicionCursoPublishPortBindingStub extends org.apach
         oper.addParameter(param);
         param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "arg3"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://publicadores/", "dtFecha"), publicadores.DtFecha.class, false, false);
         oper.addParameter(param);
-        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "arg4"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://publicadores/", "arrayList"), publicadores.ArrayList.class, false, false);
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "arg4"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://jaxb.dev.java.net/array", "stringArray"), java.lang.String[].class, false, false);
+        param.setItemQName(new javax.xml.namespace.QName("", "item"));
         oper.addParameter(param);
         param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "arg5"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "boolean"), boolean.class, false, false);
         oper.addParameter(param);
@@ -142,26 +143,14 @@ public class ControladorAltaEdicionCursoPublishPortBindingStub extends org.apach
             java.lang.Class simpledf = org.apache.axis.encoding.ser.SimpleDeserializerFactory.class;
             java.lang.Class simplelistsf = org.apache.axis.encoding.ser.SimpleListSerializerFactory.class;
             java.lang.Class simplelistdf = org.apache.axis.encoding.ser.SimpleListDeserializerFactory.class;
-            qName = new javax.xml.namespace.QName("http://publicadores/", "abstractCollection");
+            qName = new javax.xml.namespace.QName("http://jaxb.dev.java.net/array", "stringArray");
             cachedSerQNames.add(qName);
-            cls = publicadores.AbstractCollection.class;
+            cls = java.lang.String[].class;
             cachedSerClasses.add(cls);
-            cachedSerFactories.add(beansf);
-            cachedDeserFactories.add(beandf);
-
-            qName = new javax.xml.namespace.QName("http://publicadores/", "abstractList");
-            cachedSerQNames.add(qName);
-            cls = publicadores.AbstractList.class;
-            cachedSerClasses.add(cls);
-            cachedSerFactories.add(beansf);
-            cachedDeserFactories.add(beandf);
-
-            qName = new javax.xml.namespace.QName("http://publicadores/", "arrayList");
-            cachedSerQNames.add(qName);
-            cls = publicadores.ArrayList.class;
-            cachedSerClasses.add(cls);
-            cachedSerFactories.add(beansf);
-            cachedDeserFactories.add(beandf);
+            qName = new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string");
+            qName2 = new javax.xml.namespace.QName("", "item");
+            cachedSerFactories.add(new org.apache.axis.encoding.ser.ArraySerializerFactory(qName, qName2));
+            cachedDeserFactories.add(new org.apache.axis.encoding.ser.ArrayDeserializerFactory());
 
             qName = new javax.xml.namespace.QName("http://publicadores/", "CursoNoExiste");
             cachedSerQNames.add(qName);
@@ -296,46 +285,12 @@ public class ControladorAltaEdicionCursoPublishPortBindingStub extends org.apach
         }
     }
 
-    public publicadores.DtUsuarioBase[] getDocentes() throws java.rmi.RemoteException {
-        if (super.cachedEndpoint == null) {
-            throw new org.apache.axis.NoEndPointException();
-        }
-        org.apache.axis.client.Call _call = createCall();
-        _call.setOperation(_operations[0]);
-        _call.setUseSOAPAction(true);
-        _call.setSOAPActionURI("");
-        _call.setEncodingStyle(null);
-        _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
-        _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
-        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
-        _call.setOperationName(new javax.xml.namespace.QName("http://publicadores/", "getDocentes"));
-
-        setRequestHeaders(_call);
-        setAttachments(_call);
- try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {});
-
-        if (_resp instanceof java.rmi.RemoteException) {
-            throw (java.rmi.RemoteException)_resp;
-        }
-        else {
-            extractAttachments(_call);
-            try {
-                return (publicadores.DtUsuarioBase[]) _resp;
-            } catch (java.lang.Exception _exception) {
-                return (publicadores.DtUsuarioBase[]) org.apache.axis.utils.JavaUtils.convert(_resp, publicadores.DtUsuarioBase[].class);
-            }
-        }
-  } catch (org.apache.axis.AxisFault axisFaultException) {
-  throw axisFaultException;
-}
-    }
-
     public publicadores.DtUsuarioBase[] getUsuarios() throws java.rmi.RemoteException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
         org.apache.axis.client.Call _call = createCall();
-        _call.setOperation(_operations[1]);
+        _call.setOperation(_operations[0]);
         _call.setUseSOAPAction(true);
         _call.setSOAPActionURI("");
         _call.setEncodingStyle(null);
@@ -364,7 +319,41 @@ public class ControladorAltaEdicionCursoPublishPortBindingStub extends org.apach
 }
     }
 
-    public void altaEdicionCurso(java.lang.String arg0, java.lang.String arg1, publicadores.DtFecha arg2, publicadores.DtFecha arg3, publicadores.ArrayList arg4, boolean arg5, int arg6, publicadores.DtFecha arg7) throws java.rmi.RemoteException, publicadores.UsuarioNoDocente, publicadores.EdicionRepetida, publicadores.CursoNoExiste, publicadores.InstitutoInexistente {
+    public publicadores.DtUsuarioBase[] getDocentes() throws java.rmi.RemoteException {
+        if (super.cachedEndpoint == null) {
+            throw new org.apache.axis.NoEndPointException();
+        }
+        org.apache.axis.client.Call _call = createCall();
+        _call.setOperation(_operations[1]);
+        _call.setUseSOAPAction(true);
+        _call.setSOAPActionURI("");
+        _call.setEncodingStyle(null);
+        _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
+        _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
+        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
+        _call.setOperationName(new javax.xml.namespace.QName("http://publicadores/", "getDocentes"));
+
+        setRequestHeaders(_call);
+        setAttachments(_call);
+ try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {});
+
+        if (_resp instanceof java.rmi.RemoteException) {
+            throw (java.rmi.RemoteException)_resp;
+        }
+        else {
+            extractAttachments(_call);
+            try {
+                return (publicadores.DtUsuarioBase[]) _resp;
+            } catch (java.lang.Exception _exception) {
+                return (publicadores.DtUsuarioBase[]) org.apache.axis.utils.JavaUtils.convert(_resp, publicadores.DtUsuarioBase[].class);
+            }
+        }
+  } catch (org.apache.axis.AxisFault axisFaultException) {
+  throw axisFaultException;
+}
+    }
+
+    public void altaEdicionCurso(java.lang.String arg0, java.lang.String arg1, publicadores.DtFecha arg2, publicadores.DtFecha arg3, java.lang.String[] arg4, boolean arg5, int arg6, publicadores.DtFecha arg7) throws java.rmi.RemoteException, publicadores.UsuarioNoDocente, publicadores.EdicionRepetida, publicadores.CursoNoExiste, publicadores.InstitutoInexistente {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }

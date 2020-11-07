@@ -67,8 +67,12 @@ public class ControladorAltaEdicionCursoPublish {
 	}
 	
 	@WebMethod
-	public void altaEdicionCurso(String curso, String nombre, DtFecha fechaI, DtFecha fechaF, ArrayList<String> docentes, boolean tieneCupos, Integer cantCupos, DtFecha fechaPub) throws EdicionRepetida, CursoNoExiste, InstitutoInexistente, UsuarioNoDocente {
-		icon.altaEdicionCurso(curso, nombre, fechaI, fechaF, docentes, tieneCupos, cantCupos, fechaPub);
+	public void altaEdicionCurso(String curso, String nombre, DtFecha fechaI, DtFecha fechaF, String[] docentes, boolean tieneCupos, Integer cantCupos, DtFecha fechaPub) throws EdicionRepetida, CursoNoExiste, InstitutoInexistente, UsuarioNoDocente {
+		ArrayList<String> profes = new ArrayList<String>();
+		for(int i = 0; i < docentes.length; ++i) {
+			profes.add(docentes[i]);
+		}
+		icon.altaEdicionCurso(curso, nombre, fechaI, fechaF, profes, tieneCupos, cantCupos, fechaPub);
 	}
 	
 	@WebMethod

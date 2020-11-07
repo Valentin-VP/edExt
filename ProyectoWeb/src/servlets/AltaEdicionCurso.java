@@ -152,8 +152,13 @@ public class AltaEdicionCurso extends HttpServlet {
 	
 	public void altaEdicionCurso(String curso, String nombre, DtFecha fechaI, DtFecha fechaF, ArrayList<String> docentes, boolean tieneCupos, Integer cupos, DtFecha fechaPub) throws Exception {
 		ControladorAltaEdicionCursoPublishService cps = new ControladorAltaEdicionCursoPublishServiceLocator();
-		ControladorAltaEdicionCursoPublish port = cps.getControladorAltaEdicionCursoPublishPort();		
-		port.altaEdicionCurso(curso, nombre, fechaI, fechaF, docentes, tieneCupos, cupos, fechaPub);
-		//problema con el ArrayList<String> de docentes
+		ControladorAltaEdicionCursoPublish port = cps.getControladorAltaEdicionCursoPublishPort();
+		String[] profes = new String[docentes.size()];
+		int i = 0;
+		for (String s: docentes) {
+		    profes[i] = s;
+		    i++;
+		}
+		port.altaEdicionCurso(curso, nombre, fechaI, fechaF, profes, tieneCupos, cupos, fechaPub);
 	}
 }
