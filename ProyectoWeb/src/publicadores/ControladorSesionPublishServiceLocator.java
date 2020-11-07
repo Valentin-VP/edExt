@@ -22,7 +22,7 @@ public class ControladorSesionPublishServiceLocator extends org.apache.axis.clie
     }
 
     // Use to get a proxy class for ControladorSesionPublishPort
-    private java.lang.String ControladorSesionPublishPort_address = "http://127.0.0.1:1942/controlador";
+    private java.lang.String ControladorSesionPublishPort_address = "http://127.0.0.1:1942/controladorSesion";
 
     public java.lang.String getControladorSesionPublishPortAddress() {
         return ControladorSesionPublishPort_address;

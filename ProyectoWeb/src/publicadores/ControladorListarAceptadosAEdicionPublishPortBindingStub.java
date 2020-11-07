@@ -41,31 +41,6 @@ public class ControladorListarAceptadosAEdicionPublishPortBindingStub extends or
         _operations[0] = oper;
 
         oper = new org.apache.axis.description.OperationDesc();
-        oper.setName("ingresarInstituto");
-        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "arg0"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
-        oper.addParameter(param);
-        oper.setReturnType(new javax.xml.namespace.QName("http://publicadores/", "dtCursoBaseArray"));
-        oper.setReturnClass(publicadores.DtCursoBase[].class);
-        oper.setReturnQName(new javax.xml.namespace.QName("", "return"));
-        param = oper.getReturnParamDesc();
-        param.setItemQName(new javax.xml.namespace.QName("", "item"));
-        oper.setStyle(org.apache.axis.constants.Style.RPC);
-        oper.setUse(org.apache.axis.constants.Use.LITERAL);
-        oper.addFault(new org.apache.axis.description.FaultDesc(
-                      new javax.xml.namespace.QName("http://publicadores/", "InstitutoInexistente"),
-                      "publicadores.InstitutoInexistente",
-                      new javax.xml.namespace.QName("http://publicadores/", "InstitutoInexistente"), 
-                      true
-                     ));
-        oper.addFault(new org.apache.axis.description.FaultDesc(
-                      new javax.xml.namespace.QName("http://publicadores/", "InstitutoSinCursos"),
-                      "publicadores.InstitutoSinCursos",
-                      new javax.xml.namespace.QName("http://publicadores/", "InstitutoSinCursos"), 
-                      true
-                     ));
-        _operations[1] = oper;
-
-        oper = new org.apache.axis.description.OperationDesc();
         oper.setName("ingresarCurso");
         param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "arg0"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
         oper.addParameter(param);
@@ -88,7 +63,7 @@ public class ControladorListarAceptadosAEdicionPublishPortBindingStub extends or
                       new javax.xml.namespace.QName("http://publicadores/", "CursoNoExiste"), 
                       true
                      ));
-        _operations[2] = oper;
+        _operations[1] = oper;
 
         oper = new org.apache.axis.description.OperationDesc();
         oper.setName("ingresarEdicion");
@@ -103,6 +78,31 @@ public class ControladorListarAceptadosAEdicionPublishPortBindingStub extends or
                       new javax.xml.namespace.QName("http://publicadores/", "EdicionNoExiste"),
                       "publicadores.EdicionNoExiste",
                       new javax.xml.namespace.QName("http://publicadores/", "EdicionNoExiste"), 
+                      true
+                     ));
+        _operations[2] = oper;
+
+        oper = new org.apache.axis.description.OperationDesc();
+        oper.setName("ingresarInstituto");
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "arg0"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
+        oper.addParameter(param);
+        oper.setReturnType(new javax.xml.namespace.QName("http://publicadores/", "dtCursoBaseArray"));
+        oper.setReturnClass(publicadores.DtCursoBase[].class);
+        oper.setReturnQName(new javax.xml.namespace.QName("", "return"));
+        param = oper.getReturnParamDesc();
+        param.setItemQName(new javax.xml.namespace.QName("", "item"));
+        oper.setStyle(org.apache.axis.constants.Style.RPC);
+        oper.setUse(org.apache.axis.constants.Use.LITERAL);
+        oper.addFault(new org.apache.axis.description.FaultDesc(
+                      new javax.xml.namespace.QName("http://publicadores/", "InstitutoInexistente"),
+                      "publicadores.InstitutoInexistente",
+                      new javax.xml.namespace.QName("http://publicadores/", "InstitutoInexistente"), 
+                      true
+                     ));
+        oper.addFault(new org.apache.axis.description.FaultDesc(
+                      new javax.xml.namespace.QName("http://publicadores/", "InstitutoSinCursos"),
+                      "publicadores.InstitutoSinCursos",
+                      new javax.xml.namespace.QName("http://publicadores/", "InstitutoSinCursos"), 
                       true
                      ));
         _operations[3] = oper;
@@ -371,57 +371,12 @@ public class ControladorListarAceptadosAEdicionPublishPortBindingStub extends or
 }
     }
 
-    public publicadores.DtCursoBase[] ingresarInstituto(java.lang.String arg0) throws java.rmi.RemoteException, publicadores.InstitutoInexistente, publicadores.InstitutoSinCursos {
-        if (super.cachedEndpoint == null) {
-            throw new org.apache.axis.NoEndPointException();
-        }
-        org.apache.axis.client.Call _call = createCall();
-        _call.setOperation(_operations[1]);
-        _call.setUseSOAPAction(true);
-        _call.setSOAPActionURI("");
-        _call.setEncodingStyle(null);
-        _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
-        _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
-        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
-        _call.setOperationName(new javax.xml.namespace.QName("http://publicadores/", "ingresarInstituto"));
-
-        setRequestHeaders(_call);
-        setAttachments(_call);
- try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {arg0});
-
-        if (_resp instanceof java.rmi.RemoteException) {
-            throw (java.rmi.RemoteException)_resp;
-        }
-        else {
-            extractAttachments(_call);
-            try {
-                return (publicadores.DtCursoBase[]) _resp;
-            } catch (java.lang.Exception _exception) {
-                return (publicadores.DtCursoBase[]) org.apache.axis.utils.JavaUtils.convert(_resp, publicadores.DtCursoBase[].class);
-            }
-        }
-  } catch (org.apache.axis.AxisFault axisFaultException) {
-    if (axisFaultException.detail != null) {
-        if (axisFaultException.detail instanceof java.rmi.RemoteException) {
-              throw (java.rmi.RemoteException) axisFaultException.detail;
-         }
-        if (axisFaultException.detail instanceof publicadores.InstitutoInexistente) {
-              throw (publicadores.InstitutoInexistente) axisFaultException.detail;
-         }
-        if (axisFaultException.detail instanceof publicadores.InstitutoSinCursos) {
-              throw (publicadores.InstitutoSinCursos) axisFaultException.detail;
-         }
-   }
-  throw axisFaultException;
-}
-    }
-
     public publicadores.DtEdicionBase[] ingresarCurso(java.lang.String arg0) throws java.rmi.RemoteException, publicadores.EdicionNoExiste, publicadores.CursoNoExiste {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
         org.apache.axis.client.Call _call = createCall();
-        _call.setOperation(_operations[2]);
+        _call.setOperation(_operations[1]);
         _call.setUseSOAPAction(true);
         _call.setSOAPActionURI("");
         _call.setEncodingStyle(null);
@@ -466,7 +421,7 @@ public class ControladorListarAceptadosAEdicionPublishPortBindingStub extends or
             throw new org.apache.axis.NoEndPointException();
         }
         org.apache.axis.client.Call _call = createCall();
-        _call.setOperation(_operations[3]);
+        _call.setOperation(_operations[2]);
         _call.setUseSOAPAction(true);
         _call.setSOAPActionURI("");
         _call.setEncodingStyle(null);
@@ -497,6 +452,51 @@ public class ControladorListarAceptadosAEdicionPublishPortBindingStub extends or
          }
         if (axisFaultException.detail instanceof publicadores.EdicionNoExiste) {
               throw (publicadores.EdicionNoExiste) axisFaultException.detail;
+         }
+   }
+  throw axisFaultException;
+}
+    }
+
+    public publicadores.DtCursoBase[] ingresarInstituto(java.lang.String arg0) throws java.rmi.RemoteException, publicadores.InstitutoInexistente, publicadores.InstitutoSinCursos {
+        if (super.cachedEndpoint == null) {
+            throw new org.apache.axis.NoEndPointException();
+        }
+        org.apache.axis.client.Call _call = createCall();
+        _call.setOperation(_operations[3]);
+        _call.setUseSOAPAction(true);
+        _call.setSOAPActionURI("");
+        _call.setEncodingStyle(null);
+        _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
+        _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
+        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
+        _call.setOperationName(new javax.xml.namespace.QName("http://publicadores/", "ingresarInstituto"));
+
+        setRequestHeaders(_call);
+        setAttachments(_call);
+ try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {arg0});
+
+        if (_resp instanceof java.rmi.RemoteException) {
+            throw (java.rmi.RemoteException)_resp;
+        }
+        else {
+            extractAttachments(_call);
+            try {
+                return (publicadores.DtCursoBase[]) _resp;
+            } catch (java.lang.Exception _exception) {
+                return (publicadores.DtCursoBase[]) org.apache.axis.utils.JavaUtils.convert(_resp, publicadores.DtCursoBase[].class);
+            }
+        }
+  } catch (org.apache.axis.AxisFault axisFaultException) {
+    if (axisFaultException.detail != null) {
+        if (axisFaultException.detail instanceof java.rmi.RemoteException) {
+              throw (java.rmi.RemoteException) axisFaultException.detail;
+         }
+        if (axisFaultException.detail instanceof publicadores.InstitutoInexistente) {
+              throw (publicadores.InstitutoInexistente) axisFaultException.detail;
+         }
+        if (axisFaultException.detail instanceof publicadores.InstitutoSinCursos) {
+              throw (publicadores.InstitutoSinCursos) axisFaultException.detail;
          }
    }
   throw axisFaultException;

@@ -58,7 +58,7 @@ public class ControladorInscripcionEdicionPublish {
 	
 	//LOS MÉTODOS QUE VAMOS A PUBLICAR
 	@WebMethod
-	public DtInstituto[] listarInstitutos(String id, String hashpass) throws SinInstitutos {
+	public DtInstituto[] listarInstitutos() throws SinInstitutos {
 		//return icon.listarInstitutos();
 		List<DtInstituto> institutos = icon.listarInstitutos();
 		int i = 0;

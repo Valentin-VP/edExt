@@ -44,10 +44,10 @@ public class ControladorSesionPublishProxy implements publicadores.ControladorSe
     return controladorSesionPublish;
   }
   
-  public java.lang.String identificarUsuario(java.lang.String arg0, java.lang.String arg1) throws java.rmi.RemoteException{
+  public java.lang.String codificarPass(java.lang.String arg0) throws java.rmi.RemoteException, publicadores.NoSuchAlgorithmException{
     if (controladorSesionPublish == null)
       _initControladorSesionPublishProxy();
-    return controladorSesionPublish.identificarUsuario(arg0, arg1);
+    return controladorSesionPublish.codificarPass(arg0);
   }
   
   public java.lang.String obtenerNick() throws java.rmi.RemoteException{
@@ -62,10 +62,10 @@ public class ControladorSesionPublishProxy implements publicadores.ControladorSe
     return controladorSesionPublish.obtenerCorreo();
   }
   
-  public java.lang.String codificarPass(java.lang.String arg0) throws java.rmi.RemoteException, publicadores.NoSuchAlgorithmException{
+  public java.lang.String identificarUsuario(java.lang.String arg0, java.lang.String arg1) throws java.rmi.RemoteException{
     if (controladorSesionPublish == null)
       _initControladorSesionPublishProxy();
-    return controladorSesionPublish.codificarPass(arg0);
+    return controladorSesionPublish.identificarUsuario(arg0, arg1);
   }
   
   

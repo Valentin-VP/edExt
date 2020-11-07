@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,21 +13,25 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.rpc.ServiceException;
 
 import com.google.gson.Gson;
 
-import datatypes.DtCursoBase;
-import datatypes.DtEdicionBase;
-import datatypes.DtFecha;
-import datatypes.DtInstituto;
-import excepciones.CursoNoExiste;
-import excepciones.EdicionVigenteNoExiste;
-import excepciones.InscripcionEdRepetido;
-import excepciones.SinInstitutos;
-import excepciones.UsuarioNoEstudiante;
-import excepciones.UsuarioNoExiste;
-import interfaces.Fabrica;
-import interfaces.IControladorInscripcionEdicionCurso;
+import publicadores.DtCursoBase;
+import publicadores.DtEdicionBase;
+import publicadores.DtFecha;
+import publicadores.DtInstituto;
+import publicadores.CursoNoExiste;
+import publicadores.EdicionVigenteNoExiste;
+import publicadores.InscripcionEdRepetido;
+import publicadores.SinInstitutos;
+import publicadores.UsuarioNoEstudiante;
+import publicadores.UsuarioNoExiste;
+//import interfaces.Fabrica;
+//import interfaces.IControladorInscripcionEdicionCurso;
+import publicadores.ControladorInscripcionEdicionPublish;
+import publicadores.ControladorInscripcionEdicionPublishService;
+import publicadores.ControladorInscripcionEdicionPublishServiceLocator;
 
 @WebServlet("/InscripcionEdicionCurso")
 public class InscripcionEdicionCurso extends HttpServlet {
@@ -37,16 +42,13 @@ public class InscripcionEdicionCurso extends HttpServlet {
     }
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//ControladorPublishService cps = new ControladorPublishServiceLocator();
-		//ControladorPublish port = cps.getControladorPublishPort();
-		//port.funcion();
 		
-		Fabrica fabrica = Fabrica.getInstancia();
-		IControladorInscripcionEdicionCurso icon = fabrica.getIControladorInscripcionEdicionCurso();
+		//Fabrica fabrica = Fabrica.getInstancia();
+		//IControladorInscripcionEdicionCurso icon = fabrica.getIControladorInscripcionEdicionCurso();
 		List<DtInstituto> institutos = new ArrayList<DtInstituto>();
 		try {
-			institutos = icon.listarInstitutos();
-		} catch (SinInstitutos e) {
+			institutos = listarInstitutos();
+		} catch (SinInstitutos | ServiceException e) {
 			e.printStackTrace();
 		}
 		
@@ -76,8 +78,8 @@ public class InscripcionEdicionCurso extends HttpServlet {
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Fabrica fabrica = Fabrica.getInstancia();
-		IControladorInscripcionEdicionCurso icon = fabrica.getIControladorInscripcionEdicionCurso();
+		//Fabrica fabrica = Fabrica.getInstancia();
+		//IControladorInscripcionEdicionCurso icon = fabrica.getIControladorInscripcionEdicionCurso();
 		HttpSession sesion = request.getSession();
 		String nick = (String) sesion.getAttribute("nick");
 		String correo = (String) sesion.getAttribute("correo");
@@ -93,8 +95,8 @@ public class InscripcionEdicionCurso extends HttpServlet {
 			String ins = request.getParameter("institutoselect");
 			ArrayList<DtCursoBase> cursos = new ArrayList<>();
 			try {
-				cursos = icon.seleccionarInstituto(ins);
-			} catch (CursoNoExiste e) {
+				cursos = seleccionarInstituto(ins);
+			} catch (CursoNoExiste | ServiceException e) {
 				request.setAttribute("mensaje", e.getMessage());
 				rd = request.getRequestDispatcher("/error.jsp");
 				rd.forward(request, response);
@@ -128,21 +130,25 @@ public class InscripcionEdicionCurso extends HttpServlet {
 			
 			DtEdicionBase dteb = new DtEdicionBase();
 			try {
-				dteb = icon.seleccionarCurso(curso);
-			} catch (EdicionVigenteNoExiste e) {
+				dteb = seleccionarCurso(curso);
+			} catch (EdicionVigenteNoExiste | ServiceException e) {
 				request.setAttribute("mensaje", e.getMessage());
 				rd = request.getRequestDispatcher("/error.jsp");
 				rd.forward(request, response);
 			}
 			try {
-				icon.registrarInscripcionEd(nick, correo, curso, fecha);
-				icon.confirmar();
-			} catch (UsuarioNoExiste | UsuarioNoEstudiante | InscripcionEdRepetido | EdicionVigenteNoExiste e) {
+				registrarInscripcionEd(nick, correo, curso, fecha);
+				confirmar();
+			} catch (UsuarioNoExiste | UsuarioNoEstudiante | InscripcionEdRepetido | EdicionVigenteNoExiste | ServiceException e) {
 				request.setAttribute("mensaje", e.getMessage());
 				rd = request.getRequestDispatcher("/error.jsp");
 				rd.forward(request, response);
 			}
-			icon.cancelar();
+			try {
+				cancelar();
+			} catch (ServiceException e) {
+				e.printStackTrace();
+			}
 			
 			request.setAttribute("mensaje", "La inscripcion a la edicion "+ dteb.getNombre() +" se realizo correctamente");
 			rd = request.getRequestDispatcher("/notificacion.jsp");
@@ -151,5 +157,51 @@ public class InscripcionEdicionCurso extends HttpServlet {
 		}
 		
 	}
-
+	
+	public List<DtInstituto> listarInstitutos() throws SinInstitutos, ServiceException, publicadores.SinInstitutos, RemoteException {
+		ControladorInscripcionEdicionPublishService cps = new ControladorInscripcionEdicionPublishServiceLocator();
+		ControladorInscripcionEdicionPublish port = cps.getControladorInscripcionEdicionPublishPort();
+		DtInstituto[] institutos = port.listarInstitutos();
+		List<DtInstituto> retorno = new ArrayList<DtInstituto>();
+		for (int i = 0; i < institutos.length; ++i) {
+		    retorno.add(institutos[i]);
+		}
+		return retorno;
+	}
+	
+	public ArrayList<DtCursoBase> seleccionarInstituto(String nomIns) throws CursoNoExiste, ServiceException, RemoteException{
+		ControladorInscripcionEdicionPublishService cps = new ControladorInscripcionEdicionPublishServiceLocator();
+		ControladorInscripcionEdicionPublish port = cps.getControladorInscripcionEdicionPublishPort();
+		DtCursoBase[] cursos = port.seleccionarInstituto(nomIns);
+		ArrayList<DtCursoBase> retorno = new ArrayList<DtCursoBase>();
+		for (int i = 0; i < cursos.length; ++i) {
+		    retorno.add(cursos[i]);
+		}
+		return retorno;
+	}
+	
+	public DtEdicionBase seleccionarCurso(String nomCurso) throws ServiceException, RemoteException{
+		ControladorInscripcionEdicionPublishService cps = new ControladorInscripcionEdicionPublishServiceLocator();
+		ControladorInscripcionEdicionPublish port = cps.getControladorInscripcionEdicionPublishPort();
+		return port.seleccionarCurso(nomCurso);
+	}
+	
+	public void registrarInscripcionEd(String nick, String correo, String nomCurso, DtFecha fecha) throws ServiceException, RemoteException{
+		ControladorInscripcionEdicionPublishService cps = new ControladorInscripcionEdicionPublishServiceLocator();
+		ControladorInscripcionEdicionPublish port = cps.getControladorInscripcionEdicionPublishPort();
+		port.registrarInscripcionEd(nick, correo, nomCurso, fecha);
+	}
+	
+	public void cancelar() throws ServiceException, RemoteException {
+		ControladorInscripcionEdicionPublishService cps = new ControladorInscripcionEdicionPublishServiceLocator();
+		ControladorInscripcionEdicionPublish port = cps.getControladorInscripcionEdicionPublishPort();
+		port.cancelar();
+	}
+	
+	public void confirmar() throws InscripcionEdRepetido, EdicionVigenteNoExiste, UsuarioNoExiste, ServiceException, RemoteException{
+		ControladorInscripcionEdicionPublishService cps = new ControladorInscripcionEdicionPublishServiceLocator();
+		ControladorInscripcionEdicionPublish port = cps.getControladorInscripcionEdicionPublishPort();
+		port.confirmar();
+	}
+	
 }

@@ -9,7 +9,7 @@ package publicadores;
 
 public interface ControladorListarAceptadosAEdicionPublish extends java.rmi.Remote {
     public publicadores.DtInstituto[] listarInstitutos() throws java.rmi.RemoteException, publicadores.SinInstitutos;
-    public publicadores.DtCursoBase[] ingresarInstituto(java.lang.String arg0) throws java.rmi.RemoteException, publicadores.InstitutoInexistente, publicadores.InstitutoSinCursos;
     public publicadores.DtEdicionBase[] ingresarCurso(java.lang.String arg0) throws java.rmi.RemoteException, publicadores.EdicionNoExiste, publicadores.CursoNoExiste;
     public publicadores.DtEdicionCompleta ingresarEdicion(java.lang.String arg0) throws java.rmi.RemoteException, publicadores.EdicionNoExiste;
+    public publicadores.DtCursoBase[] ingresarInstituto(java.lang.String arg0) throws java.rmi.RemoteException, publicadores.InstitutoInexistente, publicadores.InstitutoSinCursos;
 }
