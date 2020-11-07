@@ -1,5 +1,5 @@
-<%@page import="datatypes.DtEdicionCompleta"%>
-<%@page import="datatypes.DtInscripcionEd"%>
+<%@page import="publicadores.DtEdicionCompleta"%>
+<%@page import="publicadores.DtInscripcionEd"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -19,7 +19,7 @@ if(session.getAttribute("opAceptadosEdicion") == null){
 ArrayList<String> cursos = (ArrayList) session.getAttribute("cursosAceptados");
 ArrayList<String> ediciones = (ArrayList) session.getAttribute("edicionesAceptados");
 //String cursoConsultaEdicion = (String) session.getAttribute("cursoConsultaEdicion");
-DtEdicionCompleta infoEdicionAceptados = (DtEdicionCompleta) session.getAttribute("infoFinalAceptados");
+publicadores.DtEdicionCompleta infoEdicionAceptados = (publicadores.DtEdicionCompleta) session.getAttribute("infoFinalAceptados");
 //String edicionConsultaEdicion = (String) sesion.getAttribute("edicionConsultaEdicion");
 
 if(session.getAttribute("opAceptadosEdicion").toString().equals("0")) {%>
@@ -109,14 +109,15 @@ if(session.getAttribute("opAceptadosEdicion").toString().equals("0")) {%>
 	</table>
 	<table class="table">
 	  <tbody>
-		<% if(infoEdicionAceptados.getInscripciones().isEmpty()){ %>
+		<% if(infoEdicionAceptados.getInscripciones()==null || infoEdicionAceptados.getInscripciones().length==0){ %>
 		<tr>
 	      <td> No hay ningún estudiante con inscripción aceptada </td>
 	    </tr>
 	    <%} else { %>
-	    <%for(DtInscripcionEd dted: infoEdicionAceptados.getInscripciones()){ %>
+
+	    <%	    for (int i = 0; i < infoEdicionAceptados.getInscripciones().length; ++i) { %>
 		<tr>
-	      <td>Nombre: <%=dted.getEstudiante().getNick()%> | Fecha de Inscripcion: <%= dted.getFecha().getDia() + "/" + dted.getFecha().getMes() + "/" + dted.getFecha().getAnio() %></td>
+	      <td>Nombre: <%=infoEdicionAceptados.getInscripciones()[i].getEstudiante().getNick()%> | Fecha de Inscripcion: <%= infoEdicionAceptados.getInscripciones()[i].getFecha().getDia() + "/" + infoEdicionAceptados.getInscripciones()[i].getFecha().getMes() + "/" + infoEdicionAceptados.getInscripciones()[i].getFecha().getAnio() %></td>
 	    </tr>  
 	      <%} %>
 	    <%} %>

@@ -2,6 +2,7 @@ package servlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -24,6 +25,12 @@ import excepciones.InstitutoSinCursos;
 import excepciones.SinInstitutos;
 import interfaces.Fabrica;
 import interfaces.IControladorListarAceptadosAUnaEdicionDeCurso;
+import publicadores.ControladorAltaUsuarioPublish;
+import publicadores.ControladorAltaUsuarioPublishService;
+import publicadores.ControladorAltaUsuarioPublishServiceLocator;
+import publicadores.ControladorListarAceptadosAEdicionPublish;
+import publicadores.ControladorListarAceptadosAEdicionPublishService;
+import publicadores.ControladorListarAceptadosAEdicionPublishServiceLocator;
 
 @WebServlet("/ListarAceptadosEdicion")
 public class ListarAceptadosEdicion extends HttpServlet {
@@ -38,8 +45,8 @@ public class ListarAceptadosEdicion extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Fabrica fabrica = Fabrica.getInstancia();
-		IControladorListarAceptadosAUnaEdicionDeCurso icon = fabrica.getIControladorListarAceptadosAUnaEdicionDeCurso();
+		//Fabrica fabrica = Fabrica.getInstancia();
+		//IControladorListarAceptadosAUnaEdicionDeCurso icon = fabrica.getIControladorListarAceptadosAUnaEdicionDeCurso();
 		HttpSession sesion = request.getSession(true);
 		RequestDispatcher rd;
 		//doGet(request, response);
@@ -49,16 +56,16 @@ public class ListarAceptadosEdicion extends HttpServlet {
 			ArrayList<String> cursos = new ArrayList<String>();
 			
 			try {
-				for(DtCursoBase dtcb: icon.ingresarInstituto(instituto)) {
+				for(publicadores.DtCursoBase dtcb: ingresarInstituto(instituto)) {
 					cursos.add(dtcb.getNombre());
 				}
 				sesion.setAttribute("cursosAceptados", cursos);
 				sesion.setAttribute("opAceptadosEdicion", "1");
 				response.sendRedirect("ListarAceptadosEdicion.jsp");
-			} catch (InstitutoInexistente | InstitutoSinCursos e) {
+			/*} catch (InstitutoInexistente | InstitutoSinCursos e) {
 				request.setAttribute("mensaje", e.getMessage());
 				rd = request.getRequestDispatcher("/error.jsp");
-				rd.forward(request, response);
+				rd.forward(request, response);*/
 			} catch (Exception e) {
 				request.setAttribute("mensaje", e.getMessage());
 				rd = request.getRequestDispatcher("/error.jsp");
@@ -80,16 +87,16 @@ public class ListarAceptadosEdicion extends HttpServlet {
 				rd.forward(request, response);
 			}
 			try {
-				for(DtEdicionBase dteb: icon.ingresarCurso(curso)) {
+				for(publicadores.DtEdicionBase dteb: ingresarCurso(curso)) {
 					ediciones.add(dteb.getNombre());
 				}
 				sesion.setAttribute("edicionesAceptados", ediciones);
 				sesion.setAttribute("opAceptadosEdicion", "2");
 				response.sendRedirect("ListarAceptadosEdicion.jsp");
-			} catch (CursoNoExiste | EdicionNoExiste e) {
+			/*} catch (CursoNoExiste | EdicionNoExiste e) {
 				request.setAttribute("mensaje", e.getMessage());
 				rd = request.getRequestDispatcher("/error.jsp");
-				rd.forward(request, response);
+				rd.forward(request, response);*/
 			} catch (Exception e) {
 				request.setAttribute("mensaje", e.getMessage());
 				rd = request.getRequestDispatcher("/error.jsp");
@@ -109,17 +116,17 @@ public class ListarAceptadosEdicion extends HttpServlet {
 				rd.forward(request, response);
 			}
 			try {
-				DtEdicionCompleta infoEdicion = icon.ingresarEdicion(edicion);
-				
-				
+				publicadores.DtEdicionCompleta infoEdicion = ingresarEdicion(edicion);
+				//if (infoEdicion.getInscripciones().length==0) System.out.println("vacio");
+				//System.out.println(infoEdicion.getInscripciones().length);
 				sesion.setAttribute("infoFinalAceptados", infoEdicion);
 				sesion.setAttribute("opAceptadosEdicion", "3");
 				response.sendRedirect("ListarAceptadosEdicion.jsp");
-				if (infoEdicion.getInscripciones().isEmpty()) System.out.println("vacio");
-			} catch (EdicionNoExiste e) {
+				
+			/*} catch (EdicionNoExiste e) {
 				request.setAttribute("mensaje", e.getMessage());
 				rd = request.getRequestDispatcher("/error.jsp");
-				rd.forward(request, response);
+				rd.forward(request, response);*/
 			} catch (Exception e) {
 				request.setAttribute("mensaje", e.getMessage());
 				rd = request.getRequestDispatcher("/error.jsp");
@@ -127,5 +134,43 @@ public class ListarAceptadosEdicion extends HttpServlet {
 			}
 			break;
 		}
+	}
+	public ArrayList<publicadores.DtInstituto> listarInstitutos() throws Exception {
+		ControladorListarAceptadosAEdicionPublishService cps = new ControladorListarAceptadosAEdicionPublishServiceLocator();
+		ControladorListarAceptadosAEdicionPublish port = cps.getControladorListarAceptadosAEdicionPublishPort();
+		publicadores.DtInstituto[] ins = port.listarInstitutos();
+		ArrayList<publicadores.DtInstituto> retorno = new ArrayList<publicadores.DtInstituto>();
+		for (int i = 0; i < ins.length; ++i) {
+		    retorno.add(ins[i]);
+		}
+		return retorno;
+	}
+	
+	public ArrayList<publicadores.DtCursoBase> ingresarInstituto(String nomIns) throws Exception {
+		ControladorListarAceptadosAEdicionPublishService cps = new ControladorListarAceptadosAEdicionPublishServiceLocator();
+		ControladorListarAceptadosAEdicionPublish port = cps.getControladorListarAceptadosAEdicionPublishPort();
+		publicadores.DtCursoBase[] ins = port.ingresarInstituto(nomIns);
+		ArrayList<publicadores.DtCursoBase> retorno = new ArrayList<publicadores.DtCursoBase>();
+		for (int i = 0; i < ins.length; ++i) {
+		    retorno.add(ins[i]);
+		}
+		return retorno;
+	}
+	public ArrayList<publicadores.DtEdicionBase> ingresarCurso(String nomCur) throws Exception {
+		ControladorListarAceptadosAEdicionPublishService cps = new ControladorListarAceptadosAEdicionPublishServiceLocator();
+		ControladorListarAceptadosAEdicionPublish port = cps.getControladorListarAceptadosAEdicionPublishPort();
+		publicadores.DtEdicionBase[] ins = port.ingresarCurso(nomCur);
+		ArrayList<publicadores.DtEdicionBase> retorno = new ArrayList<publicadores.DtEdicionBase>();
+		for (int i = 0; i < ins.length; ++i) {
+		    retorno.add(ins[i]);
+		}
+		return retorno;
+	}
+	public publicadores.DtEdicionCompleta ingresarEdicion(String edicion) throws Exception {
+		ControladorListarAceptadosAEdicionPublishService cps = new ControladorListarAceptadosAEdicionPublishServiceLocator();
+		ControladorListarAceptadosAEdicionPublish port = cps.getControladorListarAceptadosAEdicionPublishPort();
+		publicadores.DtEdicionCompleta retorno = port.ingresarEdicion(edicion);
+
+		return retorno;
 	}
 }

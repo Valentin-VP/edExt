@@ -85,6 +85,7 @@ public class ControladorListarAceptadosAUnaEdicionDeCurso implements IControlado
 
 		DtEdicionCompleta dtec = new DtEdicionCompleta(e.getNombre(), e.convertToDtFecha(e.getFechaI()),
 						e.convertToDtFecha(e.getFechaF()), e.isTieneCupos(), e.getCupos(), e.convertToDtFecha(e.getFechaPub()), dtinsc);
+		System.out.println(dtinsc.size());
 		return dtec;
 	}
 }
