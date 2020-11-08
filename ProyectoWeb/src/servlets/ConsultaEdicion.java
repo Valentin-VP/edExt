@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -10,15 +11,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.rpc.ServiceException;
 
-import datatypes.DtCursoBase;
-import datatypes.DtEdicion;
-import datatypes.DtEdicionBase;
-import excepciones.CategoriaInexistente;
-import excepciones.CursoNoExiste;
-import excepciones.InstitutoInexistente;
-import interfaces.Fabrica;
-import interfaces.IControladorConsultaEdicionCurso;
+import publicadores.DtCursoBase;
+import publicadores.DtEdicion;
+import publicadores.DtEdicionBase;
+import publicadores.CategoriaInexistente;
+import publicadores.CursoNoExiste;
+import publicadores.InstitutoInexistente;
+import publicadores.ControladorAltaEdicionCursoPublish;
+import publicadores.ControladorAltaEdicionCursoPublishService;
+import publicadores.ControladorAltaEdicionCursoPublishServiceLocator;
+import publicadores.ControladorConsultaEdicionCursoPublish;
+import publicadores.ControladorConsultaEdicionCursoPublishService;
+import publicadores.ControladorConsultaEdicionCursoPublishServiceLocator;
+import publicadores.DtUsuarioBase;
 
 @WebServlet("/ConsultaEdicion")
 public class ConsultaEdicion extends HttpServlet {
@@ -34,9 +41,7 @@ public class ConsultaEdicion extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession sesion = request.getSession(true);
-		Fabrica fabrica = Fabrica.getInstancia();
 		RequestDispatcher rd;
-		IControladorConsultaEdicionCurso icon = fabrica.getIControladorConsultaEdicionCurso();
 		
 		switch(sesion.getAttribute("optConsultaEdicionInfoEdicion").toString()) {
 		case "0":	//ingresar instituto, traer cursos y setear el opt en 1
@@ -46,22 +51,22 @@ public class ConsultaEdicion extends HttpServlet {
 					ArrayList<String> cursosInfoEdicion = new ArrayList<String>();
 					if(!esInstituto && esCategoria) {
 						try {
-							for(DtCursoBase dtcb: icon.seleccionarCategoria(InsCat)) {
+							for(DtCursoBase dtcb: seleccionarCategoria(InsCat)) {
 								cursosInfoEdicion.add(dtcb.getNombre());
 							}
 							sesion.setAttribute("cursosInfoEdicion", cursosInfoEdicion);
-						} catch (CategoriaInexistente e) {
+						} catch (CategoriaInexistente | ServiceException e) {
 							request.setAttribute("mensaje", e.getMessage());
 							rd = request.getRequestDispatcher("/error.jsp");
 							rd.forward(request, response);
 						}
 					} else {//por default busco por instituto
 						try {
-							for(DtCursoBase dtcb: icon.seleccionarInstituto(InsCat)) {
+							for(DtCursoBase dtcb: seleccionarInstituto(InsCat)) {
 								cursosInfoEdicion.add(dtcb.getNombre());
 							}
 							sesion.setAttribute("cursosInfoEdicion", cursosInfoEdicion);
-						} catch (InstitutoInexistente e) {
+						} catch (InstitutoInexistente | ServiceException e) {
 							request.setAttribute("mensaje", e.getMessage());
 							rd = request.getRequestDispatcher("/error.jsp");
 							rd.forward(request, response);
@@ -78,11 +83,11 @@ public class ConsultaEdicion extends HttpServlet {
 					String curso = request.getParameter("cursoInfoEdicion");
 					ArrayList<String> edicionesInfoEdicion = new ArrayList<String>();
 					try {
-						for(DtEdicionBase dteb: icon.seleccionarCurso(curso)) {
+						for(DtEdicionBase dteb: seleccionarCurso(curso)) {
 							edicionesInfoEdicion.add(dteb.getNombre());
 						}
 						sesion.setAttribute("edicionesInfoEdicion", edicionesInfoEdicion);
-					} catch (CursoNoExiste e) {
+					} catch (CursoNoExiste | ServiceException e) {
 						request.setAttribute("mensaje", e.getMessage());
 						rd = request.getRequestDispatcher("/error.jsp");
 						rd.forward(request, response);
@@ -99,25 +104,30 @@ public class ConsultaEdicion extends HttpServlet {
 					try {
 						if(esInstituto2 && !esCategoria2) {
 							@SuppressWarnings("unused")
-							ArrayList<DtCursoBase> noLosUso = icon.seleccionarInstituto((String) sesion.getAttribute("InsCatEd"));
+							ArrayList<DtCursoBase> noLosUso = seleccionarInstituto((String) sesion.getAttribute("InsCatEd"));
 						} else if(!esInstituto2 && esCategoria2) {
 							@SuppressWarnings("unused")
-							ArrayList<DtCursoBase> noLosUso = icon.seleccionarCategoria((String) sesion.getAttribute("InsCatEd"));
+							ArrayList<DtCursoBase> noLosUso = seleccionarCategoria((String) sesion.getAttribute("InsCatEd"));
 						}
-					} catch (InstitutoInexistente | CategoriaInexistente e) {
+					} catch (InstitutoInexistente | CategoriaInexistente | ServiceException e) {
 						request.setAttribute("mensaje", e.getMessage());
 						rd = request.getRequestDispatcher("/error.jsp");
 						rd.forward(request, response);
 					}	
 					try {
 						@SuppressWarnings("unused")
-						ArrayList<DtEdicionBase> tampocoLasUso = icon.seleccionarCurso((String) sesion.getAttribute("cursoConsultaEdicion"));
-					} catch (CursoNoExiste a) {
+						ArrayList<DtEdicionBase> tampocoLasUso = seleccionarCurso((String) sesion.getAttribute("cursoConsultaEdicion"));
+					} catch (CursoNoExiste | ServiceException a) {
 						request.setAttribute("mensaje", a.getMessage());
 						rd = request.getRequestDispatcher("/error.jsp");
 						rd.forward(request, response);
 					}
-					DtEdicion infoEdicion = icon.seleccionarEdicion(edicion);
+					DtEdicion infoEdicion = null;
+					try {
+						infoEdicion = seleccionarEdicion(edicion);
+					} catch (RemoteException | ServiceException e1) {
+						e1.printStackTrace();
+					}
 					sesion.setAttribute("infoEdicion", infoEdicion);
 					sesion.setAttribute("edicionConsultaEdicion",edicion);
 					sesion.setAttribute("optConsultaEdicionInfoEdicion", "3");
@@ -126,7 +136,12 @@ public class ConsultaEdicion extends HttpServlet {
 					break;
 		
 		case "5":	String edicion3 = request.getParameter("edicion");
-					DtEdicion infoEdicion3 = icon.seleccionarEdicion(edicion3);
+					DtEdicion infoEdicion3 = null;
+					try {
+						infoEdicion3 = seleccionarEdicion(edicion3);
+					} catch (RemoteException | ServiceException e) {
+						e.printStackTrace();
+					}
 					sesion.setAttribute("infoEdicion", infoEdicion3);
 					sesion.setAttribute("edicionConsultaEdicion",edicion3);
 					sesion.setAttribute("optConsultaEdicionInfoEdicion", "3");
@@ -134,6 +149,45 @@ public class ConsultaEdicion extends HttpServlet {
 					rd.forward(request, response);
 					break;
 		}
+	}
+	
+	public ArrayList<DtCursoBase> seleccionarCategoria(String categoria) throws CategoriaInexistente, ServiceException, publicadores.CategoriaInexistente, RemoteException {
+		ControladorConsultaEdicionCursoPublishService cps = new ControladorConsultaEdicionCursoPublishServiceLocator();
+		ControladorConsultaEdicionCursoPublish port = cps.getControladorConsultaEdicionCursoPublishPort();
+		DtCursoBase[] cursos = port.seleccionarCategoria(categoria);
+		ArrayList<DtCursoBase> retorno = new ArrayList<DtCursoBase>();
+		for(int i = 0; i < cursos.length; ++i) {
+			retorno.add(cursos[i]);
+		}
+		return retorno;
+	}
+	
+	public ArrayList<DtCursoBase> seleccionarInstituto(String instituto) throws InstitutoInexistente, ServiceException, publicadores.InstitutoInexistente, RemoteException {
+		ControladorConsultaEdicionCursoPublishService cps = new ControladorConsultaEdicionCursoPublishServiceLocator();
+		ControladorConsultaEdicionCursoPublish port = cps.getControladorConsultaEdicionCursoPublishPort();
+		DtCursoBase[] cursos = port.seleccionarInstituto(instituto);
+		ArrayList<DtCursoBase> retorno = new ArrayList<DtCursoBase>();
+		for(int i = 0; i < cursos.length; ++i) {
+			retorno.add(cursos[i]);
+		}
+		return retorno;
+	}
+	
+	public ArrayList<DtEdicionBase> seleccionarCurso(String curso) throws RemoteException, ServiceException {
+		ControladorConsultaEdicionCursoPublishService cps = new ControladorConsultaEdicionCursoPublishServiceLocator();
+		ControladorConsultaEdicionCursoPublish port = cps.getControladorConsultaEdicionCursoPublishPort();
+		DtEdicionBase[] cursos = port.seleccionarCurso(curso);
+		ArrayList<DtEdicionBase> retorno = new ArrayList<DtEdicionBase>();
+		for(int i = 0; i < cursos.length; ++i) {
+			retorno.add(cursos[i]);
+		}
+		return retorno;
+	}
+	
+	public DtEdicion seleccionarEdicion(String edicion) throws RemoteException, ServiceException {
+		ControladorConsultaEdicionCursoPublishService cps = new ControladorConsultaEdicionCursoPublishServiceLocator();
+		ControladorConsultaEdicionCursoPublish port = cps.getControladorConsultaEdicionCursoPublishPort();
+		return port.seleccionarEdicion(edicion);
 	}
 
 }

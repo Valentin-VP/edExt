@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,13 +12,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.rpc.ServiceException;
 
 import publicadores.DtCursoBase;
 import publicadores.DtFecha;
 import publicadores.DtUsuarioBase;
+import publicadores.EdicionRepetida;
+import publicadores.InstitutoInexistente;
+import publicadores.UsuarioNoDocente;
 import publicadores.ControladorAltaEdicionCursoPublish;
 import publicadores.ControladorAltaEdicionCursoPublishService;
 import publicadores.ControladorAltaEdicionCursoPublishServiceLocator;
+import publicadores.CursoNoExiste;
 
 @WebServlet("/AltaEdicionCurso")
 public class AltaEdicionCurso extends HttpServlet {
@@ -46,7 +52,7 @@ public class AltaEdicionCurso extends HttpServlet {
 							cursos.add(dtcb.getNombre());
 						}
 						sesion.setAttribute("cursos", cursos);
-					} catch (Exception e) {
+					} catch (RemoteException | ServiceException e) {
 						request.setAttribute("mensaje", e.getMessage());
 						rd = request.getRequestDispatcher("/error.jsp");
 						rd.forward(request, response);
@@ -55,7 +61,7 @@ public class AltaEdicionCurso extends HttpServlet {
 				for(DtUsuarioBase dtub: getDocentes()) {
 					docentes.add(dtub.getNick());
 				}
-			} catch (Exception e1) {
+			} catch (RemoteException | ServiceException e1) {
 				e1.printStackTrace();
 			}
 					sesion.setAttribute("docentes", docentes);
@@ -105,7 +111,7 @@ public class AltaEdicionCurso extends HttpServlet {
 						@SuppressWarnings("unused")
 						List<DtCursoBase> noLosUso = seleccionarInstituto(i);
 						altaEdicionCurso(curso, nombre, fechaI, fechaF, profes, conCupos, cupos, fechaP);
-					} catch (Exception e) {
+					} catch (RemoteException | ServiceException e) {
 						request.setAttribute("mensaje", e.getMessage());
 						rd = request.getRequestDispatcher("/error.jsp");
 						rd.forward(request, response);
@@ -117,7 +123,7 @@ public class AltaEdicionCurso extends HttpServlet {
 		}
 	}
 
-	public List<DtCursoBase> seleccionarInstituto(String instituto) throws Exception {
+	public List<DtCursoBase> seleccionarInstituto(String instituto) throws publicadores.InstitutoInexistente, RemoteException, ServiceException {
 		ControladorAltaEdicionCursoPublishService cps = new ControladorAltaEdicionCursoPublishServiceLocator();
 		ControladorAltaEdicionCursoPublish port = cps.getControladorAltaEdicionCursoPublishPort();
 		DtCursoBase[] cursos = port.seleccionarInstituto(instituto);
@@ -128,7 +134,7 @@ public class AltaEdicionCurso extends HttpServlet {
 		return retorno;
 	}
 	
-	public ArrayList<DtUsuarioBase> getDocentes() throws Exception {
+	public ArrayList<DtUsuarioBase> getDocentes() throws RemoteException, ServiceException {
 		ControladorAltaEdicionCursoPublishService cps = new ControladorAltaEdicionCursoPublishServiceLocator();
 		ControladorAltaEdicionCursoPublish port = cps.getControladorAltaEdicionCursoPublishPort();
 		DtUsuarioBase[] profes = port.getDocentes();
@@ -139,18 +145,7 @@ public class AltaEdicionCurso extends HttpServlet {
 		return retorno;
 	}
 	
-	public ArrayList<DtUsuarioBase> getUsuarios() throws Exception{
-		ControladorAltaEdicionCursoPublishService cps = new ControladorAltaEdicionCursoPublishServiceLocator();
-		ControladorAltaEdicionCursoPublish port = cps.getControladorAltaEdicionCursoPublishPort();
-		DtUsuarioBase[] users = port.getUsuarios();
-		ArrayList<DtUsuarioBase> retorno = new ArrayList<DtUsuarioBase>();
-		for (int i = 0; i < users.length; ++i) {
-		    retorno.add(users[i]);
-		}
-		return retorno;
-	}
-	
-	public void altaEdicionCurso(String curso, String nombre, DtFecha fechaI, DtFecha fechaF, ArrayList<String> docentes, boolean tieneCupos, Integer cupos, DtFecha fechaPub) throws Exception {
+	public void altaEdicionCurso(String curso, String nombre, DtFecha fechaI, DtFecha fechaF, ArrayList<String> docentes, boolean tieneCupos, Integer cupos, DtFecha fechaPub) throws publicadores.UsuarioNoDocente, publicadores.EdicionRepetida, publicadores.CursoNoExiste, publicadores.InstitutoInexistente, RemoteException, ServiceException {
 		ControladorAltaEdicionCursoPublishService cps = new ControladorAltaEdicionCursoPublishServiceLocator();
 		ControladorAltaEdicionCursoPublish port = cps.getControladorAltaEdicionCursoPublishPort();
 		String[] profes = new String[docentes.size()];

@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,11 +11,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.rpc.ServiceException;
 
 import com.google.gson.Gson;
 
 import publicadores.DtFecha;
 import publicadores.DtInstituto;
+import publicadores.NoSuchAlgorithmException;
+import publicadores.SinInstitutos;
+import publicadores.UsuarioRepetido;
 import publicadores.ControladorAltaUsuarioPublish;
 import publicadores.ControladorAltaUsuarioPublishService;
 import publicadores.ControladorAltaUsuarioPublishServiceLocator;
@@ -87,14 +92,8 @@ public class AltaUsuario extends HttpServlet {
 				seleccionarInstituto(instituto);
 				System.out.println("Fue seteado el instituto: " + instituto);
 				altaUsuario(nick, correo, nombre, apellido, fechaNac, pass);
-				try {
-					confirmarAltaUsuario(esDocente);
-				} catch (Exception e) {
-					request.setAttribute("mensaje", e.getMessage());
-					rd = request.getRequestDispatcher("/error.jsp");
-					rd.forward(request, response);
-				}
-			} catch(Exception e) {
+				confirmarAltaUsuario(esDocente);
+			} catch(RemoteException | ServiceException e) {
 				request.setAttribute("mensaje", e.getMessage());
 				rd = request.getRequestDispatcher("/error.jsp");
 				rd.forward(request, response);
@@ -109,7 +108,7 @@ public class AltaUsuario extends HttpServlet {
 		rd.forward(request, response);
 	}
 	
-	public ArrayList<DtInstituto> listarInstitutos() throws Exception {
+	public ArrayList<DtInstituto> listarInstitutos() throws publicadores.SinInstitutos, RemoteException, ServiceException {
 		ControladorAltaUsuarioPublishService cps = new ControladorAltaUsuarioPublishServiceLocator();
 		ControladorAltaUsuarioPublish port = cps.getControladorAltaUsuarioPublishPort();
 		publicadores.DtInstituto[] ins = port.listarInstitutos();
@@ -120,19 +119,19 @@ public class AltaUsuario extends HttpServlet {
 		return retorno;
 	}
 	
-	public void seleccionarInstituto(String instituto) throws Exception {
+	public void seleccionarInstituto(String instituto) throws RemoteException, ServiceException {
 		ControladorAltaUsuarioPublishService cps = new ControladorAltaUsuarioPublishServiceLocator();
 		ControladorAltaUsuarioPublish port = cps.getControladorAltaUsuarioPublishPort();
 		port.seleccionarInstituto(instituto);
 	}
 	
-	public void altaUsuario(String nick, String correo, String nombre, String apellido, DtFecha fechaNac, String password) throws Exception {
+	public void altaUsuario(String nick, String correo, String nombre, String apellido, DtFecha fechaNac, String password) throws publicadores.UsuarioRepetido, RemoteException, ServiceException {
 		ControladorAltaUsuarioPublishService cps = new ControladorAltaUsuarioPublishServiceLocator();
 		ControladorAltaUsuarioPublish port = cps.getControladorAltaUsuarioPublishPort();
 		port.altaUsuario(nick, correo, nombre, apellido, fechaNac, password);
 	}
 	
-	public void confirmarAltaUsuario(boolean esDocente) throws Exception {
+	public void confirmarAltaUsuario(boolean esDocente) throws NoSuchAlgorithmException, RemoteException, ServiceException {
 		ControladorAltaUsuarioPublishService cps = new ControladorAltaUsuarioPublishServiceLocator();
 		ControladorAltaUsuarioPublish port = cps.getControladorAltaUsuarioPublishPort();
 		port.confirmarAltaUsuario(esDocente);

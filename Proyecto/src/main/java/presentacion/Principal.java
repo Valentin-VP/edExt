@@ -31,6 +31,7 @@ import interfaces.IControladorAltaUsuario;
 import interfaces.IControladorConsultaCurso;
 import publicadores.ControladorAltaEdicionCursoPublish;
 import publicadores.ControladorAltaUsuarioPublish;
+import publicadores.ControladorConsultaEdicionCursoPublish;
 import publicadores.ControladorInscripcionEdicionPublish;
 import publicadores.ControladorListarAceptadosAEdicionPublish;
 import publicadores.ControladorSesionPublish;
@@ -85,6 +86,8 @@ public class Principal {
 		cp4.publicar();
 		ControladorListarAceptadosAEdicionPublish cp5 = new ControladorListarAceptadosAEdicionPublish();
 		cp5.publicar();
+		ControladorConsultaEdicionCursoPublish cp6 = new ControladorConsultaEdicionCursoPublish();
+		cp6.publicar();
 		
 		initialize();
 		
