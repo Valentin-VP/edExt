@@ -58,19 +58,6 @@ public class ControladorConsultaCursoPublish {
 	}
 	
 	
-	/*@WebMethod
-	public DtSocio[] obtenerInfoSociosPorClase (int idClase){
-		List<DtSocio> dtsocio = icon.obtenerInfoSociosPorClase(idClase);
-		int i = 0;
-        DtSocio[] ret = new DtSocio[dtsocio.size()];
-        for(DtSocio s : dtsocio) {
-            ret[i]=s;
-            i++;
-        }
-        return ret;
-	}*/
-	
-	
 	//LOS MÉTODOS QUE VAMOS A PUBLICAR
 	@WebMethod
 	public DtCursoBase[] listarCursosInstituto(String instituto) throws InstitutoInexistente, InstitutoSinCursos {
