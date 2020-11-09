@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,15 +12,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.rpc.ServiceException;
 
-import datatypes.DtCursoBase;
-import datatypes.DtEdicionCompleta;
-import datatypes.DtInscripcionEd;
-import excepciones.EdicionVigenteNoExiste;
-import excepciones.InstitutoInexistente;
-import excepciones.InstitutoSinCursos;
-import interfaces.Fabrica;
-import interfaces.IControladorSeleccionarEstudiantesParaUnaEdicionDeCurso;
+import publicadores.DtCursoBase;
+import publicadores.DtEdicionCompleta;
+import publicadores.DtInscripcionEd;
+import publicadores.EdicionVigenteNoExiste;
+import publicadores.InstitutoInexistente;
+import publicadores.InstitutoSinCursos;
+//import interfaces.Fabrica;
+//import interfaces.IControladorSeleccionarEstudiantesParaUnaEdicionDeCurso;
+import publicadores.ControladorSeleccionarEstudiantesPublish;
+import publicadores.ControladorSeleccionarEstudiantesPublishService;
+import publicadores.ControladorSeleccionarEstudiantesPublishServiceLocator;
 
 @WebServlet("/SeleccionarEstudiantesEdicion")
 public class SeleccionarEstudiantesEdicion extends HttpServlet {
@@ -34,11 +39,12 @@ public class SeleccionarEstudiantesEdicion extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Fabrica fabrica = Fabrica.getInstancia();
-		IControladorSeleccionarEstudiantesParaUnaEdicionDeCurso icon = fabrica.getIControladorSeleccionarEstudiantesParaUnaEdicionDeCurso();
+		//Fabrica fabrica = Fabrica.getInstancia();
+		//IControladorSeleccionarEstudiantesParaUnaEdicionDeCurso icon = fabrica.getIControladorSeleccionarEstudiantesParaUnaEdicionDeCurso();
 		HttpSession sesion = request.getSession(true);
 		RequestDispatcher rd;
 		String curso = request.getParameter("cursoSeleccionarEstudiantes");
+		@SuppressWarnings("unused")
 		String edicion = (String) request.getAttribute("edicionCompletaSeleccionarEstudiantes");
 		// Comparo si es una request de AJAX o una request normal
 		boolean ajax = "XMLHttpRequest".equals(request.getHeader("X-Requested-With"));
@@ -46,13 +52,18 @@ public class SeleccionarEstudiantesEdicion extends HttpServlet {
 		if (ajax) { // Es una request de AJAX
 			
 
-			icon.setEdicion(sesion.getAttribute("edicionSEEC").toString());
+			try {
+				setEdicion(sesion.getAttribute("edicionSEEC").toString());
+			} catch (RemoteException | ServiceException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			String nick = request.getParameter("nickestudiante");
 			String estadonuevo = request.getParameter("estadoestudiante");
 			System.out.print(nick);
 			System.out.print(estadonuevo);
 			try {
-				icon.cambiarEstadoInscripcion(nick, estadonuevo);
+				cambiarEstadoInscripcion(nick, estadonuevo);
 			} catch (Exception e) {
 				request.setAttribute("mensaje", "El formulario ha partido.");
 				rd = request.getRequestDispatcher("/error.jsp");
@@ -69,7 +80,7 @@ public class SeleccionarEstudiantesEdicion extends HttpServlet {
 				System.out.println("el instituto es"+instituto);
 				
 				try {
-					for(DtCursoBase dtcb: icon.listarCursosInstituto(instituto)) {
+					for(DtCursoBase dtcb: listarCursosInstituto(instituto)) {
 						cursos.add(dtcb.getNombre());
 					}
 					sesion.setAttribute("cursosSeleccionarEstudiantes", cursos);
@@ -83,6 +94,7 @@ public class SeleccionarEstudiantesEdicion extends HttpServlet {
 					request.setAttribute("mensaje", "El formulario ha partido.");
 					rd = request.getRequestDispatcher("/error.jsp");
 					rd.forward(request, response);
+					e.printStackTrace();
 				}		
 				break;
 			case "1":	//selecciona curso, devuelve edicion completa vigente
@@ -91,7 +103,7 @@ public class SeleccionarEstudiantesEdicion extends HttpServlet {
 				System.out.println("el curso es"+curso);
 				DtEdicionCompleta dtec = new DtEdicionCompleta();
 				try {
-					dtec = icon.seleccionarCurso(curso,sesion.getAttribute("nick").toString());
+					dtec = seleccionarCurso(curso,sesion.getAttribute("nick").toString());	
 					System.out.println("la edicion es "+dtec.getNombre());
 					sesion.setAttribute("edicionCompletaSeleccionarEstudiantes", dtec);
 					sesion.setAttribute("opSeleccionarEstudiantes", "2");
@@ -114,9 +126,9 @@ public class SeleccionarEstudiantesEdicion extends HttpServlet {
 					//dtec = icon.seleccionarCurso(sesion.getAttribute("cursoSeleccionarEstudiantes").toString(),sesion.getAttribute("nick").toString());
 					//System.out.println("ediciones: " + dtec.getInscripciones().size());
 					sesion.setAttribute("edicionSEEC", request.getParameter("edicionSelect"));
-					icon.seleccionarCurso(sesion.getAttribute("cursoSeleccionarEstudiantes").toString(), sesion.getAttribute("nick").toString());
-					icon.setEdicion(request.getParameter("edicionSelect"));
-					inscripciones = icon.ordenarInscripciones(ordenar);
+					seleccionarCurso(sesion.getAttribute("cursoSeleccionarEstudiantes").toString(), sesion.getAttribute("nick").toString());
+					setEdicion(request.getParameter("edicionSelect"));
+					inscripciones = ordenarInscripciones(ordenar);
 					System.out.println("cant estudiantes: " + inscripciones.size());
 					//System.out.print("Estudiante 2" + inscripciones.get(1).getEstudiante().getNick());
 					//System.out.print("Estudiante 3" + inscripciones.get(2).getEstudiante().getNick());
@@ -132,9 +144,14 @@ public class SeleccionarEstudiantesEdicion extends HttpServlet {
 				}
 				break;
 			case "3":
-					icon.setEdicion(sesion.getAttribute("edicionSEEC").toString());
+				try {
+					setEdicion(sesion.getAttribute("edicionSEEC").toString());
+				} catch (RemoteException | ServiceException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 					try {
-						icon.confirmarSeleccion();
+						confirmarSeleccion();
 					}catch(Exception e) {
 						request.setAttribute("mensaje", "Error en persistencia");
 						rd = request.getRequestDispatcher("/error.jsp");
@@ -148,5 +165,57 @@ public class SeleccionarEstudiantesEdicion extends HttpServlet {
 		} // cierra if para verificar si es request ajax o comun
 		
 	} // cierra doPost
+	
+	public ArrayList<DtCursoBase> listarCursosInstituto(String instituto) throws ServiceException, RemoteException {
+		ControladorSeleccionarEstudiantesPublishService cps = new ControladorSeleccionarEstudiantesPublishServiceLocator();
+		ControladorSeleccionarEstudiantesPublish port = cps.getControladorSeleccionarEstudiantesPublishPort();
+		DtCursoBase[] cursos = port.listarCursosInstituto(instituto);
+		ArrayList<DtCursoBase> retorno = new ArrayList<DtCursoBase>();
+		for (int i = 0; i < cursos.length; i++) {
+		    retorno.add(cursos[i]);
+		}
+		return retorno;
+	}
+	
+	public DtEdicionCompleta seleccionarCurso(String nomCurso, String nick) throws ServiceException, RemoteException{
+		ControladorSeleccionarEstudiantesPublishService cps = new ControladorSeleccionarEstudiantesPublishServiceLocator();
+		ControladorSeleccionarEstudiantesPublish port = cps.getControladorSeleccionarEstudiantesPublishPort();
+		return port.seleccionarCurso(nomCurso, nick);
+	}
+	
+	public List<DtInscripcionEd> ordenarInscripciones(String ordenarpor) throws ServiceException, RemoteException {
+		ControladorSeleccionarEstudiantesPublishService cps = new ControladorSeleccionarEstudiantesPublishServiceLocator();
+		ControladorSeleccionarEstudiantesPublish port = cps.getControladorSeleccionarEstudiantesPublishPort();
+		DtInscripcionEd[] inscripciones = port.ordenarInscripciones(ordenarpor);
+		List<DtInscripcionEd> retorno = new ArrayList<DtInscripcionEd>();
+		for (int i = 0; i < inscripciones.length; i++) {
+		    retorno.add(inscripciones[i]);
+		}
+		return retorno;
+	}
+	
+	public void cambiarEstadoInscripcion(String nick, String estado) throws ServiceException, RemoteException {
+		ControladorSeleccionarEstudiantesPublishService cps = new ControladorSeleccionarEstudiantesPublishServiceLocator();
+		ControladorSeleccionarEstudiantesPublish port = cps.getControladorSeleccionarEstudiantesPublishPort();
+		port.cambiarEstadoInscripcion(nick, estado);
+	}
+	
+	public void setEdicion(String edicion) throws ServiceException, RemoteException {
+		ControladorSeleccionarEstudiantesPublishService cps = new ControladorSeleccionarEstudiantesPublishServiceLocator();
+		ControladorSeleccionarEstudiantesPublish port = cps.getControladorSeleccionarEstudiantesPublishPort();
+		port.setEdicion(edicion);
+	}
+	
+	public void confirmarSeleccion() throws ServiceException, RemoteException {
+		ControladorSeleccionarEstudiantesPublishService cps = new ControladorSeleccionarEstudiantesPublishServiceLocator();
+		ControladorSeleccionarEstudiantesPublish port = cps.getControladorSeleccionarEstudiantesPublishPort();
+		port.confirmarSeleccion();
+	}
 
+	public void limpiar() throws ServiceException, RemoteException {
+		ControladorSeleccionarEstudiantesPublishService cps = new ControladorSeleccionarEstudiantesPublishServiceLocator();
+		ControladorSeleccionarEstudiantesPublish port = cps.getControladorSeleccionarEstudiantesPublishPort();
+		port.limpiar();
+	}
+	
 }

@@ -158,12 +158,12 @@ public class InscripcionEdicionCurso extends HttpServlet {
 		
 	}
 	
-	public List<DtInstituto> listarInstitutos() throws SinInstitutos, ServiceException, publicadores.SinInstitutos, RemoteException {
+	public List<DtInstituto> listarInstitutos() throws SinInstitutos, ServiceException, RemoteException {
 		ControladorInscripcionEdicionPublishService cps = new ControladorInscripcionEdicionPublishServiceLocator();
 		ControladorInscripcionEdicionPublish port = cps.getControladorInscripcionEdicionPublishPort();
 		DtInstituto[] institutos = port.listarInstitutos();
 		List<DtInstituto> retorno = new ArrayList<DtInstituto>();
-		for (int i = 0; i < institutos.length; ++i) {
+		for (int i = 0; i < institutos.length; i++) {
 		    retorno.add(institutos[i]);
 		}
 		return retorno;
@@ -174,7 +174,7 @@ public class InscripcionEdicionCurso extends HttpServlet {
 		ControladorInscripcionEdicionPublish port = cps.getControladorInscripcionEdicionPublishPort();
 		DtCursoBase[] cursos = port.seleccionarInstituto(nomIns);
 		ArrayList<DtCursoBase> retorno = new ArrayList<DtCursoBase>();
-		for (int i = 0; i < cursos.length; ++i) {
+		for (int i = 0; i < cursos.length; i++) {
 		    retorno.add(cursos[i]);
 		}
 		return retorno;

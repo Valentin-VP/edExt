@@ -1,8 +1,5 @@
 package publicadores;
 
-import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.jws.WebMethod;
@@ -25,7 +22,6 @@ import excepciones.UsuarioNoEstudiante;
 import excepciones.UsuarioNoExiste;
 import interfaces.Fabrica;
 import interfaces.IControladorInscripcionEdicionCurso;
-
 
 @WebService
 @SOAPBinding(style = Style.RPC, parameterStyle = ParameterStyle.WRAPPED)
@@ -61,8 +57,8 @@ public class ControladorInscripcionEdicionPublish {
 	public DtInstituto[] listarInstitutos() throws SinInstitutos {
 		//return icon.listarInstitutos();
 		List<DtInstituto> institutos = icon.listarInstitutos();
-		int i = 0;
 		DtInstituto[] ret = new DtInstituto[institutos.size()];
+		int i = 0;
         for(DtInstituto ins : institutos) {
             ret[i]=ins;
             i++;

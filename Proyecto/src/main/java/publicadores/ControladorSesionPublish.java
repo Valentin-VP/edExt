@@ -15,7 +15,6 @@ import configuraciones.WebServiceConfiguration;
 import interfaces.Fabrica;
 import interfaces.IControladorSesion;
 
-
 @WebService
 @SOAPBinding(style = Style.RPC, parameterStyle = ParameterStyle.WRAPPED)
 public class ControladorSesionPublish {
@@ -66,7 +65,6 @@ public class ControladorSesionPublish {
 		return icon.codificarPass(contrasenia);
 	}
 	
-	
 	/*@WebMethod
 	public DtSocio[] obtenerInfoSociosPorClase (int idClase){
 		List<DtSocio> dtsocio = icon.obtenerInfoSociosPorClase(idClase);
@@ -78,6 +76,5 @@ public class ControladorSesionPublish {
         }
         return ret;
 	}*/
-	
 
 }

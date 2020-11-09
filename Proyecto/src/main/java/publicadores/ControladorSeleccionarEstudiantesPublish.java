@@ -1,7 +1,6 @@
 package publicadores;
 
-import java.security.NoSuchAlgorithmException;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.jws.WebMethod;
@@ -54,7 +53,7 @@ public class ControladorSeleccionarEstudiantesPublish {
 	@WebMethod
 	public DtCursoBase[] listarCursosInstituto(String instituto) throws InstitutoInexistente, InstitutoSinCursos {
 		//return icon.listarCursosInstituto(instituto);
-		List<DtCursoBase> cursos = icon.listarCursosInstituto(instituto);
+		ArrayList<DtCursoBase> cursos = icon.listarCursosInstituto(instituto);
 		int i=0;
 		DtCursoBase[] ret = new DtCursoBase[cursos.size()];
 		for(DtCursoBase c : cursos) {

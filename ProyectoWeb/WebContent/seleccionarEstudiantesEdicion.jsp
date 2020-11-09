@@ -1,5 +1,5 @@
-<%@page import="datatypes.DtEdicionCompleta"%>
-<%@page import="datatypes.DtInscripcionEd"%>
+<%@page import="publicadores.DtEdicionCompleta"%>
+<%@page import="publicadores.DtInscripcionEd"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -114,7 +114,7 @@ if(session.getAttribute("opSeleccionarEstudiantes").toString().equals("0")) {%>
 	</table>
 	<table class="table">
 	  <tbody>
-		<% if(edicion.getInscripciones().isEmpty()){ %>
+		<% if(edicion.getInscripciones().length == 0){ %>
 		<tr>
 	      <td> No hay ningún estudiante inscripto a la Edicion </td>
 	    </tr>
