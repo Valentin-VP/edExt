@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -14,17 +15,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.swing.JOptionPane;
+import javax.xml.rpc.ServiceException;
 
-import datatypes.DtCursoBase;
-import datatypes.DtFecha;
-import datatypes.DtInstituto;
-import excepciones.CursoRepetido;
-import excepciones.InstitutoInexistente;
-import excepciones.InstitutoSinCursos;
-import excepciones.SinCategorias;
-import interfaces.Fabrica;
-import interfaces.IControladorAltaCurso;
-import interfaces.IControladorConsultaCurso;
+import publicadores.DtCursoBase;
+import publicadores.DtFecha;
+import publicadores.DtInstituto;
+import publicadores.CursoRepetido;
+import publicadores.InstitutoInexistente;
+import publicadores.InstitutoSinCursos;
+import publicadores.SinCategorias;
+import publicadores.ControladorAltaCursoPublish;
+import publicadores.ControladorAltaCursoPublishService;
+import publicadores.ControladorAltaCursoPublishServiceLocator;
+import publicadores.ControladorInscripcionEdicionPublish;
+import publicadores.ControladorInscripcionEdicionPublishService;
+import publicadores.ControladorInscripcionEdicionPublishServiceLocator;
 
 /**
  * Servlet implementation class altaCurso
@@ -43,9 +48,11 @@ public class AltaCurso extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Fabrica fabrica = Fabrica.getInstancia();
-		IControladorAltaCurso icon = fabrica.getIControladorAltaCurso();
-		IControladorConsultaCurso iconaux = fabrica.getIControladorConsultaCurso();
+		/*
+		 * Fabrica fabrica = Fabrica.getInstancia(); IControladorAltaCurso icon =
+		 * fabrica.getIControladorAltaCurso(); IControladorConsultaCurso iconaux =
+		 * fabrica.getIControladorConsultaCurso();
+		 */
 		HttpSession sesion = request.getSession(true);
 		RequestDispatcher rd;
 		
@@ -58,11 +65,11 @@ public class AltaCurso extends HttpServlet {
 			instituto = request.getParameter("institutoAltaCurso").toString();
 
 			try {
-				for(String strcat: icon.listarCategorias()) {
+				for(String strcat: listarCategorias()) {
 					categorias.add(strcat);
 				}
 				sesion.setAttribute("categoriasAltaCurso", categorias);
-			} catch (SinCategorias e) {
+			} catch (RemoteException| ServiceException e) {
 				request.setAttribute("mensaje", e.getMessage());
 				rd = request.getRequestDispatcher("/error.jsp");
 				rd.forward(request, response);
@@ -177,6 +184,17 @@ public class AltaCurso extends HttpServlet {
 			}
 		}
 		return true;
+	}
+	
+	public ArrayList<String> listarCategorias() throws RemoteException, ServiceException {
+		ControladorAltaCursoPublishService cps = new ControladorAltaCursoPublishServiceLocator();
+		ControladorAltaCursoPublish port = cps.getControladorAltaCursoPublishPort();
+		String[] categorias = port.listarCategorias();
+		ArrayList<String> retorno = new ArrayList<String>();
+		for (int i = 0; i < categorias.length; ++i) {
+		    retorno.add(categorias[i]);
+		}
+		return retorno;
 	}
 
 }

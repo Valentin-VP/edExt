@@ -1,5 +1,5 @@
 /**
- * InstitutoInexistente.java
+ * CursoRepetido.java
  *
  * This file was auto-generated from WSDL
  * by the Apache Axis 1.4 Apr 22, 2006 (06:55:48 PDT) WSDL2Java emitter.
@@ -7,20 +7,20 @@
 
 package publicadores;
 
-public class InstitutoInexistente  extends org.apache.axis.AxisFault  implements java.io.Serializable {
+public class CursoRepetido  extends org.apache.axis.AxisFault  implements java.io.Serializable {
     private java.lang.String message1;
 
-    public InstitutoInexistente() {
+    public CursoRepetido() {
     }
 
-    public InstitutoInexistente(
+    public CursoRepetido(
            java.lang.String message1) {
         this.message1 = message1;
     }
 
 
     /**
-     * Gets the message1 value for this InstitutoInexistente.
+     * Gets the message1 value for this CursoRepetido.
      * 
      * @return message1
      */
@@ -30,7 +30,7 @@ public class InstitutoInexistente  extends org.apache.axis.AxisFault  implements
 
 
     /**
-     * Sets the message1 value for this InstitutoInexistente.
+     * Sets the message1 value for this CursoRepetido.
      * 
      * @param message1
      */
@@ -40,8 +40,8 @@ public class InstitutoInexistente  extends org.apache.axis.AxisFault  implements
 
     private java.lang.Object __equalsCalc = null;
     public synchronized boolean equals(java.lang.Object obj) {
-        if (!(obj instanceof InstitutoInexistente)) return false;
-        InstitutoInexistente other = (InstitutoInexistente) obj;
+        if (!(obj instanceof CursoRepetido)) return false;
+        CursoRepetido other = (CursoRepetido) obj;
         if (obj == null) return false;
         if (this == obj) return true;
         if (__equalsCalc != null) {
@@ -73,10 +73,10 @@ public class InstitutoInexistente  extends org.apache.axis.AxisFault  implements
 
     // Type metadata
     private static org.apache.axis.description.TypeDesc typeDesc =
-        new org.apache.axis.description.TypeDesc(InstitutoInexistente.class, true);
+        new org.apache.axis.description.TypeDesc(CursoRepetido.class, true);
 
     static {
-        typeDesc.setXmlType(new javax.xml.namespace.QName("http://publicadores/", "InstitutoInexistente"));
+        typeDesc.setXmlType(new javax.xml.namespace.QName("http://publicadores/", "CursoRepetido"));
         org.apache.axis.description.ElementDesc elemField = new org.apache.axis.description.ElementDesc();
         elemField.setFieldName("message1");
         elemField.setXmlName(new javax.xml.namespace.QName("", "message"));
