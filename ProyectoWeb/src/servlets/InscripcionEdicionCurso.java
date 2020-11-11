@@ -25,7 +25,6 @@ import publicadores.CursoNoExiste;
 import publicadores.EdicionVigenteNoExiste;
 import publicadores.InscripcionEdRepetido;
 import publicadores.SinInstitutos;
-import publicadores.UsuarioNoEstudiante;
 import publicadores.UsuarioNoExiste;
 //import interfaces.Fabrica;
 //import interfaces.IControladorInscripcionEdicionCurso;
@@ -131,23 +130,26 @@ public class InscripcionEdicionCurso extends HttpServlet {
 			DtEdicionBase dteb = new DtEdicionBase();
 			try {
 				dteb = seleccionarCurso(curso);
-			} catch (EdicionVigenteNoExiste | ServiceException e) {
-				request.setAttribute("mensaje", e.getMessage());
+			} catch (ServiceException | RemoteException e) {
+				request.setAttribute("mensaje", "No existe edicion vigente");
 				rd = request.getRequestDispatcher("/error.jsp");
 				rd.forward(request, response);
 			}
 			try {
 				registrarInscripcionEd(nick, correo, curso, fecha);
 				confirmar();
-			} catch (UsuarioNoExiste | UsuarioNoEstudiante | InscripcionEdRepetido | EdicionVigenteNoExiste | ServiceException e) {
-				request.setAttribute("mensaje", e.getMessage());
+			} catch (ServiceException | RemoteException e) {
+				request.setAttribute("mensaje", "Ya esta inscripto a la edicion");
 				rd = request.getRequestDispatcher("/error.jsp");
 				rd.forward(request, response);
+				//System.out.print("El mensaje es: " + e.getMessage());
 			}
 			try {
 				cancelar();
 			} catch (ServiceException e) {
-				e.printStackTrace();
+				request.setAttribute("mensaje", e.getMessage());
+				rd = request.getRequestDispatcher("/error.jsp");
+				rd.forward(request, response);
 			}
 			
 			request.setAttribute("mensaje", "La inscripcion a la edicion "+ dteb.getNombre() +" se realizo correctamente");

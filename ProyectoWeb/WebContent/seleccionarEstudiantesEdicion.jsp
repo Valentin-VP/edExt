@@ -15,9 +15,11 @@
 if(session.getAttribute("opSeleccionarEstudiantes") == null){
 	session.setAttribute("opSeleccionarEstudiantes", request.getParameter("opSeleccionarEstudiantes"));
 }
-ArrayList<String> cursos = (ArrayList) session.getAttribute("cursosSeleccionarEstudiantes");
+@SuppressWarnings("unchecked")
+ArrayList<String> cursos = (ArrayList<String>) session.getAttribute("cursosSeleccionarEstudiantes");
 DtEdicionCompleta edicion = (DtEdicionCompleta) session.getAttribute("edicionCompletaSeleccionarEstudiantes");
-ArrayList<DtInscripcionEd> inscripciones = (ArrayList) session.getAttribute("inscripcionesEstudiantes");
+@SuppressWarnings("unchecked")
+ArrayList<DtInscripcionEd> inscripciones = (ArrayList<DtInscripcionEd>) session.getAttribute("inscripcionesEstudiantes");
 
 if(session.getAttribute("opSeleccionarEstudiantes").toString().equals("0")) {%>
 <h1 align="left"> Ingrese el Instituto </h1>

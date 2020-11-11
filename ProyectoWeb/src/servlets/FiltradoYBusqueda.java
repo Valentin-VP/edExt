@@ -1,10 +1,13 @@
 package servlets;
 
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,12 +16,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.rpc.ServiceException;
 
-import datatypes.DtCurso;
-import datatypes.DtCursoBase;
-import excepciones.SinCursos;
-import interfaces.Fabrica;
-import interfaces.IControladorConsultaCurso;
+import publicadores.DtCurso;
+import publicadores.DtFecha;
+import publicadores.SinCursos;
+//import interfaces.Fabrica;
+//import interfaces.IControladorConsultaCurso;
+import publicadores.ControladorConsultaCursoPublish;
+import publicadores.ControladorConsultaCursoPublishService;
+import publicadores.ControladorConsultaCursoPublishServiceLocator;
 
 @WebServlet("/FiltradoYBusqueda")
 public class FiltradoYBusqueda extends HttpServlet {
@@ -36,16 +43,16 @@ public class FiltradoYBusqueda extends HttpServlet {
 		// Cuando se tengan programas de formacion, se deben tener 2 Array (los cursos y progF), y luego aplicar los filtros (es decir, retornar solo 1 de ellos)
 		
 		HttpSession sesion = request.getSession(true);
-		Fabrica fabrica = Fabrica.getInstancia();
+		//Fabrica fabrica = Fabrica.getInstancia();
 		RequestDispatcher rd;
-		IControladorConsultaCurso icon = fabrica.getIControladorConsultaCurso();
+		//IControladorConsultaCurso icon = fabrica.getIControladorConsultaCurso();
 		ArrayList<DtCurso> misCursos = new ArrayList<DtCurso>();
 		ArrayList<DtCurso> cursosCompletos = new ArrayList<DtCurso>();
 		try {
-			misCursos = icon.listarCursosPlataforma();
+			misCursos = listarCursosPlataforma();
 			// misProgramas = icon.listarProgramasPlataforma(); WARNING, NO EXISTE AUN
 			
-		} catch (SinCursos e) {
+		} catch (SinCursos | ServiceException e) {
 			e.printStackTrace();
 		}
 		for(DtCurso cu: misCursos) {
@@ -112,13 +119,13 @@ public class FiltradoYBusqueda extends HttpServlet {
 									Collections.sort(cursosCompletos, new Comparator<DtCurso>() {
 										  public int compare(DtCurso o1, DtCurso o2) {
 										      try {
-												if (o1.getFechaR().DtFechaToDate() == null || o2.getFechaR().DtFechaToDate() == null)
+												if (DtFechaToDate(o1.getFechaR()) == null || DtFechaToDate(o2.getFechaR()) == null)
 												    return 0;
 											} catch (ParseException e) {
 												e.printStackTrace();
 											}
 										      try {
-												return o1.getFechaR().DtFechaToDate().compareTo(o2.getFechaR().DtFechaToDate());
+												return DtFechaToDate(o1.getFechaR()).compareTo(DtFechaToDate(o2.getFechaR()));
 											} catch (ParseException e) {
 												e.printStackTrace();
 											}
@@ -135,5 +142,27 @@ public class FiltradoYBusqueda extends HttpServlet {
 		sesion.setAttribute("todosLosCursos", ResultadosFinales);
 		rd = request.getRequestDispatcher("/BusquedaBarra.jsp");
 		rd.forward(request, response);
+	}
+	
+	public ArrayList<DtCurso> listarCursosPlataforma() throws ServiceException, SinCursos, RemoteException {
+		ControladorConsultaCursoPublishService cps = new ControladorConsultaCursoPublishServiceLocator();
+		ControladorConsultaCursoPublish port = cps.getControladorConsultaCursoPublishPort();
+		DtCurso[] cursos = port.listarCursosPlataforma();
+		ArrayList<DtCurso> retorno = new ArrayList<DtCurso>();
+		for (int i = 0; i < cursos.length; i++) {
+		    retorno.add(cursos[i]);
+		}
+		return retorno;
+	}
+	
+	public Date DtFechaToDate(DtFecha fecha) throws ParseException {
+		String strdtf = aString(fecha.getDia(), fecha.getMes(), fecha.getAnio());
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/M/yyyy");
+		Date date = sdf.parse(strdtf);
+		return date;
+	}
+	
+	public String aString(int dia, int mes, int anio) {
+		return ""+dia+"/"+mes+"/"+anio;
 	}
 }

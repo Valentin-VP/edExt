@@ -46,13 +46,12 @@ public class ControladorInscripcionEdicionPublish {
 		endpoint = Endpoint.publish("http://" + configuracion.getConfigOf("#WS_IP") + ":" + configuracion.getConfigOf("#WS_PORT") + "/controladorInscripcionEdicion", this);
 		System.out.println("http://" + configuracion.getConfigOf("#WS_IP") + ":" + configuracion.getConfigOf("#WS_PORT") + "/controladorInscripcionEdicion");
 	}
-	
+
 	@WebMethod(exclude = true)
 	public Endpoint getEndpoint() {
-        return endpoint;
+		return endpoint;
 	}
-	
-	//LOS MÉTODOS QUE VAMOS A PUBLICAR
+
 	@WebMethod
 	public DtInstituto[] listarInstitutos() throws SinInstitutos {
 		//return icon.listarInstitutos();
@@ -98,17 +97,5 @@ public class ControladorInscripcionEdicionPublish {
 	public void confirmar() throws InscripcionEdRepetido, EdicionVigenteNoExiste, UsuarioNoExiste {
 		icon.confirmar();
 	}
-	
-	/*@WebMethod
-	public DtSocio[] obtenerInfoSociosPorClase (int idClase){
-		List<DtSocio> dtsocio = icon.obtenerInfoSociosPorClase(idClase);
-		int i = 0;
-        DtSocio[] ret = new DtSocio[dtsocio.size()];
-        for(DtSocio s : dtsocio) {
-            ret[i]=s;
-            i++;
-        }
-        return ret;
-	}*/
 
 }
