@@ -56,7 +56,7 @@ public class ConsultaEdicion extends HttpServlet {
 							}
 							sesion.setAttribute("cursosInfoEdicion", cursosInfoEdicion);
 						} catch (CategoriaInexistente | ServiceException e) {
-							request.setAttribute("mensaje", e.getMessage());
+							request.setAttribute("mensaje", "La categoria es incorrecta");
 							rd = request.getRequestDispatcher("/error.jsp");
 							rd.forward(request, response);
 						}
@@ -67,7 +67,7 @@ public class ConsultaEdicion extends HttpServlet {
 							}
 							sesion.setAttribute("cursosInfoEdicion", cursosInfoEdicion);
 						} catch (InstitutoInexistente | ServiceException e) {
-							request.setAttribute("mensaje", e.getMessage());
+							request.setAttribute("mensaje", "El instituto es incorrecto");
 							rd = request.getRequestDispatcher("/error.jsp");
 							rd.forward(request, response);
 						}
@@ -88,7 +88,7 @@ public class ConsultaEdicion extends HttpServlet {
 						}
 						sesion.setAttribute("edicionesInfoEdicion", edicionesInfoEdicion);
 					} catch (CursoNoExiste | ServiceException e) {
-						request.setAttribute("mensaje", e.getMessage());
+						request.setAttribute("mensaje", "El curso es incorrecto");
 						rd = request.getRequestDispatcher("/error.jsp");
 						rd.forward(request, response);
 					}
@@ -110,7 +110,7 @@ public class ConsultaEdicion extends HttpServlet {
 							ArrayList<DtCursoBase> noLosUso = seleccionarCategoria((String) sesion.getAttribute("InsCatEd"));
 						}
 					} catch (InstitutoInexistente | CategoriaInexistente | ServiceException e) {
-						request.setAttribute("mensaje", e.getMessage());
+						request.setAttribute("mensaje", "El instituto o categoria es incorrecto");
 						rd = request.getRequestDispatcher("/error.jsp");
 						rd.forward(request, response);
 					}	
@@ -118,7 +118,7 @@ public class ConsultaEdicion extends HttpServlet {
 						@SuppressWarnings("unused")
 						ArrayList<DtEdicionBase> tampocoLasUso = seleccionarCurso((String) sesion.getAttribute("cursoConsultaEdicion"));
 					} catch (CursoNoExiste | ServiceException a) {
-						request.setAttribute("mensaje", a.getMessage());
+						request.setAttribute("mensaje", "El curso es incorrecto");
 						rd = request.getRequestDispatcher("/error.jsp");
 						rd.forward(request, response);
 					}
@@ -126,7 +126,9 @@ public class ConsultaEdicion extends HttpServlet {
 					try {
 						infoEdicion = seleccionarEdicion(edicion);
 					} catch (RemoteException | ServiceException e1) {
-						e1.printStackTrace();
+						request.setAttribute("mensaje", "La edicion es incorrecta");
+						rd = request.getRequestDispatcher("/error.jsp");
+						rd.forward(request, response);
 					}
 					sesion.setAttribute("infoEdicion", infoEdicion);
 					sesion.setAttribute("edicionConsultaEdicion",edicion);
@@ -140,7 +142,9 @@ public class ConsultaEdicion extends HttpServlet {
 					try {
 						infoEdicion3 = seleccionarEdicion(edicion3);
 					} catch (RemoteException | ServiceException e) {
-						e.printStackTrace();
+						request.setAttribute("mensaje", "La edicion es incorrecta");
+						rd = request.getRequestDispatcher("/error.jsp");
+						rd.forward(request, response);
 					}
 					sesion.setAttribute("infoEdicion", infoEdicion3);
 					sesion.setAttribute("edicionConsultaEdicion",edicion3);

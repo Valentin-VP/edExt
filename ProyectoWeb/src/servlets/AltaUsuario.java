@@ -94,7 +94,7 @@ public class AltaUsuario extends HttpServlet {
 				altaUsuario(nick, correo, nombre, apellido, fechaNac, pass);
 				confirmarAltaUsuario(esDocente);
 			} catch(RemoteException | ServiceException e) {
-				request.setAttribute("mensaje", e.getMessage());
+				request.setAttribute("mensaje", "No hay institutos o el instituto es incorrecto o el usuario ya existe");
 				rd = request.getRequestDispatcher("/error.jsp");
 				rd.forward(request, response);
 			}

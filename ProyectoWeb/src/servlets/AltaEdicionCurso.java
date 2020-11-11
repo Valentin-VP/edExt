@@ -53,17 +53,19 @@ public class AltaEdicionCurso extends HttpServlet {
 						}
 						sesion.setAttribute("cursos", cursos);
 					} catch (RemoteException | ServiceException e) {
-						request.setAttribute("mensaje", e.getMessage());
+						request.setAttribute("mensaje", "El instituto no existe");
 						rd = request.getRequestDispatcher("/error.jsp");
 						rd.forward(request, response);
 					}
-			try {
-				for(DtUsuarioBase dtub: getDocentes()) {
-					docentes.add(dtub.getNick());
-				}
-			} catch (RemoteException | ServiceException e1) {
-				e1.printStackTrace();
-			}
+					try {
+						for(DtUsuarioBase dtub: getDocentes()) {
+							docentes.add(dtub.getNick());
+						}
+					} catch (RemoteException | ServiceException e1) {
+						request.setAttribute("mensaje", "El instituto no tiene docentes");
+						rd = request.getRequestDispatcher("/error.jsp");
+						rd.forward(request, response);
+					}
 					sesion.setAttribute("docentes", docentes);
 					sesion.setAttribute("optAltaEdicionAltaEd", "1");
 					rd = request.getRequestDispatcher("/altaEdicion.jsp");
@@ -112,7 +114,7 @@ public class AltaEdicionCurso extends HttpServlet {
 						List<DtCursoBase> noLosUso = seleccionarInstituto(i);
 						altaEdicionCurso(curso, nombre, fechaI, fechaF, profes, conCupos, cupos, fechaP);
 					} catch (RemoteException | ServiceException e) {
-						request.setAttribute("mensaje", e.getMessage());
+						request.setAttribute("mensaje", "El instituto es incorrecto");
 						rd = request.getRequestDispatcher("/error.jsp");
 						rd.forward(request, response);
 					}
