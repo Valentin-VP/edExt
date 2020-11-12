@@ -37,6 +37,7 @@ import publicadores.ControladorListarAceptadosAEdicionPublishServiceLocator;
 @WebServlet("/ListarAceptadosEdicion")
 public class ListarAceptadosEdicion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private String error;
 
     public ListarAceptadosEdicion() {
         super();
@@ -64,14 +65,11 @@ public class ListarAceptadosEdicion extends HttpServlet {
 				sesion.setAttribute("cursosAceptados", cursos);
 				sesion.setAttribute("opAceptadosEdicion", "1");
 				response.sendRedirect("ListarAceptadosEdicion.jsp");
-			} catch (publicadores.InstitutoInexistente | publicadores.InstitutoSinCursos e) {
-				request.setAttribute("mensaje", e);
+			} catch (RemoteException | ServiceException | InstitutoInexistente | InstitutoSinCursos e) {
+				request.setAttribute("mensaje", error);
 				rd = request.getRequestDispatcher("/error.jsp");
 				rd.forward(request, response);
-			} catch (Exception e) {
-				request.setAttribute("mensaje", e);
-				rd = request.getRequestDispatcher("/error.jsp");
-				rd.forward(request, response);
+
 			}
 			
 //			rd = request.getRequestDispatcher("/ListarAceptadosEdicion.jsp");
@@ -95,14 +93,11 @@ public class ListarAceptadosEdicion extends HttpServlet {
 				sesion.setAttribute("edicionesAceptados", ediciones);
 				sesion.setAttribute("opAceptadosEdicion", "2");
 				response.sendRedirect("ListarAceptadosEdicion.jsp");
-			} catch (publicadores.CursoNoExiste | publicadores.EdicionNoExiste e) {
-				request.setAttribute("mensaje", e);
+			} catch (RemoteException | ServiceException e) {
+				request.setAttribute("mensaje", error);
 				rd = request.getRequestDispatcher("/error.jsp");
 				rd.forward(request, response);
-			} catch (Exception e) {
-				request.setAttribute("mensaje", e);
-				rd = request.getRequestDispatcher("/error.jsp");
-				rd.forward(request, response);
+
 			}
 			
 			
@@ -125,22 +120,23 @@ public class ListarAceptadosEdicion extends HttpServlet {
 				sesion.setAttribute("opAceptadosEdicion", "3");
 				response.sendRedirect("ListarAceptadosEdicion.jsp");
 				
-			} catch (publicadores.EdicionNoExiste e) {
-				request.setAttribute("mensaje", e);
+			} catch (RemoteException | ServiceException e) {
+				request.setAttribute("mensaje", error);
 				rd = request.getRequestDispatcher("/error.jsp");
 				rd.forward(request, response);
-			} catch (Exception e) {
-				request.setAttribute("mensaje", e);
-				rd = request.getRequestDispatcher("/error.jsp");
-				rd.forward(request, response);
+
 			}
 			break;
 		}
 	}
-	public ArrayList<publicadores.DtInstituto> listarInstitutos() throws publicadores.SinInstitutos, RemoteException, ServiceException {
+	public ArrayList<publicadores.DtInstituto> listarInstitutos() throws  RemoteException, ServiceException {
 		ControladorListarAceptadosAEdicionPublishService cps = new ControladorListarAceptadosAEdicionPublishServiceLocator();
 		ControladorListarAceptadosAEdicionPublish port = cps.getControladorListarAceptadosAEdicionPublishPort();
 		publicadores.DtInstituto[] ins = port.listarInstitutos();
+		if (port.getMensaje() != null) {
+			error = port.getMensaje();
+			throw new RemoteException();
+		}
 		ArrayList<publicadores.DtInstituto> retorno = new ArrayList<publicadores.DtInstituto>();
 		for (int i = 0; i < ins.length; ++i) {
 		    retorno.add(ins[i]);
@@ -148,31 +144,43 @@ public class ListarAceptadosEdicion extends HttpServlet {
 		return retorno;
 	}
 	
-	public ArrayList<publicadores.DtCursoBase> ingresarInstituto(String nomIns) throws publicadores.InstitutoInexistente, publicadores.InstitutoSinCursos, RemoteException, ServiceException {
+	public ArrayList<publicadores.DtCursoBase> ingresarInstituto(String nomIns) throws InstitutoInexistente, InstitutoSinCursos, RemoteException, ServiceException {
 		ControladorListarAceptadosAEdicionPublishService cps = new ControladorListarAceptadosAEdicionPublishServiceLocator();
 		ControladorListarAceptadosAEdicionPublish port = cps.getControladorListarAceptadosAEdicionPublishPort();
 		publicadores.DtCursoBase[] ins = port.ingresarInstituto(nomIns);
+		if (!port.getMensaje().equals("")) {
+			System.out.println(port.getMensaje());
+			error = port.getMensaje();
+			throw new RemoteException();
+		}
 		ArrayList<publicadores.DtCursoBase> retorno = new ArrayList<publicadores.DtCursoBase>();
 		for (int i = 0; i < ins.length; ++i) {
 		    retorno.add(ins[i]);
 		}
 		return retorno;
 	}
-	public ArrayList<publicadores.DtEdicionBase> ingresarCurso(String nomCur) throws publicadores.EdicionNoExiste, publicadores.CursoNoExiste, RemoteException, ServiceException  {
+	public ArrayList<publicadores.DtEdicionBase> ingresarCurso(String nomCur) throws  RemoteException, ServiceException  {
 		ControladorListarAceptadosAEdicionPublishService cps = new ControladorListarAceptadosAEdicionPublishServiceLocator();
 		ControladorListarAceptadosAEdicionPublish port = cps.getControladorListarAceptadosAEdicionPublishPort();
 		publicadores.DtEdicionBase[] ins = port.ingresarCurso(nomCur);
+		if (!port.getMensaje().equals("")) {
+			error = port.getMensaje();
+			throw new RemoteException();
+		}
 		ArrayList<publicadores.DtEdicionBase> retorno = new ArrayList<publicadores.DtEdicionBase>();
 		for (int i = 0; i < ins.length; ++i) {
 		    retorno.add(ins[i]);
 		}
 		return retorno;
 	}
-	public publicadores.DtEdicionCompleta ingresarEdicion(String edicion) throws publicadores.EdicionNoExiste, RemoteException, ServiceException  {
+	public publicadores.DtEdicionCompleta ingresarEdicion(String edicion) throws  RemoteException, ServiceException  {
 		ControladorListarAceptadosAEdicionPublishService cps = new ControladorListarAceptadosAEdicionPublishServiceLocator();
 		ControladorListarAceptadosAEdicionPublish port = cps.getControladorListarAceptadosAEdicionPublishPort();
 		publicadores.DtEdicionCompleta retorno = port.ingresarEdicion(edicion);
-
+		if (!port.getMensaje().equals("")) {
+			error = port.getMensaje();
+			throw new RemoteException();
+		}
 		return retorno;
 	}
 }

@@ -44,10 +44,10 @@ public class ControladorListarAceptadosAEdicionPublishProxy implements publicado
     return controladorListarAceptadosAEdicionPublish;
   }
   
-  public publicadores.DtInstituto[] listarInstitutos() throws java.rmi.RemoteException, publicadores.SinInstitutos{
+  public publicadores.DtCursoBase[] ingresarInstituto(java.lang.String arg0) throws java.rmi.RemoteException, publicadores.InstitutoInexistente, publicadores.InstitutoSinCursos{
     if (controladorListarAceptadosAEdicionPublish == null)
       _initControladorListarAceptadosAEdicionPublishProxy();
-    return controladorListarAceptadosAEdicionPublish.listarInstitutos();
+    return controladorListarAceptadosAEdicionPublish.ingresarInstituto(arg0);
   }
   
   public publicadores.DtEdicionBase[] ingresarCurso(java.lang.String arg0) throws java.rmi.RemoteException, publicadores.EdicionNoExiste, publicadores.CursoNoExiste{
@@ -62,10 +62,16 @@ public class ControladorListarAceptadosAEdicionPublishProxy implements publicado
     return controladorListarAceptadosAEdicionPublish.ingresarEdicion(arg0);
   }
   
-  public publicadores.DtCursoBase[] ingresarInstituto(java.lang.String arg0) throws java.rmi.RemoteException, publicadores.InstitutoInexistente, publicadores.InstitutoSinCursos{
+  public publicadores.DtInstituto[] listarInstitutos() throws java.rmi.RemoteException, publicadores.InstitutoInexistente{
     if (controladorListarAceptadosAEdicionPublish == null)
       _initControladorListarAceptadosAEdicionPublishProxy();
-    return controladorListarAceptadosAEdicionPublish.ingresarInstituto(arg0);
+    return controladorListarAceptadosAEdicionPublish.listarInstitutos();
+  }
+  
+  public java.lang.String getMensaje() throws java.rmi.RemoteException{
+    if (controladorListarAceptadosAEdicionPublish == null)
+      _initControladorListarAceptadosAEdicionPublishProxy();
+    return controladorListarAceptadosAEdicionPublish.getMensaje();
   }
   
   
