@@ -22,6 +22,7 @@ public class ControladorSesionPublish {
 	private IControladorSesion icon;
 	private WebServiceConfiguration configuracion;
 	private Endpoint endpoint;
+	private String mensaje;
 
 	public ControladorSesionPublish() {
 		fabrica = Fabrica.getInstancia();
@@ -44,7 +45,12 @@ public class ControladorSesionPublish {
         return endpoint;
 	}
 	
-	//LOS MÉTODOS QUE VAMOS A PUBLICAR
+	//LOS Mï¿½TODOS QUE VAMOS A PUBLICAR
+	@WebMethod
+	public boolean existeUsuario(String id) {
+		return icon.existeUsuario(id);
+	}
+	
 	@WebMethod
 	public String identificarUsuario(String id, String hashpass) {
 		return icon.identificarUsuario(id, hashpass);
@@ -63,6 +69,11 @@ public class ControladorSesionPublish {
 	@WebMethod
 	public String codificarPass(String contrasenia) throws NoSuchAlgorithmException {
 		return icon.codificarPass(contrasenia);
+	}
+	
+	@WebMethod
+	public String getMensaje() {
+		return this.mensaje;
 	}
 	
 	/*@WebMethod
