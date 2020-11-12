@@ -28,6 +28,7 @@ public class ControladorAltaUsuarioPublish {
 	private IControladorAltaUsuario icon;
 	private WebServiceConfiguration configuracion;
 	private Endpoint endpoint;
+	private String mensaje;
 
 	public ControladorAltaUsuarioPublish() {
 		fabrica = Fabrica.getInstancia();
@@ -53,7 +54,11 @@ public class ControladorAltaUsuarioPublish {
 	//LOS M�TODOS QUE VAMOS A PUBLICAR
 	@WebMethod
 	public void AltaUsuario(String nick, String correo, String nombre, String apellido, DtFecha fechaNac, String password) throws UsuarioRepetido {
-		icon.altaUsuario(nick, correo, nombre, apellido, fechaNac, password);
+		try {
+			icon.altaUsuario(nick, correo, nombre, apellido, fechaNac, password);
+		} catch(UsuarioRepetido e) {
+			this.mensaje = e.getMessage();
+		}
 	}
 	
 	@WebMethod
@@ -73,14 +78,24 @@ public class ControladorAltaUsuarioPublish {
 	
 	@WebMethod
 	public DtInstituto[] listarInstitutos() throws SinInstitutos {
-		ArrayList<DtInstituto> dtinstitutos = icon.listarInstitutos();
-		int i = 0;
-		DtInstituto[] retorno = new DtInstituto[dtinstitutos.size()];
-		for(DtInstituto ins: dtinstitutos) {
-			retorno[i] = ins;
-			i++;
+		DtInstituto[] retorno = new DtInstituto[0];
+		try {
+			ArrayList<DtInstituto> dtinstitutos = icon.listarInstitutos();
+			int i = 0;
+			retorno = new DtInstituto[dtinstitutos.size()];
+			for(DtInstituto ins: dtinstitutos) {
+				retorno[i] = ins;
+				i++;
+			}
+		} catch(SinInstitutos e) {
+			this.mensaje = e.getMessage();
 		}
 		return retorno;
+	}
+	
+	@WebMethod
+	public String getMensaje() {
+		return this.mensaje;
 	}
 	
 	/*@WebMethod

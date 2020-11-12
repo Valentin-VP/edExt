@@ -30,6 +30,7 @@ import publicadores.DtUsuarioBase;
 @WebServlet("/ConsultaEdicion")
 public class ConsultaEdicion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private String error;
 
     public ConsultaEdicion() {
         super();
@@ -55,8 +56,8 @@ public class ConsultaEdicion extends HttpServlet {
 								cursosInfoEdicion.add(dtcb.getNombre());
 							}
 							sesion.setAttribute("cursosInfoEdicion", cursosInfoEdicion);
-						} catch (CategoriaInexistente | ServiceException e) {
-							request.setAttribute("mensaje", "La categoria es incorrecta");
+						} catch (RemoteException | ServiceException e) {
+							request.setAttribute("mensaje", error);
 							rd = request.getRequestDispatcher("/error.jsp");
 							rd.forward(request, response);
 						}
@@ -66,8 +67,8 @@ public class ConsultaEdicion extends HttpServlet {
 								cursosInfoEdicion.add(dtcb.getNombre());
 							}
 							sesion.setAttribute("cursosInfoEdicion", cursosInfoEdicion);
-						} catch (InstitutoInexistente | ServiceException e) {
-							request.setAttribute("mensaje", "El instituto es incorrecto");
+						} catch (RemoteException | ServiceException e) {
+							request.setAttribute("mensaje", error);
 							rd = request.getRequestDispatcher("/error.jsp");
 							rd.forward(request, response);
 						}
@@ -87,8 +88,8 @@ public class ConsultaEdicion extends HttpServlet {
 							edicionesInfoEdicion.add(dteb.getNombre());
 						}
 						sesion.setAttribute("edicionesInfoEdicion", edicionesInfoEdicion);
-					} catch (CursoNoExiste | ServiceException e) {
-						request.setAttribute("mensaje", "El curso es incorrecto");
+					} catch (RemoteException | ServiceException e) {
+						request.setAttribute("mensaje", error);
 						rd = request.getRequestDispatcher("/error.jsp");
 						rd.forward(request, response);
 					}
@@ -109,16 +110,16 @@ public class ConsultaEdicion extends HttpServlet {
 							@SuppressWarnings("unused")
 							ArrayList<DtCursoBase> noLosUso = seleccionarCategoria((String) sesion.getAttribute("InsCatEd"));
 						}
-					} catch (InstitutoInexistente | CategoriaInexistente | ServiceException e) {
-						request.setAttribute("mensaje", "El instituto o categoria es incorrecto");
+					} catch (RemoteException | ServiceException e) {
+						request.setAttribute("mensaje", error);
 						rd = request.getRequestDispatcher("/error.jsp");
 						rd.forward(request, response);
 					}	
 					try {
 						@SuppressWarnings("unused")
 						ArrayList<DtEdicionBase> tampocoLasUso = seleccionarCurso((String) sesion.getAttribute("cursoConsultaEdicion"));
-					} catch (CursoNoExiste | ServiceException a) {
-						request.setAttribute("mensaje", "El curso es incorrecto");
+					} catch (RemoteException | ServiceException a) {
+						request.setAttribute("mensaje", error);
 						rd = request.getRequestDispatcher("/error.jsp");
 						rd.forward(request, response);
 					}
@@ -163,10 +164,15 @@ public class ConsultaEdicion extends HttpServlet {
 		for(int i = 0; i < cursos.length; ++i) {
 			retorno.add(cursos[i]);
 		}
+		if (port.getMensaje() != null) {
+			error = port.getMensaje();
+			throw new RemoteException();
+		}
+		System.out.println("El mensaje es: " + port.getMensaje());
 		return retorno;
 	}
 	
-	public ArrayList<DtCursoBase> seleccionarInstituto(String instituto) throws InstitutoInexistente, ServiceException, publicadores.InstitutoInexistente, RemoteException {
+	public ArrayList<DtCursoBase> seleccionarInstituto(String instituto) throws InstitutoInexistente, ServiceException, InstitutoInexistente, RemoteException {
 		ControladorConsultaEdicionCursoPublishService cps = new ControladorConsultaEdicionCursoPublishServiceLocator();
 		ControladorConsultaEdicionCursoPublish port = cps.getControladorConsultaEdicionCursoPublishPort();
 		DtCursoBase[] cursos = port.seleccionarInstituto(instituto);
@@ -174,10 +180,15 @@ public class ConsultaEdicion extends HttpServlet {
 		for(int i = 0; i < cursos.length; ++i) {
 			retorno.add(cursos[i]);
 		}
+		if (port.getMensaje() != null) {
+			error = port.getMensaje();
+			throw new RemoteException();
+		}
+		System.out.println("El mensaje es: " + port.getMensaje());
 		return retorno;
 	}
 	
-	public ArrayList<DtEdicionBase> seleccionarCurso(String curso) throws RemoteException, ServiceException {
+	public ArrayList<DtEdicionBase> seleccionarCurso(String curso) throws CursoNoExiste, RemoteException, ServiceException {
 		ControladorConsultaEdicionCursoPublishService cps = new ControladorConsultaEdicionCursoPublishServiceLocator();
 		ControladorConsultaEdicionCursoPublish port = cps.getControladorConsultaEdicionCursoPublishPort();
 		DtEdicionBase[] cursos = port.seleccionarCurso(curso);
@@ -185,6 +196,11 @@ public class ConsultaEdicion extends HttpServlet {
 		for(int i = 0; i < cursos.length; ++i) {
 			retorno.add(cursos[i]);
 		}
+		if (port.getMensaje() != null) {
+			error = port.getMensaje();
+			throw new RemoteException();
+		}
+		System.out.println("El mensaje es: " + port.getMensaje());
 		return retorno;
 	}
 	

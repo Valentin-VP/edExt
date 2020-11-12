@@ -27,6 +27,7 @@ import publicadores.ControladorAltaUsuarioPublishServiceLocator;
 @WebServlet("/AltaUsuario")
 public class AltaUsuario extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private String error;
  
     public AltaUsuario() {
         super();
@@ -94,7 +95,7 @@ public class AltaUsuario extends HttpServlet {
 				altaUsuario(nick, correo, nombre, apellido, fechaNac, pass);
 				confirmarAltaUsuario(esDocente);
 			} catch(RemoteException | ServiceException e) {
-				request.setAttribute("mensaje", "No hay institutos o el instituto es incorrecto o el usuario ya existe");
+				request.setAttribute("mensaje", error);
 				rd = request.getRequestDispatcher("/error.jsp");
 				rd.forward(request, response);
 			}
@@ -108,7 +109,7 @@ public class AltaUsuario extends HttpServlet {
 		rd.forward(request, response);
 	}
 	
-	public ArrayList<DtInstituto> listarInstitutos() throws publicadores.SinInstitutos, RemoteException, ServiceException {
+	public ArrayList<DtInstituto> listarInstitutos() throws SinInstitutos, RemoteException, ServiceException {
 		ControladorAltaUsuarioPublishService cps = new ControladorAltaUsuarioPublishServiceLocator();
 		ControladorAltaUsuarioPublish port = cps.getControladorAltaUsuarioPublishPort();
 		publicadores.DtInstituto[] ins = port.listarInstitutos();
@@ -116,6 +117,11 @@ public class AltaUsuario extends HttpServlet {
 		for (int i = 0; i < ins.length; ++i) {
 		    retorno.add(ins[i]);
 		}
+		if (port.getMensaje() != null) {
+			error = port.getMensaje();
+			throw new RemoteException();
+		}
+		System.out.println("El mensaje es: " + port.getMensaje());
 		return retorno;
 	}
 	
@@ -125,10 +131,15 @@ public class AltaUsuario extends HttpServlet {
 		port.seleccionarInstituto(instituto);
 	}
 	
-	public void altaUsuario(String nick, String correo, String nombre, String apellido, DtFecha fechaNac, String password) throws publicadores.UsuarioRepetido, RemoteException, ServiceException {
+	public void altaUsuario(String nick, String correo, String nombre, String apellido, DtFecha fechaNac, String password) throws UsuarioRepetido, RemoteException, ServiceException {
 		ControladorAltaUsuarioPublishService cps = new ControladorAltaUsuarioPublishServiceLocator();
 		ControladorAltaUsuarioPublish port = cps.getControladorAltaUsuarioPublishPort();
 		port.altaUsuario(nick, correo, nombre, apellido, fechaNac, password);
+		if (port.getMensaje() != null) {
+			error = port.getMensaje();
+			throw new RemoteException();
+		}
+		System.out.println("El mensaje es: " + port.getMensaje());
 	}
 	
 	public void confirmarAltaUsuario(boolean esDocente) throws NoSuchAlgorithmException, RemoteException, ServiceException {

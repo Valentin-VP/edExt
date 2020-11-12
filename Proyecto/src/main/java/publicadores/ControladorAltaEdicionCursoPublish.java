@@ -31,6 +31,7 @@ public class ControladorAltaEdicionCursoPublish {
 	private IControladorAltaEdicionCurso icon;
 	private WebServiceConfiguration configuracion;
 	private Endpoint endpoint;
+	private String mensaje;
 
 	public ControladorAltaEdicionCursoPublish() {
 		fabrica = Fabrica.getInstancia();
@@ -56,12 +57,17 @@ public class ControladorAltaEdicionCursoPublish {
 	//LOS M�TODOS QUE VAMOS A PUBLICAR
 	@WebMethod
 	public DtCursoBase[] seleccionarInstituto(String instituto) throws InstitutoInexistente {
-		List<DtCursoBase> cursos = icon.seleccionarInstituto(instituto);
-		DtCursoBase[] retorno = new DtCursoBase[cursos.size()];
-		int i = 0;
-		for(DtCursoBase dtcb: cursos) {
-			retorno[i] = dtcb;
-			i++;
+		DtCursoBase[] retorno = new DtCursoBase[0];
+		try {
+			List<DtCursoBase> cursos = icon.seleccionarInstituto(instituto);
+			retorno = new DtCursoBase[cursos.size()];
+			int i = 0;
+			for(DtCursoBase dtcb: cursos) {
+				retorno[i] = dtcb;
+				i++;
+			}
+		} catch(InstitutoInexistente e) {
+			this.mensaje = e.getMessage();
 		}
 		return retorno;
 	}
@@ -72,7 +78,11 @@ public class ControladorAltaEdicionCursoPublish {
 		for(int i = 0; i < docentes.length; ++i) {
 			profes.add(docentes[i]);
 		}
-		icon.altaEdicionCurso(curso, nombre, fechaI, fechaF, profes, tieneCupos, cantCupos, fechaPub);
+		try {
+			icon.altaEdicionCurso(curso, nombre, fechaI, fechaF, profes, tieneCupos, cantCupos, fechaPub);
+		} catch(EdicionRepetida | CursoNoExiste | InstitutoInexistente | UsuarioNoDocente e) {
+			this.mensaje = e.getMessage();
+		}
 	}
 	
 	@WebMethod
@@ -99,17 +109,8 @@ public class ControladorAltaEdicionCursoPublish {
 		return retorno;
 	}
 	
-	/*@WebMethod
-	public DtSocio[] obtenerInfoSociosPorClase (int idClase){
-		List<DtSocio> dtsocio = icon.obtenerInfoSociosPorClase(idClase);
-		int i = 0;
-        DtSocio[] ret = new DtSocio[dtsocio.size()];
-        for(DtSocio s : dtsocio) {
-            ret[i]=s;
-            i++;
-        }
-        return ret;
-	}*/
-	
-
+	@WebMethod
+	public String getMensaje() {
+		return this.mensaje;
+	}
 }

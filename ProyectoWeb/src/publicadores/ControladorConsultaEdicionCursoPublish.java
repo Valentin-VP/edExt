@@ -12,6 +12,7 @@ public interface ControladorConsultaEdicionCursoPublish extends java.rmi.Remote 
     public java.lang.String[] getDocentes(java.lang.String arg0) throws java.rmi.RemoteException;
     public publicadores.DtEdicion getDtEdicion(java.lang.String arg0) throws java.rmi.RemoteException;
     public java.lang.String getNombreCurso(java.lang.String arg0) throws java.rmi.RemoteException;
+    public java.lang.String getMensaje() throws java.rmi.RemoteException;
     public publicadores.DtCursoBase[] seleccionarCategoria(java.lang.String arg0) throws java.rmi.RemoteException, publicadores.CategoriaInexistente;
     public publicadores.DtInstituto[] getInstitutosConCurso(java.lang.String arg0) throws java.rmi.RemoteException;
     public publicadores.DtEdicionBase[] seleccionarCurso(java.lang.String arg0) throws java.rmi.RemoteException, publicadores.CursoNoExiste;

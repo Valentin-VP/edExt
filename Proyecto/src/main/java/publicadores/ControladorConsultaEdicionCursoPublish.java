@@ -35,6 +35,7 @@ public class ControladorConsultaEdicionCursoPublish {
 	private IControladorConsultaEdicionCurso icon;
 	private WebServiceConfiguration configuracion;
 	private Endpoint endpoint;
+	private String mensaje;
 
 	public ControladorConsultaEdicionCursoPublish() {
 		fabrica = Fabrica.getInstancia();
@@ -60,36 +61,51 @@ public class ControladorConsultaEdicionCursoPublish {
 	//LOS M�TODOS QUE VAMOS A PUBLICAR
 	@WebMethod
 	public DtCursoBase[] seleccionarInstituto(String instituto) throws InstitutoInexistente {
-		List<DtCursoBase> cursos = icon.seleccionarInstituto(instituto);
-		DtCursoBase[] retorno = new DtCursoBase[cursos.size()];
-		int i = 0;
-		for(DtCursoBase dtcb: cursos) {
-			retorno[i] = dtcb;
-			i++;
+		DtCursoBase[] retorno = new DtCursoBase[0];
+		try {
+			List<DtCursoBase> cursos = icon.seleccionarInstituto(instituto);
+			retorno = new DtCursoBase[cursos.size()];
+			int i = 0;
+			for(DtCursoBase dtcb: cursos) {
+				retorno[i] = dtcb;
+				i++;
+			}
+		} catch(InstitutoInexistente e) {
+			this.mensaje = e.getMessage();
 		}
 		return retorno;
 	}
 	
 	@WebMethod
 	public DtCursoBase[] seleccionarCategoria(String categoria) throws CategoriaInexistente {
-		List<DtCursoBase> cursos = icon.seleccionarCategoria(categoria);
-		DtCursoBase[] retorno = new DtCursoBase[cursos.size()];
-		int i = 0;
-		for(DtCursoBase dtcb: cursos) {
-			retorno[i] = dtcb;
-			i++;
+		DtCursoBase[] retorno = new DtCursoBase[0];
+		try {
+			List<DtCursoBase> cursos = icon.seleccionarCategoria(categoria);
+			retorno = new DtCursoBase[cursos.size()];
+			int i = 0;
+			for(DtCursoBase dtcb: cursos) {
+				retorno[i] = dtcb;
+				i++;
+			}
+		} catch(CategoriaInexistente e) {
+			this.mensaje = e.getMessage();
 		}
 		return retorno;
 	}
 	
 	@WebMethod
 	public DtEdicionBase[] seleccionarCurso(String curso) throws CursoNoExiste {
-		List<DtEdicionBase> ediciones = icon.seleccionarCurso(curso);
-		DtEdicionBase[] retorno = new DtEdicionBase[ediciones.size()];
-		int i = 0;
-		for(DtEdicionBase dteb: ediciones) {
-			retorno[i] = dteb;
-			i++;
+		DtEdicionBase[] retorno = new DtEdicionBase[0];
+		try {
+			List<DtEdicionBase> ediciones = icon.seleccionarCurso(curso);
+			retorno = new DtEdicionBase[ediciones.size()];
+			int i = 0;
+			for(DtEdicionBase dteb: ediciones) {
+				retorno[i] = dteb;
+				i++;
+			}
+		} catch(CursoNoExiste e) {
+			this.mensaje = e.getMessage();
 		}
 		return retorno;
 	}
@@ -131,6 +147,11 @@ public class ControladorConsultaEdicionCursoPublish {
 	@WebMethod
 	public String getNombreCurso(String CursoInstituto) {
 		return icon.getNombreCurso(CursoInstituto);
+	}
+	
+	@WebMethod
+	public String getMensaje() {
+		return this.mensaje;
 	}
 	
 	/*@WebMethod

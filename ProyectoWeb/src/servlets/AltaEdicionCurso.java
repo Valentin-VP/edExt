@@ -28,6 +28,7 @@ import publicadores.CursoNoExiste;
 @WebServlet("/AltaEdicionCurso")
 public class AltaEdicionCurso extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private String error;
 
     public AltaEdicionCurso() {
         super();
@@ -53,7 +54,7 @@ public class AltaEdicionCurso extends HttpServlet {
 						}
 						sesion.setAttribute("cursos", cursos);
 					} catch (RemoteException | ServiceException e) {
-						request.setAttribute("mensaje", "El instituto no existe");
+						request.setAttribute("mensaje", error);
 						rd = request.getRequestDispatcher("/error.jsp");
 						rd.forward(request, response);
 					}
@@ -114,7 +115,7 @@ public class AltaEdicionCurso extends HttpServlet {
 						List<DtCursoBase> noLosUso = seleccionarInstituto(i);
 						altaEdicionCurso(curso, nombre, fechaI, fechaF, profes, conCupos, cupos, fechaP);
 					} catch (RemoteException | ServiceException e) {
-						request.setAttribute("mensaje", "El instituto es incorrecto");
+						request.setAttribute("mensaje", error);
 						rd = request.getRequestDispatcher("/error.jsp");
 						rd.forward(request, response);
 					}
@@ -125,7 +126,7 @@ public class AltaEdicionCurso extends HttpServlet {
 		}
 	}
 
-	public List<DtCursoBase> seleccionarInstituto(String instituto) throws publicadores.InstitutoInexistente, RemoteException, ServiceException {
+	public List<DtCursoBase> seleccionarInstituto(String instituto) throws InstitutoInexistente, RemoteException, ServiceException {
 		ControladorAltaEdicionCursoPublishService cps = new ControladorAltaEdicionCursoPublishServiceLocator();
 		ControladorAltaEdicionCursoPublish port = cps.getControladorAltaEdicionCursoPublishPort();
 		DtCursoBase[] cursos = port.seleccionarInstituto(instituto);
@@ -133,6 +134,11 @@ public class AltaEdicionCurso extends HttpServlet {
 		for (int i = 0; i < cursos.length; ++i) {
 		    retorno.add(cursos[i]);
 		}
+		if (port.getMensaje() != null) {
+			error = port.getMensaje();
+			throw new RemoteException();
+		}
+		System.out.println("El mensaje es: " + port.getMensaje());
 		return retorno;
 	}
 	
@@ -147,7 +153,7 @@ public class AltaEdicionCurso extends HttpServlet {
 		return retorno;
 	}
 	
-	public void altaEdicionCurso(String curso, String nombre, DtFecha fechaI, DtFecha fechaF, ArrayList<String> docentes, boolean tieneCupos, Integer cupos, DtFecha fechaPub) throws publicadores.UsuarioNoDocente, publicadores.EdicionRepetida, publicadores.CursoNoExiste, publicadores.InstitutoInexistente, RemoteException, ServiceException {
+	public void altaEdicionCurso(String curso, String nombre, DtFecha fechaI, DtFecha fechaF, ArrayList<String> docentes, boolean tieneCupos, Integer cupos, DtFecha fechaPub) throws UsuarioNoDocente, EdicionRepetida, CursoNoExiste, InstitutoInexistente, RemoteException, ServiceException {
 		ControladorAltaEdicionCursoPublishService cps = new ControladorAltaEdicionCursoPublishServiceLocator();
 		ControladorAltaEdicionCursoPublish port = cps.getControladorAltaEdicionCursoPublishPort();
 		String[] profes = new String[docentes.size()];
@@ -157,5 +163,10 @@ public class AltaEdicionCurso extends HttpServlet {
 		    i++;
 		}
 		port.altaEdicionCurso(curso, nombre, fechaI, fechaF, profes, tieneCupos, cupos, fechaPub);
+		if (port.getMensaje() != null) {
+			error = port.getMensaje();
+			throw new RemoteException();
+		}
+		System.out.println("El mensaje es: " + port.getMensaje());
 	}
 }

@@ -68,6 +68,12 @@ public class ControladorConsultaEdicionCursoPublishProxy implements publicadores
     return controladorConsultaEdicionCursoPublish.getNombreCurso(arg0);
   }
   
+  public java.lang.String getMensaje() throws java.rmi.RemoteException{
+    if (controladorConsultaEdicionCursoPublish == null)
+      _initControladorConsultaEdicionCursoPublishProxy();
+    return controladorConsultaEdicionCursoPublish.getMensaje();
+  }
+  
   public publicadores.DtCursoBase[] seleccionarCategoria(java.lang.String arg0) throws java.rmi.RemoteException, publicadores.CategoriaInexistente{
     if (controladorConsultaEdicionCursoPublish == null)
       _initControladorConsultaEdicionCursoPublishProxy();

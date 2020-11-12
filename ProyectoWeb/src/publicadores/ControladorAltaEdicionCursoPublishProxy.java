@@ -44,6 +44,24 @@ public class ControladorAltaEdicionCursoPublishProxy implements publicadores.Con
     return controladorAltaEdicionCursoPublish;
   }
   
+  public publicadores.DtUsuarioBase[] getUsuarios() throws java.rmi.RemoteException{
+    if (controladorAltaEdicionCursoPublish == null)
+      _initControladorAltaEdicionCursoPublishProxy();
+    return controladorAltaEdicionCursoPublish.getUsuarios();
+  }
+  
+  public publicadores.DtUsuarioBase[] getDocentes() throws java.rmi.RemoteException{
+    if (controladorAltaEdicionCursoPublish == null)
+      _initControladorAltaEdicionCursoPublishProxy();
+    return controladorAltaEdicionCursoPublish.getDocentes();
+  }
+  
+  public java.lang.String getMensaje() throws java.rmi.RemoteException{
+    if (controladorAltaEdicionCursoPublish == null)
+      _initControladorAltaEdicionCursoPublishProxy();
+    return controladorAltaEdicionCursoPublish.getMensaje();
+  }
+  
   public void altaEdicionCurso(java.lang.String arg0, java.lang.String arg1, publicadores.DtFecha arg2, publicadores.DtFecha arg3, java.lang.String[] arg4, boolean arg5, int arg6, publicadores.DtFecha arg7) throws java.rmi.RemoteException, publicadores.UsuarioNoDocente, publicadores.EdicionRepetida, publicadores.CursoNoExiste, publicadores.InstitutoInexistente{
     if (controladorAltaEdicionCursoPublish == null)
       _initControladorAltaEdicionCursoPublishProxy();
@@ -54,18 +72,6 @@ public class ControladorAltaEdicionCursoPublishProxy implements publicadores.Con
     if (controladorAltaEdicionCursoPublish == null)
       _initControladorAltaEdicionCursoPublishProxy();
     return controladorAltaEdicionCursoPublish.seleccionarInstituto(arg0);
-  }
-  
-  public publicadores.DtUsuarioBase[] getDocentes() throws java.rmi.RemoteException{
-    if (controladorAltaEdicionCursoPublish == null)
-      _initControladorAltaEdicionCursoPublishProxy();
-    return controladorAltaEdicionCursoPublish.getDocentes();
-  }
-  
-  public publicadores.DtUsuarioBase[] getUsuarios() throws java.rmi.RemoteException{
-    if (controladorAltaEdicionCursoPublish == null)
-      _initControladorAltaEdicionCursoPublishProxy();
-    return controladorAltaEdicionCursoPublish.getUsuarios();
   }
   
   

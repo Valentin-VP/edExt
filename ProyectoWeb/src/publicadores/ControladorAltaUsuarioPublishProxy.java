@@ -44,6 +44,24 @@ public class ControladorAltaUsuarioPublishProxy implements publicadores.Controla
     return controladorAltaUsuarioPublish;
   }
   
+  public java.lang.String codificarPass(java.lang.String arg0) throws java.rmi.RemoteException, publicadores.NoSuchAlgorithmException{
+    if (controladorAltaUsuarioPublish == null)
+      _initControladorAltaUsuarioPublishProxy();
+    return controladorAltaUsuarioPublish.codificarPass(arg0);
+  }
+  
+  public void altaUsuario(java.lang.String arg0, java.lang.String arg1, java.lang.String arg2, java.lang.String arg3, publicadores.DtFecha arg4, java.lang.String arg5) throws java.rmi.RemoteException, publicadores.UsuarioRepetido{
+    if (controladorAltaUsuarioPublish == null)
+      _initControladorAltaUsuarioPublishProxy();
+    controladorAltaUsuarioPublish.altaUsuario(arg0, arg1, arg2, arg3, arg4, arg5);
+  }
+  
+  public java.lang.String getMensaje() throws java.rmi.RemoteException{
+    if (controladorAltaUsuarioPublish == null)
+      _initControladorAltaUsuarioPublishProxy();
+    return controladorAltaUsuarioPublish.getMensaje();
+  }
+  
   public void seleccionarInstituto(java.lang.String arg0) throws java.rmi.RemoteException{
     if (controladorAltaUsuarioPublish == null)
       _initControladorAltaUsuarioPublishProxy();
@@ -60,18 +78,6 @@ public class ControladorAltaUsuarioPublishProxy implements publicadores.Controla
     if (controladorAltaUsuarioPublish == null)
       _initControladorAltaUsuarioPublishProxy();
     return controladorAltaUsuarioPublish.listarInstitutos();
-  }
-  
-  public java.lang.String codificarPass(java.lang.String arg0) throws java.rmi.RemoteException, publicadores.NoSuchAlgorithmException{
-    if (controladorAltaUsuarioPublish == null)
-      _initControladorAltaUsuarioPublishProxy();
-    return controladorAltaUsuarioPublish.codificarPass(arg0);
-  }
-  
-  public void altaUsuario(java.lang.String arg0, java.lang.String arg1, java.lang.String arg2, java.lang.String arg3, publicadores.DtFecha arg4, java.lang.String arg5) throws java.rmi.RemoteException, publicadores.UsuarioRepetido{
-    if (controladorAltaUsuarioPublish == null)
-      _initControladorAltaUsuarioPublishProxy();
-    controladorAltaUsuarioPublish.altaUsuario(arg0, arg1, arg2, arg3, arg4, arg5);
   }
   
   
