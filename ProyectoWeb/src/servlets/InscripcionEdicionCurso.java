@@ -35,7 +35,8 @@ import publicadores.ControladorInscripcionEdicionPublishServiceLocator;
 @WebServlet("/InscripcionEdicionCurso")
 public class InscripcionEdicionCurso extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    
+	private String error;
+	
     public InscripcionEdicionCurso() {
         super();
     }
@@ -47,7 +48,7 @@ public class InscripcionEdicionCurso extends HttpServlet {
 		List<DtInstituto> institutos = new ArrayList<DtInstituto>();
 		try {
 			institutos = listarInstitutos();
-		} catch (SinInstitutos | ServiceException e) {
+		} catch (RemoteException | ServiceException e) {
 			e.printStackTrace();
 		}
 		
@@ -139,7 +140,7 @@ public class InscripcionEdicionCurso extends HttpServlet {
 				registrarInscripcionEd(nick, correo, curso, fecha);
 				confirmar();
 			} catch (ServiceException | RemoteException e) {
-				request.setAttribute("mensaje", "Ya esta inscripto a la edicion");
+				request.setAttribute("mensaje", error);
 				rd = request.getRequestDispatcher("/error.jsp");
 				rd.forward(request, response);
 				//System.out.print("El mensaje es: " + e.getMessage());
@@ -164,6 +165,7 @@ public class InscripcionEdicionCurso extends HttpServlet {
 		ControladorInscripcionEdicionPublishService cps = new ControladorInscripcionEdicionPublishServiceLocator();
 		ControladorInscripcionEdicionPublish port = cps.getControladorInscripcionEdicionPublishPort();
 		DtInstituto[] institutos = port.listarInstitutos();
+		System.out.print("Institutos que estan" + institutos.length);
 		List<DtInstituto> retorno = new ArrayList<DtInstituto>();
 		for (int i = 0; i < institutos.length; i++) {
 		    retorno.add(institutos[i]);
@@ -204,6 +206,11 @@ public class InscripcionEdicionCurso extends HttpServlet {
 		ControladorInscripcionEdicionPublishService cps = new ControladorInscripcionEdicionPublishServiceLocator();
 		ControladorInscripcionEdicionPublish port = cps.getControladorInscripcionEdicionPublishPort();
 		port.confirmar();
+		if (port.getMensaje() != null) {
+			error = port.getMensaje();
+			throw new RemoteException();
+		}
+		//System.out.print("El mensaje es: " + port.getMensaje());
 	}
 	
 }

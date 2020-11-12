@@ -44,10 +44,10 @@ public class ControladorInscripcionEdicionPublishProxy implements publicadores.C
     return controladorInscripcionEdicionPublish;
   }
   
-  public publicadores.DtInstituto[] listarInstitutos() throws java.rmi.RemoteException, publicadores.SinInstitutos{
+  public void registrarInscripcionEd(java.lang.String arg0, java.lang.String arg1, java.lang.String arg2, publicadores.DtFecha arg3) throws java.rmi.RemoteException, publicadores.UsuarioNoExiste, publicadores.UsuarioNoEstudiante{
     if (controladorInscripcionEdicionPublish == null)
       _initControladorInscripcionEdicionPublishProxy();
-    return controladorInscripcionEdicionPublish.listarInstitutos();
+    controladorInscripcionEdicionPublish.registrarInscripcionEd(arg0, arg1, arg2, arg3);
   }
   
   public void confirmar() throws java.rmi.RemoteException, publicadores.InscripcionEdRepetido, publicadores.EdicionVigenteNoExiste, publicadores.UsuarioNoExiste{
@@ -56,16 +56,22 @@ public class ControladorInscripcionEdicionPublishProxy implements publicadores.C
     controladorInscripcionEdicionPublish.confirmar();
   }
   
+  public void cancelar() throws java.rmi.RemoteException{
+    if (controladorInscripcionEdicionPublish == null)
+      _initControladorInscripcionEdicionPublishProxy();
+    controladorInscripcionEdicionPublish.cancelar();
+  }
+  
   public publicadores.DtEdicionBase seleccionarCurso(java.lang.String arg0) throws java.rmi.RemoteException, publicadores.EdicionVigenteNoExiste{
     if (controladorInscripcionEdicionPublish == null)
       _initControladorInscripcionEdicionPublishProxy();
     return controladorInscripcionEdicionPublish.seleccionarCurso(arg0);
   }
   
-  public void cancelar() throws java.rmi.RemoteException{
+  public publicadores.DtInstituto[] listarInstitutos() throws java.rmi.RemoteException, publicadores.SinInstitutos{
     if (controladorInscripcionEdicionPublish == null)
       _initControladorInscripcionEdicionPublishProxy();
-    controladorInscripcionEdicionPublish.cancelar();
+    return controladorInscripcionEdicionPublish.listarInstitutos();
   }
   
   public publicadores.DtCursoBase[] seleccionarInstituto(java.lang.String arg0) throws java.rmi.RemoteException, publicadores.CursoNoExiste{
@@ -74,10 +80,10 @@ public class ControladorInscripcionEdicionPublishProxy implements publicadores.C
     return controladorInscripcionEdicionPublish.seleccionarInstituto(arg0);
   }
   
-  public void registrarInscripcionEd(java.lang.String arg0, java.lang.String arg1, java.lang.String arg2, publicadores.DtFecha arg3) throws java.rmi.RemoteException, publicadores.UsuarioNoExiste, publicadores.UsuarioNoEstudiante{
+  public java.lang.String getMensaje() throws java.rmi.RemoteException{
     if (controladorInscripcionEdicionPublish == null)
       _initControladorInscripcionEdicionPublishProxy();
-    controladorInscripcionEdicionPublish.registrarInscripcionEd(arg0, arg1, arg2, arg3);
+    return controladorInscripcionEdicionPublish.getMensaje();
   }
   
   

@@ -66,7 +66,7 @@
 		$(document).on("click", "#boton1", function() {               // When HTML DOM "click" event is invoked on element with ID "somebutton", execute the following function...
 		    $.get("InscripcionEdicionCurso", function(responseJson) {                 // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
 		        var $select = $("#selectInstitutos");                         // Locate HTML DOM element with ID "someselect".
-		        $select.find("option").remove();                          // Find all child elements with tag name "option" and remove them (just to prevent duplicate options when button is pressed again).
+		        //$select.find("option").remove();                          // Find all child elements with tag name "option" and remove them (just to prevent duplicate options when button is pressed again).
 		         //$('#selectInstitutos').append(`<option selected disabled value="${'Elige un instituto'}"> ${'Elige un instituto'} </option>`);
 		        $.each(responseJson, function(value, result) {               // Iterate over the JSON object.
 		        	$("<option>").text(result.nombre).appendTo($select); 
@@ -87,7 +87,7 @@
 				data: {institutoselect : instituto}, // los datos que voy a mandar, nombre del atributo : el valor
 				success: function(resultText){ // si sale bien el request
 					var $select = $("#selectCursos");                         // Locate HTML DOM element with ID "someselect".
-			        $select.find("option").remove();                          // Find all child elements with tag name "option" and remove them (just to prevent duplicate options when button is pressed again).
+			        //$select.find("option").remove();                          // Find all child elements with tag name "option" and remove them (just to prevent duplicate options when button is pressed again).
 			        //$('#selectCursos').append(`<option value="${optionValue}"> ${optionText} </option>`); Crear un option personalizado
 			        //$('#selectCursos').append(`<option selected disabled value="${'Elige un curso'}"> ${'Elige un curso'} </option>`);
 			        $.each(resultText, function(value, result) {               // Iterate over the JSON object.

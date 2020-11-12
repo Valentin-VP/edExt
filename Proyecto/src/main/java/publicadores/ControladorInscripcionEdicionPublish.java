@@ -30,7 +30,8 @@ public class ControladorInscripcionEdicionPublish {
 	private IControladorInscripcionEdicionCurso icon;
 	private WebServiceConfiguration configuracion;
 	private Endpoint endpoint;
-
+	private String mensaje;
+	
 	public ControladorInscripcionEdicionPublish() {
 		fabrica = Fabrica.getInstancia();
 		icon = fabrica.getIControladorInscripcionEdicionCurso();
@@ -56,6 +57,7 @@ public class ControladorInscripcionEdicionPublish {
 	public DtInstituto[] listarInstitutos() throws SinInstitutos {
 		//return icon.listarInstitutos();
 		List<DtInstituto> institutos = icon.listarInstitutos();
+		System.out.print(institutos.size());
 		DtInstituto[] ret = new DtInstituto[institutos.size()];
 		int i = 0;
         for(DtInstituto ins : institutos) {
@@ -95,7 +97,16 @@ public class ControladorInscripcionEdicionPublish {
 	
 	@WebMethod
 	public void confirmar() throws InscripcionEdRepetido, EdicionVigenteNoExiste, UsuarioNoExiste {
-		icon.confirmar();
+		try {
+			icon.confirmar();
+		} catch (InscripcionEdRepetido | EdicionVigenteNoExiste | UsuarioNoExiste e) {
+			this.mensaje = e.getMessage();
+		}
+	}
+	
+	@WebMethod
+	public String getMensaje() {
+		return this.mensaje;
 	}
 
 }
