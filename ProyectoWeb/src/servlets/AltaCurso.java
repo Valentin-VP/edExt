@@ -59,9 +59,6 @@ public class AltaCurso extends HttpServlet {
 		switch(sesion.getAttribute("optAltaCurso").toString()) {
 		case "inicio" : 
 			instituto = request.getParameter("institutoAltaCurso").toString();
-			
-			listarCursosInstituto(instituto);
-			
 			try {
 				for(String strcat: listarCategorias()) {
 					categorias.add(strcat);
