@@ -27,6 +27,7 @@ public class ControladorAltaCursoPublish {
 	private IControladorAltaCurso icon;
 	private WebServiceConfiguration configuracion;
 	private Endpoint endpoint;
+	private String mensaje;
 	
 	public ControladorAltaCursoPublish() {
 		fabrica = Fabrica.getInstancia();
@@ -57,7 +58,7 @@ public class ControladorAltaCursoPublish {
 			icon.altaCurso(instituto, nombre, descripcion, duracion, cantHoras, creditos, url, fechaR);
 		}
 		catch(CursoRepetido | InstitutoInexistente ex){
-			ex.printStackTrace();
+			this.mensaje = ex.getMessage();
 		}
 	}
 	
@@ -88,7 +89,7 @@ public class ControladorAltaCursoPublish {
 				i++;
 			}
 		}catch(SinCategorias ex) {
-			ex.printStackTrace();
+			this.mensaje = ex.getMessage();
 		}
 		return retorno;
 	}
@@ -116,8 +117,13 @@ public class ControladorAltaCursoPublish {
 			}
 		}
 		catch(SinInstitutos ex) {
-			ex.printStackTrace();
+			this.mensaje = ex.getMessage();
 		}
 		return retorno;
+	}
+	
+	@WebMethod
+	public String getMensaje() {
+		return this.mensaje;
 	}
 }

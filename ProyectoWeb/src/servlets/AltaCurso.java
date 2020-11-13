@@ -27,9 +27,9 @@ import publicadores.SinCategorias;
 import publicadores.ControladorAltaCursoPublish;
 import publicadores.ControladorAltaCursoPublishService;
 import publicadores.ControladorAltaCursoPublishServiceLocator;
-import publicadores.ControladorInscripcionEdicionPublish;
-import publicadores.ControladorInscripcionEdicionPublishService;
-import publicadores.ControladorInscripcionEdicionPublishServiceLocator;
+import publicadores.ControladorConsultaCursoPublish;
+import publicadores.ControladorConsultaCursoPublishService;
+import publicadores.ControladorConsultaCursoPublishServiceLocator;
 
 /**
  * Servlet implementation class altaCurso
@@ -38,6 +38,7 @@ import publicadores.ControladorInscripcionEdicionPublishServiceLocator;
 public class AltaCurso extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private String error = "";
+	private String remoteerror;
 
     public AltaCurso() {
         super();
@@ -48,11 +49,6 @@ public class AltaCurso extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		/*
-		 * Fabrica fabrica = Fabrica.getInstancia(); IControladorAltaCurso icon =
-		 * fabrica.getIControladorAltaCurso(); IControladorConsultaCurso iconaux =
-		 * fabrica.getIControladorConsultaCurso();
-		 */
 		HttpSession sesion = request.getSession(true);
 		RequestDispatcher rd;
 		
@@ -63,30 +59,29 @@ public class AltaCurso extends HttpServlet {
 		switch(sesion.getAttribute("optAltaCurso").toString()) {
 		case "inicio" : 
 			instituto = request.getParameter("institutoAltaCurso").toString();
-
+			
+			listarCursosInstituto(instituto);
+			
 			try {
 				for(String strcat: listarCategorias()) {
 					categorias.add(strcat);
 				}
 				sesion.setAttribute("categoriasAltaCurso", categorias);
 			} catch (RemoteException| ServiceException e) {
-				request.setAttribute("mensaje", e.getMessage());
+				request.setAttribute("mensaje", remoteerror);
 				rd = request.getRequestDispatcher("/error.jsp");
 				rd.forward(request, response);
 			}
 			
 			try {
-				for(DtCursoBase dtcb: iconaux.listarCursosInstituto(instituto)) {
+				for(DtCursoBase dtcb: listarCursosInstituto(instituto)) {
 					previas.add(dtcb.getNombre());
 				}
 				sesion.setAttribute("previasAltaCurso", previas);
-			}catch (InstitutoInexistente e) {
-				request.setAttribute("mensaje", e.getMessage());
+			}catch (InstitutoInexistente | ServiceException | InstitutoSinCursos e) {
+				request.setAttribute("mensaje", remoteerror);
 				rd = request.getRequestDispatcher("/error.jsp");
 				rd.forward(request, response);
-			}catch (InstitutoSinCursos e) {
-				previas = null;
-				sesion.setAttribute("previasAltaCurso", previas);
 			}
 			sesion.setAttribute("institutoAltaCurso", instituto);
 			sesion.setAttribute("optAltaCurso", "cargaDatos");
@@ -117,25 +112,41 @@ public class AltaCurso extends HttpServlet {
 				Integer creditos = Integer.parseInt(request.getParameter("creditosAltaCurso"));
 				System.out.println("cantHoras vale: " + cantHoras + "creditos vale:" + creditos);
 				try {
-					icon.altaCurso(instituto, nombre, descripcion, duracion, cantHoras, creditos, url, fechaR);
-				} catch (CursoRepetido | InstitutoInexistente e) {
-					request.setAttribute("mensaje", e.getMessage());
+					altaCurso(instituto, nombre, descripcion, duracion, cantHoras, creditos, url, fechaR);
+				} catch (CursoRepetido | InstitutoInexistente | ServiceException e) {
+					request.setAttribute("mensaje", remoteerror);
 					rd = request.getRequestDispatcher("/error.jsp");
 					rd.forward(request, response);
 				}
 				
 				if(selprevias != null) {
 					for(String p: selprevias) {
-						icon.agregarPrevia(p);
+						try {
+							agregarPrevia(p);
+						} catch (RemoteException | ServiceException e) {
+							request.setAttribute("mensaje", error);
+							rd = request.getRequestDispatcher("/error.jsp");
+							rd.forward(request, response);
+						}
 					}
 				}
 				if(selcategorias != null) {
 					for(String c: selcategorias) {
-						icon.agregarCategoria(c);
+						try {
+							agregarCategoria(c);
+						} catch (RemoteException | ServiceException e) {
+							request.setAttribute("mensaje", error);
+							rd = request.getRequestDispatcher("/error.jsp");
+							rd.forward(request, response);
+						}
 					}
 				}
 				
-				icon.confirmarAltaCurso();
+				try {
+					confirmarAltaCurso();
+				} catch (RemoteException | ServiceException e) {
+					e.printStackTrace();
+				}
 				request.setAttribute("mensaje", "El curso fue ingresado con exito");
 				rd = request.getRequestDispatcher("/notificacion.jsp");
 				rd.forward(request, response);
@@ -190,11 +201,59 @@ public class AltaCurso extends HttpServlet {
 		ControladorAltaCursoPublishService cps = new ControladorAltaCursoPublishServiceLocator();
 		ControladorAltaCursoPublish port = cps.getControladorAltaCursoPublishPort();
 		String[] categorias = port.listarCategorias();
+		if (port.getMensaje() != null) {
+			remoteerror = port.getMensaje();
+			throw new RemoteException();
+		}
 		ArrayList<String> retorno = new ArrayList<String>();
 		for (int i = 0; i < categorias.length; ++i) {
 		    retorno.add(categorias[i]);
 		}
 		return retorno;
 	}
+	
+	public ArrayList<DtCursoBase> listarCursosInstituto(String instituto) throws RemoteException, ServiceException {
+		ControladorConsultaCursoPublishService cpscc = new ControladorConsultaCursoPublishServiceLocator();
+		ControladorConsultaCursoPublish port = cpscc.getControladorConsultaCursoPublishPort();
+		DtCursoBase[] cursos = port.listarCursosInstituto(instituto);
+		if (port.getMensaje() != null) {
+			remoteerror = port.getMensaje();
+			throw new RemoteException();
+		}
+		ArrayList<DtCursoBase> retorno = new ArrayList<DtCursoBase>();
+		for (int i = 0; i < cursos.length; ++i) {
+		    retorno.add(cursos[i]);
+		}
+		return retorno;
+	}
 
+	public void altaCurso(String instituto,String nombre,String descripcion,String duracion,int cantHoras,int creditos,String url,DtFecha fechaR) throws RemoteException, ServiceException {
+		ControladorAltaCursoPublishService cps = new ControladorAltaCursoPublishServiceLocator();
+		ControladorAltaCursoPublish port = cps.getControladorAltaCursoPublishPort();
+		port.altaCurso(instituto, nombre, descripcion, duracion, cantHoras, creditos, url, fechaR);
+		if (port.getMensaje() != null) {
+			remoteerror = port.getMensaje();
+			throw new RemoteException();
+		}
+	}
+	
+	public void agregarPrevia(String previa) throws RemoteException, ServiceException {
+		ControladorAltaCursoPublishService cps = new ControladorAltaCursoPublishServiceLocator();
+		ControladorAltaCursoPublish port = cps.getControladorAltaCursoPublishPort();
+		port.agregarPrevia(previa);
+	}
+	
+	public void agregarCategoria(String categoria) throws RemoteException, ServiceException {
+		ControladorAltaCursoPublishService cps = new ControladorAltaCursoPublishServiceLocator();
+		ControladorAltaCursoPublish port = cps.getControladorAltaCursoPublishPort();
+		port.agregarCategoria(categoria);
+	}
+	
+	public void confirmarAltaCurso() throws RemoteException, ServiceException {
+		ControladorAltaCursoPublishService cps = new ControladorAltaCursoPublishServiceLocator();
+		ControladorAltaCursoPublish port = cps.getControladorAltaCursoPublishPort();
+		port.confirmarAltaCurso();
+	}
+
+	
 }
