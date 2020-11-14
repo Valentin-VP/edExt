@@ -28,7 +28,7 @@ public class ControladorAltaUsuarioPublish {
 	private IControladorAltaUsuario icon;
 	private WebServiceConfiguration configuracion;
 	private Endpoint endpoint;
-	private String mensaje;
+	private String mensaje = "vacio";
 
 	public ControladorAltaUsuarioPublish() {
 		fabrica = Fabrica.getInstancia();
@@ -96,6 +96,11 @@ public class ControladorAltaUsuarioPublish {
 	@WebMethod
 	public String getMensaje() {
 		return this.mensaje;
+	}
+	
+	@WebMethod
+	public void setMensaje(String m) {
+		this.mensaje = m;
 	}
 	
 	/*@WebMethod

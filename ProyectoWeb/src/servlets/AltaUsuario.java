@@ -117,8 +117,9 @@ public class AltaUsuario extends HttpServlet {
 		for (int i = 0; i < ins.length; ++i) {
 		    retorno.add(ins[i]);
 		}
-		if (port.getMensaje() != null) {
+		if (!port.getMensaje().equals("vacio")) {
 			error = port.getMensaje();
+			port.setMensaje("vacio");
 			throw new RemoteException();
 		}
 		System.out.println("El mensaje es: " + port.getMensaje());
@@ -135,8 +136,9 @@ public class AltaUsuario extends HttpServlet {
 		ControladorAltaUsuarioPublishService cps = new ControladorAltaUsuarioPublishServiceLocator();
 		ControladorAltaUsuarioPublish port = cps.getControladorAltaUsuarioPublishPort();
 		port.altaUsuario(nick, correo, nombre, apellido, fechaNac, password);
-		if (port.getMensaje() != null) {
+		if (!port.getMensaje().equals("vacio")) {
 			error = port.getMensaje();
+			port.setMensaje("vacio");
 			throw new RemoteException();
 		}
 		System.out.println("El mensaje es: " + port.getMensaje());

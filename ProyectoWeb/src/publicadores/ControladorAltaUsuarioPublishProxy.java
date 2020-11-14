@@ -44,22 +44,10 @@ public class ControladorAltaUsuarioPublishProxy implements publicadores.Controla
     return controladorAltaUsuarioPublish;
   }
   
-  public java.lang.String codificarPass(java.lang.String arg0) throws java.rmi.RemoteException, publicadores.NoSuchAlgorithmException{
+  public publicadores.DtInstituto[] listarInstitutos() throws java.rmi.RemoteException, publicadores.SinInstitutos{
     if (controladorAltaUsuarioPublish == null)
       _initControladorAltaUsuarioPublishProxy();
-    return controladorAltaUsuarioPublish.codificarPass(arg0);
-  }
-  
-  public void altaUsuario(java.lang.String arg0, java.lang.String arg1, java.lang.String arg2, java.lang.String arg3, publicadores.DtFecha arg4, java.lang.String arg5) throws java.rmi.RemoteException, publicadores.UsuarioRepetido{
-    if (controladorAltaUsuarioPublish == null)
-      _initControladorAltaUsuarioPublishProxy();
-    controladorAltaUsuarioPublish.altaUsuario(arg0, arg1, arg2, arg3, arg4, arg5);
-  }
-  
-  public java.lang.String getMensaje() throws java.rmi.RemoteException{
-    if (controladorAltaUsuarioPublish == null)
-      _initControladorAltaUsuarioPublishProxy();
-    return controladorAltaUsuarioPublish.getMensaje();
+    return controladorAltaUsuarioPublish.listarInstitutos();
   }
   
   public void seleccionarInstituto(java.lang.String arg0) throws java.rmi.RemoteException{
@@ -74,10 +62,28 @@ public class ControladorAltaUsuarioPublishProxy implements publicadores.Controla
     controladorAltaUsuarioPublish.confirmarAltaUsuario(arg0);
   }
   
-  public publicadores.DtInstituto[] listarInstitutos() throws java.rmi.RemoteException, publicadores.SinInstitutos{
+  public java.lang.String codificarPass(java.lang.String arg0) throws java.rmi.RemoteException, publicadores.NoSuchAlgorithmException{
     if (controladorAltaUsuarioPublish == null)
       _initControladorAltaUsuarioPublishProxy();
-    return controladorAltaUsuarioPublish.listarInstitutos();
+    return controladorAltaUsuarioPublish.codificarPass(arg0);
+  }
+  
+  public java.lang.String getMensaje() throws java.rmi.RemoteException{
+    if (controladorAltaUsuarioPublish == null)
+      _initControladorAltaUsuarioPublishProxy();
+    return controladorAltaUsuarioPublish.getMensaje();
+  }
+  
+  public void altaUsuario(java.lang.String arg0, java.lang.String arg1, java.lang.String arg2, java.lang.String arg3, publicadores.DtFecha arg4, java.lang.String arg5) throws java.rmi.RemoteException, publicadores.UsuarioRepetido{
+    if (controladorAltaUsuarioPublish == null)
+      _initControladorAltaUsuarioPublishProxy();
+    controladorAltaUsuarioPublish.altaUsuario(arg0, arg1, arg2, arg3, arg4, arg5);
+  }
+  
+  public void setMensaje(java.lang.String arg0) throws java.rmi.RemoteException{
+    if (controladorAltaUsuarioPublish == null)
+      _initControladorAltaUsuarioPublishProxy();
+    controladorAltaUsuarioPublish.setMensaje(arg0);
   }
   
   
