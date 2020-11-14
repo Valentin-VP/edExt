@@ -24,6 +24,7 @@ import publicadores.CursoRepetido;
 import publicadores.InstitutoInexistente;
 import publicadores.InstitutoSinCursos;
 import publicadores.SinCategorias;
+import publicadores.SinInstitutos;
 import publicadores.ControladorAltaCursoPublish;
 import publicadores.ControladorAltaCursoPublishService;
 import publicadores.ControladorAltaCursoPublishServiceLocator;
@@ -228,9 +229,10 @@ public class AltaCurso extends HttpServlet {
 		ControladorAltaCursoPublishService cps = new ControladorAltaCursoPublishServiceLocator();
 		ControladorAltaCursoPublish port = cps.getControladorAltaCursoPublishPort();
 		port.altaCurso(instituto, nombre, descripcion, duracion, cantHoras, creditos, url, fechaR);
-		if (port.getMensaje() != null) {
+		if(!port.getMensaje().equals("vacio")){
 			remoteerror = port.getMensaje();
-			throw new RemoteException();
+			port.setMensaje("vacio");
+			throw new RemoteException(remoteerror);
 		}
 	}
 	

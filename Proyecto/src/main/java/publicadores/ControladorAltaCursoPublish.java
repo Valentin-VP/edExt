@@ -126,4 +126,9 @@ public class ControladorAltaCursoPublish {
 	public String getMensaje() {
 		return this.mensaje;
 	}
+	
+	@WebMethod
+	public void setMensaje(String mensaje) {
+		this.mensaje = mensaje;
+	}
 }

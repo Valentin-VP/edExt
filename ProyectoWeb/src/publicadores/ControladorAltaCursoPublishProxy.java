@@ -44,10 +44,16 @@ public class ControladorAltaCursoPublishProxy implements publicadores.Controlado
     return controladorAltaCursoPublish;
   }
   
-  public void confirmarAltaCurso() throws java.rmi.RemoteException{
+  public publicadores.DtInstituto[] listarInstitutos() throws java.rmi.RemoteException, publicadores.SinInstitutos{
     if (controladorAltaCursoPublish == null)
       _initControladorAltaCursoPublishProxy();
-    controladorAltaCursoPublish.confirmarAltaCurso();
+    return controladorAltaCursoPublish.listarInstitutos();
+  }
+  
+  public void agregarPrevia(java.lang.String arg0) throws java.rmi.RemoteException{
+    if (controladorAltaCursoPublish == null)
+      _initControladorAltaCursoPublishProxy();
+    controladorAltaCursoPublish.agregarPrevia(arg0);
   }
   
   public void altaCurso(java.lang.String arg0, java.lang.String arg1, java.lang.String arg2, java.lang.String arg3, int arg4, int arg5, java.lang.String arg6, publicadores.DtFecha arg7) throws java.rmi.RemoteException, publicadores.CursoRepetido, publicadores.InstitutoInexistente{
@@ -62,10 +68,10 @@ public class ControladorAltaCursoPublishProxy implements publicadores.Controlado
     controladorAltaCursoPublish.agregarCategoria(arg0);
   }
   
-  public publicadores.DtInstituto[] listarInstitutos() throws java.rmi.RemoteException, publicadores.SinInstitutos{
+  public void confirmarAltaCurso() throws java.rmi.RemoteException{
     if (controladorAltaCursoPublish == null)
       _initControladorAltaCursoPublishProxy();
-    return controladorAltaCursoPublish.listarInstitutos();
+    controladorAltaCursoPublish.confirmarAltaCurso();
   }
   
   public java.lang.String[] listarCategorias() throws java.rmi.RemoteException, publicadores.SinCategorias{
@@ -74,10 +80,10 @@ public class ControladorAltaCursoPublishProxy implements publicadores.Controlado
     return controladorAltaCursoPublish.listarCategorias();
   }
   
-  public void agregarPrevia(java.lang.String arg0) throws java.rmi.RemoteException{
+  public java.lang.String getMensaje() throws java.rmi.RemoteException{
     if (controladorAltaCursoPublish == null)
       _initControladorAltaCursoPublishProxy();
-    controladorAltaCursoPublish.agregarPrevia(arg0);
+    return controladorAltaCursoPublish.getMensaje();
   }
   
   public void cancelarAltaCurso() throws java.rmi.RemoteException{
@@ -92,10 +98,10 @@ public class ControladorAltaCursoPublishProxy implements publicadores.Controlado
     controladorAltaCursoPublish.cleanCategorias();
   }
   
-  public java.lang.String getMensaje() throws java.rmi.RemoteException{
+  public void setMensaje(java.lang.String arg0) throws java.rmi.RemoteException{
     if (controladorAltaCursoPublish == null)
       _initControladorAltaCursoPublishProxy();
-    return controladorAltaCursoPublish.getMensaje();
+    controladorAltaCursoPublish.setMensaje(arg0);
   }
   
   
