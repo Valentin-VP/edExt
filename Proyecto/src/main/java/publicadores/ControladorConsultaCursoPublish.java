@@ -35,6 +35,7 @@ public class ControladorConsultaCursoPublish {
 	private IControladorConsultaCurso icon;
 	private WebServiceConfiguration configuracion;
 	private Endpoint endpoint;
+	private String mensaje = "vacio";
 
 	public ControladorConsultaCursoPublish() {
 		fabrica = Fabrica.getInstancia();
@@ -61,24 +62,40 @@ public class ControladorConsultaCursoPublish {
 	//LOS MÉTODOS QUE VAMOS A PUBLICAR
 	@WebMethod
 	public DtCursoBase[] listarCursosInstituto(String instituto) throws InstitutoInexistente, InstitutoSinCursos {
-		ArrayList<DtCursoBase> dtcb = icon.listarCursosInstituto(instituto);
-		int i = 0;
-		DtCursoBase[] ret = new DtCursoBase[dtcb.size()];
-		for(DtCursoBase cb : dtcb) {
-			ret[i] = cb;
-			i++;
+		System.out.println("al listarcursoInstituto");
+		ArrayList<DtCursoBase> dtcb = new ArrayList<DtCursoBase>();
+		DtCursoBase[] ret = new DtCursoBase[0];
+		try {
+			System.out.println("entro al try");
+			dtcb = icon.listarCursosInstituto(instituto);
+			int i = 0;
+			ret = new DtCursoBase[dtcb.size()];
+			for(DtCursoBase cb : dtcb) {
+				System.out.println(cb.getNombre());
+				ret[i] = cb;
+				i++;
+			}
+		}catch(InstitutoInexistente |InstitutoSinCursos e) {
+			System.out.println("entro al catch");
+			this.mensaje = e.getMessage();
 		}
 		return ret;
 	}
 	
 	@WebMethod
 	public DtCursoBase[] listarCursosCategoria(String categoria) throws CategoriaInexistente, CategoriaSinCursos {
-		ArrayList<DtCursoBase> dtcb = icon.listarCursosCategoria(categoria);
-		int i = 0;
-		DtCursoBase[] ret = new DtCursoBase[dtcb.size()];
-		for(DtCursoBase cb : dtcb) {
-			ret[i] = cb;
-			i++;
+		ArrayList<DtCursoBase> dtcb = new ArrayList<>();
+		DtCursoBase[] ret = new DtCursoBase[0];
+		try {
+			dtcb = icon.listarCursosCategoria(categoria);
+			int i = 0;
+			ret = new DtCursoBase[dtcb.size()];
+			for(DtCursoBase cb : dtcb) {
+				ret[i] = cb;
+				i++;
+			}
+		}catch(CategoriaInexistente |CategoriaSinCursos e) {
+			this.mensaje = e.getMessage();
 		}
 		return ret;
 	}
@@ -90,27 +107,42 @@ public class ControladorConsultaCursoPublish {
 	
 	@WebMethod
 	public DtInstituto[] listarInstitutos() throws SinInstitutos {
-		ArrayList<DtInstituto> dtIns= icon.listarInstitutos();
-		int i = 0;
-		DtInstituto[] ret = new DtInstituto[dtIns.size()];
-		for(DtInstituto ins : dtIns) {
-			ret[i] = ins;
-			i++;
+		ArrayList<DtInstituto> dtcb = new ArrayList<>();
+		DtInstituto[] ret = new DtInstituto[0];
+		try {
+			dtcb = icon.listarInstitutos();
+			int i = 0;
+			ret = new DtInstituto[dtcb.size()];
+			for(DtInstituto cb : dtcb) {
+				ret[i] = cb;
+				i++;
+			}
+		}catch(SinInstitutos e) {
+			System.out.println(e.getMessage()+" este es el mensaje en el publish");
+			this.mensaje = e.getMessage();
 		}
 		return ret;
 	}
 	
 	@WebMethod
 	public String[] listarCategorias() throws SinCategorias {
-		ArrayList<String> dtCat= icon.listarCategorias();
-		int i = 0;
-		String[] ret = new String[dtCat.size()];
-		for(String cat : dtCat) {
-			ret[i] = cat;
-			i++;
+		ArrayList<String> dtCat = new ArrayList<>();
+		String[] ret = new String[0];
+		try {
+			dtCat = icon.listarCategorias();
+			int i = 0;
+			ret = new String[dtCat.size()];
+			for(String cb : dtCat) {
+				ret[i] = cb;
+				i++;
+			}
+		}catch(SinCategorias e) {
+			this.mensaje = e.getMessage();
 		}
+		
 		return ret;
 	}
+
 	
 	@WebMethod
 	public DtProgramaBase[] getProgramas() {
@@ -126,13 +158,31 @@ public class ControladorConsultaCursoPublish {
 	
 	@WebMethod
 	public DtCurso[] listarCursosPlataforma() throws SinCursos {
-		ArrayList<DtCurso> dtc = icon.listarCursosPlataforma();
-		int i = 0;
-		DtCurso[] ret = new DtCurso[dtc.size()];
-		for(DtCurso c : dtc) {
-			ret[i] = c;
-			i++;
+		ArrayList<DtCurso> dtcb = new ArrayList<>();
+		DtCurso[] ret = new DtCurso[0];
+		try {
+			dtcb = icon.listarCursosPlataforma();
+			int i = 0;
+			ret = new DtCurso[dtcb.size()];
+			for(DtCurso cb : dtcb) {
+				ret[i] = cb;
+				i++;
+			}
+		}catch(SinCursos e) {
+			this.mensaje = e.getMessage();
 		}
 		return ret;
 	}
+	
+	@WebMethod
+	public String getMensaje() {
+		System.out.println("entro al getMessage " + this.mensaje);
+		return this.mensaje;
+	}
+	
+	@WebMethod
+	public void setMensaje(String m) {
+		this.mensaje = m;
+	}
+	
 }

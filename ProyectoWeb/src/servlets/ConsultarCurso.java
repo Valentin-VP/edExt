@@ -13,20 +13,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.xml.rpc.ServiceException;
 
-import datatypes.DtCursoBase;
-import datatypes.DtCurso;
-import datatypes.DtFecha;
-import datatypes.DtEdicionBase;
-import excepciones.CategoriaInexistente;
-import excepciones.CategoriaSinCursos;
-import excepciones.InstitutoInexistente;
-import excepciones.InstitutoSinCursos;
-import excepciones.SinCursos;
-import interfaces.Fabrica;
-import interfaces.IControladorConsultaCurso;
-import publicadores.ControladorAltaUsuarioPublish;
-import publicadores.ControladorAltaUsuarioPublishService;
-import publicadores.ControladorAltaUsuarioPublishServiceLocator;
+import publicadores.DtCursoBase;
+import publicadores.DtCurso;
+import publicadores.DtFecha;
+import publicadores.DtUsuarioBase;
+import publicadores.InstitutoInexistente;
+import publicadores.InstitutoSinCursos;
+import publicadores.DtEdicionBase;
 import publicadores.ControladorConsultaCursoPublish;
 import publicadores.ControladorConsultaCursoPublishService;
 import publicadores.ControladorConsultaCursoPublishServiceLocator;
@@ -37,6 +30,7 @@ import publicadores.ControladorConsultaCursoPublishServiceLocator;
 @WebServlet("/ConsultarCurso")
 public class ConsultarCurso extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private String error = new String();
 	
     public ConsultarCurso() {
         super();
@@ -48,7 +42,6 @@ public class ConsultarCurso extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession sesion = request.getSession(true);
-		System.out.println(sesion.getAttribute("optConsultaCursoInfoCurso").toString());
 		/*Fabrica fabrica = Fabrica.getInstancia();
 		IControladorConsultaCurso icon = fabrica.getIControladorConsultaCurso();*/
 		RequestDispatcher rd;
@@ -58,28 +51,31 @@ public class ConsultarCurso extends HttpServlet {
 					boolean esCategoria = request.getParameter("esCategoriaInfoCurso") != null;
 					String insCat = request.getParameter("instituto-categoria");
 					ArrayList<String> cursos = new ArrayList<String>();
-					System.out.println(esInstituto);
-					System.out.println(esCategoria);
 					if(!esInstituto && esCategoria) {
 						try {
-							publicadores.DtCursoBase[] CCat = listarCursosCategoria(insCat);
-							for(publicadores.DtCursoBase dtcb: CCat) {
+							DtCursoBase[] CCat = listarCursosCategoria(insCat);
+							System.out.println("paso el listar cursos");
+							for(DtCursoBase dtcb: CCat) {
 								cursos.add(dtcb.getNombre());
 							}
 							sesion.setAttribute("cursos", cursos);
 						} catch (ServiceException |RemoteException e) {
-							request.setAttribute("mensaje", "Categoria inexistente o sin cursos");
+							request.setAttribute("mensaje", error);
 			                rd = request.getRequestDispatcher("/error.jsp");
 			                rd.forward(request, response);
 						}
 					} else {//por default busco por instituto
+						
 						try {
-							publicadores.DtCursoBase[] CIns = listarCursosInstituto(insCat);
-							for(publicadores.DtCursoBase dtcb: CIns) {
+							System.out.println("antes de listarCursosInstituto");
+							DtCursoBase[] CIns = listarCursosInstituto(insCat);
+							System.out.println("paso listar cursos");
+							for(DtCursoBase dtcb: CIns) {
 								cursos.add(dtcb.getNombre());
 							}
 						} catch (ServiceException |RemoteException e) {
-							request.setAttribute("mensaje", "Instituto inexistente o sin cursos");
+							System.out.println("exception "+ e.getMessage());
+							request.setAttribute("mensaje", error);
 			                rd = request.getRequestDispatcher("/error.jsp");
 			                rd.forward(request, response);
 						}
@@ -96,20 +92,19 @@ public class ConsultarCurso extends HttpServlet {
 					break;	
 
 		case "1":	String nomCurso = request.getParameter("dropdownCursos").toString();
-					System.out.println("Recibe el nomcurso: "+nomCurso);
 					sesion.setAttribute("cursoConsulta", nomCurso);
 					ArrayList<String> infoCurso = new ArrayList<String>();
-					publicadores.DtEdicionBase[] ediciones;
+					DtEdicionBase[] ediciones;
 					ArrayList<String> edicionesStr = new ArrayList<String>();
-					publicadores.DtCurso curso = new publicadores.DtCurso();
+					DtCurso curso = new DtCurso();
 					try {
-						publicadores.DtCurso[] CPla = listarCursosPlataforma(); 
+						DtCurso[] CPla = listarCursosPlataforma(); 
 						for(int i=0; i<CPla.length; i++) {
 							if(CPla[i].getNombre().equals(nomCurso))
 								curso = CPla[i];
 						}
 					} catch (ServiceException| RemoteException e1) {
-						request.setAttribute("mensaje", "Error: sin cursos");
+						request.setAttribute("mensaje", error);
 		                rd = request.getRequestDispatcher("/error.jsp");
 		                rd.forward(request, response);
 					}
@@ -127,17 +122,21 @@ public class ConsultarCurso extends HttpServlet {
 					}
 					infoCurso.add(categorias);
 					String previas = "";
-					if(curso.getPrevias().length != 0){
-						for(publicadores.DtCursoBase p: curso.getPrevias()){
-							previas = previas + " " + p.getNombre();
+					if(curso.getPrevias() != null) {
+						if(curso.getPrevias().length != 0){
+							for(DtCursoBase p: curso.getPrevias()){
+								previas = previas + " " + p.getNombre();
+							}
 						}
-					}
+					}	
 					if(previas == "") 
 						previas = "Sin previas";
 					infoCurso.add(previas);
-					ediciones = curso.getEdiciones();
-					for(publicadores.DtEdicionBase e: ediciones) {
-						edicionesStr.add(e.getNombre());
+					if(curso.getEdiciones() != null) {
+						ediciones = curso.getEdiciones();
+						for(DtEdicionBase e: ediciones) {
+							edicionesStr.add(e.getNombre());
+						}
 					}
 					sesion.setAttribute("edicionesConsultaCurso", edicionesStr);
 					sesion.setAttribute("infoCurso", infoCurso);
@@ -149,22 +148,41 @@ public class ConsultarCurso extends HttpServlet {
 		}
 		
 	}
-	public publicadores.DtCursoBase[] listarCursosCategoria(String categoria) throws RemoteException, ServiceException {
+	public DtCursoBase[] listarCursosCategoria(String categoria) throws RemoteException, ServiceException {
 		ControladorConsultaCursoPublishService cps = new ControladorConsultaCursoPublishServiceLocator();
 		ControladorConsultaCursoPublish port = cps.getControladorConsultaCursoPublishPort();
-		return port.listarCursosCategoria(categoria);
+		DtCursoBase[] ret = port.listarCursosCategoria(categoria);
+		if(!port.getMensaje().equals("vacio")) {
+			error = port.getMensaje();
+			port.setMensaje("vacio");
+			throw new RemoteException();
+		}
+		return ret;
 	}
 	
-	public publicadores.DtCursoBase[] listarCursosInstituto(String instituto) throws RemoteException, ServiceException {
+	public DtCursoBase[] listarCursosInstituto(String instituto) throws RemoteException,  ServiceException {
 		ControladorConsultaCursoPublishService cps = new ControladorConsultaCursoPublishServiceLocator();
 		ControladorConsultaCursoPublish port = cps.getControladorConsultaCursoPublishPort();
-		return port.listarCursosInstituto(instituto);
+		DtCursoBase[] ret =  port.listarCursosInstituto(instituto);
+		if(!port.getMensaje().equals("vacio")) {
+			error = port.getMensaje();
+			port.setMensaje("vacio");
+			throw new RemoteException();
+		}
+		System.out.println("paso el if");
+		return ret;
 	}
 	
-	public publicadores.DtCurso[] listarCursosPlataforma() throws RemoteException, ServiceException {
+	public DtCurso[] listarCursosPlataforma() throws RemoteException, ServiceException {
 		ControladorConsultaCursoPublishService cps = new ControladorConsultaCursoPublishServiceLocator();
 		ControladorConsultaCursoPublish port = cps.getControladorConsultaCursoPublishPort();
-		return port.listarCursosPlataforma();
+		DtCurso[] ret = port.listarCursosPlataforma();
+		if(!port.getMensaje().equals("vacio")) {
+			error = port.getMensaje();
+			port.setMensaje("vacio");
+			throw new RemoteException();
+		}
+		return ret;
 	}
 
 }

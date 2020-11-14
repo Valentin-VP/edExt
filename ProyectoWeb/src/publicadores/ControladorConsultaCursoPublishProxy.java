@@ -44,12 +44,6 @@ public class ControladorConsultaCursoPublishProxy implements publicadores.Contro
     return controladorConsultaCursoPublish;
   }
   
-  public publicadores.DtCursoBase[] listarCursosCategoria(java.lang.String arg0) throws java.rmi.RemoteException, publicadores.CategoriaInexistente, publicadores.CategoriaSinCursos{
-    if (controladorConsultaCursoPublish == null)
-      _initControladorConsultaCursoPublishProxy();
-    return controladorConsultaCursoPublish.listarCursosCategoria(arg0);
-  }
-  
   public publicadores.DtCursoBase[] listarCursosInstituto(java.lang.String arg0) throws java.rmi.RemoteException, publicadores.InstitutoInexistente, publicadores.InstitutoSinCursos{
     if (controladorConsultaCursoPublish == null)
       _initControladorConsultaCursoPublishProxy();
@@ -68,6 +62,12 @@ public class ControladorConsultaCursoPublishProxy implements publicadores.Contro
     return controladorConsultaCursoPublish.listarInstitutos();
   }
   
+  public publicadores.DtCursoBase[] listarCursosCategoria(java.lang.String arg0) throws java.rmi.RemoteException, publicadores.CategoriaInexistente, publicadores.CategoriaSinCursos{
+    if (controladorConsultaCursoPublish == null)
+      _initControladorConsultaCursoPublishProxy();
+    return controladorConsultaCursoPublish.listarCursosCategoria(arg0);
+  }
+  
   public publicadores.DtProgramaBase[] getProgramas() throws java.rmi.RemoteException{
     if (controladorConsultaCursoPublish == null)
       _initControladorConsultaCursoPublishProxy();
@@ -84,6 +84,18 @@ public class ControladorConsultaCursoPublishProxy implements publicadores.Contro
     if (controladorConsultaCursoPublish == null)
       _initControladorConsultaCursoPublishProxy();
     return controladorConsultaCursoPublish.listarCursosPlataforma();
+  }
+  
+  public java.lang.String getMensaje() throws java.rmi.RemoteException{
+    if (controladorConsultaCursoPublish == null)
+      _initControladorConsultaCursoPublishProxy();
+    return controladorConsultaCursoPublish.getMensaje();
+  }
+  
+  public void setMensaje(java.lang.String arg0) throws java.rmi.RemoteException{
+    if (controladorConsultaCursoPublish == null)
+      _initControladorConsultaCursoPublishProxy();
+    controladorConsultaCursoPublish.setMensaje(arg0);
   }
   
   
