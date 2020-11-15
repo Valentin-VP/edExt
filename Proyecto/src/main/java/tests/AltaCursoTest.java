@@ -177,16 +177,4 @@ public class AltaCursoTest {
 		Curso recuperadoConPrevias = mC.find(nombre_curso_dos+counter.getValue().toString());
 		assertSame(recuperadoConPrevias.getPrevias().get(0), previas.get(0));
 	}
-	
-	@Test
-	public void test9_gettersAndSetters() throws CursoRepetido, InstitutoInexistente {
-		Counter counter = new Counter();
-		Instituto instituto_uno = new Instituto(nombre_instituto_uno+counter.getValue().toString());
-		mI.agregarInstituto(instituto_uno);	
-		Categoria categoria_uno = new Categoria(nombre_categoria_uno+counter.getValue().toString());
-		mCat.agregarCategoria(categoria_uno);
-		icon.agregarCategoria(nombre_categoria_uno);
-		icon.altaCurso(nombre_instituto_uno+counter.getValue().toString(), nombre_curso_uno, descripcion_uno, duracion_uno, cantHoras_uno, creditos_uno, url_uno, fechaR_uno);
-		icon.confirmarAltaCurso();
-	}
 }
