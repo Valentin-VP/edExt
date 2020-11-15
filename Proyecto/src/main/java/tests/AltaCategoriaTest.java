@@ -1,7 +1,11 @@
 package tests;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
+import static org.junit.Assert.*;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
 
 import excepciones.CategoriaRepetidaException;
 import interfaces.Fabrica;
@@ -9,26 +13,18 @@ import interfaces.IControladorAltaCategoria;
 import logica.Categoria;
 import logica.ManejadorCategoria;
 
-import static org.junit.Assert.*;
-
-import javax.transaction.Transactional;
-
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-
+import tests.Counter;
 
 public class AltaCategoriaTest {
-	static Fabrica fabrica;
-	static IControladorAltaCategoria icon; 
-	String nombrec1;
+	static Fabrica fabrica = null;
+	static IControladorAltaCategoria icon = null; 
+	String nombrec1 = "";
 	Integer id1 = 0;
-	String nombrec2;
+	String nombrec2 = "";
 	Integer id2 = 0;
-	Categoria categoria1;
-	Categoria categoria2;
-	static ManejadorCategoria mC;
+	Categoria categoria1 = null;
+	Categoria categoria2 = null;
+	static ManejadorCategoria mC = null;
 	
 	@BeforeClass
 	public static void preparacionTests() {
@@ -39,10 +35,11 @@ public class AltaCategoriaTest {
 	
 	@Before
 	public void inicializarTest() {
-		nombrec1 = "jedi_arts" + this.id1.toString();
-		this.id1 += 1;
-		nombrec2 = "sith_arts" + this.id2.toString();
-		this.id2 += 1;
+		Counter counter1 = new Counter();
+		this.nombrec1 = "jedi_arts" +  counter1.getValue();
+		System.out.println(this.nombrec1);
+		this.nombrec2 = "sith_arts" + counter1.getValue();
+		System.out.println(this.nombrec2);
 	}
 	
 	@Test
@@ -53,4 +50,12 @@ public class AltaCategoriaTest {
 		categoria2 = mC.find(nombrec2);
 		assertNotSame(categoria1,categoria2);
 	}
+	
+	@Test (expected = CategoriaRepetidaException.class)
+	public void categoriaRepetida() throws CategoriaRepetidaException {
+		icon.darAltaCategoria(nombrec1);
+		System.out.println("En Categoria Repetida vale "+this.nombrec1);
+		icon.darAltaCategoria(nombrec1);
+	}
+
 }

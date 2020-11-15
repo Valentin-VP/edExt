@@ -12,7 +12,6 @@ public class ControladorAltaCategoria implements IControladorAltaCategoria{
 		ManejadorCategoria mC = ManejadorCategoria.getInstancia();
 		Categoria C = mC.find(nombre);
 		if (C != null) {
-			System.out.println("banderaIF");
 			throw new CategoriaRepetidaException("La categoria " + nombre +" ya esta registrada");
 		}
 		Categoria c = new Categoria(nombre);
