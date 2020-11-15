@@ -19,15 +19,14 @@ import datatypes.DtFecha;
 import datatypes.DtInstituto;
 
 public class ControladorAltaCurso implements IControladorAltaCurso{
-	private DtCurso curso;
-	private String instituto;
-	private String nombre;
-	private String descripcion;
-	private String duracion;
-	private int cantHoras;
-	private int creditos;
-	private DtFecha fechaR;
-	private String url;
+	private String instituto = null;
+	private String nombre = null;
+	private String descripcion = null;
+	private String duracion = null;
+	private int cantHoras = 0;
+	private int creditos = 0;
+	private DtFecha fechaR = null;
+	private String url = null;
 	private ArrayList<DtCursoBase> previas = new ArrayList<DtCursoBase>();
 	private ArrayList<Categoria> categorias = new ArrayList<Categoria>();
 	
@@ -35,25 +34,6 @@ public class ControladorAltaCurso implements IControladorAltaCurso{
 		super();
 	}
 	
-	public ControladorAltaCurso(DtCurso curso, String instituto, String nombre, String descripcion, String duracion,
-			int cantHoras, int creditos, DtFecha fechaR, ArrayList<Categoria> categorias) {
-		super();
-		this.curso = curso;
-		this.instituto = instituto;
-		this.nombre = nombre;
-		this.descripcion = descripcion;
-		this.duracion = duracion;
-		this.cantHoras = cantHoras;
-		this.creditos = creditos;
-		this.fechaR = fechaR;
-		this.categorias = categorias;
-	}
-	public DtCurso getCurso() {
-		return curso;
-	}
-	public void setCurso(DtCurso curso) {
-		this.curso = curso;
-	}
 	public String getInstituto() {
 		return instituto;
 	}
@@ -113,21 +93,13 @@ public class ControladorAltaCurso implements IControladorAltaCurso{
 		this.url = url;
 	}
 	
-	public ArrayList<Categoria> getCategorias() {
-		return categorias;
-	}
-
-	public void setCategorias(ArrayList<Categoria> categorias) {
-		this.categorias = categorias;
-	}
-	
 	public void cleanCategorias() {
 		this.categorias = new ArrayList<Categoria>();
 	}
 
 	public void agregarPrevia(String previa) {
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
-		if(mI.find(this.instituto).existsCurso(previa)) {
+		if(mI.find(getInstituto()).existsCurso(previa)) {
 			DtCursoBase dtcb = new DtCursoBase(mI.find(this.instituto).findCurso(previa).getNombre());
 			previas.add(dtcb);
 		}
@@ -164,7 +136,6 @@ public class ControladorAltaCurso implements IControladorAltaCurso{
 		try {
 			fechadate = getFechaR().DtFechaToDate();
 		} catch (ParseException e) {
-			e.printStackTrace();
 		}
 		
 		Curso curso = new Curso(getNombre(), getDescripcion(), getDuracion(), getCantHoras(), getCreditos(), fechadate, getUrl(), previascursos,  categorias);
@@ -184,7 +155,6 @@ public class ControladorAltaCurso implements IControladorAltaCurso{
 	@Override
 
 	public void cancelarAltaCurso() {
-		this.curso = null;
 		this.instituto = null;
 		this.nombre = null;
 		this.descripcion = null;
