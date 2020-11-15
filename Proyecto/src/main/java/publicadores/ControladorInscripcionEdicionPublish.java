@@ -30,7 +30,7 @@ public class ControladorInscripcionEdicionPublish {
 	private IControladorInscripcionEdicionCurso icon;
 	private WebServiceConfiguration configuracion;
 	private Endpoint endpoint;
-	private String mensaje;
+	private String mensaje = "vacio";
 	
 	public ControladorInscripcionEdicionPublish() {
 		fabrica = Fabrica.getInstancia();
@@ -56,38 +56,59 @@ public class ControladorInscripcionEdicionPublish {
 	@WebMethod
 	public DtInstituto[] listarInstitutos() throws SinInstitutos {
 		//return icon.listarInstitutos();
-		List<DtInstituto> institutos = icon.listarInstitutos();
-		System.out.print(institutos.size());
-		DtInstituto[] ret = new DtInstituto[institutos.size()];
-		int i = 0;
-        for(DtInstituto ins : institutos) {
-            ret[i]=ins;
-            i++;
-        }
+		List<DtInstituto> institutos;
+		DtInstituto[] ret = new DtInstituto[10];
+		try {
+			institutos = icon.listarInstitutos();
+			ret = new DtInstituto[institutos.size()];
+			int i = 0;
+	        for(DtInstituto ins : institutos) {
+	            ret[i]=ins;
+	            i++;
+	        }
+		} catch(SinInstitutos e) {
+			this.mensaje = e.getMessage();
+		}
         return ret;
 	}
 	
 	@WebMethod
 	public DtCursoBase[] seleccionarInstituto(String nomIns) throws CursoNoExiste {
 		//return icon.seleccionarInstituto(nomIns);
-		List<DtCursoBase> cursos = icon.seleccionarInstituto(nomIns);
-		int i=0;
-		DtCursoBase[] ret = new DtCursoBase[cursos.size()];
-		for(DtCursoBase c : cursos) {
-            ret[i]=c;
-            i++;
-        }
+		List<DtCursoBase> cursos;
+		DtCursoBase[] ret = new DtCursoBase[10];
+		try {
+			cursos = icon.seleccionarInstituto(nomIns);
+			int i=0;
+			ret = new DtCursoBase[cursos.size()];
+			for(DtCursoBase c : cursos) {
+	            ret[i]=c;
+	            i++;
+	        }
+		} catch (CursoNoExiste e) {
+			this.mensaje = e.getMessage();
+		}
 		return ret;
 	}
 	
 	@WebMethod
 	public DtEdicionBase seleccionarCurso(String nomCurso) throws EdicionVigenteNoExiste {
-		return icon.seleccionarCurso(nomCurso);
+		DtEdicionBase dteb = new DtEdicionBase();
+		try {
+			dteb = icon.seleccionarCurso(nomCurso);
+		} catch (EdicionVigenteNoExiste e) {
+			this.mensaje = e.getMessage();
+		}
+		return dteb;
 	}
 	
 	@WebMethod
 	public void registrarInscripcionEd(String nick, String correo, String nomCurso, DtFecha fecha) throws UsuarioNoExiste, UsuarioNoEstudiante {
-		icon.registrarInscripcionEd(nick, correo, nomCurso, fecha);
+		try {
+			icon.registrarInscripcionEd(nick, correo, nomCurso, fecha);
+		} catch (UsuarioNoExiste | UsuarioNoEstudiante e) {
+			this.mensaje = e.getMessage();
+		}
 	}
 	
 	@WebMethod
@@ -107,6 +128,11 @@ public class ControladorInscripcionEdicionPublish {
 	@WebMethod
 	public String getMensaje() {
 		return this.mensaje;
+	}
+	
+	@WebMethod
+	public void setMensaje(String m) {
+		this.mensaje = m;
 	}
 
 }

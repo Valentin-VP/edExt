@@ -27,6 +27,7 @@ public class ControladorSeleccionarEstudiantesPublish {
 	private IControladorSeleccionarEstudiantesParaUnaEdicionDeCurso icon;
 	private WebServiceConfiguration configuracion;
 	private Endpoint endpoint;
+	private String mensaje = "vacio";
 
 	public ControladorSeleccionarEstudiantesPublish() {
 		fabrica = Fabrica.getInstancia();
@@ -49,23 +50,34 @@ public class ControladorSeleccionarEstudiantesPublish {
         return endpoint;
 	}
 	
-	//LOS MÉTODOS QUE VAMOS A PUBLICAR
 	@WebMethod
 	public DtCursoBase[] listarCursosInstituto(String instituto) throws InstitutoInexistente, InstitutoSinCursos {
 		//return icon.listarCursosInstituto(instituto);
-		ArrayList<DtCursoBase> cursos = icon.listarCursosInstituto(instituto);
-		int i=0;
-		DtCursoBase[] ret = new DtCursoBase[cursos.size()];
-		for(DtCursoBase c : cursos) {
-            ret[i]=c;
-            i++;
-        }
+		ArrayList<DtCursoBase> cursos;
+		DtCursoBase[] ret = new DtCursoBase[10];
+		try {
+			cursos = icon.listarCursosInstituto(instituto);
+			int i=0;
+			ret = new DtCursoBase[cursos.size()];
+			for(DtCursoBase c : cursos) {
+	            ret[i]=c;
+	            i++;
+	        }
+		} catch (InstitutoInexistente | InstitutoSinCursos e) {
+			this.mensaje = e.getMessage();
+		}
 		return ret;
 	}
 	
 	@WebMethod
 	public DtEdicionCompleta seleccionarCurso(String nomCurso, String nick) throws EdicionVigenteNoExiste {
-		return icon.seleccionarCurso(nomCurso, nick);
+		DtEdicionCompleta dtec = new DtEdicionCompleta();
+		try {
+			dtec = icon.seleccionarCurso(nomCurso, nick);
+		} catch (EdicionVigenteNoExiste e) {
+			this.mensaje = e.getMessage();
+		}
+		return dtec;
 	}
 	
 	@WebMethod
@@ -101,16 +113,14 @@ public class ControladorSeleccionarEstudiantesPublish {
 		icon.limpiar();
 	}
 	
-	/*@WebMethod
-	public DtSocio[] obtenerInfoSociosPorClase (int idClase){
-		List<DtSocio> dtsocio = icon.obtenerInfoSociosPorClase(idClase);
-		int i = 0;
-        DtSocio[] ret = new DtSocio[dtsocio.size()];
-        for(DtSocio s : dtsocio) {
-            ret[i]=s;
-            i++;
-        }
-        return ret;
-	}*/
+	@WebMethod
+	public String getMensaje() {
+		return this.mensaje;
+	}
+	
+	@WebMethod
+	public void setMensaje(String m) {
+		this.mensaje = m;
+	}
 
 }

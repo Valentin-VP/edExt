@@ -42,14 +42,16 @@ public class InscripcionEdicionCurso extends HttpServlet {
     }
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		RequestDispatcher rd;
 		//Fabrica fabrica = Fabrica.getInstancia();
 		//IControladorInscripcionEdicionCurso icon = fabrica.getIControladorInscripcionEdicionCurso();
 		List<DtInstituto> institutos = new ArrayList<DtInstituto>();
 		try {
 			institutos = listarInstitutos();
 		} catch (RemoteException | ServiceException e) {
-			e.printStackTrace();
+			request.setAttribute("mensaje", error);
+			rd = request.getRequestDispatcher("/error.jsp");
+			rd.forward(request, response);
 		}
 		
 		//Ejemplo con Lista de Objetos JSON funcionando
@@ -96,8 +98,8 @@ public class InscripcionEdicionCurso extends HttpServlet {
 			ArrayList<DtCursoBase> cursos = new ArrayList<>();
 			try {
 				cursos = seleccionarInstituto(ins);
-			} catch (CursoNoExiste | ServiceException e) {
-				request.setAttribute("mensaje", e.getMessage());
+			} catch (RemoteException | ServiceException e) {
+				request.setAttribute("mensaje", error);
 				rd = request.getRequestDispatcher("/error.jsp");
 				rd.forward(request, response);
 			}
@@ -132,7 +134,7 @@ public class InscripcionEdicionCurso extends HttpServlet {
 			try {
 				dteb = seleccionarCurso(curso);
 			} catch (ServiceException | RemoteException e) {
-				request.setAttribute("mensaje", "No existe edicion vigente");
+				request.setAttribute("mensaje", error);
 				rd = request.getRequestDispatcher("/error.jsp");
 				rd.forward(request, response);
 			}
@@ -170,6 +172,11 @@ public class InscripcionEdicionCurso extends HttpServlet {
 		for (int i = 0; i < institutos.length; i++) {
 		    retorno.add(institutos[i]);
 		}
+		if (!port.getMensaje().equals("vacio")) {
+			error = port.getMensaje();
+			port.setMensaje("vacio");
+			throw new RemoteException();
+		}
 		return retorno;
 	}
 	
@@ -181,19 +188,36 @@ public class InscripcionEdicionCurso extends HttpServlet {
 		for (int i = 0; i < cursos.length; i++) {
 		    retorno.add(cursos[i]);
 		}
+		if (!port.getMensaje().equals("vacio")) {
+			error = port.getMensaje();
+			port.setMensaje("vacio");
+			throw new RemoteException();
+		}
 		return retorno;
 	}
 	
 	public DtEdicionBase seleccionarCurso(String nomCurso) throws ServiceException, RemoteException{
 		ControladorInscripcionEdicionPublishService cps = new ControladorInscripcionEdicionPublishServiceLocator();
 		ControladorInscripcionEdicionPublish port = cps.getControladorInscripcionEdicionPublishPort();
-		return port.seleccionarCurso(nomCurso);
+		DtEdicionBase dteb = new DtEdicionBase();
+		dteb = port.seleccionarCurso(nomCurso);
+		if (!port.getMensaje().equals("vacio")) {
+			error = port.getMensaje();
+			port.setMensaje("vacio");
+			throw new RemoteException();
+		}
+		return dteb;
 	}
 	
 	public void registrarInscripcionEd(String nick, String correo, String nomCurso, DtFecha fecha) throws ServiceException, RemoteException{
 		ControladorInscripcionEdicionPublishService cps = new ControladorInscripcionEdicionPublishServiceLocator();
 		ControladorInscripcionEdicionPublish port = cps.getControladorInscripcionEdicionPublishPort();
 		port.registrarInscripcionEd(nick, correo, nomCurso, fecha);
+		if (!port.getMensaje().equals("vacio")) {
+			error = port.getMensaje();
+			port.setMensaje("vacio");
+			throw new RemoteException();
+		}
 	}
 	
 	public void cancelar() throws ServiceException, RemoteException {
@@ -206,8 +230,9 @@ public class InscripcionEdicionCurso extends HttpServlet {
 		ControladorInscripcionEdicionPublishService cps = new ControladorInscripcionEdicionPublishServiceLocator();
 		ControladorInscripcionEdicionPublish port = cps.getControladorInscripcionEdicionPublishPort();
 		port.confirmar();
-		if (port.getMensaje() != null) {
+		if (!port.getMensaje().equals("vacio")) {
 			error = port.getMensaje();
+			port.setMensaje("vacio");
 			throw new RemoteException();
 		}
 		//System.out.print("El mensaje es: " + port.getMensaje());

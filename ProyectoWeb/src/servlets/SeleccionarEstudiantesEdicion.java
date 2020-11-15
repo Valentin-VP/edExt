@@ -29,7 +29,8 @@ import publicadores.ControladorSeleccionarEstudiantesPublishServiceLocator;
 @WebServlet("/SeleccionarEstudiantesEdicion")
 public class SeleccionarEstudiantesEdicion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+	private String error;
+	
     public SeleccionarEstudiantesEdicion() {
         super();
     }
@@ -86,8 +87,8 @@ public class SeleccionarEstudiantesEdicion extends HttpServlet {
 					sesion.setAttribute("cursosSeleccionarEstudiantes", cursos);
 					sesion.setAttribute("opSeleccionarEstudiantes", "1");
 					response.sendRedirect("seleccionarEstudiantesEdicion.jsp");
-				} catch (InstitutoInexistente | InstitutoSinCursos e) {
-					request.setAttribute("mensaje", e.getMessage());
+				} catch (ServiceException | RemoteException e) {
+					request.setAttribute("mensaje", error);
 					rd = request.getRequestDispatcher("/error.jsp");
 					rd.forward(request, response);
 				} catch (Exception e) {
@@ -108,8 +109,8 @@ public class SeleccionarEstudiantesEdicion extends HttpServlet {
 					sesion.setAttribute("edicionCompletaSeleccionarEstudiantes", dtec);
 					sesion.setAttribute("opSeleccionarEstudiantes", "2");
 					response.sendRedirect("seleccionarEstudiantesEdicion.jsp");
-				} catch (EdicionVigenteNoExiste e) {
-					request.setAttribute("mensaje", e.getMessage());
+				} catch (ServiceException | RemoteException e) {
+					request.setAttribute("mensaje", error);
 					rd = request.getRequestDispatcher("/error.jsp");
 					rd.forward(request, response);
 				} catch (Exception e) {
@@ -174,13 +175,25 @@ public class SeleccionarEstudiantesEdicion extends HttpServlet {
 		for (int i = 0; i < cursos.length; i++) {
 		    retorno.add(cursos[i]);
 		}
+		if (!port.getMensaje().equals("vacio")) {
+			error = port.getMensaje();
+			port.setMensaje("vacio");
+			throw new RemoteException();
+		}
 		return retorno;
 	}
 	
 	public DtEdicionCompleta seleccionarCurso(String nomCurso, String nick) throws ServiceException, RemoteException{
 		ControladorSeleccionarEstudiantesPublishService cps = new ControladorSeleccionarEstudiantesPublishServiceLocator();
 		ControladorSeleccionarEstudiantesPublish port = cps.getControladorSeleccionarEstudiantesPublishPort();
-		return port.seleccionarCurso(nomCurso, nick);
+		DtEdicionCompleta dtec = new DtEdicionCompleta();
+		dtec = port.seleccionarCurso(nomCurso, nick);
+		if (!port.getMensaje().equals("vacio")) {
+			error = port.getMensaje();
+			port.setMensaje("vacio");
+			throw new RemoteException();
+		}
+		return dtec;
 	}
 	
 	public List<DtInscripcionEd> ordenarInscripciones(String ordenarpor) throws ServiceException, RemoteException {

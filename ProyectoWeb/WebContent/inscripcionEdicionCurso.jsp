@@ -5,17 +5,17 @@
 <head>
 <meta charset="ISO-8859-1">
 <%@include file = "/header.jsp" %>
-<title>Insert title here</title>
+<title>Inscripcion a Edicion</title>
 </head>
 <body>
 <form action="InscripcionEdicionCurso" method="post">
-   <div class="form-row">
+   <div class="form-row" id="divins">
     <div class="col-md-6 mb-3">
       <label for="validationDefault04">Institutos</label>
-      <select class="custom-select" id="selectInstitutos" name="selectInstitutos">
+      <select class="custom-select" id="selectInstitutos" name="selectInstitutos"> <!-- onChange="cargarSinBoton();"> -->
         <option selected disabled value="">Choose...</option>
       </select>
-      <button class="btn btn-secondary" type="button" id="boton1" onclick="cargarInstitutos();">Mostrar institutos</button>
+       <button class="btn btn-secondary" type="button" id="boton1" onclick="cargarInstitutos();">Mostrar institutos</button>
     </div>
   </div>
   <div class="form-row">
@@ -27,6 +27,7 @@
       <button class="btn btn-secondary" type="button" id="boton2" onclick="cargarCursos();">Mostrar cursos</button>
     </div>
   </div>
+  <h3 id="result"></h3>
   <button class="btn btn-primary" type="submit">Inscribirse</button>
 </form>
 	<!-- <h3 id="result"></h3> -->
@@ -61,7 +62,85 @@
 			});
 	}
 	*/
-	
+/*
+	// Cargar institutos sin boton
+	$(document).ready(function() {             // When HTML DOM "click" event is invoked on element with ID "somebutton", execute the following function...
+		$('#selectInstitutos').change(function() {    
+			$.get("InscripcionEdicionCurso", function(responseJson) {                 // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
+		        var $select = $("#selectInstitutos");                         // Locate HTML DOM element with ID "someselect".
+		        //$select.find("option").remove();                          // Find all child elements with tag name "option" and remove them (just to prevent duplicate options when button is pressed again).
+		         //$('#selectInstitutos').append(`<option selected disabled value="${'Elige un instituto'}"> ${'Elige un instituto'} </option>`);
+		        $.each(responseJson, function(value, result) {               // Iterate over the JSON object.
+		        	$("<option>").text(result.nombre).appendTo($select); 
+		        	//$("<option>").val(key).text(value).appendTo($select); // Create HTML <option> element, set its value with currently iterated key and its text content with currently iterated item and finally append it to the <select>.
+		        });
+		    });
+		});
+	});
+	*/
+	/*
+	// Cargar cursos sin boton
+	function cargarSinBoton() {
+		$(document).ready(function() { 
+			$('#selectInstitutos').change(function() { 
+				var instituto=$("#selectInstitutos :selected").text();
+			 	//var instituto=$("#selectInstitutos :selected").val(); // obtiene el valor del select seleccionado
+				//var instituto=$('#inputInstituto').val(); // creo variable con el valor del input usando su id
+				$.ajax({ // Request Asincronica AJAX
+					url: 'InscripcionEdicionCurso', // Serverlet
+					method: 'POST',					// Metodo
+					data: {institutoselect : instituto}, // los datos que voy a mandar, nombre del atributo : el valor
+					success: function(resultText){ // si sale bien el request
+						var $select = $("#selectCursos");                         // Locate HTML DOM element with ID "someselect".
+				        //$select.find("option").remove();                          // Find all child elements with tag name "option" and remove them (just to prevent duplicate options when button is pressed again).
+				        //$('#selectCursos').append(`<option value="${optionValue}"> ${optionText} </option>`); Crear un option personalizado
+				        //$('#selectCursos').append(`<option selected disabled value="${'Elige un curso'}"> ${'Elige un curso'} </option>`);
+				        $.each(resultText, function(value, result) {               // Iterate over the JSON object.
+				        	$("<option>").text(result).appendTo($select); 
+				        	//$("<option>").val(key).text(value).appendTo($select); // Create HTML <option> element, set its value with currently iterated key and its text content with currently iterated item and finally append it to the <select>.
+				        });
+						//$('#result').html(resultText); // muestro los datos en el h3 usando su id para identificarlo
+					},
+					error: function(jqXHR, exception){ // si da error el request
+					console.log('Error occured!!'); // imprimo en la consola del navegador
+					}
+				});
+			});
+		});
+	});
+	*/
+	/*
+	$(document).ready(function() {
+		//$('#selectInstitutos').load(function(){
+			$.get("InscripcionEdicionCurso", function(responseJson) {                 // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
+		        var $select = $("#selectInstitutos");                         // Locate HTML DOM element with ID "someselect".
+		        //$select.find("option").remove();                          // Find all child elements with tag name "option" and remove them (just to prevent duplicate options when button is pressed again).
+		         //$('#selectInstitutos').append(`<option selected disabled value="${'Elige un instituto'}"> ${'Elige un instituto'} </option>`);
+		        $.each(responseJson, function(value, result) {               // Iterate over the JSON object.
+		        	$("<option>").text(result.nombre).appendTo($select); 
+		        	//$("<option>").val(key).text(value).appendTo($select); // Create HTML <option> element, set its value with currently iterated key and its text content with currently iterated item and finally append it to the <select>.
+		        });
+		    });
+		//});
+	});
+	*/
+	/*
+	$(document).ready(function() {
+		$( "#result" ).text( "The DOM is now loaded and can be manipulated." );
+		$(document).on("click", "#boton1", function() { 
+		//$('#selectInstitutos').focus(function(){
+			$.get("InscripcionEdicionCurso", function(responseJson) {                 // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
+		        var $select = $("#selectInstitutos");                         // Locate HTML DOM element with ID "someselect".
+		        //$select.find("option").remove();                          // Find all child elements with tag name "option" and remove them (just to prevent duplicate options when button is pressed again).
+		         //$('#selectInstitutos').append(`<option selected disabled value="${'Elige un instituto'}"> ${'Elige un instituto'} </option>`);
+		        $.each(responseJson, function(value, result) {               // Iterate over the JSON object.
+		        	$("<option>").text(result.nombre).appendTo($select); 
+		        	//$("<option>").val(key).text(value).appendTo($select); // Create HTML <option> element, set its value with currently iterated key and its text content with currently iterated item and finally append it to the <select>.
+		        });
+		    });
+		});
+	});
+	*/
 	function cargarInstitutos() {
 		$(document).on("click", "#boton1", function() {               // When HTML DOM "click" event is invoked on element with ID "somebutton", execute the following function...
 		    $.get("InscripcionEdicionCurso", function(responseJson) {                 // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
