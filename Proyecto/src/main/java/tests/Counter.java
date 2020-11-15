@@ -5,6 +5,7 @@ public class Counter{
 	private Integer id = 0;
 	
 	public Counter() {
+		super();
 		this.id=value++;
 	}
 	

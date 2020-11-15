@@ -19,9 +19,7 @@ public class AltaCategoriaTest {
 	static Fabrica fabrica = null;
 	static IControladorAltaCategoria icon = null; 
 	String nombrec1 = "";
-	Integer id1 = 0;
 	String nombrec2 = "";
-	Integer id2 = 0;
 	Categoria categoria1 = null;
 	Categoria categoria2 = null;
 	static ManejadorCategoria mC = null;
