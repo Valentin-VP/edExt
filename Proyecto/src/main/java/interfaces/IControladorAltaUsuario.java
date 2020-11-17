@@ -6,6 +6,7 @@ import java.util.List;
 
 import datatypes.DtFecha;
 import datatypes.DtInstituto;
+import datatypes.DtUsuario;
 import excepciones.SinInstitutos;
 import excepciones.UsuarioRepetido;
 import logica.Instituto;
@@ -26,5 +27,13 @@ public interface IControladorAltaUsuario {
 	public ArrayList<DtInstituto> listarInstitutos() throws SinInstitutos;
 	
 	public String codificarPass(String contrasenia) throws NoSuchAlgorithmException;
+
+	DtUsuario getUsuario();
+
+	void setUsuario(DtUsuario usuario);
+
+	Instituto getInstituto();
+
+	void setInstituto(Instituto instituto);
 	
 }

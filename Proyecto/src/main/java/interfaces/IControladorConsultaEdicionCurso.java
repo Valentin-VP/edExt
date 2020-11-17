@@ -34,4 +34,12 @@ public interface IControladorConsultaEdicionCurso {
 	
 	public String getNombreCurso(String CursoInstituto);
 
+	String getCategoria();
+
+	void setCategoria(String categoria);
+
+	void setCurso(String curso);
+
+	void setInstituto(String instituto);
+
 }

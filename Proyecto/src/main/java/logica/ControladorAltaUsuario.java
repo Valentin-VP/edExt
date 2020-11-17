@@ -62,7 +62,6 @@ public class ControladorAltaUsuario implements IControladorAltaUsuario {
 	            md = MessageDigest.getInstance("SHA-512");
 	            mb = md.digest(contrasenia.getBytes());
 	        } catch  (NoSuchAlgorithmException e) {
-				e.printStackTrace();
 	        }
 	        StringBuffer sb = new StringBuffer();
 	        for(byte b: mb) {
@@ -79,14 +78,12 @@ public class ControladorAltaUsuario implements IControladorAltaUsuario {
 		try {
 			fechadate = usuario.getFechaNac().DtFechaToDate();
 		} catch (ParseException e) {
-			e.printStackTrace();
 		}
 		String laPass = new String();
 		try {
 			laPass = codificarPass(this.usuario.getPassword());
 			this.usuario.setPassword(laPass);
 		} catch (NoSuchAlgorithmException e){
-			e.printStackTrace();
 		}
 
 		if (esDocente) {	
@@ -97,22 +94,27 @@ public class ControladorAltaUsuario implements IControladorAltaUsuario {
 		mU.agregarUsuario(user);
 	}
 	
+	@Override
 	public DtUsuario getUsuario() {
 		return usuario;
 	}
 	
+	@Override
 	public void setUsuario(DtUsuario usuario) {
 		this.usuario = usuario;
 	}
 	
+	@Override
 	public Instituto getInstituto() {
 		return instituto;
 	}
 	
+	@Override
 	public void setInstituto(Instituto instituto) {
 		this.instituto = instituto;
 	}
 	
+	@Override
 	public List<Instituto> getInstitutos() {
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 		return mI.getInstitutos();

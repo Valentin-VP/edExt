@@ -110,26 +110,32 @@ public class ControladorConsultaEdicionCurso implements IControladorConsultaEdic
 		return edition;
 	}
 	
+	@Override
 	public String getEdicion() {
 		return edicion;
 	}
 	
+	@Override
 	public void setEdicion(String edicion) {
 		this.edicion = edicion;
 	}
 	
+	@Override
 	public String getInstituto() {
 		return instituto;
 	}
 	
+	@Override
 	public void setInstituto(String instituto) {
 		this.instituto = instituto;
 	}
 	
+	@Override
 	public String getCurso() {
 		return curso;
 	}
 	
+	@Override
 	public void setCurso(String curso) {
 		this.curso = curso;
 	}
@@ -144,6 +150,7 @@ public class ControladorConsultaEdicionCurso implements IControladorConsultaEdic
 		DtEdicion dte = new DtEdicion(e.getNombre(), dtfechaI, dtfechaF, e.isTieneCupos(), e.getCupos(), dtfechaPub);
 		return dte;
 	}
+	
 	@Override
 	public ArrayList<String> getDocentes(String edicion) {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
@@ -159,9 +166,13 @@ public class ControladorConsultaEdicionCurso implements IControladorConsultaEdic
 		}
 		return docentes;
 	}
+	
+	@Override
 	public String getCategoria() {
 		return categoria;
 	}
+	
+	@Override
 	public void setCategoria(String categoria) {
 		this.categoria = categoria;
 	}
