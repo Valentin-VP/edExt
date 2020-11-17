@@ -13,8 +13,10 @@ import interfaces.Fabrica;
 import interfaces.IControladorAltaUsuario;
 import logica.Usuario;
 import logica.ManejadorUsuario;
+import logica.ManejadorInstituto;
 import datatypes.DtFecha;
 import excepciones.UsuarioRepetido;
+import excepciones.SinInstitutos;
 
 public class AltaUsuarioTest {
 	static Fabrica fabrica;
@@ -22,60 +24,80 @@ public class AltaUsuarioTest {
 	Integer id1 = 0;
 	Integer id2 = 0;
 	Integer id3 = 0;
-	Usuario usuario1;
-	Usuario usuario2;
-	String nick1;
-	String nick2;
-	String correo1;
-	String correo2;
-	String nombre1;
-	String nombre2;
-	String apellido1;
-	String apellido2;
-	String pass1;
-	String pass2;
-	DtFecha fecha1;
-	DtFecha fecha2;
-	boolean esDocente1;
-	boolean esDocente2;
+	Usuario usuario1 = null;
+	Usuario usuario2 = null;
+	String nick1 = "";
+	String nick2 = "";
+	String correo1 = "";
+	String correo2 = "";
+	String nombre1 = "";
+	String nombre2 = "";
+	String apellido1 = "";
+	String apellido2 = "";
+	String pass1 = "";
+	String pass2 = "";
+	DtFecha fecha1 = null;
+	DtFecha fecha2 = null;
+	boolean esDocente1 = false;
+	boolean esDocente2 = false;
 	static ManejadorUsuario mU;
+	static ManejadorInstituto mI;
 	
 	@BeforeClass
 	public static void preparacionTests() {
 		fabrica = Fabrica.getInstancia();
 		icon = fabrica.getIControladorAltaUsuario();
 		mU = ManejadorUsuario.getInstancia();
+		mI = ManejadorInstituto.getInstancia();
 	}
 	
 	@Before
 	public void inicializarTest() {
-		nick1 = "ObiWK" + this.id1.toString();
-		nick2 = "DarthM" + this.id2.toString();
-		correo1 = "ObiWanKenobi@jedis.republic" + this.id1.toString();
-		correo2 = "DarthMaul@siths.empire" + this.id2.toString();
-		nombre1 = "ObiWan" + this.id1.toString();
-		nombre2 = "Darth" + this.id2.toString();
-		apellido1 = "Kenobi" + this.id1.toString();
-		apellido2 = "Maul" + this.id2.toString();
-		pass1 = "ObiWan" + this.id1.toString();
-		pass2 = "DarthMaul" + this.id2.toString();
-		fecha1 = new DtFecha(id1, id2, id3);
-		fecha2 = new DtFecha(id3, id2, id1);
-		esDocente1 = false;
-		esDocente2 = true;
-		id1++;
-		id2++;
-		id3++;
+		Counter contador = new Counter();
+		this.nick1 = "ObiWK" + contador.getValue();
+		this.nick2 = "DarthM" + contador.getValue();
+		this.correo1 = "ObiWanKenobi@jedis.republic" + contador.getValue();
+		this.correo2 = "DarthMaul@siths.empire" + contador.getValue();
+		this.nombre1 = "ObiWan" + contador.getValue();
+		this.nombre2 = "Darth" + contador.getValue();
+		this.apellido1 = "Kenobi" + contador.getValue();
+		this.apellido2 = "Maul" + contador.getValue();
+		this.pass1 = "ObiWan" + contador.getValue();
+		this.pass2 = "DarthMaul" + contador.getValue();
+		this.fecha1 = new DtFecha(30, 11, 1999);
+		this.fecha2 = new DtFecha(25, 12, 1998);
+		this.esDocente1 = false;
+		this.esDocente2 = true;
 	}
 	
 	@Test
-	public void UsuariosConMismosDatos() throws UsuarioRepetido, NoSuchAlgorithmException {
+	public void test1_UsuariosConMismosDatos() throws UsuarioRepetido, NoSuchAlgorithmException {
 		icon.altaUsuario(nick1, correo1, nombre1, apellido1, fecha1, pass1);
 		icon.confirmarAltaUsuario(esDocente1);
 		icon.altaUsuario(nick2, correo2, nombre2, apellido2, fecha2, pass2);
-		icon.confirmarAltaUsuario(esDocente1);
+		icon.confirmarAltaUsuario(esDocente2);
 		usuario1 = mU.findUsuario(nick1);
 		usuario2 = mU.findUsuario(nick2);
 		assertNotSame(usuario1, usuario2);
+	}
+	
+	@Test(expected = UsuarioRepetido.class)
+	public void test2_UsuarioRepetido() {
+		//crear un usuario y ver que no lo puedo crear devuelta
+	}
+	
+	@Test
+	public void test3_ListarInstitutos() {
+		//listar los institutos que hay
+	}
+	
+	@Test(expected = SinInstitutos.class)
+	public void test4_NoHayInstitutosParaListar() {
+		//ver que no hay institutos para listar
+	}
+	
+	@Test
+	public void test5_ObtenerInstitutos() {
+		//traer los institutos que hay en la base de datos
 	}
 }
