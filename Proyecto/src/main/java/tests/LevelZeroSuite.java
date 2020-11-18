@@ -1,16 +1,23 @@
 package tests;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import datatypes.DtCursoBase;
 import datatypes.DtInstituto;
+import datatypes.DtProgramaBase;
 import excepciones.SinCategorias;
+import excepciones.SinCursos;
 import excepciones.SinInstitutos;
+import excepciones.SinProgramas;
 import interfaces.Fabrica;
+import interfaces.IControladorAgregarCursoProgFormacion;
 import interfaces.IControladorAltaUsuario;
 import interfaces.IControladorConsultaCurso;
+import interfaces.IControladorConsultaPrograma;
 import interfaces.IControladorInscripcionEdicionCurso;
 import interfaces.IControladorListarAceptadosAUnaEdicionDeCurso;
 
@@ -20,6 +27,8 @@ public class LevelZeroSuite {
 	static IControladorConsultaCurso iconConsultaCurso;
 	static IControladorInscripcionEdicionCurso iconInscripcionEdicion;
 	static IControladorListarAceptadosAUnaEdicionDeCurso iconListarAceptados;
+	static IControladorAgregarCursoProgFormacion iconAgregarCursoProg; 
+	static IControladorConsultaPrograma iconConsultaPrograma; 
 	
 	@BeforeClass
 	public static void preparacionTests() {
@@ -28,6 +37,8 @@ public class LevelZeroSuite {
 		iconConsultaCurso = fabrica.getIControladorConsultaCurso();
 		iconInscripcionEdicion = fabrica.getIControladorInscripcionEdicionCurso();
 		iconListarAceptados = fabrica.getIControladorListarAceptadosAUnaEdicionDeCurso();
+		iconAgregarCursoProg = fabrica.getIControladorAgregarCursoAPF();
+		iconConsultaPrograma = fabrica.getIControladorConsultaPrograma();
 	}
 	
 	@Test (expected = SinInstitutos.class)
@@ -53,5 +64,21 @@ public class LevelZeroSuite {
 	@Test (expected = SinInstitutos.class)
 	public void test01_listarInstitutoSinInstitutos() throws SinInstitutos {
 		ArrayList<DtInstituto> instNoExiste = iconListarAceptados.listarInstitutos();
+	}
+	
+	@Test (expected = SinProgramas.class)
+	public void test01_listarProgramasSinProgACPF() throws SinProgramas {
+		List<DtProgramaBase> progNoExiste = iconAgregarCursoProg.getDtPFs();
+	}
+	
+	@Test(expected = SinCursos.class)
+	public void test03_listarCursosSinCursos() throws SinCursos  {
+
+		List<DtCursoBase> sincursos = iconAgregarCursoProg.getDtCurso();
+	}
+	
+	@Test (expected = SinProgramas.class)
+	public void test01_listarProgramasSinProgConsulta() throws SinProgramas {
+		List<DtProgramaBase> progNoExiste = iconConsultaPrograma.listarProgramas();
 	}
 }

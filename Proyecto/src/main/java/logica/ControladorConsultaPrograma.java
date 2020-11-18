@@ -22,7 +22,7 @@ public class ControladorConsultaPrograma implements interfaces.IControladorConsu
 	public ControladorConsultaPrograma() {
 		super();
 	}
-	public String getPrograma() {
+/*public String getPrograma() {
 		return programa;
 	}
 	public void setPrograma(String programa) {
@@ -33,7 +33,7 @@ public class ControladorConsultaPrograma implements interfaces.IControladorConsu
 	}
 	public void setCurso(String curso) {
 		this.curso = curso;
-	}
+	}*/
 	@Override
 	public ArrayList<DtProgramaBase> listarProgramas() throws SinProgramas {
 		ManejadorProgFormacion mPF = ManejadorProgFormacion.getInstancia();
@@ -84,7 +84,6 @@ public class ControladorConsultaPrograma implements interfaces.IControladorConsu
 			fF = fechaFin.DtFechaToDate();
 			fA = fechaAlta.DtFechaToDate();
 		} catch (ParseException e) {
-			e.printStackTrace();
 		}
 		if(!mPF.find(nombre).getCursos().isEmpty()) {
 			for(Curso c: mPF.find(nombre).getCursos()) {
@@ -124,9 +123,5 @@ public class ControladorConsultaPrograma implements interfaces.IControladorConsu
 		return this.cursos;		
 	}
 
-	@Override
-	public DtCurso seleccionarCurso(String nombre) {
-		
-		return null;
-	}
+
 }

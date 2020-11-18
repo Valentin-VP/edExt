@@ -15,5 +15,5 @@ public interface IControladorConsultaPrograma {
 	
 	public DtPrograma seleccionarPrograma(String nombre)  throws ProgramaSinCursos, ProgramaInexistente;
 	
-	public DtCurso seleccionarCurso(String nombre);
+	//public DtCurso seleccionarCurso(String nombre);
 }
