@@ -80,6 +80,7 @@ public class Docente extends Usuario {
 		return null;
 	}
 	
+	/*
 	// Para obtener las ediciones vigentes que dicta el docente
 	public List<DtEdicionBase> getDtEdicionesVigentes() {
 		LocalDate date = LocalDate.now();
@@ -92,7 +93,7 @@ public class Docente extends Usuario {
 		}
 		return edicionesvigentes;
 	}
-	
+	*/
 	public boolean fechaValidaInicio(DtFecha fecha,LocalDate date) {
 		if(fecha.getAnio().intValue() > date.getYear()) {
 			return false;

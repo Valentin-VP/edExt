@@ -10,6 +10,7 @@ import java.util.List;
 import datatypes.DtEdicion;
 import datatypes.DtPrograma;
 import datatypes.DtUsuario;
+import datatypes.EstadoInscripcion;
 import excepciones.UsuarioNoExiste;
 import interfaces.IControladorConsultaUsuario;
 
@@ -59,7 +60,7 @@ public class ControladorConsultaUsuario implements IControladorConsultaUsuario {
 			}
 		} else {
 			for(InscripcionEd ied:((Estudiante) user).getInscripcionesEd()) {
-				if(ied.getEstado().equals("Inscripto") || ied.getEstado().equals("Aceptada")) {
+				if(ied.getEstado().equals(EstadoInscripcion.Inscripto) || ied.getEstado().equals(EstadoInscripcion.Aceptada)) {
 					DtEdicion edi = ied.getEdicion().getDtEdicion();
 					ediciones.add(edi);
 				}	

@@ -43,8 +43,8 @@ public class InscripcionEdicionTest {
 	static ManejadorCategoria mCat;
 	String instituto1 = "";
 	String instituto2 = "";
-	Instituto ins1;
-	Instituto ins2;
+	static Instituto ins1;
+	static Instituto ins2;
 	String categoria1 = "";
 	String categoria2 = "";
 	String estudiante1 = "";
@@ -57,8 +57,8 @@ public class InscripcionEdicionTest {
 	Curso c2;
 	String edicion1 = "";
 	String edicion2 = "";
-	Edicion ed1;
-	Edicion ed2;
+	static Edicion ed1;
+	static Edicion ed2;
 	DtFecha factual;
 	//InscripcionEd ied1 = null;
 	//InscripcionEd ied2 = null;
@@ -123,7 +123,7 @@ public class InscripcionEdicionTest {
 		Instituto i2 = new Instituto(this.instituto2);
 		this.ins1 = i;
 		this.ins2 = i2;
-		mI.agregarInstituto(i); // Hasta aca llega
+		mI.agregarInstituto(i);
 		mI.agregarInstituto(i2);
 		
 		// Fecha realizacion random
@@ -158,6 +158,7 @@ public class InscripcionEdicionTest {
 		icon.seleccionarInstituto(i.getNombre());
 	}
 	
+	@SuppressWarnings("static-access")
 	@Test (expected = EdicionVigenteNoExiste.class)
 	public void test3_seleccionarCurso() throws EdicionVigenteNoExiste, ParseException{
 		// FechaI random
@@ -201,6 +202,7 @@ public class InscripcionEdicionTest {
 		icon.seleccionarCurso(c.getNombre());
 	}
 	
+	@SuppressWarnings("static-access")
 	@Test
 	public void test4_registrarInscripcionEd() throws UsuarioNoExiste, UsuarioNoEstudiante, ParseException {
 		// Fecha nacimiento random
@@ -222,8 +224,9 @@ public class InscripcionEdicionTest {
 		
 		// Docente(String nick, String nombre, String apellido, String correo, Date fechaNac, Instituto instituto, String password)
 		Docente doc1 = new Docente(this.docente1,"doc1","nose","doc1@gmail.com",fnac.DtFechaToDate(),this.ins1,"23472364asdwqe213");
-		Docente doc2 = new Docente(this.docente2,"doc2","nose","doc2@gmail.com",fnac.DtFechaToDate(),this.ins1,"lkkhgñojoijodwqe213");
+		Docente doc2 = new Docente(this.docente2,"doc2","nose","doc2@gmail.com",fnac.DtFechaToDate(),this.ins2,"lkkhgñojoijodwqe213");
 		((Docente) doc1).addDictaEdicion(this.ed1);
+		((Docente) doc1).addDictaEdicion(this.ed2);
 		
 		mU.agregarUsuario(est1);
 		mU.agregarUsuario(est2);

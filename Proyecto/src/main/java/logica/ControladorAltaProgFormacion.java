@@ -41,6 +41,9 @@ public class ControladorAltaProgFormacion implements IControladorAltaProgFormaci
 	
 	@Override
 	public void confirmar() {
+		System.out.print("Dia de inicio " + this.fechaI.getDia().intValue());
+		System.out.print("Mes de inicio " + this.fechaI.getMes().intValue());
+		System.out.print("Anio de inicio " + this.fechaI.getAnio());
 		LocalDate fechaI = LocalDate.of(this.fechaI.getAnio(), this.fechaI.getMes(), this.fechaI.getDia());
 		LocalDate fechaF = LocalDate.of(this.fechaF.getAnio(), this.fechaF.getMes(), this.fechaF.getDia());
 		//LocalDate pruebaFecha = LocalDate.parse("2018-10-30");
