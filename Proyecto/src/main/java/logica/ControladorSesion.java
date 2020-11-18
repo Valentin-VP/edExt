@@ -8,6 +8,7 @@ import interfaces.IControladorSesion;
 public class ControladorSesion implements IControladorSesion{
 	private String nick = "";
 	private String correo = "";
+	
 	@Override
 	public boolean existeUsuario(String id) {
 		this.nick = "";
@@ -29,6 +30,7 @@ public class ControladorSesion implements IControladorSesion{
 		return existe;
 	}
 	
+	@Override
 	public String identificarUsuario(String id, String hashpass) {
 		String tipo = ""; //"estudiante" "docente"
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
@@ -78,7 +80,6 @@ public class ControladorSesion implements IControladorSesion{
 	            md = MessageDigest.getInstance("SHA-512");
 	            mb = md.digest(contrasenia.getBytes());
 	        } catch  (NoSuchAlgorithmException e) {
-				e.printStackTrace();
 	        }
 	        StringBuffer sb = new StringBuffer();
 	        for(byte b: mb) {
