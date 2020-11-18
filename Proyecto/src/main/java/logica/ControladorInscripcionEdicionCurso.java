@@ -32,24 +32,12 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 		super();
 	}
 
-	public String getNomIns() {
-		return nomIns;
-	}
-
 	public void setNomIns(String nomIns) {
 		this.nomIns = nomIns;
 	}
 
-	public String getNomCurso() {
-		return nomCurso;
-	}
-
 	public void setNomCurso(String nomCurso) {
 		this.nomCurso = nomCurso;
-	}
-
-	public String getCorreo() {
-		return correo;
 	}
 
 	public void setCorreo(String correo) {

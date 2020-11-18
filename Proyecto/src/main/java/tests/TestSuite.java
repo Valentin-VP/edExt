@@ -6,5 +6,5 @@ import org.junit.runners.Suite.SuiteClasses;
 
 // Incluir aqui los tests independientes del estado de la DB
 @RunWith(Suite.class)
-@SuiteClasses({ AltaCategoriaTest.class})
+@SuiteClasses({ AltaCategoriaTest.class,  InscripcionEdicionTest.class, SeleccionarEstudiantesTest.class})
 public class TestSuite {}
