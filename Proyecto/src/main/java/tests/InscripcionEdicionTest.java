@@ -4,9 +4,11 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import datatypes.DtFecha;
+import datatypes.DtInstituto;
 import excepciones.CursoNoExiste;
 import excepciones.EdicionVigenteNoExiste;
 import excepciones.InscripcionEdRepetido;
+import excepciones.SinInstitutos;
 import excepciones.UsuarioNoEstudiante;
 import excepciones.UsuarioNoExiste;
 import interfaces.Fabrica;
@@ -114,6 +116,11 @@ public class InscripcionEdicionTest {
 		System.out.println(this.edicion1);
 		this.edicion2 = "edicion_jedis" + counter.getValue();
 		System.out.println(this.edicion2);
+	}
+	
+	@Test (expected = SinInstitutos.class)
+	public void test1_listarInstitutos() throws SinInstitutos {
+		icon.listarInstitutos();
 	}
 	
 	@SuppressWarnings("static-access")

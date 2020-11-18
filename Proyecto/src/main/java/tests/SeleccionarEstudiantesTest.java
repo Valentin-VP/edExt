@@ -164,7 +164,6 @@ public class SeleccionarEstudiantesTest {
 				mC.agregarCurso(cur2);
 				
 		icon.listarCursosInstituto(i.getNombre());
-		//assertNotNull(cursos);
 	}
 	
 	@Test
@@ -194,7 +193,7 @@ public class SeleccionarEstudiantesTest {
 				int diaf = (int)(Math.random()*(maxdiaf-mindiaf+1)+mindiaf);
 				
 				DtFecha fechaI = new DtFecha(diai,mesi,yeari);
-				DtFecha fechaF = new DtFecha(diaf,mesf,yearf);
+				DtFecha fechaF = new DtFecha(diaf,mesf,2019);
 				DtFecha fechaIv = new DtFecha(15,10,2015);
 				DtFecha fechaFv = new DtFecha(15,10,2022);
 				Edicion e1 = new Edicion(this.edicion1, fechaIv.DtFechaToDate(), fechaFv.DtFechaToDate(), false, 0, factual.DtFechaToDate());
@@ -242,23 +241,31 @@ public class SeleccionarEstudiantesTest {
 						throw new InscripcionEdRepetido("Ya existe una inscripcion a la edicion");
 					} else {
 						EstadoInscripcion estado = EstadoInscripcion.Inscripto;
+						EstadoInscripcion estado2 = EstadoInscripcion.Rechazada;
 						InscripcionEd ie=new InscripcionEd(factual.DtFechaToDate(),estado,e1,(Estudiante) est1);
 						((Estudiante) est1).agregarInscripcionEd(ie);
 						e1.addInscripcion(ie);
 						this.es1 = est1;
+						
+						// Inscripcion en edicionNoVigente
+						InscripcionEd ie2 = new InscripcionEd(factual.DtFechaToDate(),estado2,e2,(Estudiante) est1);
+						e2.addInscripcion(ie2);
 						
 						Conexion conexion = Conexion.getInstancia();
 						EntityManager em = conexion.getEntityManager();
 						em.getTransaction().begin();
 						
 						em.persist(e1);
+						em.persist(e2);
 						em.persist(est1);
+						em.persist(ie);
+						em.persist(ie2);
 						
 						em.getTransaction().commit();
 						
 					}
 				}
-				
+						
 		icon.seleccionarCurso(c.getNombre(), doc1.getNick());
 	}
 	

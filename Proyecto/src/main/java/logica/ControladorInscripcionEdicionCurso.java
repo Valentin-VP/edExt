@@ -154,6 +154,7 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 				
 				em.persist(ed);
 				em.persist(u);
+				em.persist(ie);
 				
 				em.getTransaction().commit();
 				

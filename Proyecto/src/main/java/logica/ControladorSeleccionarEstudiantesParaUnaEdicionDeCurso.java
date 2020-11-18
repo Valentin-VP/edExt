@@ -26,7 +26,7 @@ import excepciones.InstitutoInexistente;
 import excepciones.InstitutoSinCursos;
 import interfaces.IControladorSeleccionarEstudiantesParaUnaEdicionDeCurso;
 
-public class ControladorSeleccionarEstudiantesParaUnaEdicionDeCurso implements IControladorSeleccionarEstudiantesParaUnaEdicionDeCurso{
+public class ControladorSeleccionarEstudiantesParaUnaEdicionDeCurso implements IControladorSeleccionarEstudiantesParaUnaEdicionDeCurso {
 
 	/*Actores Docente
 	Descripción El caso de uso comienza cuando un docente desea seleccionar los

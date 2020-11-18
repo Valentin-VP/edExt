@@ -9,10 +9,12 @@ import org.junit.Test;
 import datatypes.DtCursoBase;
 import datatypes.DtInstituto;
 import datatypes.DtProgramaBase;
+import datatypes.DtUsuarioBase;
 import excepciones.SinCategorias;
 import excepciones.SinCursos;
 import excepciones.SinInstitutos;
 import excepciones.SinProgramas;
+import excepciones.SinUsuarios;
 import interfaces.Fabrica;
 import interfaces.IControladorAgregarCursoProgFormacion;
 import interfaces.IControladorAltaUsuario;
@@ -20,6 +22,7 @@ import interfaces.IControladorConsultaCurso;
 import interfaces.IControladorConsultaPrograma;
 import interfaces.IControladorInscripcionEdicionCurso;
 import interfaces.IControladorListarAceptadosAUnaEdicionDeCurso;
+import interfaces.IControladorModificarDatosUsuario;
 
 public class LevelZeroSuite {
 	static Fabrica fabrica;
@@ -29,6 +32,7 @@ public class LevelZeroSuite {
 	static IControladorListarAceptadosAUnaEdicionDeCurso iconListarAceptados;
 	static IControladorAgregarCursoProgFormacion iconAgregarCursoProg; 
 	static IControladorConsultaPrograma iconConsultaPrograma; 
+	static IControladorModificarDatosUsuario iconModificarDatosUsuario;
 	
 	@BeforeClass
 	public static void preparacionTests() {
@@ -39,6 +43,7 @@ public class LevelZeroSuite {
 		iconListarAceptados = fabrica.getIControladorListarAceptadosAUnaEdicionDeCurso();
 		iconAgregarCursoProg = fabrica.getIControladorAgregarCursoAPF();
 		iconConsultaPrograma = fabrica.getIControladorConsultaPrograma();
+		iconModificarDatosUsuario = fabrica.getIControladorModificarDatosUsuario();
 	}
 	
 	@Test (expected = SinInstitutos.class)
@@ -80,5 +85,10 @@ public class LevelZeroSuite {
 	@Test (expected = SinProgramas.class)
 	public void test01_listarProgramasSinProgConsulta() throws SinProgramas {
 		List<DtProgramaBase> progNoExiste = iconConsultaPrograma.listarProgramas();
+	}
+	
+	@Test (expected = SinUsuarios.class)
+	public void test1_mostrarUsuarios() throws SinUsuarios {
+		ArrayList<DtUsuarioBase> usuarios = iconModificarDatosUsuario.mostrarUsuarios();
 	}
 }
