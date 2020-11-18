@@ -12,12 +12,14 @@ import interfaces.Fabrica;
 import interfaces.IControladorAltaUsuario;
 import interfaces.IControladorConsultaCurso;
 import interfaces.IControladorInscripcionEdicionCurso;
+import interfaces.IControladorListarAceptadosAUnaEdicionDeCurso;
 
 public class LevelZeroSuite {
 	static Fabrica fabrica;
 	static IControladorAltaUsuario icon;
 	static IControladorConsultaCurso iconConsultaCurso;
 	static IControladorInscripcionEdicionCurso iconInscripcionEdicion;
+	static IControladorListarAceptadosAUnaEdicionDeCurso iconListarAceptados;
 	
 	@BeforeClass
 	public static void preparacionTests() {
@@ -25,6 +27,7 @@ public class LevelZeroSuite {
 		icon = fabrica.getIControladorAltaUsuario();
 		iconConsultaCurso = fabrica.getIControladorConsultaCurso();
 		iconInscripcionEdicion = fabrica.getIControladorInscripcionEdicionCurso();
+		iconListarAceptados = fabrica.getIControladorListarAceptadosAUnaEdicionDeCurso();
 	}
 	
 	@Test (expected = SinInstitutos.class)
@@ -47,4 +50,8 @@ public class LevelZeroSuite {
 		ArrayList<DtInstituto> institutos = iconInscripcionEdicion.listarInstitutos();
 	}
 	
+	@Test (expected = SinInstitutos.class)
+	public void test01_listarInstitutoSinInstitutos() throws SinInstitutos {
+		ArrayList<DtInstituto> instNoExiste = iconListarAceptados.listarInstitutos();
+	}
 }

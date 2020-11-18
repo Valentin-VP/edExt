@@ -144,10 +144,7 @@ public class ListarAceptadosTest {
 
 	}
 	
-	@Test (expected = SinInstitutos.class)
-	public void test01_listarInstitutoSinInstitutos() throws SinInstitutos {
-		ArrayList<DtInstituto> instNoExiste = icon.listarInstitutos();
-	}
+
 	
 	@Test (expected = InstitutoInexistente.class)
 	public void test02_ingresarInstitutoInexistente() throws SinInstitutos, InstitutoInexistente, InstitutoSinCursos {
