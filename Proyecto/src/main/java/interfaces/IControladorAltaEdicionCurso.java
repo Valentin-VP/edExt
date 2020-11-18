@@ -26,4 +26,6 @@ public interface IControladorAltaEdicionCurso {
 	public boolean docenteEnArray(String nick, ArrayList<String> docentes);
 	
 	public ArrayList<DtUsuarioBase> getDocentes();
+
+	void setInstituto(String instituto);
 }

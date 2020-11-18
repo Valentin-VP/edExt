@@ -34,12 +34,22 @@ public class SesionTest {
 	private String pass_usuario2 = "";
 	private DtFecha fechaN_usuario1 = new DtFecha(10, 10, 1998);
 	private DtFecha fechaN_usuario2 = new DtFecha(11, 11, 1999);
+	private String nick_usuario3 = "";
+	private String nick_usuario4 = "";
+	private String correo_usuario3 = "";
+	private String correo_usuario4 = "";
+	private String pass_usuario3 = "";
+	private String pass_usuario4 = "";
+	private DtFecha fechaN_usuario3 = new DtFecha(11, 11, 1998);
+	private DtFecha fechaN_usuario4 = new DtFecha(12, 12, 1999);
 	
 	private String id_usr1 = "";
 	private String id_usr2 = "";
+	private String id_usr3 = "";
+	private String id_usr4 = "";
 	
-	private Usuario usuario1 = null;
-	private Usuario usuario2 = null;
+	/*private Usuario usuario1 = null;
+	private Usuario usuario2 = null;*/
 	
 	@BeforeClass
 	public static void preparacionTests() {
@@ -59,8 +69,17 @@ public class SesionTest {
 		this.pass_usuario1 = "asokaRules";
 		this.pass_usuario2 = "kenobiRules";
 		
-		this.id_usr1 = "ATano@republic.com" + contador.getValue();
-		this.id_usr2 = "OWK" + contador.getValue();
+		this.nick_usuario3 = "Yoda" + contador.getValue();
+		this.nick_usuario4 = "Ani" + contador.getValue();
+		this.correo_usuario3 = "Yoda@republic.com" + contador.getValue();
+		this.correo_usuario4 = "ASkywalker@republic.com" + contador.getValue();
+		this.pass_usuario3 = "YodaRules";
+		this.pass_usuario4 = "AnakinRules";
+		
+		this.id_usr1 = this.correo_usuario1;
+		this.id_usr2 = this.nick_usuario2;
+		this.id_usr3 = this.correo_usuario3;
+		this.id_usr4 = this.nick_usuario4;
 	}
 	
 	@Test
@@ -92,16 +111,18 @@ public class SesionTest {
 	}
 	
 	@Test
-	public void test5_identificarUsaurioNick() throws NoSuchAlgorithmException {//probar usando un usuario nuevo
-		String retorno = icon.identificarUsuario(id_usr2, this.pass_usuario2);
-		System.out.println(this.pass_usuario2);
-		System.out.println(id_usr2);
+	public void test5_identificarUsuarioCorreo() throws NoSuchAlgorithmException, UsuarioRepetido {
+		icon2.altaUsuario(this.nick_usuario3, this.correo_usuario3, "Master", "Yoda", fechaN_usuario3, this.pass_usuario3);
+		icon2.confirmarAltaUsuario(true);
+		String retorno = icon.identificarUsuario(id_usr3, icon.codificarPass(this.pass_usuario3));
 		assertEquals("docente", retorno);
 	}
 	
 	@Test
-	public void test6_identificarUsuarioCorreo() throws NoSuchAlgorithmException {//probar usando un usuario nuevo
-		String retorno = icon.identificarUsuario(id_usr1, icon.codificarPass(this.pass_usuario1));
+	public void test6_identificarUsaurioNick() throws NoSuchAlgorithmException, UsuarioRepetido {
+		icon2.altaUsuario(this.nick_usuario4, this.correo_usuario4, "Anakin", "Skywalker", fechaN_usuario4, this.pass_usuario4);
+		icon2.confirmarAltaUsuario(false);
+		String retorno = icon.identificarUsuario(id_usr4, icon.codificarPass(this.pass_usuario4));
 		assertEquals("estudiante", retorno);
 	}
 }

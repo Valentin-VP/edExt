@@ -27,6 +27,11 @@ public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso
 	private boolean tieneCupos;
 	private Integer cupos;
 	private DtEdicion dtEdi;
+
+	@Override
+	public void setInstituto(String instituto) {
+		this.instituto = instituto;
+	}
 	
 	public String getCurso() {
 		return curso;
@@ -82,7 +87,7 @@ public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso
 		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 		Instituto i = mI.find(this.instituto);
 		Edicion edicion;
-		if (i.equals(null)) {
+		if (i == null) {//i.equals(null)
 			throw new InstitutoInexistente("El instituto " + instituto + " no esta en el sistema");
 		}
 		ManejadorCurso mC = ManejadorCurso.getInstancia();
@@ -98,7 +103,6 @@ public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso
 					fechaFdate = fechaF.DtFechaToDate();
 					fechaPubdate = fechaPub.DtFechaToDate();
 				} catch (ParseException e) {
-					e.printStackTrace();
 				}
 
 				if (!tieneCupos) {
