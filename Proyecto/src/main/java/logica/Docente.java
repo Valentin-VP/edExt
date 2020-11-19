@@ -54,7 +54,7 @@ public class Docente extends Usuario {
 	public Instituto getInstituto() {
 		return this.instituto;
 	}
-
+	
 	public void setInstituto(Instituto instituto) {
 		this.instituto = instituto;
 	}

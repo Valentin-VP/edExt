@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import datatypes.DtCursoBase;
+import datatypes.DtEdicion;
 import datatypes.DtFecha;
 import excepciones.EdicionRepetida;
 import excepciones.CursoNoExiste;
@@ -27,5 +28,21 @@ public interface IControladorAltaEdicionCurso {
 	
 	public ArrayList<DtUsuarioBase> getDocentes();
 
-	void setInstituto(String instituto);
+	public void setInstituto(String instituto);
+	
+	public void setCurso(String curso);
+	
+	public String getCurso();
+	
+	public boolean isTieneCupos();
+	
+	public void setTieneCupos(boolean tieneCupos);
+	
+	public Integer getCupos();
+	
+	public void setCupos(Integer cupos);
+	
+	public DtEdicion getDtEdi();
+	
+	public void setDtEdi(DtEdicion dtEdi);
 }

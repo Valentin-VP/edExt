@@ -10,22 +10,34 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import datatypes.DtCursoBase;
+import datatypes.DtEdicion;
 import datatypes.DtFecha;
+import datatypes.DtUsuarioBase;
 import excepciones.CursoNoExiste;
 import excepciones.CursoRepetido;
+import excepciones.DocenteDeOtroInstituto;
+import excepciones.DocenteYaAgregado;
 import excepciones.EdicionRepetida;
 import excepciones.InstitutoInexistente;
+import excepciones.InstitutoRepetidoException;
 import excepciones.UsuarioNoDocente;
+import excepciones.UsuarioNoExiste;
 import interfaces.Fabrica;
 import interfaces.IControladorAltaCurso;
 import interfaces.IControladorAltaEdicionCurso;
+import interfaces.IControladorAltaInstituto;
 import logica.Categoria;
 import logica.Curso;
+import logica.Docente;
 import logica.Edicion;
+import logica.Estudiante;
 import logica.Instituto;
 import logica.ManejadorCategoria;
+import logica.ManejadorCurso;
 import logica.ManejadorEdicion;
 import logica.ManejadorInstituto;
+import logica.ManejadorUsuario;
+import logica.Usuario;
 
 public class AltaEdicionCursoTest {
 	private static Fabrica fabrica;
@@ -34,6 +46,23 @@ public class AltaEdicionCursoTest {
 	private static ManejadorInstituto mI;
 	private static ManejadorCategoria mC;
 	private static ManejadorEdicion mE;
+	//private static ManejadorCurso mK;
+	private static ManejadorUsuario mU;
+	
+	private Instituto i3 = null;
+	private Categoria cat3 = null;
+	private Curso c3 = null;
+	private Edicion edi = null;
+	
+	private Instituto i4 = null;
+	private Categoria cat4 = null;
+	private Curso c4 = null;
+	private Usuario u4 = null;
+	
+	private Usuario u5 = null;
+	
+	private Usuario u6 = null;
+	private Instituto i6 = null;
 	
 	@BeforeClass
 	public static void preparacionTests() {
@@ -43,6 +72,9 @@ public class AltaEdicionCursoTest {
 		mI = ManejadorInstituto.getInstancia();
 		mC = ManejadorCategoria.getInstancia();
 		mE = ManejadorEdicion.getInstancia();
+		//mK = ManejadorCurso.getInstancia();
+		mU = ManejadorUsuario.getInstancia();
+		
 	}
 	
 	/*@Before
@@ -109,100 +141,135 @@ public class AltaEdicionCursoTest {
 	}
 	
 	@Test(expected = EdicionRepetida.class)
-	public void test5_altaEdicionCursoEdicionRepetida() throws ParseException, CursoRepetido, InstitutoInexistente, EdicionRepetida, CursoNoExiste, UsuarioNoDocente {
-		Counter contador2 = new Counter();
-		String nombre_instituto3 = "StarkAcademy" + contador2.getValue().toString();
-		String nombre_categoria3 = "Estrategia" + contador2.getValue().toString();
-		String nombre_curso3 = "curso3_Stark" + contador2.getValue().toString();
-		String nombre_curso4 = "curso4_Stark" + contador2.getValue().toString();
-		String descripcion_curso3 = "desc_c3" + contador2.getValue().toString();
-		String descripcion_curso4 = "desc_c4" + contador2.getValue().toString();
-		String duracion_curso3 = "5";
-		String duracion_curso4 = "6";
-		String url_curso3 = "algomas.com" + contador2.getValue().toString();
-		String url_curso4 = "otroAlgo.com" + contador2.getValue().toString();
-		int cantHoras_curso3 = 15;
-		int cantHoras_curso4 = 30;
-		Integer creditos_curso3 = 25;
-		Integer creditos_curso4 = 40;
+	public void test5_altaEdicionCursoEdicionRepetida() throws ParseException, CursoRepetido, InstitutoInexistente, EdicionRepetida, CursoNoExiste, UsuarioNoDocente, InstitutoRepetidoException {
+		Counter contador = new Counter();
 		DtFecha fechaR_curso3 = new DtFecha(10, 10, 1998);
-		DtFecha fechaR_curso4 = new DtFecha(11, 11, 1999);
 		Date fecha_curso3 = fechaR_curso3.DtFechaToDate();
-		Date fecha_curso4 = fechaR_curso4.DtFechaToDate();
-		Instituto i3 = new Instituto(nombre_instituto3);
+		
+		this.i3 = new Instituto("StarkAcademy" + contador.getValue());
 		mI.agregarInstituto(i3);
-		icon2.altaCurso(nombre_instituto3, nombre_curso3, descripcion_curso3, duracion_curso3, cantHoras_curso3, creditos_curso3, url_curso3, fechaR_curso3);
-		icon2.confirmarAltaCurso();
-		icon2.altaCurso(nombre_instituto3, nombre_curso4, descripcion_curso4, duracion_curso4, cantHoras_curso4, creditos_curso4, url_curso4, fechaR_curso4);
-		icon2.confirmarAltaCurso();
-		Categoria cat3 = new Categoria(nombre_categoria3);
+		
+		this.cat3 = new Categoria("Estrategia" + contador.getValue());
 		mC.agregarCategoria(cat3);
+		
 		List<Categoria> categs = new ArrayList<Categoria>();
 		categs.add(cat3);
-		List<Curso> previas2 = new ArrayList<Curso>();
-		Curso c3 = new Curso(nombre_curso3, descripcion_curso3, duracion_curso3, cantHoras_curso3, creditos_curso3, fecha_curso3, url_curso3, null, categs);
-		previas2.add(c3);
-		Curso c4 = new Curso(nombre_curso4, descripcion_curso4, duracion_curso4, cantHoras_curso4, creditos_curso4, fecha_curso4, url_curso4, previas2, categs);
-		i3.agregarCurso(c3);
-		i3.agregarCurso(c4);
-		icon.setInstituto(nombre_instituto3);
-		String nombre_edicion3 = "edicion_2020" + contador2.getValue().toString();
-		DtFecha fecha_inicio = new DtFecha(10, 10, 1997);
-		DtFecha fecha_fin = new DtFecha(11, 11, 1998);
-		DtFecha fecha_pub = new DtFecha(12, 12, 1999);
-		/*Date fechaI = fecha_inicio.DtFechaToDate();
-		Date fechaF = fecha_fin.DtFechaToDate();
-		Date fechaP = fecha_pub.DtFechaToDate();*/
-		boolean tieneCupos_edicion3 = false;
-		Integer cupos_edicion3 = 0;
-		//Edicion edicion3 = new Edicion(nombre_edicion3, fechaI, fechaF, tieneCupos_edicion3, cupos_edicion3, fechaP);
-		//mE.agregarEdicion(edicion3);
-		icon.altaEdicionCurso(nombre_curso4, nombre_edicion3, fecha_inicio, fecha_fin, null, tieneCupos_edicion3, cupos_edicion3, fecha_pub);
-		icon.altaEdicionCurso(nombre_curso4, nombre_edicion3, fecha_inicio, fecha_fin, null, tieneCupos_edicion3, cupos_edicion3, fecha_pub);
+		
+		this.c3 = new Curso("curso3", "estrategia3", "5", 10, 60, fecha_curso3, "curso3.com", null, categs);
+		icon2.altaCurso(this.i3.getNombre(), this.c3.getNombre(), this.c3.getDescripcion(), this.c3.getDuracion(), this.c3.getCantHoras(), this.c3.getCreditos(), this.c3.getUrl(), fechaR_curso3);
+		icon2.confirmarAltaCurso();
+		//mK.agregarCurso(c3);
+		//i3.agregarCurso(c3);
+		
+		DtFecha fechaI_edicion = new DtFecha(10, 10, 1997);
+		DtFecha fechaF_edicion = new DtFecha(11, 11, 1998);
+		DtFecha fechaP_edicion = new DtFecha(12, 12, 1999);
+		Date fechaI = fechaI_edicion.DtFechaToDate();
+		Date fechaF = fechaF_edicion.DtFechaToDate();
+		Date fechaP = fechaP_edicion.DtFechaToDate();
+		this.edi = new Edicion("edicion3", fechaI, fechaF, true, 400, fechaP);
+		this.c3.addEdicion(edi);
+		mE.agregarEdicion(edi);
+		
+		/*for(Curso cu: mK.getCursos()) {
+			System.out.println(cu.getNombre());
+		}
+		
+		System.out.println(mE.getEdiciones().size());
+		for(Edicion ed: mE.getEdiciones()) {
+			System.out.println(ed.getNombre());
+		}*/
+		
+		icon.setInstituto(i3.getNombre());
+		icon.setCurso(c3.getNombre());
+		icon.altaEdicionCurso(this.c3.getNombre(), this.edi.getNombre(), fechaI_edicion, fechaF_edicion, null, true, 400, fechaP_edicion);
 	}
 	
 	@Test
-	public void test6_altaEdicionCurso() {
+	public void test6_altaEdicionCurso() throws CursoRepetido, InstitutoInexistente, ParseException, EdicionRepetida, CursoNoExiste, UsuarioNoDocente {
+		Counter contador = new Counter();
+		DtFecha fechaR_curso4 = new DtFecha(10, 10, 1998);
+		Date fecha_curso4 = fechaR_curso4.DtFechaToDate();
+		DtFecha fechaUser = new DtFecha(10, 10, 1999);
+		Date fechau = fechaUser.DtFechaToDate();
 		
+		this.i4 = new Instituto("EvansAcademy" + contador.getValue());
+		mI.agregarInstituto(i4);
+		
+		this.cat4 = new Categoria("Escudo" + contador.getValue());
+		mC.agregarCategoria(cat4);
+		
+		List<Categoria> categs = new ArrayList<Categoria>();
+		categs.add(cat4);
+		
+		this.c4 = new Curso("curso4", "escudo4", "5", 10, 60, fecha_curso4, "curso4.com", null, categs);
+		icon2.altaCurso(this.i4.getNombre(), this.c4.getNombre(), this.c4.getDescripcion(), this.c4.getDuracion(), this.c4.getCantHoras(), this.c4.getCreditos(), this.c4.getUrl(), fechaR_curso4);
+		icon2.confirmarAltaCurso();
+		
+		ArrayList<String> profes = new ArrayList<String>();
+		this.u4 = new Docente("Capi", "Steve", "Rogers", "capi@algo.com", fechau, i4, "capiRules");
+		mU.agregarUsuario(this.u4);
+		profes.add(this.u4.getNick());
+		
+		DtFecha fechaI_edicion = new DtFecha(10, 10, 1997);
+		DtFecha fechaF_edicion = new DtFecha(11, 11, 1998);
+		DtFecha fechaP_edicion = new DtFecha(12, 12, 1999);
+		icon.setInstituto(i4.getNombre());
+		icon.setCurso(c4.getNombre());
+		icon.altaEdicionCurso(this.c4.getNombre(), "edicion4", fechaI_edicion, fechaF_edicion, profes, true, 400, fechaP_edicion);
 	}
+
 	
 	@Test
 	public void test7_getUsuarios() {
+		ArrayList<DtUsuarioBase> losUsers = icon.getUsuarios();
+	}
+	
+	@Test(expected = UsuarioNoDocente.class)
+	public void test8_verificarUsuarioUsuarioNoDocente() throws ParseException, UsuarioNoExiste, UsuarioNoDocente, DocenteDeOtroInstituto, DocenteYaAgregado {
+		//Counter contador = new Counter();
+		DtFecha fechaUser = new DtFecha(10, 10, 1999);
+		Date fechau = fechaUser.DtFechaToDate();
 		
+		this.u5 = new Estudiante("Manu", "Manuel", "Yo", "yo@algo.com", fechau, "manuRules");
+		mU.agregarUsuario(this.u5);
+		
+		icon.verificarUsuario(this.u5.getNick(), this.u5.getCorreo(), null);
+	}
+	
+	@Test(expected = UsuarioNoExiste.class)
+	public void test9_verificarUsuarioUsuarioNoExiste() throws UsuarioNoExiste, UsuarioNoDocente, DocenteDeOtroInstituto, DocenteYaAgregado {
+		icon.verificarUsuario("noExisteEsteUsuario", "", null);
+	}
+	
+	@Test(expected = DocenteYaAgregado.class)
+	public void test10_verificarUsuarioDocenteYaAgregado() throws ParseException, UsuarioNoExiste, UsuarioNoDocente, DocenteDeOtroInstituto, DocenteYaAgregado {
+		Counter contador = new Counter();
+		DtFecha fechaUser = new DtFecha(10, 10, 1999);
+		Date fechau = fechaUser.DtFechaToDate();
+		
+		this.i6 = new Instituto("PanterInstitute" + contador.getValue());
+		mI.agregarInstituto(i6);
+		
+		ArrayList<String> profes = new ArrayList<String>();
+		this.u6 = new Docente("Vale", "Valentin", "Aquel", "aquel@algo.com", fechau, i6, "valeRules");
+		mU.agregarUsuario(this.u6);
+		profes.add(this.u6.getNick());
+		
+		icon.setInstituto(i6.getNombre());
+		icon.verificarUsuario(this.u6.getNick(), this.u6.getCorreo(), profes);
 	}
 	
 	@Test
-	public void test8_getDocentes() {
-		
-	}
-	
-	@Test
-	public void test9_docenteEnArray() {
-		
-	}
-	
-	@Test
-	public void test10_verificarUsuarioUsuarioNoDocente() {
-		
-	}
-	
-	@Test
-	public void test11_verificarUsuarioUsuarioNoExiste() {
-		
-	}
-	
-	@Test
-	public void test12_verificarUsuarioDocenteYaAgregado() {
-		
-	}
-	
-	@Test
-	public void test13_verificarUsuarioDocenteDeOtroInsituto() {
-		
-	}
-	
-	@Test
-	public void test14_GetersYSeters() {
-		
+	public void GetersYSeters() {
+		icon.setCurso("chanchuyo");
+		icon.getCurso();
+		icon.setCupos(45);
+		icon.getCupos();
+		icon.setTieneCupos(false);
+		icon.isTieneCupos();
+		DtEdicion dtEdi = new DtEdicion();
+		icon.setDtEdi(dtEdi);
+		icon.getDtEdi();
 	}
 }
