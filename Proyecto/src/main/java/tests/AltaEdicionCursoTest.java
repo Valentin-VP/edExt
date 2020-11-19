@@ -21,8 +21,10 @@ import interfaces.IControladorAltaCurso;
 import interfaces.IControladorAltaEdicionCurso;
 import logica.Categoria;
 import logica.Curso;
+import logica.Edicion;
 import logica.Instituto;
 import logica.ManejadorCategoria;
+import logica.ManejadorEdicion;
 import logica.ManejadorInstituto;
 
 public class AltaEdicionCursoTest {
@@ -31,6 +33,7 @@ public class AltaEdicionCursoTest {
 	private static IControladorAltaCurso icon2;
 	private static ManejadorInstituto mI;
 	private static ManejadorCategoria mC;
+	private static ManejadorEdicion mE;
 	
 	@BeforeClass
 	public static void preparacionTests() {
@@ -39,6 +42,7 @@ public class AltaEdicionCursoTest {
 		icon2 = fabrica.getIControladorAltaCurso();
 		mI = ManejadorInstituto.getInstancia();
 		mC = ManejadorCategoria.getInstancia();
+		mE = ManejadorEdicion.getInstancia();
 	}
 	
 	/*@Before
@@ -104,58 +108,101 @@ public class AltaEdicionCursoTest {
 		icon.altaEdicionCurso("", "", null, null, null, false, null, null);
 	}
 	
+	@Test(expected = EdicionRepetida.class)
+	public void test5_altaEdicionCursoEdicionRepetida() throws ParseException, CursoRepetido, InstitutoInexistente, EdicionRepetida, CursoNoExiste, UsuarioNoDocente {
+		Counter contador2 = new Counter();
+		String nombre_instituto3 = "StarkAcademy" + contador2.getValue().toString();
+		String nombre_categoria3 = "Estrategia" + contador2.getValue().toString();
+		String nombre_curso3 = "curso3_Stark" + contador2.getValue().toString();
+		String nombre_curso4 = "curso4_Stark" + contador2.getValue().toString();
+		String descripcion_curso3 = "desc_c3" + contador2.getValue().toString();
+		String descripcion_curso4 = "desc_c4" + contador2.getValue().toString();
+		String duracion_curso3 = "5";
+		String duracion_curso4 = "6";
+		String url_curso3 = "algomas.com" + contador2.getValue().toString();
+		String url_curso4 = "otroAlgo.com" + contador2.getValue().toString();
+		int cantHoras_curso3 = 15;
+		int cantHoras_curso4 = 30;
+		Integer creditos_curso3 = 25;
+		Integer creditos_curso4 = 40;
+		DtFecha fechaR_curso3 = new DtFecha(10, 10, 1998);
+		DtFecha fechaR_curso4 = new DtFecha(11, 11, 1999);
+		Date fecha_curso3 = fechaR_curso3.DtFechaToDate();
+		Date fecha_curso4 = fechaR_curso4.DtFechaToDate();
+		Instituto i3 = new Instituto(nombre_instituto3);
+		mI.agregarInstituto(i3);
+		icon2.altaCurso(nombre_instituto3, nombre_curso3, descripcion_curso3, duracion_curso3, cantHoras_curso3, creditos_curso3, url_curso3, fechaR_curso3);
+		icon2.confirmarAltaCurso();
+		icon2.altaCurso(nombre_instituto3, nombre_curso4, descripcion_curso4, duracion_curso4, cantHoras_curso4, creditos_curso4, url_curso4, fechaR_curso4);
+		icon2.confirmarAltaCurso();
+		Categoria cat3 = new Categoria(nombre_categoria3);
+		mC.agregarCategoria(cat3);
+		List<Categoria> categs = new ArrayList<Categoria>();
+		categs.add(cat3);
+		List<Curso> previas2 = new ArrayList<Curso>();
+		Curso c3 = new Curso(nombre_curso3, descripcion_curso3, duracion_curso3, cantHoras_curso3, creditos_curso3, fecha_curso3, url_curso3, null, categs);
+		previas2.add(c3);
+		Curso c4 = new Curso(nombre_curso4, descripcion_curso4, duracion_curso4, cantHoras_curso4, creditos_curso4, fecha_curso4, url_curso4, previas2, categs);
+		i3.agregarCurso(c3);
+		i3.agregarCurso(c4);
+		icon.setInstituto(nombre_instituto3);
+		String nombre_edicion3 = "edicion_2020" + contador2.getValue().toString();
+		DtFecha fecha_inicio = new DtFecha(10, 10, 1997);
+		DtFecha fecha_fin = new DtFecha(11, 11, 1998);
+		DtFecha fecha_pub = new DtFecha(12, 12, 1999);
+		/*Date fechaI = fecha_inicio.DtFechaToDate();
+		Date fechaF = fecha_fin.DtFechaToDate();
+		Date fechaP = fecha_pub.DtFechaToDate();*/
+		boolean tieneCupos_edicion3 = false;
+		Integer cupos_edicion3 = 0;
+		//Edicion edicion3 = new Edicion(nombre_edicion3, fechaI, fechaF, tieneCupos_edicion3, cupos_edicion3, fechaP);
+		//mE.agregarEdicion(edicion3);
+		icon.altaEdicionCurso(nombre_curso4, nombre_edicion3, fecha_inicio, fecha_fin, null, tieneCupos_edicion3, cupos_edicion3, fecha_pub);
+		icon.altaEdicionCurso(nombre_curso4, nombre_edicion3, fecha_inicio, fecha_fin, null, tieneCupos_edicion3, cupos_edicion3, fecha_pub);
+	}
+	
 	@Test
-	public void test5_altaEdicionCursoUsuarioNoDocente() {
+	public void test6_altaEdicionCurso() {
 		
 	}
 	
 	@Test
-	public void test6_altaEdicionCursoEdicionRepetida() {
+	public void test7_getUsuarios() {
 		
 	}
 	
 	@Test
-	public void test7_altaEdicionCurso() {
+	public void test8_getDocentes() {
 		
 	}
 	
 	@Test
-	public void test8_getUsuarios() {
+	public void test9_docenteEnArray() {
 		
 	}
 	
 	@Test
-	public void test9_getDocentes() {
+	public void test10_verificarUsuarioUsuarioNoDocente() {
 		
 	}
 	
 	@Test
-	public void test10_docenteEnArray() {
+	public void test11_verificarUsuarioUsuarioNoExiste() {
 		
 	}
 	
 	@Test
-	public void test11_verificarUsuarioUsuarioNoDocente() {
+	public void test12_verificarUsuarioDocenteYaAgregado() {
 		
 	}
 	
 	@Test
-	public void test12_verificarUsuarioUsuarioNoExiste() {
+	public void test13_verificarUsuarioDocenteDeOtroInsituto() {
 		
 	}
 	
 	@Test
-	public void test13_verificarUsuarioDocenteYaAgregado() {
-		
-	}
-	
-	@Test
-	public void test14_verificarUsuarioDocenteDeOtroInsituto() {
-		
-	}
-	
-	@Test
-	public void test15_GetersYSeters() {
+	public void test14_GetersYSeters() {
 		
 	}
 }
