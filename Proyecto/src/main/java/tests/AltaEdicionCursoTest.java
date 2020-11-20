@@ -1,5 +1,7 @@
 package tests;
 
+import static org.junit.Assert.*;
+
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -25,7 +27,6 @@ import excepciones.UsuarioNoExiste;
 import interfaces.Fabrica;
 import interfaces.IControladorAltaCurso;
 import interfaces.IControladorAltaEdicionCurso;
-import interfaces.IControladorAltaInstituto;
 import logica.Categoria;
 import logica.Curso;
 import logica.Docente;
@@ -33,7 +34,6 @@ import logica.Edicion;
 import logica.Estudiante;
 import logica.Instituto;
 import logica.ManejadorCategoria;
-import logica.ManejadorCurso;
 import logica.ManejadorEdicion;
 import logica.ManejadorInstituto;
 import logica.ManejadorUsuario;
@@ -46,7 +46,6 @@ public class AltaEdicionCursoTest {
 	private static ManejadorInstituto mI;
 	private static ManejadorCategoria mC;
 	private static ManejadorEdicion mE;
-	//private static ManejadorCurso mK;
 	private static ManejadorUsuario mU;
 	
 	private Instituto i3 = null;
@@ -72,7 +71,6 @@ public class AltaEdicionCursoTest {
 		mI = ManejadorInstituto.getInstancia();
 		mC = ManejadorCategoria.getInstancia();
 		mE = ManejadorEdicion.getInstancia();
-		//mK = ManejadorCurso.getInstancia();
 		mU = ManejadorUsuario.getInstancia();
 		
 	}
@@ -118,21 +116,28 @@ public class AltaEdicionCursoTest {
 		Date fecha_curso2 = fechaR_curso2.DtFechaToDate();
 		Instituto i1 = new Instituto(nombre_instituto1);
 		mI.agregarInstituto(i1);
-		icon2.altaCurso(nombre_instituto1, nombre_curso1, descripcion_curso1, duracion_curso1, cantHoras_curso1, creditos_curso1, url_curso1, fechaR_curso1);
-		icon2.confirmarAltaCurso();
-		icon2.altaCurso(nombre_instituto1, nombre_curso2, descripcion_curso2, duracion_curso2, cantHoras_curso2, creditos_curso2, url_curso2, fechaR_curso2);
-		icon2.confirmarAltaCurso();
+		
 		Categoria cat1 = new Categoria(nombre_categoria1);
 		mC.agregarCategoria(cat1);
 		List<Categoria> cats = new ArrayList<Categoria>();
 		cats.add(cat1);
+		
 		List<Curso> previas = new ArrayList<Curso>();
 		Curso c1 = new Curso(nombre_curso1, descripcion_curso1, duracion_curso1, cantHoras_curso1, creditos_curso1, fecha_curso1, url_curso1, null, cats);
 		previas.add(c1);
 		Curso c2 = new Curso(nombre_curso2, descripcion_curso2, duracion_curso2, cantHoras_curso2, creditos_curso2, fecha_curso2, url_curso2, previas, cats);
+		
 		i1.agregarCurso(c1);
 		i1.agregarCurso(c2);
+		
+		List<DtCursoBase> supuesto = new ArrayList<DtCursoBase>();
+		DtCursoBase dtcb1 = new DtCursoBase(c1.getNombre());
+		DtCursoBase dtcb2 = new DtCursoBase(c2.getNombre());
+		supuesto.add(dtcb1);
+		supuesto.add(dtcb2);
+		
 		List<DtCursoBase> retorno = icon.seleccionarInstituto(nombre_instituto1);
+		assertEquals(retorno, supuesto);
 	}
 	
 	@Test(expected = CursoNoExiste.class)
@@ -158,8 +163,6 @@ public class AltaEdicionCursoTest {
 		this.c3 = new Curso("curso3", "estrategia3", "5", 10, 60, fecha_curso3, "curso3.com", null, categs);
 		icon2.altaCurso(this.i3.getNombre(), this.c3.getNombre(), this.c3.getDescripcion(), this.c3.getDuracion(), this.c3.getCantHoras(), this.c3.getCreditos(), this.c3.getUrl(), fechaR_curso3);
 		icon2.confirmarAltaCurso();
-		//mK.agregarCurso(c3);
-		//i3.agregarCurso(c3);
 		
 		DtFecha fechaI_edicion = new DtFecha(10, 10, 1997);
 		DtFecha fechaF_edicion = new DtFecha(11, 11, 1998);
@@ -170,15 +173,6 @@ public class AltaEdicionCursoTest {
 		this.edi = new Edicion("edicion3", fechaI, fechaF, true, 400, fechaP);
 		this.c3.addEdicion(edi);
 		mE.agregarEdicion(edi);
-		
-		/*for(Curso cu: mK.getCursos()) {
-			System.out.println(cu.getNombre());
-		}
-		
-		System.out.println(mE.getEdiciones().size());
-		for(Edicion ed: mE.getEdiciones()) {
-			System.out.println(ed.getNombre());
-		}*/
 		
 		icon.setInstituto(i3.getNombre());
 		icon.setCurso(c3.getNombre());
@@ -217,6 +211,9 @@ public class AltaEdicionCursoTest {
 		icon.setInstituto(i4.getNombre());
 		icon.setCurso(c4.getNombre());
 		icon.altaEdicionCurso(this.c4.getNombre(), "edicion4", fechaI_edicion, fechaF_edicion, profes, true, 400, fechaP_edicion);
+		
+		Edicion temp = mE.find("edicion4");
+		assertEquals(temp.getNombre(), "edicion4");
 	}
 
 	
