@@ -21,7 +21,7 @@ public class ManejadorCurso {
     
     public boolean existeCurso(String nombre) {
     	List<Curso> cursos = getCursos();
-    	if(cursos!=null) {
+    	if(cursos.size()!=0) {//cursos!=null
     		for(Curso c: cursos) {
         		if(c.getNombre().equals(nombre)) {
         			return true;

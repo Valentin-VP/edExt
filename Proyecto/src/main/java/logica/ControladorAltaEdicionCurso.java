@@ -33,34 +33,42 @@ public class ControladorAltaEdicionCurso implements IControladorAltaEdicionCurso
 		this.instituto = instituto;
 	}
 	
+	@Override
 	public String getCurso() {
 		return curso;
 	}
-
+	
+	@Override
 	public void setCurso(String curso) {
 		this.curso = curso;
 	}
-
+	
+	@Override
 	public boolean isTieneCupos() {
 		return tieneCupos;
 	}
-
+	
+	@Override
 	public void setTieneCupos(boolean tieneCupos) {
 		this.tieneCupos = tieneCupos;
 	}
-
+	
+	@Override
 	public Integer getCupos() {
 		return cupos;
 	}
-
+	
+	@Override
 	public void setCupos(Integer cupos) {
 		this.cupos = cupos;
 	}
-
+	
+	@Override
 	public DtEdicion getDtEdi() {
 		return dtEdi;
 	}
-
+	
+	@Override
 	public void setDtEdi(DtEdicion dtEdi) {
 		this.dtEdi = dtEdi;
 	}
