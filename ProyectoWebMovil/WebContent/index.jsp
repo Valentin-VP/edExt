@@ -12,7 +12,6 @@
 
 <%
 HttpSession session = (HttpSession) request.getSession();
-session.setAttribute("inicio", null);
 //ArrayList<String> institutosIndex = (ArrayList) session.getAttribute("institutosPlataforma");
 //ArrayList<String> categoriasIndex = (ArrayList) session.getAttribute("categoriasPlataforma");
 %>

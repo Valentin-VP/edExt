@@ -10,19 +10,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet("/CerrarSesion")
-public class CerrarSesion extends HttpServlet {
+@WebServlet("/RefreshInicio")
+public class RefreshInicio extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    public CerrarSesion() {
+    public RefreshInicio() {
         super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
         if (session != null) {
-        	session.removeAttribute("tipo");
-        	session.removeAttribute("nick");
         	session.removeAttribute("cursos");
         	session.removeAttribute("docentes");
         	session.removeAttribute("instituto");
@@ -52,12 +50,12 @@ public class CerrarSesion extends HttpServlet {
         	session.removeAttribute("previasAltaCurso");
         	session.removeAttribute("categoriasAltaCurso");
         	session.removeAttribute("institutoAltaCurso");
-        	session.removeAttribute("todosLosCursos");
-        	session.removeAttribute("buscando");
         	session.removeAttribute("opAceptadosEdicion");
         	session.removeAttribute("cursosAceptados");
         	session.removeAttribute("edicionesAceptados");
         	session.removeAttribute("infoFinalAceptados");
+        	session.removeAttribute("todosLosCursos");
+        	session.removeAttribute("buscando");
         	
         	session.removeAttribute("opSeleccionarEstudiantes");
         	session.removeAttribute("cursosSeleccionarEstudiantes");
@@ -73,21 +71,15 @@ public class CerrarSesion extends HttpServlet {
         	session.removeAttribute("usuariosConsultaUsuario");
         	session.removeAttribute("DtUser");
         	session.removeAttribute("seguido");
-        	session.removeAttribute("inicio");
-			session.invalidate();
         }
-        
+
         RequestDispatcher rd;
     	rd = request.getRequestDispatcher("/index.jsp");
-    	rd.forward(request, response);    
+    	rd.forward(request, response); 
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		/*String tipo = null;
-		RequestDispatcher rd;
-		request.setAttribute("tipo", tipo);
-		rd = request.getRequestDispatcher("/index.jsp");
-		rd.forward(request, response);*/
+		//nada
 	}
 
 }

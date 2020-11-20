@@ -4,6 +4,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Inicio De sesion</title>
 </head>
 <style>
@@ -46,6 +47,7 @@
 	  //box-shadow: 0 0 1rem rgba(0,0,0,0.3);
 	  min-height: 10rem;
 	  margin: auto;
+	  margin-top: 30%;
 	  min-width: 70%;
 	  max-width: 90%;
 	  padding: .5rem;
@@ -151,11 +153,13 @@
 
 <form class="login-form" action="ConsultarTipoUsuario" method="post">
 	<img src="imagenes/iProfile.png" alt="ironman" style="max-width:50%;max-height:50%; display:block; margin-left:auto; margin-right:auto;">
-	  <input type="text" class="login-username" autofocus="true" required="true" placeholder="Email" />
-	  <input type="password" class="login-password" required="true" placeholder="Contraseña" />
-	  <input type="submit" name="Login" value="Login" class="login-submit" />
+	  <input type="text" class="login-username" name="nick-correo" id="nick-correo"  placeholder="Nick/Correo" required>
+	  <input type="password" class="login-password" name="pass" id="pass" placeholder="Contraseña" required>
+	  <button type="submit" name="Login" class="login-submit">Login</button>
 	</form>
 	<div class="underlay-photo"></div>
 	<div class="underlay-black"></div> 
+
+<%@include file = "/footer.jsp" %>
 </body>
 </html>

@@ -22,8 +22,9 @@ crossorigin="anonymous">
 	String opAceptadosEdicion = "0";
 	String optAltaCurso = "inicio";
 	String opSeleccionarEstudiantes = "0";
+	if(sesion.getAttribute("inicio") == null)
+		sesion.setAttribute("inicio", "noIniciado");
 	
-
 
 if(sesion.getAttribute("inicio") == "iniciado") {  %>
 <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #222222;">
@@ -33,31 +34,14 @@ if(sesion.getAttribute("inicio") == "iniciado") {  %>
   </button>
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-     <li class="nav-item dropdown">
-     	<a class="nav-link dropdown-toggle" href="#" id="ConsultasDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Informacion
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-        	<a class="dropdown-item" href='infoCurso.jsp?optConsultaCursoInfoCurso=<%= optConsultaCurso %>'>Curso</a>
-          	<a class="dropdown-item" href='infoEdicion.jsp?optConsultaEdicionInfoEdicion=<%= optConsultaEdicion %>'>Ediciones</a>
-        </div>
+      <li class="nav-item">
+      	<a class="nav-link" href="infoCurso.jsp" id="ConsutaCurso" role="button">Info. Curso</a>
       </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="EstudiantesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Estudiantes
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="inscripcionEdicionCurso.jsp">Inscribirse</a>
-        </div>
+      <li class="nav-item">
+      	<a class="nav-link" href="infoEdicion.jsp" id="ConsutaEdicion" role="button">Info. Edicion</a>
       </li>
       <li class="nav-item">
        	<a class="nav-link" href="CerrarSesion" id="IniciarButton" role="button">Cerrar Sesion</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="ConsultaUsuario.jsp" id="ConsultaUsuarios" role="button">Usuarios</a>
-      </li>		
-      <li class="nav-item">
-        <a class="nav-link disabled" href="ConsultaUsuario.jsp" id="RegistrarseButton" role="button">Mi Perfil<%= " - " + nickname %></a>
       </li>
     </ul>
     <form action="FiltradoYBusqueda" method="post" class="form-inline my-2 my-lg-0">
@@ -67,6 +51,7 @@ if(sesion.getAttribute("inicio") == "iniciado") {  %>
   </div>
 </nav>
 <%} else { //-- NavBar visitante -->
+	System.out.println("entro a iniciar sesion");
 	String redirectURL = "/ProyectoWebMovil/inicioSesion.jsp";
 	response.sendRedirect(redirectURL);
  } %>

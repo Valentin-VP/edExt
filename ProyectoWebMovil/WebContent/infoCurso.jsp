@@ -9,19 +9,17 @@
 <%@include file = "/header.jsp" %>
 <title>Informacion de un curso</title>
 <style>
-	#nomIns{
+
+	#ins{
+		margin-left:15%;
+	}
+	#cat{
+		margin-left:15%;
+	}
+	#nomInsAceptar{
+		display: block;
 		margin: auto;
-		width: 100%;
-		padding: 10px;
-	}
-	#insCat{
-		
-		left: 30px;
-	}
-	#botonInsCat{
-		position: relative;
-	  	height: 40px;
-  		top: 0px;
+
 	}
 	#tabla{
 		position: relative; 
@@ -29,11 +27,12 @@
 		
 	}
 	#buscarCursos{
-		position: relative;
-	  	height: 39px;
+		display: block;
+	  	mergin:auto;
   		
 	}
 	#dropCursos{
+		display: block;
 		margin: auto;
 	}
 
@@ -64,38 +63,46 @@ System.out.println(infoCurso);
 	<br><br>
 	<form action="ConsultarCurso" method="post">
 		<div class="form-row" id="nombres">
-			<div class="col-md-3" id="insCat">
-	    		<input class="form-check-input" type="checkbox" id="checkInstituto" name="esInstitutoInfoCurso"  checked>
-	    		<label class="form-check-label" for="checkInstituto">Instituto</label>
+			<div class="MyDiv" id="ins">
+	    		<input class="form-check-input" type="checkbox" id="checkInstituto" name="esInstitutoInfoCurso" checked>
+	    		<label class="form-check-label" for="checkInstituto" style="font-size: 150%">Instituto</label>
 	    	</div>
-	    	<div>
-		    	<input class="form-check-input" type="checkbox" id="checkCategoria" name="esCategoriaInfoCurso">
-		    	<label class="form-check-label" for="checkCategoria">Categoria</label>
+	    </div>
+	    <div class="form-row" id="nombres">
+	    	<div class="MyDiv" id="cat">
+	    		<input class="form-check-input" type="checkbox" id="checkCategoria" name="esCategoriaInfoCurso">
+		    	<label class="form-check-label" for="checkCategoria" style="font-size: 150%">Categoria</label>
 	    	</div>
 	  	</div>
 	  	<div class="form-row" id="nomIns">
-	  		<div class="col-md-6">
+	  		<div class="MyDiv" Style="display:block; margin:auto; width:80%; ">
 		    	<input type="text" name="instituto-categoria" class="form-control" id="instituto-categoria" required>
 	    	</div>
-	    	<button class="btn btn-primary" id="botonInsCat" type="submit" onclick="setOpt()">Aceptar</button>
+	    	<br></br>
 	  	</div>
+	  	<div id="nomInsAceptar">
+	    	<button class="btn btn-primary" id="botonInsCat" type="submit" Style="display:block; margin:auto;">Aceptar</button>
+	    </div>
 	</form>
 	<br></br>
 	<form action="ConsultarCurso" method="post">
-	   <div class="form-row" id="dropCursos">	
-	      <div class="form-group col-md-4">
+	   <div class="form-row">	
+	      <div class="MyDiv" style="display:block; margin:auto;">
 		      <select id="dropdownCursos" name="dropdownCursos" class="selectpicker" required>
 		      	<option></option>
 		        <%for(String c: cursosConsulta){%>
 					<option value="<%=c %>"><%= c %></option><%
 				}%>
 		      </select>
-		  </div> 
-	      <button type="submit" class="btn btn-secondary" id="buscarCursos">Buscar</button>
+		  </div>
+		</div>
+		<br>
+		<div class="MyDiv" >
+			<button class="btn btn-secondary"  type="submit" Style="display:block; margin:auto;">Buscar</button>
 		</div>
 	</form> 
 		  		
-		  	
+	<br>	
 	<%if(!infoCurso.isEmpty()){%>
 		<div class="form-row" id="tabla">
 			<table class="table">
@@ -151,7 +158,7 @@ System.out.println(infoCurso);
 			  	sesion.setAttribute("cursoConsultaEdicion", sesion.getAttribute("cursoConsulta").toString());
 			  	sesion.setAttribute("optConsultaEdicionInfoEdicion", 5);
 			  	%>
-		      	<button type="submit" class="btn btn-secondary" id="buscarCursos">Consultar</button>
+		      	<button type="submit" class="btn btn-secondary" id="buscarCursos" style="margin-left:10%">Consultar</button>
 			</div>
 		</form><%
 	}%>	

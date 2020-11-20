@@ -30,6 +30,7 @@ public class ConsultarTipoUsuario extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession sesion = request.getSession(true);
 		String nick = request.getParameter("nick-correo");
 		String pass = request.getParameter("pass");
 		String codificada = "";
@@ -49,13 +50,12 @@ public class ConsultarTipoUsuario extends HttpServlet {
 				if(tipo != null) {
 					nickname = obtenerNick();
 					String correo = obtenerCorreo();
-					HttpSession sesion = request.getSession(true);
 					sesion.setAttribute("tipo", tipo);
 					sesion.setAttribute("nick", nickname);
 					sesion.setAttribute("correo", correo);
 				}
 			} else {
-				request.setAttribute("mensaje", "El usuario no existe");
+				request.setAttribute("mensaje", "El estudiante no esta registrado");
 				rd = request.getRequestDispatcher("/error.jsp");
 				rd.forward(request, response);
 			}
@@ -66,8 +66,16 @@ public class ConsultarTipoUsuario extends HttpServlet {
 		}
 		//request.setAttribute("tipo", tipo);
 		//request.setAttribute("nick", nickname);
-		rd = request.getRequestDispatcher("/index.jsp");
-		rd.forward(request, response);
+		if(tipo.equals("estudiante")) {
+			System.out.println("entro a setear iniciado");
+			sesion.setAttribute("inicio","iniciado");
+			rd = request.getRequestDispatcher("/index.jsp");
+			rd.forward(request, response);
+		}else {
+			request.setAttribute("mensaje", "Acceso exclusivo a estudiantes");
+			rd = request.getRequestDispatcher("/error.jsp");
+			rd.forward(request, response);
+		}
 	}
 	
 	public String codificarPass(String pass) throws ServiceException, NoSuchAlgorithmException, RemoteException {
