@@ -14,46 +14,51 @@ import logica.Categoria;
 import logica.ManejadorCategoria;
 
 import tests.Counter;
+import org.junit.FixMethodOrder;
+import org.junit.runners.MethodSorters;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class AltaCategoriaTest {
-	static Fabrica fabrica = null;
-	static IControladorAltaCategoria icon = null; 
-	String nombrec1 = "";
-	String nombrec2 = "";
-	Categoria categoria1 = null;
-	Categoria categoria2 = null;
-	static ManejadorCategoria mC = null;
+	static Fabrica fabricaAltaCategoria = null;
+	static IControladorAltaCategoria iconAltaCategory = null; 
+	String var1 = "";
+	String var2 = "";
+	Categoria category1 = null;
+	Categoria category2 = null;
+	static ManejadorCategoria mCategory = null;
 	
 	@BeforeClass
 	public static void preparacionTests() {
-		fabrica = Fabrica.getInstancia();
-		icon = fabrica.getIControladorAltaCategoria();
-		mC = ManejadorCategoria.getInstancia();
+		fabricaAltaCategoria = Fabrica.getInstancia();
+		iconAltaCategory = fabricaAltaCategoria.getIControladorAltaCategoria();
+		mCategory = ManejadorCategoria.getInstancia();
 	}
 	
 	@Before
 	public void inicializarTest() {
 		Counter counter1 = new Counter();
-		this.nombrec1 = "jedi_arts" +  counter1.getValue();
-		System.out.println(this.nombrec1);
-		this.nombrec2 = "sith_arts" + counter1.getValue();
-		System.out.println(this.nombrec2);
+		this.var1 = "jedi_arts_" +  counter1.getValue();
+		System.out.println(this.var1);
+		this.var2 = "sith_arts_" + counter1.getValue();
+		System.out.println(this.var2);
 	}
 	
 	@Test
-	public void categoriasConMismosDatos() throws CategoriaRepetidaException {
-		icon.darAltaCategoria(nombrec1);
-		icon.darAltaCategoria(nombrec2);
-		categoria1 = mC.find(nombrec1);
-		categoria2 = mC.find(nombrec2);
-		assertNotSame(categoria1,categoria2);
+	public void test1_categoriasConMismosDatos() throws CategoriaRepetidaException {
+		Counter counter = new Counter();
+		iconAltaCategory.darAltaCategoria(this.var1+counter.getValue().toString());
+		iconAltaCategory.darAltaCategoria(this.var2+counter.getValue().toString());
+		category1 = mCategory.find("AltaCategoria: " + this.var1+counter.getValue().toString());
+		category2 = mCategory.find("AltaCategoria: " + this.var2+counter.getValue().toString());
+		assertNotSame(category1,category2);
 	}
 	
 	@Test (expected = CategoriaRepetidaException.class)
-	public void categoriaRepetida() throws CategoriaRepetidaException {
-		icon.darAltaCategoria(nombrec1);
-		System.out.println("En Categoria Repetida vale "+this.nombrec1);
-		icon.darAltaCategoria(nombrec1);
+	public void test2_categoriaRepetida() throws CategoriaRepetidaException {
+		Counter counter = new Counter();
+		iconAltaCategory.darAltaCategoria(this.var1+counter.getValue().toString());
+		System.out.println("En Categoria Repetida vale "+this.var1+counter.getValue().toString());
+		iconAltaCategory.darAltaCategoria(this.var1+counter.getValue().toString());
 	}
 
 }

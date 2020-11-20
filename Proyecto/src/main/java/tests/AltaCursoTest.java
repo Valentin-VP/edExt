@@ -83,13 +83,8 @@ public class AltaCursoTest {
 		this.nombre_curso_dos = "mind_trick_" + counter1.getValue();
 	}
 	
-	@Test (expected = SinCategorias.class)
-	public void test1_listarCategoriasNoExistenCategorias() throws SinCategorias{
-		ArrayList<String> categoriasInexistentes = icon.listarCategorias();
-	}
-	
 	@Test
-	public void test2_crearYListarCategorias() throws SinCategorias {
+	public void test1_crearYListarCategorias() throws SinCategorias {
 		Counter counter = new Counter();
 		Categoria categoria_uno = new Categoria(nombre_categoria_uno+counter.getValue().toString());
 		Categoria categoria_dos = new Categoria(nombre_categoria_dos+counter.getValue().toString());
@@ -101,7 +96,7 @@ public class AltaCursoTest {
 	}
 	
 	@Test (expected = InstitutoInexistente.class)
-	public void test3_institutoNoExiste() throws CursoRepetido, InstitutoInexistente{
+	public void test2_institutoNoExiste() throws CursoRepetido, InstitutoInexistente{
 		Counter counter = new Counter();
 		Categoria categoria_uno = new Categoria(nombre_categoria_uno+counter.getValue().toString());
 		mCat.agregarCategoria(categoria_uno);
@@ -109,13 +104,9 @@ public class AltaCursoTest {
 		icon.altaCurso(nombre_instituto_uno, nombre_curso_uno, descripcion_uno, duracion_uno, cantHoras_uno, creditos_uno, url_uno, fechaR_uno);
 	}
 	
-	@Test (expected = SinInstitutos.class)
-	public void test4_listarInstitutosSinInstitutos() throws SinInstitutos {
-		ArrayList<DtInstituto> institutos = icon.listarInstitutos();
-	}
 	
 	@Test
-	public void test5_crearUnCurso() throws CursoRepetido, InstitutoInexistente{
+	public void test3_crearUnCurso() throws CursoRepetido, InstitutoInexistente{
 		Counter counter = new Counter();
 		Instituto instituto_uno = new Instituto(nombre_instituto_uno+counter.getValue().toString());
 		mI.agregarInstituto(instituto_uno);	
@@ -129,7 +120,7 @@ public class AltaCursoTest {
 	}
 	
 	@Test
-	public void test6_listarInstitutos() throws SinInstitutos {
+	public void test4_listarInstitutos() throws SinInstitutos {
 		Counter counter = new Counter();
 		Instituto instituto_uno = new Instituto(nombre_instituto_uno+counter.getValue().toString());
 		mI.agregarInstituto(instituto_uno);	
@@ -139,7 +130,7 @@ public class AltaCursoTest {
 	
 	
 	@Test (expected = CursoRepetido.class)
-	public void test7_altaCursoYaExiste() throws CursoRepetido, InstitutoInexistente{
+	public void test5_altaCursoYaExiste() throws CursoRepetido, InstitutoInexistente{
 		Counter counter = new Counter();
 		Instituto instituto_uno = new Instituto(nombre_instituto_uno+counter.getValue().toString());
 		mI.agregarInstituto(instituto_uno);	
@@ -153,7 +144,7 @@ public class AltaCursoTest {
 	}
 	
 	@Test
-	public void test8_crearCursoConPrevias() throws CursoRepetido, InstitutoInexistente{
+	public void test6_crearCursoConPrevias() throws CursoRepetido, InstitutoInexistente{
 		Counter counter = new Counter();
 		Instituto instituto_uno = new Instituto(nombre_instituto_uno+counter.getValue().toString());
 		mI.agregarInstituto(instituto_uno);	
