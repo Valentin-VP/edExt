@@ -44,6 +44,18 @@ public class ControladorConsultaEdicionCursoPublishProxy implements publicadores
     return controladorConsultaEdicionCursoPublish;
   }
   
+  public publicadores.DtCursoBase[] seleccionarCategoria(java.lang.String arg0) throws java.rmi.RemoteException, publicadores.CategoriaInexistente{
+    if (controladorConsultaEdicionCursoPublish == null)
+      _initControladorConsultaEdicionCursoPublishProxy();
+    return controladorConsultaEdicionCursoPublish.seleccionarCategoria(arg0);
+  }
+  
+  public publicadores.DtInstituto[] getInstitutosConCurso(java.lang.String arg0) throws java.rmi.RemoteException{
+    if (controladorConsultaEdicionCursoPublish == null)
+      _initControladorConsultaEdicionCursoPublishProxy();
+    return controladorConsultaEdicionCursoPublish.getInstitutosConCurso(arg0);
+  }
+  
   public publicadores.DtCursoBase[] seleccionarInstituto(java.lang.String arg0) throws java.rmi.RemoteException, publicadores.InstitutoInexistente{
     if (controladorConsultaEdicionCursoPublish == null)
       _initControladorConsultaEdicionCursoPublishProxy();
@@ -56,34 +68,16 @@ public class ControladorConsultaEdicionCursoPublishProxy implements publicadores
     return controladorConsultaEdicionCursoPublish.seleccionarCurso(arg0);
   }
   
-  public publicadores.DtInstituto[] getInstitutosConCurso(java.lang.String arg0) throws java.rmi.RemoteException{
-    if (controladorConsultaEdicionCursoPublish == null)
-      _initControladorConsultaEdicionCursoPublishProxy();
-    return controladorConsultaEdicionCursoPublish.getInstitutosConCurso(arg0);
-  }
-  
-  public publicadores.DtCursoBase[] seleccionarCategoria(java.lang.String arg0) throws java.rmi.RemoteException, publicadores.CategoriaInexistente{
-    if (controladorConsultaEdicionCursoPublish == null)
-      _initControladorConsultaEdicionCursoPublishProxy();
-    return controladorConsultaEdicionCursoPublish.seleccionarCategoria(arg0);
-  }
-  
   public publicadores.DtEdicion seleccionarEdicion(java.lang.String arg0) throws java.rmi.RemoteException{
     if (controladorConsultaEdicionCursoPublish == null)
       _initControladorConsultaEdicionCursoPublishProxy();
     return controladorConsultaEdicionCursoPublish.seleccionarEdicion(arg0);
   }
   
-  public publicadores.DtEdicion getDtEdicion(java.lang.String arg0) throws java.rmi.RemoteException{
+  public java.lang.String getMensaje() throws java.rmi.RemoteException{
     if (controladorConsultaEdicionCursoPublish == null)
       _initControladorConsultaEdicionCursoPublishProxy();
-    return controladorConsultaEdicionCursoPublish.getDtEdicion(arg0);
-  }
-  
-  public java.lang.String getNombreCurso(java.lang.String arg0) throws java.rmi.RemoteException{
-    if (controladorConsultaEdicionCursoPublish == null)
-      _initControladorConsultaEdicionCursoPublishProxy();
-    return controladorConsultaEdicionCursoPublish.getNombreCurso(arg0);
+    return controladorConsultaEdicionCursoPublish.getMensaje();
   }
   
   public java.lang.String[] getDocentes(java.lang.String arg0) throws java.rmi.RemoteException{
@@ -92,10 +86,22 @@ public class ControladorConsultaEdicionCursoPublishProxy implements publicadores
     return controladorConsultaEdicionCursoPublish.getDocentes(arg0);
   }
   
-  public java.lang.String getMensaje() throws java.rmi.RemoteException{
+  public java.lang.String getNombreCurso(java.lang.String arg0) throws java.rmi.RemoteException{
     if (controladorConsultaEdicionCursoPublish == null)
       _initControladorConsultaEdicionCursoPublishProxy();
-    return controladorConsultaEdicionCursoPublish.getMensaje();
+    return controladorConsultaEdicionCursoPublish.getNombreCurso(arg0);
+  }
+  
+  public publicadores.DtEdicion getDtEdicion(java.lang.String arg0) throws java.rmi.RemoteException{
+    if (controladorConsultaEdicionCursoPublish == null)
+      _initControladorConsultaEdicionCursoPublishProxy();
+    return controladorConsultaEdicionCursoPublish.getDtEdicion(arg0);
+  }
+  
+  public void setMensaje(java.lang.String arg0) throws java.rmi.RemoteException{
+    if (controladorConsultaEdicionCursoPublish == null)
+      _initControladorConsultaEdicionCursoPublishProxy();
+    controladorConsultaEdicionCursoPublish.setMensaje(arg0);
   }
   
   

@@ -164,8 +164,9 @@ public class ConsultaEdicion extends HttpServlet {
 		for(int i = 0; i < cursos.length; ++i) {
 			retorno.add(cursos[i]);
 		}
-		if (port.getMensaje() != null) {
+		if (!port.getMensaje().equals("vacio")) {
 			error = port.getMensaje();
+			port.setMensaje("vacio");
 			throw new RemoteException();
 		}
 		System.out.println("El mensaje es: " + port.getMensaje());
@@ -177,11 +178,13 @@ public class ConsultaEdicion extends HttpServlet {
 		ControladorConsultaEdicionCursoPublish port = cps.getControladorConsultaEdicionCursoPublishPort();
 		DtCursoBase[] cursos = port.seleccionarInstituto(instituto);
 		ArrayList<DtCursoBase> retorno = new ArrayList<DtCursoBase>();
+		System.out.println(retorno.size());
 		for(int i = 0; i < cursos.length; ++i) {
 			retorno.add(cursos[i]);
 		}
-		if (port.getMensaje() != null) {
+		if (!port.getMensaje().equals("vacio")) {
 			error = port.getMensaje();
+			port.setMensaje("vacio");
 			throw new RemoteException();
 		}
 		System.out.println("El mensaje es: " + port.getMensaje());
@@ -196,8 +199,9 @@ public class ConsultaEdicion extends HttpServlet {
 		for(int i = 0; i < cursos.length; ++i) {
 			retorno.add(cursos[i]);
 		}
-		if (port.getMensaje() != null) {
+		if (!port.getMensaje().equals("vacio")) {
 			error = port.getMensaje();
+			port.setMensaje("vacio");
 			throw new RemoteException();
 		}
 		System.out.println("El mensaje es: " + port.getMensaje());

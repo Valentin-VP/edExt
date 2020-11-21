@@ -35,7 +35,7 @@ public class ControladorConsultaEdicionCursoPublish {
 	private IControladorConsultaEdicionCurso icon;
 	private WebServiceConfiguration configuracion;
 	private Endpoint endpoint;
-	private String mensaje;
+	private String mensaje = "vacio";
 
 	public ControladorConsultaEdicionCursoPublish() {
 		fabrica = Fabrica.getInstancia();
@@ -152,6 +152,11 @@ public class ControladorConsultaEdicionCursoPublish {
 	@WebMethod
 	public String getMensaje() {
 		return this.mensaje;
+	}
+	
+	@WebMethod
+	public void setMensaje(String m) {
+		this.mensaje = m;
 	}
 	
 	/*@WebMethod

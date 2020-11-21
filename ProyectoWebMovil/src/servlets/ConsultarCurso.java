@@ -45,6 +45,7 @@ public class ConsultarCurso extends HttpServlet {
 		/*Fabrica fabrica = Fabrica.getInstancia();
 		IControladorConsultaCurso icon = fabrica.getIControladorConsultaCurso();*/
 		RequestDispatcher rd;
+		System.out.println("Entro al consulta de webMovil");
 		switch(sesion.getAttribute("optConsultaCursoInfoCurso").toString()) {
 		case "0": //carga una variable con los cursos
 					boolean esInstituto = request.getParameter("esInstitutoInfoCurso") != null;

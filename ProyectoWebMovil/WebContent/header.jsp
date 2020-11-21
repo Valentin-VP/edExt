@@ -38,7 +38,7 @@ if(sesion.getAttribute("inicio") == "iniciado") {  %>
       	<a class="nav-link" href="infoCurso.jsp" id="ConsutaCurso" role="button">Info. Curso</a>
       </li>
       <li class="nav-item">
-      	<a class="nav-link" href="infoEdicion.jsp" id="ConsutaEdicion" role="button">Info. Edicion</a>
+ 		<a class="nav-link" href="infoEdicion.jsp?optConsultaEdicionInfoEdicion=<%= "0" %>" id="ConsutaEdicion" role="button">Info. Edicion</a>
       </li>
       <li class="nav-item">
        	<a class="nav-link" href="CerrarSesion" id="IniciarButton" role="button">Cerrar Sesion</a>

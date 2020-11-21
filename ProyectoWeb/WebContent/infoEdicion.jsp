@@ -62,11 +62,10 @@ if(session.getAttribute("optConsultaEdicionInfoEdicion").toString().equals("0"))
 <br><br>
 <form action="ConsultaEdicion" method="post">
 	<div class="form-row">
-	<!-- <input type="text" name="optConsultaEdicionInfoEdicion" value="<%=request.getParameter("optConsultaEdicionInfoEdicion")%>"> -->
 		<div align="center" class="form-group col-md-6">
-	      <label for="inputCurso">Curso</label>
-      	<select id="inputCurso" name="cursoInfoEdicion" class="selectpicker">
-        	<option selected disabled>Choose...</option>
+	     	<label for="inputCurso">Curso</label>
+      		<select id="inputCurso" name="cursoInfoEdicion" class="selectpicker" required>
+        	<option></option>
         	<%for(String c: cursos){ %>
         	<option value="<%= c %>"><%= c %></option>
         	<%} %>

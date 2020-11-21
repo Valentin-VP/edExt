@@ -22,7 +22,7 @@ public class ControladorSesionPublish {
 	private IControladorSesion icon;
 	private WebServiceConfiguration configuracion;
 	private Endpoint endpoint;
-	private String mensaje;
+	private String mensaje = "vacio";
 
 	public ControladorSesionPublish() {
 		fabrica = Fabrica.getInstancia();
@@ -74,6 +74,11 @@ public class ControladorSesionPublish {
 	@WebMethod
 	public String getMensaje() {
 		return this.mensaje;
+	}
+	
+	@WebMethod
+	public void setMensaje(String m) {
+		this.mensaje = m;
 	}
 	
 	/*@WebMethod

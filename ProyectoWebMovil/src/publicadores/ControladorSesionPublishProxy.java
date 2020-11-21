@@ -50,22 +50,16 @@ public class ControladorSesionPublishProxy implements publicadores.ControladorSe
     return controladorSesionPublish.identificarUsuario(arg0, arg1);
   }
   
-  public java.lang.String codificarPass(java.lang.String arg0) throws java.rmi.RemoteException, publicadores.NoSuchAlgorithmException{
+  public void setMensaje(java.lang.String arg0) throws java.rmi.RemoteException{
     if (controladorSesionPublish == null)
       _initControladorSesionPublishProxy();
-    return controladorSesionPublish.codificarPass(arg0);
+    controladorSesionPublish.setMensaje(arg0);
   }
   
-  public java.lang.String obtenerNick() throws java.rmi.RemoteException{
+  public boolean existeUsuario(java.lang.String arg0) throws java.rmi.RemoteException{
     if (controladorSesionPublish == null)
       _initControladorSesionPublishProxy();
-    return controladorSesionPublish.obtenerNick();
-  }
-  
-  public java.lang.String getMensaje() throws java.rmi.RemoteException{
-    if (controladorSesionPublish == null)
-      _initControladorSesionPublishProxy();
-    return controladorSesionPublish.getMensaje();
+    return controladorSesionPublish.existeUsuario(arg0);
   }
   
   public java.lang.String obtenerCorreo() throws java.rmi.RemoteException{
@@ -74,10 +68,22 @@ public class ControladorSesionPublishProxy implements publicadores.ControladorSe
     return controladorSesionPublish.obtenerCorreo();
   }
   
-  public boolean existeUsuario(java.lang.String arg0) throws java.rmi.RemoteException{
+  public java.lang.String codificarPass(java.lang.String arg0) throws java.rmi.RemoteException, publicadores.NoSuchAlgorithmException{
     if (controladorSesionPublish == null)
       _initControladorSesionPublishProxy();
-    return controladorSesionPublish.existeUsuario(arg0);
+    return controladorSesionPublish.codificarPass(arg0);
+  }
+  
+  public java.lang.String getMensaje() throws java.rmi.RemoteException{
+    if (controladorSesionPublish == null)
+      _initControladorSesionPublishProxy();
+    return controladorSesionPublish.getMensaje();
+  }
+  
+  public java.lang.String obtenerNick() throws java.rmi.RemoteException{
+    if (controladorSesionPublish == null)
+      _initControladorSesionPublishProxy();
+    return controladorSesionPublish.obtenerNick();
   }
   
   

@@ -9,15 +9,6 @@
 <meta name="viewport" content="width=device-width, inicial-scale=1, shrink-to-fit=no">
 <%@include file = "/header.jsp" %>
 <title>Consultar la Informacion de una Edicion</title>
-<style>
-#checker{
-	left: 200px;
-}
-
-#checker2{
-	left: 300px;
-}
-</style>
 </head>
 <body>
 <% 
@@ -37,25 +28,25 @@ if(session.getAttribute("optConsultaEdicionInfoEdicion").toString().equals("0"))
 <br><br>
 <form action="ConsultaEdicion" method="post">
 	<div class="form-row">
-	<!-- <input type="text" name="optConsultaEdicionInfoEdicion" value="<%=request.getParameter("optConsultaEdicionInfoEdicion")%>">
-	<input type="text" name="esInstitutoInfoEdicion" value="<%=esInstitutoInfoEdicion%>">
-  	<input type="text" name="esCategoriaInfoEdicion" value="<%=esCategoriaInfoEdicion%>"> -->
-		<div id=checker class="form-check col-md-3">
-	      <input class="form-check-input" type="checkbox" id="checkInstituto" name="esInstitutoInfoEdicion" checked>
-	      <label class="form-check-label" for="checkInstituto">Es Instituto</label>
+		<div class="MyDiv" id="nombres" style="margin-left:15%">
+	      <input class="form-check-input" type="checkbox" id="esInstitutoInfoEdicion" name="esInstitutoInfoEdicion" checked>
+	      <label class="form-check-label" for="checkInstituto" style="font-size: 150%">Es Instituto</label>
 	    </div>
-	    <div id=checker2 class="form-check">
-	      <input class="form-check-input" type="checkbox" id="checkCategoria" name="esCategoriaInfoEdicion">
-	      <label class="form-check-label" for="checkCategoria">Es Categoria</label>
+	</div>
+	<div class="form-row" id="nombres">
+		<div class="MyDiv" style="margin-left:15%">
+	      <input class="form-check-input" type="checkbox" id="esCategoriaInfoEdicion" name="esCategoriaInfoEdicion">
+	      <label class="form-check-label" for="checkCategoria" style="font-size: 150%">Es Categoria</label>
 	    </div>
 	</div>
 	<br><br>
-	<div class="form-row">
-		<div class="form-group col-md-10">
-	      <input type="text" name="InsCatEd" class="form-control" id="InsCatEd">
+		<div class="MyDiv">
+	      <input type="text" name="InsCatEd" class="form-control" id="InsCatEd" style="display:block; margin:auto; width:80%;">
 	    </div>
-      	<button type="submit" class="btn btn-primary">Buscar Cursos</button> 
-	</div>
+	    <br>
+	    <div class="MyDiv">
+      		<button type="submit" class="btn btn-primary" style="display:block; margin:auto;">Buscar Cursos</button> 
+      	</div>
 </form>
 <%} else if(session.getAttribute("optConsultaEdicionInfoEdicion").toString().equals("1")) {%>
 <h1 align="center"> Seleccione el Curso </h1>
@@ -65,14 +56,14 @@ if(session.getAttribute("optConsultaEdicionInfoEdicion").toString().equals("0"))
 	<!-- <input type="text" name="optConsultaEdicionInfoEdicion" value="<%=request.getParameter("optConsultaEdicionInfoEdicion")%>"> -->
 		<div align="center" class="form-group col-md-6">
 	      <label for="inputCurso">Curso</label>
-      	<select id="inputCurso" name="cursoInfoEdicion" class="selectpicker">
-        	<option selected disabled>Choose...</option>
+      	<select id="inputCurso" name="cursoInfoEdicion" class="selectpicker" required>
+        	<option></option>
         	<%for(String c: cursos){ %>
         	<option value="<%= c %>"><%= c %></option>
         	<%} %>
       	</select>
 	    </div>
-	    <button type="submit" class="btn btn-primary">Buscar Ediciones</button>
+	    <button type="submit" class="btn btn-primary" style="display:block; margin:auto;">Buscar Ediciones</button>
 	</div>
 </form>
 <%} else if(session.getAttribute("optConsultaEdicionInfoEdicion").toString().equals("2")) { %>
@@ -90,7 +81,7 @@ if(session.getAttribute("optConsultaEdicionInfoEdicion").toString().equals("0"))
 	        <%} %>
 	      </select>
 	    </div>
-	    <button type="submit" class="btn btn-primary">Mostrar Informacion</button>
+	    <button type="submit" class="btn btn-primary" style="display:block; margin:auto;">Mostrar Informacion</button>
 	</div>
 </form>
 <%}else if(session.getAttribute("optConsultaEdicionInfoEdicion").toString().equals("3")) {%>

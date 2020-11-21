@@ -38,7 +38,7 @@ public class ConsultarTipoUsuario extends HttpServlet {
 		try {
 			codificada = codificarPass(pass);
 		} catch (RemoteException | ServiceException | NoSuchAlgorithmException e) {
-			request.setAttribute("mensaje", e.getMessage());
+			request.setAttribute("mensaje", error);
 			rd = request.getRequestDispatcher("/error.jsp");
 			rd.forward(request, response);
 		}
@@ -55,24 +55,28 @@ public class ConsultarTipoUsuario extends HttpServlet {
 					sesion.setAttribute("correo", correo);
 				}
 			} else {
-				request.setAttribute("mensaje", "El estudiante no esta registrado");
+				System.out.println("entro al else de existe usuario");
+				request.setAttribute("mensaje", "El usuario no esta registrado");
 				rd = request.getRequestDispatcher("/error.jsp");
 				rd.forward(request, response);
 			}
 		} catch(RemoteException | ServiceException e) {
-			request.setAttribute("mensaje", e.getMessage());
+			request.setAttribute("mensaje", error);
 			rd = request.getRequestDispatcher("/error.jsp");
 			rd.forward(request, response);
 		}
 		//request.setAttribute("tipo", tipo);
 		//request.setAttribute("nick", nickname);
 		if(tipo.equals("estudiante")) {
-			System.out.println("entro a setear iniciado");
 			sesion.setAttribute("inicio","iniciado");
 			rd = request.getRequestDispatcher("/index.jsp");
 			rd.forward(request, response);
+		}else if(tipo.equals("docente")){
+			request.setAttribute("mensaje", "Login exclusivo para estudiantes");
+			rd = request.getRequestDispatcher("/error.jsp");
+			rd.forward(request, response);
 		}else {
-			request.setAttribute("mensaje", "Acceso exclusivo a estudiantes");
+			request.setAttribute("mensaje", "Contraseña incorrecta");
 			rd = request.getRequestDispatcher("/error.jsp");
 			rd.forward(request, response);
 		}
@@ -81,31 +85,60 @@ public class ConsultarTipoUsuario extends HttpServlet {
 	public String codificarPass(String pass) throws ServiceException, NoSuchAlgorithmException, RemoteException {
 		ControladorSesionPublishService cps = new ControladorSesionPublishServiceLocator();
 		ControladorSesionPublish port = cps.getControladorSesionPublishPort();
+		if (!port.getMensaje().equals("vacio")) {
+			error = port.getMensaje();
+			port.setMensaje("vacio");
+			throw new RemoteException();
+		}
 		return port.codificarPass(pass);
 	}
 	
 	public boolean existeUsuario(String nick) throws RemoteException, ServiceException {
 		ControladorSesionPublishService cps = new ControladorSesionPublishServiceLocator();
 		ControladorSesionPublish port = cps.getControladorSesionPublishPort();
-		return port.existeUsuario(nick);
+		boolean retorno = port.existeUsuario(nick);
+		if (!port.getMensaje().equals("vacio")) {
+			error = port.getMensaje();
+			port.setMensaje("vacio");
+			throw new RemoteException();
+		}
+		return retorno;
 	}
 	
 	public String identificarUsuario(String id, String hashpass) throws RemoteException, ServiceException {
 		ControladorSesionPublishService cps = new ControladorSesionPublishServiceLocator();
 		ControladorSesionPublish port = cps.getControladorSesionPublishPort();
-		return port.identificarUsuario(id, hashpass);
+		String retorno = port.identificarUsuario(id, hashpass);
+		if (!port.getMensaje().equals("vacio")) {
+			error = port.getMensaje();
+			port.setMensaje("vacio");
+			throw new RemoteException();
+		}
+		return retorno;
 	}
 	
 	public String obtenerNick() throws ServiceException, RemoteException {
 		ControladorSesionPublishService cps = new ControladorSesionPublishServiceLocator();
 		ControladorSesionPublish port = cps.getControladorSesionPublishPort();
-		return port.obtenerNick();
+		String retorno = port.obtenerNick();
+		if (!port.getMensaje().equals("vacio")) {
+			error = port.getMensaje();
+			port.setMensaje("vacio");
+			throw new RemoteException();
+		}
+		return retorno;
 	}
 	
 	public String obtenerCorreo() throws RemoteException, ServiceException {
 		ControladorSesionPublishService cps = new ControladorSesionPublishServiceLocator();
 		ControladorSesionPublish port = cps.getControladorSesionPublishPort();
-		return port.obtenerCorreo();
+		String retorno = port.obtenerCorreo();
+		if (!port.getMensaje().equals("vacio")) {
+			error = port.getMensaje();
+			port.setMensaje("vacio");
+			throw new RemoteException();
+		}
+		return retorno;
 	}
 	
 }
