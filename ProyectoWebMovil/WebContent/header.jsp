@@ -41,13 +41,9 @@ if(sesion.getAttribute("inicio") == "iniciado") {  %>
  		<a class="nav-link" href="infoEdicion.jsp?optConsultaEdicionInfoEdicion=<%= "0" %>" id="ConsutaEdicion" role="button">Info. Edicion</a>
       </li>
       <li class="nav-item">
-       	<a class="nav-link" href="CerrarSesion" id="IniciarButton" role="button">Cerrar Sesion</a>
+       	<a class="nav-link" href="CerrarSesion" id="IniciarButton" role="button" style="color:#ff0000;">Cerrar Sesion - <%= nickname %></a>
       </li>
     </ul>
-    <form action="FiltradoYBusqueda" method="post" class="form-inline my-2 my-lg-0">
-      <input name="busqueda" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Search</button>
-    </form>
   </div>
 </nav>
 <%} else { //-- NavBar visitante -->
