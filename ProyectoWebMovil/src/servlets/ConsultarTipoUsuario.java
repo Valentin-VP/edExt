@@ -69,7 +69,7 @@ public class ConsultarTipoUsuario extends HttpServlet {
 		//request.setAttribute("nick", nickname);
 		if(tipo.equals("estudiante")) {
 			sesion.setAttribute("inicio","iniciado");
-			rd = request.getRequestDispatcher("/index.jsp");
+			rd = request.getRequestDispatcher("/CargarTodo");
 			rd.forward(request, response);
 		}else if(tipo.equals("docente")){
 			request.setAttribute("mensaje", "Login exclusivo para estudiantes");
