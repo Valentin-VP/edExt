@@ -44,48 +44,6 @@ public class ControladorConsultaCursoPublishProxy implements publicadores.Contro
     return controladorConsultaCursoPublish;
   }
   
-  public publicadores.DtCursoBase[] listarCursosInstituto(java.lang.String arg0) throws java.rmi.RemoteException, publicadores.InstitutoInexistente, publicadores.InstitutoSinCursos{
-    if (controladorConsultaCursoPublish == null)
-      _initControladorConsultaCursoPublishProxy();
-    return controladorConsultaCursoPublish.listarCursosInstituto(arg0);
-  }
-  
-  public java.lang.String[] listarCategorias() throws java.rmi.RemoteException, publicadores.SinCategorias{
-    if (controladorConsultaCursoPublish == null)
-      _initControladorConsultaCursoPublishProxy();
-    return controladorConsultaCursoPublish.listarCategorias();
-  }
-  
-  public publicadores.DtInstituto[] listarInstitutos() throws java.rmi.RemoteException, publicadores.SinInstitutos{
-    if (controladorConsultaCursoPublish == null)
-      _initControladorConsultaCursoPublishProxy();
-    return controladorConsultaCursoPublish.listarInstitutos();
-  }
-  
-  public publicadores.DtCursoBase[] listarCursosCategoria(java.lang.String arg0) throws java.rmi.RemoteException, publicadores.CategoriaInexistente, publicadores.CategoriaSinCursos{
-    if (controladorConsultaCursoPublish == null)
-      _initControladorConsultaCursoPublishProxy();
-    return controladorConsultaCursoPublish.listarCursosCategoria(arg0);
-  }
-  
-  public publicadores.DtProgramaBase[] getProgramas() throws java.rmi.RemoteException{
-    if (controladorConsultaCursoPublish == null)
-      _initControladorConsultaCursoPublishProxy();
-    return controladorConsultaCursoPublish.getProgramas();
-  }
-  
-  public publicadores.DtCurso consultarCurso(java.lang.String arg0) throws java.rmi.RemoteException{
-    if (controladorConsultaCursoPublish == null)
-      _initControladorConsultaCursoPublishProxy();
-    return controladorConsultaCursoPublish.consultarCurso(arg0);
-  }
-  
-  public publicadores.DtCurso[] listarCursosPlataforma() throws java.rmi.RemoteException, publicadores.SinCursos{
-    if (controladorConsultaCursoPublish == null)
-      _initControladorConsultaCursoPublishProxy();
-    return controladorConsultaCursoPublish.listarCursosPlataforma();
-  }
-  
   public java.lang.String getMensaje() throws java.rmi.RemoteException{
     if (controladorConsultaCursoPublish == null)
       _initControladorConsultaCursoPublishProxy();
@@ -96,6 +54,48 @@ public class ControladorConsultaCursoPublishProxy implements publicadores.Contro
     if (controladorConsultaCursoPublish == null)
       _initControladorConsultaCursoPublishProxy();
     controladorConsultaCursoPublish.setMensaje(arg0);
+  }
+  
+  public java.lang.String[] listarCategorias() throws java.rmi.RemoteException, publicadores.SinCategorias{
+    if (controladorConsultaCursoPublish == null)
+      _initControladorConsultaCursoPublishProxy();
+    return controladorConsultaCursoPublish.listarCategorias();
+  }
+  
+  public publicadores.DtCursoBase[] listarCursosInstituto(java.lang.String arg0) throws java.rmi.RemoteException, publicadores.InstitutoInexistente, publicadores.InstitutoSinCursos{
+    if (controladorConsultaCursoPublish == null)
+      _initControladorConsultaCursoPublishProxy();
+    return controladorConsultaCursoPublish.listarCursosInstituto(arg0);
+  }
+  
+  public publicadores.DtInstituto[] listarInstitutos() throws java.rmi.RemoteException, publicadores.SinInstitutos{
+    if (controladorConsultaCursoPublish == null)
+      _initControladorConsultaCursoPublishProxy();
+    return controladorConsultaCursoPublish.listarInstitutos();
+  }
+  
+  public publicadores.DtCurso consultarCurso(java.lang.String arg0) throws java.rmi.RemoteException{
+    if (controladorConsultaCursoPublish == null)
+      _initControladorConsultaCursoPublishProxy();
+    return controladorConsultaCursoPublish.consultarCurso(arg0);
+  }
+  
+  public publicadores.DtProgramaBase[] getProgramas() throws java.rmi.RemoteException{
+    if (controladorConsultaCursoPublish == null)
+      _initControladorConsultaCursoPublishProxy();
+    return controladorConsultaCursoPublish.getProgramas();
+  }
+  
+  public publicadores.DtCursoBase[] listarCursosCategoria(java.lang.String arg0) throws java.rmi.RemoteException, publicadores.CategoriaInexistente, publicadores.CategoriaSinCursos{
+    if (controladorConsultaCursoPublish == null)
+      _initControladorConsultaCursoPublishProxy();
+    return controladorConsultaCursoPublish.listarCursosCategoria(arg0);
+  }
+  
+  public publicadores.DtCurso[] listarCursosPlataforma() throws java.rmi.RemoteException, publicadores.SinCursos{
+    if (controladorConsultaCursoPublish == null)
+      _initControladorConsultaCursoPublishProxy();
+    return controladorConsultaCursoPublish.listarCursosPlataforma();
   }
   
   

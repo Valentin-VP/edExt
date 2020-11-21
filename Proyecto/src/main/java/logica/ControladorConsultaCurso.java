@@ -64,44 +64,48 @@ public class ControladorConsultaCurso implements IControladorConsultaCurso{
 	
 	@Override
 	public DtCurso consultarCurso(String curso) {
-		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 		DtCurso retorno;
-		this.programas = new ArrayList<DtProgramaBase>();
-		ManejadorProgFormacion mP = ManejadorProgFormacion.getInstancia();
+		ManejadorCurso mC = ManejadorCurso.getInstancia();
+		Curso recuperado = mC.find(curso); 
+//		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
+//		this.programas = new ArrayList<DtProgramaBase>();
+//		ManejadorProgFormacion mP = ManejadorProgFormacion.getInstancia();
+//		String nombre = mI.find(institutoCon).findCurso(curso).getNombre();
+//		String descripcion = mI.find(institutoCon).findCurso(curso).getDescripcion();
+//		String duracion = mI.find(institutoCon).findCurso(curso).getDuracion();
+//		int cantHoras = mI.find(institutoCon).findCurso(curso).getCantHoras();
+//		int creditos = mI.find(institutoCon).findCurso(curso).getCreditos().intValue();
+//		DtFecha fechaR = mI.find(institutoCon).findCurso(curso).convertToDtFecha(mI.find(institutoCon).findCurso(curso).getFechaR());
+//		String url = mI.find(institutoCon).findCurso(curso).getUrl();
+//		// Buscar ProgFormacion que incluyan a este curso y guardarlos para crear el DtCurso a retornar 
+//		if(!mP.getProgramas().isEmpty()) {
+//			for(ProgFormacion pf: mP.getProgramas()) {
+//				for(Curso c: pf.getCursos()) {
+//					if(c.getNombre().equals(curso)) {
+//						DtProgramaBase progf = new DtProgramaBase(pf.getNombre());
+//						this.programas.add(progf);
+//					}
+//				}
+//			}
+//		}
 		ArrayList<DtEdicionBase> dteb = new ArrayList<DtEdicionBase>();
-		ArrayList<DtCursoBase> dtprevias = new ArrayList<DtCursoBase>();
-		String nombre = mI.find(institutoCon).findCurso(curso).getNombre();
-		String descripcion = mI.find(institutoCon).findCurso(curso).getDescripcion();
-		String duracion = mI.find(institutoCon).findCurso(curso).getDuracion();
-		int cantHoras = mI.find(institutoCon).findCurso(curso).getCantHoras();
-		int creditos = mI.find(institutoCon).findCurso(curso).getCreditos();
-		DtFecha fechaR = mI.find(institutoCon).findCurso(curso).convertToDtFecha(mI.find(institutoCon).findCurso(curso).getFechaR());
-		String url = mI.find(institutoCon).findCurso(curso).getUrl();
-		// Buscar ProgFormacion que incluyan a este curso y guardarlos para crear el DtCurso a retornar 
-		if(!mP.getProgramas().isEmpty()) {
-			for(ProgFormacion pf: mP.getProgramas()) {
-				for(Curso c: pf.getCursos()) {
-					if(c.getNombre().equals(curso)) {
-						DtProgramaBase progf = new DtProgramaBase(pf.getNombre());
-						this.programas.add(progf);
-					}
-				}
-			}
-		}
-		for(Edicion ed: mI.find(institutoCon).findCurso(curso).getEdiciones()) { 
+		for(Edicion ed: recuperado.getEdiciones()) { 
 			  DtEdicionBase edb = new DtEdicionBase(ed.getNombre());
 			  dteb.add(edb);
 		}
-		for(Curso previa: mI.find(institutoCon).findCurso(curso).getPrevias()) { 
+		ArrayList<DtCursoBase> dtprevias = new ArrayList<DtCursoBase>();
+		for(Curso previa: recuperado.getPrevias()) { 
 			  DtCursoBase dtprevia = new DtCursoBase(previa.getNombre());
 			  dtprevias.add(dtprevia); 
 		}
 		ArrayList<String> categories = new ArrayList <String>();
-		for(Categoria cat: mI.find(institutoCon).findCurso(curso).getCategorias()) {
+		for(Categoria cat: recuperado.getCategorias()) {
 			String strcat = cat.getNombre();
 			categories.add(strcat);
 		}
-		retorno = new DtCurso(descripcion,duracion,cantHoras,creditos,fechaR,url,nombre,dteb,dtprevias,categories);
+		DtFecha dtfecha = new DtFecha();
+		dtfecha = dtfecha.convertToDtFecha(recuperado.getFechaR());
+		retorno = new DtCurso(recuperado.getDescripcion(),recuperado.getDuracion(), recuperado.getCantHoras(), recuperado.getCreditos().intValue(), dtfecha, recuperado.getUrl(),recuperado.getNombre(),dteb,dtprevias,categories);
 		return retorno;
 	 }
 
