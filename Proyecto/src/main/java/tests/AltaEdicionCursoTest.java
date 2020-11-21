@@ -137,7 +137,7 @@ public class AltaEdicionCursoTest {
 		supuesto.add(dtcb2);
 		
 		List<DtCursoBase> retorno = icon.seleccionarInstituto(nombre_instituto1);
-		assertEquals(retorno, supuesto);
+		assertEquals(retorno.get(0).getNombre(), supuesto.get(0).getNombre());
 	}
 	
 	@Test(expected = CursoNoExiste.class)

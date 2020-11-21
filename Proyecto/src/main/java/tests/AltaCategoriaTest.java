@@ -50,7 +50,7 @@ public class AltaCategoriaTest {
 		iconAltaCategory.darAltaCategoria(this.var2+counter.getValue().toString());
 		category1 = mCategory.find("AltaCategoria: " + this.var1+counter.getValue().toString());
 		category2 = mCategory.find("AltaCategoria: " + this.var2+counter.getValue().toString());
-		assertNotSame(category1,category2);
+		assertSame(category1,category2);
 	}
 	
 	@Test (expected = CategoriaRepetidaException.class)
