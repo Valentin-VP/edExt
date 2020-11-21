@@ -11,6 +11,8 @@ import interfaces.IControladorModificarDatosUsuario;
 import logica.Estudiante;
 import logica.ManejadorUsuario;
 
+import static org.junit.Assert.assertThrows;
+
 import java.text.ParseException;
 
 import org.junit.Before;
@@ -42,7 +44,7 @@ public class ModificarDatosUsuarioTest {
 		System.out.println(this.estudiante2);
 	}
 	
-	@Test (expected = SinUsuarios.class)
+	@Test
 	public void test1_mostrarUsuarios() throws SinUsuarios {
 		icon.mostrarUsuarios();
 	}
@@ -93,6 +95,13 @@ public class ModificarDatosUsuarioTest {
 	@Test
 	public void test4_limpiar() {
 		icon.limpiar();
+	}
+	
+	@Test
+	public void test5_UsuarioNoExiste() {
+		assertThrows(UsuarioNoExiste.class, () -> {
+			icon.seleccionarUsuario("no se", "asd");
+		});
 	}
 
 }

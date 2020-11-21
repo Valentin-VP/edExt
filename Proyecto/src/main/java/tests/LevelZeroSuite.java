@@ -1,5 +1,7 @@
 package tests;
 
+import static org.junit.Assert.assertThrows;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,9 +51,11 @@ public class LevelZeroSuite {
 		iconAltaCurso = fabrica.getIControladorAltaCurso();
 	}
 	
-	@Test (expected = SinInstitutos.class)
+	@Test
 	public void test1_listarInstitutos() throws SinInstitutos {
-		ArrayList<DtInstituto> institutos = iconInscripcionEdicion.listarInstitutos();
+		assertThrows(SinInstitutos.class, () -> {
+			ArrayList<DtInstituto> institutos = iconInscripcionEdicion.listarInstitutos();
+		});
 	}
 	
 	@Test (expected = SinInstitutos.class)
@@ -61,7 +65,7 @@ public class LevelZeroSuite {
 	
 	@Test (expected = SinInstitutos.class)
 	public void test3_NoHayInstitutosParaListar() throws SinInstitutos {
-			iconAltaCurso.listarInstitutos();
+		iconAltaCurso.listarInstitutos();
     }
 	
 	@Test (expected = SinInstitutos.class)
@@ -101,8 +105,11 @@ public class LevelZeroSuite {
 		List<DtProgramaBase> progNoExiste = iconConsultaPrograma.listarProgramas();
 	}
 	
-	@Test (expected = SinUsuarios.class)
+	@Test
 	public void test11_mostrarUsuarios() throws SinUsuarios {
-		ArrayList<DtUsuarioBase> usuarios = iconModificarDatosUsuario.mostrarUsuarios();
+		assertThrows(SinUsuarios.class, () -> {
+			ArrayList<DtUsuarioBase> usuarios = iconModificarDatosUsuario.mostrarUsuarios();
+		});
 	}
+	
 }

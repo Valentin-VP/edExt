@@ -115,7 +115,7 @@ public class ControladorInscripcionEdicionCurso implements IControladorInscripci
 	}
 
 	@Override
-	public void confirmar() throws InscripcionEdRepetido, EdicionVigenteNoExiste, UsuarioNoExiste{
+	public void confirmar() throws InscripcionEdRepetido, EdicionVigenteNoExiste, UsuarioNoExiste {
 		//ManejadorInstituto mI = ManejadorInstituto.getInstancia();
 		//Instituto ins = mI.find(nomIns);
 		//ManejadorCurso mC = ManejadorCurso.getInstancia();

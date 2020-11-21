@@ -9,6 +9,8 @@ import interfaces.Fabrica;
 import interfaces.IControladorAltaProgFormacion;
 import logica.ManejadorProgFormacion;
 
+import static org.junit.Assert.assertThrows;
+
 import java.time.LocalDate;
 
 import org.junit.Before;
@@ -22,6 +24,7 @@ public class AltaProgFormacionTest {
 	static ManejadorProgFormacion mI;
 	String programa1 = "";
 	String programa2 = "";
+	static String progAgregado;
 	LocalDate factual;
 	
 	@BeforeClass
@@ -42,8 +45,9 @@ public class AltaProgFormacionTest {
 		System.out.println(this.programa2);
 	}
 	
+	@SuppressWarnings("static-access")
 	@Test
-	public void test1_ingresarProgFormacion() throws ProgramaRepetido{
+	public void test1_ingresarProgFormacion() throws ProgramaRepetido {
 		// FechaI random
 		int minyear = 2015;
 		int maxyear = 2025;
@@ -76,9 +80,47 @@ public class AltaProgFormacionTest {
 		icon.ingresarProgFormacion(this.programa1, "ni idea", fechaI, fechaF, factual);
 		icon.confirmar();
 		icon.cancelar();
+		this.progAgregado = this.programa1;
 		icon.ingresarProgFormacion(this.programa2, "ni idea", fechaI, fechaF, factual);
 		icon.confirmar();
 		icon.cancelar();
+		
 	}
 
+	@SuppressWarnings("static-access")
+	// El testeo sale bien si ocurre la excepcion, en este caso la generamos a proposito
+	// el expected funciona igual
+	@Test //(expected = ProgramaRepetido.class)
+	public void test2_programaRepetido() {
+		// FechaI random
+		int minyear = 2015;
+		int maxyear = 2025;
+		int yeari = (int)(Math.random()*(maxyear-minyear+1)+minyear);
+		int minmes = 1;
+		int maxmes = 11;
+		int mesi = (int)(Math.random()*(maxmes-minmes+1)+minmes);
+		int mindia = 1;
+		int maxdia = 31;
+		int diai = (int)(Math.random()*(maxdia-mindia+1)+mindia);
+		
+		// FechaF random
+		int minyearf = 2015;
+		int maxyearf = 2025;
+		int yearf = (int)(Math.random()*(maxyearf-minyearf+1)+minyearf);
+		int minmesf = 1;
+		int maxmesf = 11;
+		int mesf = (int)(Math.random()*(maxmesf-minmesf+1)+minmes);
+		int mindiaf = 1;
+		int maxdiaf = 31;
+		int diaf = (int)(Math.random()*(maxdiaf-mindiaf+1)+mindiaf);
+		
+		DtFecha fechaI = new DtFecha(diai,mesi,yeari);
+		DtFecha fechaF = new DtFecha(diaf,mesf,yearf);
+		
+		// Ya existe el programa
+		assertThrows(ProgramaRepetido.class, () -> {
+			icon.ingresarProgFormacion(this.progAgregado, "ni idea", fechaI, fechaF, factual);
+		});
+	}
+	
 }

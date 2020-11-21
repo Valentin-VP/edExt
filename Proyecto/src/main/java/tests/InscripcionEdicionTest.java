@@ -4,7 +4,6 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import datatypes.DtFecha;
-import datatypes.DtInstituto;
 import excepciones.CursoNoExiste;
 import excepciones.EdicionVigenteNoExiste;
 import excepciones.InscripcionEdRepetido;
@@ -24,6 +23,8 @@ import logica.ManejadorCurso;
 import logica.ManejadorEdicion;
 import logica.ManejadorInstituto;
 import logica.ManejadorUsuario;
+
+import static org.junit.Assert.assertThrows;
 
 import java.text.ParseException;
 import java.time.LocalDate;
@@ -61,6 +62,7 @@ public class InscripcionEdicionTest {
 	String edicion2 = "";
 	static Edicion ed1;
 	static Edicion ed2;
+	static Docente doc;
 	DtFecha factual;
 	//InscripcionEd ied1 = null;
 	//InscripcionEd ied2 = null;
@@ -118,13 +120,13 @@ public class InscripcionEdicionTest {
 		System.out.println(this.edicion2);
 	}
 	
-	@Test (expected = SinInstitutos.class)
+	@Test
 	public void test1_listarInstitutos() throws SinInstitutos {
 		icon.listarInstitutos();
 	}
 	
 	@SuppressWarnings("static-access")
-	@Test (expected = CursoNoExiste.class)
+	@Test //(expected = CursoNoExiste.class)
 	public void test2_seleccionarInstituto() throws CursoNoExiste, ParseException {
 		Instituto i = new Instituto(this.instituto1);
 		Instituto i2 = new Instituto(this.instituto2);
@@ -166,7 +168,7 @@ public class InscripcionEdicionTest {
 	}
 	
 	@SuppressWarnings("static-access")
-	@Test (expected = EdicionVigenteNoExiste.class)
+	@Test //(expected = EdicionVigenteNoExiste.class)
 	public void test3_seleccionarCurso() throws EdicionVigenteNoExiste, ParseException{
 		// FechaI random
 		int minyear = 2015;
@@ -234,6 +236,7 @@ public class InscripcionEdicionTest {
 		Docente doc2 = new Docente(this.docente2,"doc2","nose","doc2@gmail.com",fnac.DtFechaToDate(),this.ins2,"lkkhgñojoijodwqe213");
 		((Docente) doc1).addDictaEdicion(this.ed1);
 		((Docente) doc1).addDictaEdicion(this.ed2);
+		this.doc = doc1;
 		
 		mU.agregarUsuario(est1);
 		mU.agregarUsuario(est2);
@@ -248,9 +251,73 @@ public class InscripcionEdicionTest {
 		icon.confirmar();
 	}
 	
+	@Test 
+	public void test6_ExcepcionesConfirmaro() throws InscripcionEdRepetido, EdicionVigenteNoExiste, UsuarioNoExiste {
+		// Ya estiste una inscripcion a la edicion
+		assertThrows(InscripcionEdRepetido.class, () -> {
+			icon.confirmar();
+		});
+	}
+	
 	@Test
-	public void test6_cancelar() {
+	public void test7_cancelar() {
 		icon.cancelar();
 	}
+	
+	// Instituto sin cursos
+	@Test (expected = CursoNoExiste.class)
+	public void test8_institutoSinCursos() throws CursoNoExiste {
+		Instituto i = new Instituto(this.instituto1);
+		mI.agregarInstituto(i);
+		icon.seleccionarInstituto(i.getNombre());
+	}
+	
+	// Curso sin edicion vigente
+	@Test (expected = EdicionVigenteNoExiste.class)
+	public void test9_cursoSinEdicionVigente() throws EdicionVigenteNoExiste, ParseException {
+		Instituto i = new Instituto(this.instituto1);
+		mI.agregarInstituto(i);
+		
+		// Fecha realizacion random
+		int minyear = 2010;
+		int maxyear = 2020;
+		int year = (int)(Math.random()*(maxyear-minyear+1)+minyear);
+		int minmes = 1;
+		int maxmes = 11;
+		int mesr = (int)(Math.random()*(maxmes-minmes+1)+minmes);
+		int mindia = 1;
+		int maxdia = 31;
+		int diar = (int)(Math.random()*(maxdia-mindia+1)+mindia);
+		DtFecha r = new DtFecha(diar,mesr,year);
+		List<Categoria> categorias = new ArrayList<Categoria>();
+		Categoria ca1 = new Categoria(this.categoria1);
+		mCat.agregarCategoria(ca1);
+		categorias.add(ca1);
+		
+		Curso c = new Curso(this.curso1,"nose","10 horas",5,10,r.DtFechaToDate(),"www",null,categorias);
+		mC.agregarCurso(c);
+		icon.seleccionarCurso(c.getNombre());
+	}
+	
+	// No existe el usuario ingresado y el usuario no es docente
+	@Test 
+	public void test9a_noExisteUsuarioIngresado() throws UsuarioNoExiste, UsuarioNoEstudiante {
+		// No existe el usuario ingresado
+		assertThrows(UsuarioNoExiste.class, () -> {
+			icon.registrarInscripcionEd("adasd", "", "", factual);
+		});
+		
+		// No existe el usuario con el correo ingresado
+		assertThrows(UsuarioNoExiste.class, () -> {
+			icon.registrarInscripcionEd(doc.getNick(), "asdasd", "", factual);
+		});
+		
+		// El usuario ingresado es un docente
+		assertThrows(UsuarioNoEstudiante.class, () -> {
+			icon.registrarInscripcionEd(doc.getNick(), doc.getCorreo(), "", factual);
+		});
+	}
+	
 }
+
 
