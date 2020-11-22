@@ -1,5 +1,6 @@
 package tests;
 
+import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertThrows;
 
 import java.util.ArrayList;
@@ -26,6 +27,8 @@ import interfaces.IControladorConsultaPrograma;
 import interfaces.IControladorInscripcionEdicionCurso;
 import interfaces.IControladorListarAceptadosAUnaEdicionDeCurso;
 import interfaces.IControladorModificarDatosUsuario;
+import logica.Categoria;
+import logica.Instituto;
 
 public class LevelZeroSuite {
 	static Fabrica fabrica;
@@ -112,4 +115,18 @@ public class LevelZeroSuite {
 		});
 	}
 	
+	@Test (expected = SinCursos.class)
+	public void test12_listarCursosPlataforma() throws SinCursos {
+		iconConsultaCurso.listarCursosPlataforma();
+	}
+	
+	@Test (expected = SinInstitutos.class)
+	public void test9_listarInstitutos() throws SinInstitutos {
+		ArrayList<DtInstituto> institutos = iconConsultaCurso.listarInstitutos();
+	}
+	
+	@Test (expected = SinCategorias.class)
+	public void test10_listarCategorias() throws SinCategorias {
+		ArrayList<String> recuperadas = iconConsultaCurso.listarCategorias();
+	}
 }

@@ -67,27 +67,7 @@ public class ControladorConsultaCurso implements IControladorConsultaCurso{
 		DtCurso retorno;
 		ManejadorCurso mC = ManejadorCurso.getInstancia();
 		Curso recuperado = mC.find(curso); 
-//		ManejadorInstituto mI = ManejadorInstituto.getInstancia();
-//		this.programas = new ArrayList<DtProgramaBase>();
-//		ManejadorProgFormacion mP = ManejadorProgFormacion.getInstancia();
-//		String nombre = mI.find(institutoCon).findCurso(curso).getNombre();
-//		String descripcion = mI.find(institutoCon).findCurso(curso).getDescripcion();
-//		String duracion = mI.find(institutoCon).findCurso(curso).getDuracion();
-//		int cantHoras = mI.find(institutoCon).findCurso(curso).getCantHoras();
-//		int creditos = mI.find(institutoCon).findCurso(curso).getCreditos().intValue();
-//		DtFecha fechaR = mI.find(institutoCon).findCurso(curso).convertToDtFecha(mI.find(institutoCon).findCurso(curso).getFechaR());
-//		String url = mI.find(institutoCon).findCurso(curso).getUrl();
-//		// Buscar ProgFormacion que incluyan a este curso y guardarlos para crear el DtCurso a retornar 
-//		if(!mP.getProgramas().isEmpty()) {
-//			for(ProgFormacion pf: mP.getProgramas()) {
-//				for(Curso c: pf.getCursos()) {
-//					if(c.getNombre().equals(curso)) {
-//						DtProgramaBase progf = new DtProgramaBase(pf.getNombre());
-//						this.programas.add(progf);
-//					}
-//				}
-//			}
-//		}
+
 		ArrayList<DtEdicionBase> dteb = new ArrayList<DtEdicionBase>();
 		for(Edicion ed: recuperado.getEdiciones()) { 
 			  DtEdicionBase edb = new DtEdicionBase(ed.getNombre());
@@ -166,7 +146,7 @@ public class ControladorConsultaCurso implements IControladorConsultaCurso{
 		for(Curso cu: mCu.getCursos()){
 			//public DtCurso(String descripcion, String duracion, int cantHoras, Integer creditos, DtFecha fechaR, String url, String nombre, ArrayList<DtEdicionBase> ediciones, ArrayList<DtCursoBase> previas, ArrayList <String> categorias) {
 			Integer creditosInteger = new Integer (cu.getCreditos());
-			
+			System.out.println("Recorriendo Curso" + cu.getNombre());
 			List <Edicion> edicioneslist = cu.getEdiciones();
 			ArrayList <DtEdicionBase> dtedicionesbase = new ArrayList <DtEdicionBase>();
 			for(Edicion e: edicioneslist) {
@@ -189,12 +169,12 @@ public class ControladorConsultaCurso implements IControladorConsultaCurso{
 			
 			DtCurso curso = new DtCurso (cu.getDescripcion(),cu.getDuracion(),cu.getCantHoras(),creditosInteger,cu.convertToDtFecha(cu.getFechaR()),cu.getUrl(),cu.getNombre(),dtedicionesbase,dtcursosbase,strcategorias);
 			cursosplataforma.add(curso);
+			System.out.println("Se agregó Curso" + cu.getNombre());
 		}
 		if(cursosplataforma.isEmpty()) {
 			throw new SinCursos("No existen Cursos en la Plataforma");
 		}
 		return cursosplataforma;
-		
 	}
 	
 }	
