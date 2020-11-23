@@ -1,4 +1,4 @@
-package servlets;
+/*package servlets;
 
 import java.io.IOException;
 
@@ -16,9 +16,7 @@ import java.util.List;
 import java.util.ArrayList;
 import datatypes.DtUsuario;
 
-/**
- * Servlet implementation class ConsultaUsuario
- */
+Servlet implementation class ConsultaUsuario
 @WebServlet("/ConsultaUsuario")
 public class ConsultaUsuario extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -50,4 +48,4 @@ public class ConsultaUsuario extends HttpServlet {
 		}
 	}
 
-}
+}*/

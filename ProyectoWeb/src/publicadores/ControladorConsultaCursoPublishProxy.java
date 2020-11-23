@@ -44,34 +44,22 @@ public class ControladorConsultaCursoPublishProxy implements publicadores.Contro
     return controladorConsultaCursoPublish;
   }
   
-  public java.lang.String getMensaje() throws java.rmi.RemoteException{
-    if (controladorConsultaCursoPublish == null)
-      _initControladorConsultaCursoPublishProxy();
-    return controladorConsultaCursoPublish.getMensaje();
-  }
-  
-  public void setMensaje(java.lang.String arg0) throws java.rmi.RemoteException{
-    if (controladorConsultaCursoPublish == null)
-      _initControladorConsultaCursoPublishProxy();
-    controladorConsultaCursoPublish.setMensaje(arg0);
-  }
-  
   public java.lang.String[] listarCategorias() throws java.rmi.RemoteException, publicadores.SinCategorias{
     if (controladorConsultaCursoPublish == null)
       _initControladorConsultaCursoPublishProxy();
     return controladorConsultaCursoPublish.listarCategorias();
   }
   
-  public publicadores.DtCursoBase[] listarCursosInstituto(java.lang.String arg0) throws java.rmi.RemoteException, publicadores.InstitutoInexistente, publicadores.InstitutoSinCursos{
-    if (controladorConsultaCursoPublish == null)
-      _initControladorConsultaCursoPublishProxy();
-    return controladorConsultaCursoPublish.listarCursosInstituto(arg0);
-  }
-  
   public publicadores.DtInstituto[] listarInstitutos() throws java.rmi.RemoteException, publicadores.SinInstitutos{
     if (controladorConsultaCursoPublish == null)
       _initControladorConsultaCursoPublishProxy();
     return controladorConsultaCursoPublish.listarInstitutos();
+  }
+  
+  public publicadores.DtCursoBase[] listarCursosInstituto(java.lang.String arg0) throws java.rmi.RemoteException, publicadores.InstitutoInexistente, publicadores.InstitutoSinCursos{
+    if (controladorConsultaCursoPublish == null)
+      _initControladorConsultaCursoPublishProxy();
+    return controladorConsultaCursoPublish.listarCursosInstituto(arg0);
   }
   
   public publicadores.DtCurso consultarCurso(java.lang.String arg0) throws java.rmi.RemoteException{
@@ -96,6 +84,18 @@ public class ControladorConsultaCursoPublishProxy implements publicadores.Contro
     if (controladorConsultaCursoPublish == null)
       _initControladorConsultaCursoPublishProxy();
     return controladorConsultaCursoPublish.listarCursosPlataforma();
+  }
+  
+  public java.lang.String getMensaje() throws java.rmi.RemoteException{
+    if (controladorConsultaCursoPublish == null)
+      _initControladorConsultaCursoPublishProxy();
+    return controladorConsultaCursoPublish.getMensaje();
+  }
+  
+  public void setMensaje(java.lang.String arg0) throws java.rmi.RemoteException{
+    if (controladorConsultaCursoPublish == null)
+      _initControladorConsultaCursoPublishProxy();
+    controladorConsultaCursoPublish.setMensaje(arg0);
   }
   
   

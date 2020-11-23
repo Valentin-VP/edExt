@@ -75,9 +75,11 @@ public class ControladorConsultaCursoPublish {
 				ret[i] = cb;
 				i++;
 			}
-		}catch(InstitutoInexistente |InstitutoSinCursos e) {
+		}catch(InstitutoInexistente e) {
 			System.out.println("entro al catch");
 			this.mensaje = e.getMessage();
+		}catch(InstitutoSinCursos e) {
+			this.mensaje = "institutosincursos";
 		}
 		return ret;
 	}

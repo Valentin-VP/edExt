@@ -16,17 +16,17 @@ import javax.xml.rpc.ServiceException;
 
 import com.google.gson.Gson;
 
-import datatypes.DtCursoBase;
-import datatypes.DtEdicionBase;
-import datatypes.DtEdicionCompleta;
-import datatypes.DtInstituto;
-import excepciones.CursoNoExiste;
-import excepciones.EdicionNoExiste;
-import excepciones.InstitutoInexistente;
-import excepciones.InstitutoSinCursos;
-import excepciones.SinInstitutos;
-import interfaces.Fabrica;
-import interfaces.IControladorListarAceptadosAUnaEdicionDeCurso;
+import publicadores.DtCursoBase;
+import publicadores.DtEdicionBase;
+import publicadores.DtEdicionCompleta;
+import publicadores.DtInstituto;
+import publicadores.CursoNoExiste;
+import publicadores.EdicionNoExiste;
+import publicadores.InstitutoInexistente;
+import publicadores.InstitutoSinCursos;
+import publicadores.SinInstitutos;
+//import interfaces.Fabrica;
+//import interfaces.IControladorListarAceptadosAUnaEdicionDeCurso;
 import publicadores.ControladorAltaUsuarioPublish;
 import publicadores.ControladorAltaUsuarioPublishService;
 import publicadores.ControladorAltaUsuarioPublishServiceLocator;
@@ -65,7 +65,7 @@ public class ListarAceptadosEdicion extends HttpServlet {
 				sesion.setAttribute("cursosAceptados", cursos);
 				sesion.setAttribute("opAceptadosEdicion", "1");
 				response.sendRedirect("ListarAceptadosEdicion.jsp");
-			} catch (RemoteException | ServiceException | InstitutoInexistente | InstitutoSinCursos e) {
+			} catch (RemoteException | ServiceException e) {
 				request.setAttribute("mensaje", error);
 				rd = request.getRequestDispatcher("/error.jsp");
 				rd.forward(request, response);

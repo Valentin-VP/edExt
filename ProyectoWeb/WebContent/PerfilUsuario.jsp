@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+<%-- <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@page import="datatypes.DtUsuario"%>
 <%@page import="datatypes.DtFecha"%>
@@ -90,7 +90,7 @@
 	                                            </div>
 	                                        </div>
 	                                        <hr />
-	                                      <%--  <div class="row">
+	                                       <div class="row">
 	                                            <div class="col-sm-3 col-md-2 col-5">
 	                                                <label style="font-weight:bold;">Something</label>
 	                                            </div>
@@ -106,7 +106,7 @@
 	                                            <div class="col-md-8 col-6">
 	                                                Something
 	                                            </div>
-	                                        </div>--%>
+	                                        </div>
 	                                        <hr />
 	
 	                                    </div>
@@ -127,3 +127,4 @@
 </body>
 <%@include file = "/footer.jsp" %>
 </html>
+ --%>

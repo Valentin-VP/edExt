@@ -111,7 +111,7 @@ public class AltaCurso extends HttpServlet {
 				System.out.println("cantHoras vale: " + cantHoras + "creditos vale:" + creditos);
 				try {
 					altaCurso(instituto, nombre, descripcion, duracion, cantHoras, creditos, url, fechaR);
-				} catch (CursoRepetido | InstitutoInexistente | ServiceException e) {
+				} catch (RemoteException | ServiceException e) {
 					request.setAttribute("mensaje", remoteerror);
 					rd = request.getRequestDispatcher("/error.jsp");
 					rd.forward(request, response);
@@ -215,15 +215,16 @@ public class AltaCurso extends HttpServlet {
 		ControladorConsultaCursoPublishService cpscc = new ControladorConsultaCursoPublishServiceLocator();
 		ControladorConsultaCursoPublish port = cpscc.getControladorConsultaCursoPublishPort();
 		DtCursoBase[] cursos = port.listarCursosInstituto(instituto);
-		if (!port.getMensaje().equals("vacio")) {
+		if (!port.getMensaje().equals("vacio") && !port.getMensaje().equals("institutosincursos")) {
 			remoteerror = port.getMensaje();
 			port.setMensaje("vacio");
-			throw new RemoteException();
+			throw new RemoteException(remoteerror);
 		}
 		ArrayList<DtCursoBase> retorno = new ArrayList<DtCursoBase>();
 		for (int i = 0; i < cursos.length; ++i) {
 		    retorno.add(cursos[i]);
 		}
+		port.setMensaje("vacio");
 		return retorno;
 	}
 

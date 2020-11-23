@@ -1,4 +1,4 @@
-package servlets;
+/*package servlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,21 +11,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import datatypes.DtUsuario;
-import interfaces.Fabrica;
-import interfaces.IControladorConsultaUsuario;
-import interfaces.IControladorSeguirUsuario;
+import publicadores.DtUsuarioBase;
 
-/**
- * Servlet implementation class PerfilUsuario
- */
+
+
 @WebServlet("/PerfilUsuario")
 public class PerfilUsuario extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+
     public PerfilUsuario() {
         super();
         // TODO Auto-generated constructor stub
@@ -43,9 +37,8 @@ public class PerfilUsuario extends HttpServlet {
 		rd.forward(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+
+	 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession sesion = request.getSession(true);
 		Fabrica fabrica = Fabrica.getInstancia();
@@ -57,4 +50,4 @@ public class PerfilUsuario extends HttpServlet {
 		rd.forward(request, response);
 	}
 
-}
+}*/

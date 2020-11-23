@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+<%-- <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="datatypes.DtUsuario"%>
@@ -68,4 +68,4 @@ if(usuarios == null){
 	<%} %>
 <%@include file = "/footer.jsp" %>
 </body>
-</html>
+</html> --%>
