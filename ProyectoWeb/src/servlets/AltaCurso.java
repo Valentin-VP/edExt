@@ -199,8 +199,9 @@ public class AltaCurso extends HttpServlet {
 		ControladorAltaCursoPublishService cps = new ControladorAltaCursoPublishServiceLocator();
 		ControladorAltaCursoPublish port = cps.getControladorAltaCursoPublishPort();
 		String[] categorias = port.listarCategorias();
-		if (port.getMensaje() != null) {
+		if (!port.getMensaje().equals("vacio")) {
 			remoteerror = port.getMensaje();
+			port.setMensaje("vacio");
 			throw new RemoteException();
 		}
 		ArrayList<String> retorno = new ArrayList<String>();
@@ -214,8 +215,9 @@ public class AltaCurso extends HttpServlet {
 		ControladorConsultaCursoPublishService cpscc = new ControladorConsultaCursoPublishServiceLocator();
 		ControladorConsultaCursoPublish port = cpscc.getControladorConsultaCursoPublishPort();
 		DtCursoBase[] cursos = port.listarCursosInstituto(instituto);
-		if (port.getMensaje() != null) {
+		if (!port.getMensaje().equals("vacio")) {
 			remoteerror = port.getMensaje();
+			port.setMensaje("vacio");
 			throw new RemoteException();
 		}
 		ArrayList<DtCursoBase> retorno = new ArrayList<DtCursoBase>();

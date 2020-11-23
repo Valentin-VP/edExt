@@ -27,7 +27,7 @@ public class ControladorAltaCursoPublish {
 	private IControladorAltaCurso icon;
 	private WebServiceConfiguration configuracion;
 	private Endpoint endpoint;
-	private String mensaje;
+	private String mensaje = "vacio";
 	
 	public ControladorAltaCursoPublish() {
 		fabrica = Fabrica.getInstancia();
