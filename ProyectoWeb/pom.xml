@@ -12,12 +12,7 @@
 		
   </properties>
   <dependencies>
-  
-    <dependency>
-			<groupId>Grupo1</groupId>
-            <artifactId>edExt</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-		</dependency>
+
     
         <dependency>
 			<groupId>org.postgresql</groupId>
