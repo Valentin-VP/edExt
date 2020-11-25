@@ -16,9 +16,6 @@ import javax.xml.rpc.ServiceException;
 import publicadores.DtInstituto;
 import publicadores.SinCategorias;
 import publicadores.SinInstitutos;
-import publicadores.ControladorAltaCursoPublish;
-import publicadores.ControladorAltaCursoPublishService;
-import publicadores.ControladorAltaCursoPublishServiceLocator;
 import publicadores.ControladorConsultaCursoPublish;
 import publicadores.ControladorConsultaCursoPublishService;
 import publicadores.ControladorConsultaCursoPublishServiceLocator;
@@ -30,6 +27,7 @@ import publicadores.ControladorConsultaCursoPublishServiceLocator;
 public class CargarTodo extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
+	@SuppressWarnings("unused")
 	private String remoteerror = new String();
 	
     public CargarTodo() {

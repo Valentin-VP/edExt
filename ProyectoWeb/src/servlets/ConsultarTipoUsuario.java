@@ -19,6 +19,7 @@ import publicadores.ControladorSesionPublishServiceLocator;
 @WebServlet("/ConsultarTipoUsuario")
 public class ConsultarTipoUsuario extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	@SuppressWarnings("unused")
 	private String error;
 
     public ConsultarTipoUsuario() {

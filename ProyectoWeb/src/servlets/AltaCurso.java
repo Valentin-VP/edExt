@@ -5,7 +5,6 @@ import java.rmi.RemoteException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,17 +13,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.swing.JOptionPane;
 import javax.xml.rpc.ServiceException;
 
 import publicadores.DtCursoBase;
 import publicadores.DtFecha;
-import publicadores.DtInstituto;
-import publicadores.CursoRepetido;
 import publicadores.InstitutoInexistente;
 import publicadores.InstitutoSinCursos;
-import publicadores.SinCategorias;
-import publicadores.SinInstitutos;
 import publicadores.ControladorAltaCursoPublish;
 import publicadores.ControladorAltaCursoPublishService;
 import publicadores.ControladorAltaCursoPublishServiceLocator;

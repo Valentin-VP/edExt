@@ -1,7 +1,7 @@
-<%-- <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@page import="datatypes.DtUsuario"%>
-<%@page import="datatypes.DtFecha"%>
+<%@page import="publicadores.DtUsuario"%>
+<%@page import="publicadores.DtFecha"%>
 <!DOCTYPE html>
 <html>
 <%@include file = "/header.jsp" %>
@@ -86,7 +86,7 @@
 	                                                <label style="font-weight:bold;">Fecha de Nacimiento</label>
 	                                            </div>
 	                                            <div class="col-md-8 col-6">
-	                                                <%=u.getFechaNac().DtFechaToDate().toString()%>
+	                                                <%= u.getFechaNac().getDia().toString() + "/" + u.getFechaNac().getMes().toString() + "/" + u.getFechaNac().getAnio().toString() %>
 	                                            </div>
 	                                        </div>
 	                                        <hr />
@@ -127,4 +127,3 @@
 </body>
 <%@include file = "/footer.jsp" %>
 </html>
- --%>

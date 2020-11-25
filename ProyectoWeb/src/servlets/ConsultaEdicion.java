@@ -19,13 +19,9 @@ import publicadores.DtEdicionBase;
 import publicadores.CategoriaInexistente;
 import publicadores.CursoNoExiste;
 import publicadores.InstitutoInexistente;
-import publicadores.ControladorAltaEdicionCursoPublish;
-import publicadores.ControladorAltaEdicionCursoPublishService;
-import publicadores.ControladorAltaEdicionCursoPublishServiceLocator;
 import publicadores.ControladorConsultaEdicionCursoPublish;
 import publicadores.ControladorConsultaEdicionCursoPublishService;
 import publicadores.ControladorConsultaEdicionCursoPublishServiceLocator;
-import publicadores.DtUsuarioBase;
 
 @WebServlet("/ConsultaEdicion")
 public class ConsultaEdicion extends HttpServlet {

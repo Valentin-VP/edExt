@@ -33,6 +33,7 @@ public class AltaUsuario extends HttpServlet {
         super();
     }
 
+	@SuppressWarnings("unused")
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		/*Fabrica fabrica = Fabrica.getInstancia();
 		IControladorAltaUsuario icon = fabrica.getIControladorAltaUsuario();*/
